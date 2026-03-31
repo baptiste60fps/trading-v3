@@ -319,3 +319,87 @@ Ordre de construction recommande:
 12. `core/runtime`
 
 Le detail du contrat minimal est documente dans [MODULE_CONTRACTS.md](/Applications/MAMP/htdocs/baptisto-trading-v3/server/docs/MODULE_CONTRACTS.md).
+
+## Lancer en paper trading live
+
+Etat actuel important:
+
+- le projet sait deja lire Alpaca en reel, evaluer une strategie, appeler le LLM et router un ordre paper,
+- `run:symbol` est aujourd'hui le chemin operationnel pour un tir manuel par symbole,
+- `main.mjs` ne demarre pas encore une boucle live multi-symboles autonome.
+
+### 1. Preparer `.env.local`
+
+Base minimale:
+
+```bash
+cp .env.example .env.local
+```
+
+Variables a verifier:
+
+- `ALPACA_ENABLED=true`
+- `ALPACA_PAPER=true`
+- `ALPACA_API_KEY=...`
+- `ALPACA_SECRET_KEY=...`
+- `BAPTISTO_RUNTIME_MODE=paper`
+- `BAPTISTO_LLM_ENABLED=true`
+- `BAPTISTO_LLM_PROVIDER=ollama`
+- `BAPTISTO_LLM_MODEL=qwen2.5:7b`
+- `BAPTISTO_LLM_BASE_URL=http://127.0.0.1:11434`
+- `BAPTISTO_LLM_TIMEOUT_MS=30000` ou plus selon la machine
+- `BAPTISTO_EXECUTION_DRY_RUN=false`
+- `BAPTISTO_CONSOLE_LOGS_ENABLED=true`
+
+Point trading:
+tant que `BAPTISTO_EXECUTION_DRY_RUN=true`, aucune ouverture ni fermeture broker n'est envoyee, meme si toute la chaine strategie fonctionne.
+
+### 2. Verifier le modele local
+
+Exemple:
+
+```bash
+ollama list
+curl -s http://127.0.0.1:11434/api/tags
+```
+
+Si le modele n'est pas disponible ou trop lent, la strategie peut retomber en fallback et ne pas ouvrir de position.
+
+### 3. Faire le check de pre-ouverture
+
+Commande recommandee avant l'open:
+
+```bash
+npm run paper:preopen -- --target-date 2026-03-31 --pilot-symbol AAPL
+```
+
+Ce script:
+
+- verifie Alpaca paper,
+- regenere le rapport journalier,
+- teste un passage strategie en `dryRun`,
+- ne soumet jamais d'ordre broker pendant ce controle.
+
+### 4. Lancer un run paper trading manuel
+
+Commande:
+
+```bash
+npm run run:symbol -- AAPL
+```
+
+Comportement attendu:
+
+- snapshot marche + portefeuille,
+- decision LLM,
+- creation d'un ordre paper si `dryRun=false`,
+- stop loss simple cote broker Alpaca a l'ouverture quand la config symbole l'active,
+- logs console colorises avec `Portfolio Delta`, `Session Delta`, ligne `desk trader`, et logs d'ouverture / fermeture.
+
+### 5. Lire les garde-fous actuels
+
+- Le mode paper actuel est un run manuel par symbole, pas encore un orchestrateur live persistant.
+- Le stop loss actuellement supporte cote broker est un stop simple, pas un trailing stop.
+- `paper:preopen` est un check de readiness, pas une commande d'execution.
+- Si le LLM timeoute, l'ouverture peut ne pas partir.
+- Les logs console sont prevus pour l'operateur humain; les scripts JSON comme `paper:preopen` restent silencieux pour ne pas polluer leur sortie machine.
