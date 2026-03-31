@@ -1,0 +1,294 @@
+{
+  "runtime": {
+    "mode": "backtest",
+    "logLevel": "info"
+  },
+  "market": {
+    "timezone": "America/New_York",
+    "sessionMode": "regular",
+    "openMinutes": 570,
+    "closeMinutes": 960,
+    "preCloseMinutes": 10,
+    "noTradeOpenMinutes": 10
+  },
+  "alpaca": {
+    "enabled": true,
+    "paper": true,
+    "feed": "iex",
+    "adjustment": "raw",
+    "maxRetries": 4,
+    "retryBaseDelayMs": 750,
+    "retryMaxDelayMs": 5000
+  },
+  "llm": {
+    "enabled": false,
+    "provider": "ollama",
+    "model": "llama3.1:8b",
+    "baseUrl": "http://127.0.0.1:11434",
+    "temperature": 0.1,
+    "timeoutMs": 30000
+  },
+  "news": {
+    "enabled": true,
+    "userAgent": "baptisto-trading-v3/0.1 (+local research runner)",
+    "timeoutMs": 10000,
+    "cacheTtlMs": 900000,
+    "maxItemsPerFeed": 8,
+    "feeds": [
+      {
+        "id": "sec_press_releases",
+        "name": "SEC Press Releases",
+        "url": "https://www.sec.gov/rss/pressrelease.xml"
+      },
+      {
+        "id": "sec_news",
+        "name": "SEC News",
+        "url": "https://www.sec.gov/rss/news/press.xml"
+      },
+      {
+        "id": "fed_press_all",
+        "name": "Federal Reserve Press Releases",
+        "url": "https://www.federalreserve.gov/feeds/press_all.xml"
+      },
+      {
+        "id": "fed_monetary",
+        "name": "Federal Reserve Monetary Policy",
+        "url": "https://www.federalreserve.gov/feeds/press_monetary.xml"
+      }
+    ]
+  },
+  "reports": {
+    "daily": {
+      "enabled": true,
+      "outputSubdir": "daily",
+      "watchlistSymbols": [
+        "AAPL",
+        "AMZN",
+        "META",
+        "GOOGL",
+        "AMD",
+        "NVDA",
+        "SPY",
+        "QQQ"
+      ],
+      "maxNewsItemsPerFeed": 5,
+      "includeLlmAnalysis": true,
+      "llmTimeoutMs": 120000
+    }
+  },
+  "execution": {
+    "dryRun": true
+  },
+  "telemetry": {
+    "console": {
+      "enabled": true,
+      "colors": true
+    }
+  },
+  "symbols": {
+    "default": {
+      "enabled": true,
+      "strategy": "llm_long_v1",
+      "strategyProfile": "single_stock",
+      "timeframes": [
+        "1m",
+        "2m",
+        "5m",
+        "10m",
+        "15m",
+        "30m",
+        "1h",
+        "4h",
+        "1d"
+      ],
+      "evaluationTimeframes": [
+        "10s",
+        "30s",
+        "1m",
+        "2m",
+        "5m",
+        "10m"
+      ],
+      "brokerProtection": {
+        "enabled": true,
+        "simpleStopLossPct": 0.02
+      },
+      "risk": {
+        "maxPositionPct": 0.05,
+        "maxPortfolioExposurePct": 0.5
+      }
+    },
+    "SPY": {
+      "enabled": true,
+      "strategyProfile": "index_etf"
+    },
+    "QQQ": {
+      "enabled": true,
+      "strategyProfile": "index_etf"
+    },
+    "IWM": {
+      "enabled": true,
+      "strategyProfile": "index_etf"
+    },
+    "DIA": {
+      "enabled": true,
+      "strategyProfile": "index_etf"
+    },
+    "AAPL": {
+      "enabled": true,
+      "strategyProfile": "single_stock_quality"
+    },
+    "MSFT": {
+      "enabled": true,
+      "strategyProfile": "single_stock_quality"
+    },
+    "AMZN": {
+      "enabled": true,
+      "strategyProfile": "single_stock_quality",
+      "strategyRules": {
+        "minimumMediumGapWhenFallback": 0.004,
+        "minimumRelatedTrendWhenFallback": 0,
+        "enableScoutEntries": true,
+        "scoutMinimumEntryScore": 8,
+        "scoutMinimumContextScore": 6,
+        "scoutRequirePrimaryMediumContext": true,
+        "scoutMinimumMediumRsi": 70,
+        "scoutMinimumRelatedTrend": 0.005,
+        "scoutMinimumRelatedRsi": 52,
+        "scoutMinimumFastRsi": 37,
+        "scoutMaximumFastRsi": 40,
+        "scoutMaximumFastPriceVsSma": 0.0005,
+        "scoutRequestedSizeScale": 0.35,
+        "scoutMaxRequestedSizePct": 0.015
+      }
+    },
+    "META": {
+      "enabled": true,
+      "strategyProfile": "single_stock_quality",
+      "strategyRules": {
+        "minimumRelatedTrend": 0.001,
+        "minimumRelatedRsi": 48,
+        "enableScoutEntries": true,
+        "scoutMinimumEntryScore": 8,
+        "scoutMinimumContextScore": 4,
+        "scoutRequirePrimaryMediumContext": true,
+        "scoutMinimumMediumRsi": 65,
+        "scoutMinimumRelatedTrend": 0.003,
+        "scoutMinimumRelatedRsi": 54,
+        "scoutMinimumFastRsi": 49,
+        "scoutMaximumFastRsi": 51,
+        "scoutMaximumFastPriceVsSma": -0.001,
+        "scoutRequestedSizeScale": 0.4,
+        "scoutMaxRequestedSizePct": 0.015
+      }
+    },
+    "GOOGL": {
+      "enabled": true,
+      "strategyProfile": "single_stock_quality",
+      "strategyRules": {
+        "minimumMediumGap": 0.002,
+        "minimumRelatedTrend": 0.001,
+        "enableScoutEntries": true,
+        "scoutMinimumEntryScore": 8,
+        "scoutMinimumContextScore": 3,
+        "scoutRequirePrimaryMediumContext": true,
+        "scoutMinimumMediumRsi": 45,
+        "scoutMinimumRelatedTrend": 0.003,
+        "scoutMinimumRelatedRsi": 60,
+        "scoutMinimumFastRsi": 43,
+        "scoutMaximumFastRsi": 46,
+        "scoutMaximumFastPriceVsSma": -0.0015,
+        "scoutRequestedSizeScale": 0.35,
+        "scoutMaxRequestedSizePct": 0.012
+      }
+    },
+    "NVDA": {
+      "enabled": true,
+      "strategyProfile": "high_beta_stock"
+    },
+    "AMD": {
+      "enabled": true,
+      "strategyProfile": "high_beta_stock",
+      "strategyRules": {
+        "minimumMediumGapWhenFallback": 0.001,
+        "minimumFastEmaGap": 0.001,
+        "minimumFastRsi": 55,
+        "maximumFastRsi": 58,
+        "primaryFastRsiCeiling": 58,
+        "primaryChasePriceVsSmaCeiling": 0.0008,
+        "requestedSizeScale": 0.7,
+        "maxRequestedSizePct": 0.03
+      }
+    },
+    "TSLA": {
+      "enabled": true,
+      "strategyProfile": "high_beta_stock"
+    }
+  },
+  "relatedSymbols": {
+    "default": [
+      "SPY",
+      "QQQ"
+    ],
+    "SPY": [
+      "QQQ",
+      "IWM",
+      "DIA"
+    ],
+    "QQQ": [
+      "SPY",
+      "IWM",
+      "DIA"
+    ],
+    "IWM": [
+      "SPY",
+      "QQQ",
+      "DIA"
+    ],
+    "DIA": [
+      "SPY",
+      "QQQ",
+      "IWM"
+    ],
+    "AAPL": [
+      "SPY",
+      "QQQ",
+      "MSFT"
+    ],
+    "MSFT": [
+      "SPY",
+      "QQQ",
+      "AAPL"
+    ],
+    "AMZN": [
+      "QQQ",
+      "XLY",
+      "AAPL"
+    ],
+    "META": [
+      "QQQ",
+      "XLC",
+      "GOOGL"
+    ],
+    "GOOGL": [
+      "QQQ",
+      "XLC",
+      "META"
+    ],
+    "NVDA": [
+      "SPY",
+      "QQQ",
+      "AMD"
+    ],
+    "AMD": [
+      "SPY",
+      "QQQ",
+      "NVDA"
+    ],
+    "TSLA": [
+      "SPY",
+      "QQQ",
+      "AMZN"
+    ]
+  }
+}

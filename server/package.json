@@ -1,0 +1,25 @@
+{
+  "name": "baptisto-trading-v3-server",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node ./main.mjs",
+    "smoke": "node ./scripts/smoke.mjs",
+    "test": "node ./tests/run-all.mjs",
+    "test:unit": "node ./tests/run-unit.mjs",
+    "test:alpaca": "node ./tests/run-integration.mjs",
+    "test:archi": "node ./tests/run-architecture.mjs",
+    "warmup:symbol": "node ./scripts/warmup-symbol.mjs",
+    "run:symbol": "node ./scripts/run-symbol-once.mjs",
+    "report:daily": "node ./scripts/daily-market-report.mjs",
+    "paper:preopen": "node ./scripts/preopen-paper-check.mjs",
+    "backtest:symbol": "node ./scripts/backtest-symbol.mjs",
+    "backtest:batch": "node ./scripts/backtest-batch.mjs",
+    "backtest:regression": "node ./scripts/backtest-regression.mjs",
+    "backtest:regressions": "node ./scripts/backtest-regression.mjs --all"
+  },
+  "engines": {
+    "node": ">=16.17"
+  }
+}

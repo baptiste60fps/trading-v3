@@ -1,0 +1,91 @@
+export const defaultConfig = Object.freeze({
+  runtime: {
+    mode: 'backtest',
+    logLevel: 'info',
+  },
+  market: {
+    timezone: 'America/New_York',
+    sessionMode: 'regular',
+    openMinutes: 9 * 60 + 30,
+    closeMinutes: 16 * 60,
+    preCloseMinutes: 10,
+    noTradeOpenMinutes: 10,
+  },
+  storage: {
+    rootDir: 'storage',
+    cacheDir: 'storage/cache',
+    configsDir: 'storage/configs',
+    datasetsDir: 'storage/datasets',
+    reportsDir: 'storage/reports',
+    runsDir: 'storage/runs',
+    snapshotsDir: 'storage/snapshots',
+  },
+  alpaca: {
+    enabled: true,
+    paper: true,
+    brokerUrl: 'https://paper-api.alpaca.markets/v2',
+    dataUrl: 'https://data.alpaca.markets/v2',
+    feed: 'iex',
+    adjustment: 'raw',
+    maxRetries: 4,
+    retryBaseDelayMs: 750,
+    retryMaxDelayMs: 5_000,
+    keyId: null,
+    secretKey: null,
+  },
+  llm: {
+    enabled: false,
+    provider: 'ollama',
+    model: 'llama3.1:8b',
+    baseUrl: 'http://127.0.0.1:11434',
+    temperature: 0.1,
+    timeoutMs: 30_000,
+  },
+  news: {
+    enabled: true,
+    userAgent: 'baptisto-trading-v3/0.1 (+local research runner)',
+    timeoutMs: 10_000,
+    cacheTtlMs: 15 * 60 * 1000,
+    maxItemsPerFeed: 8,
+    feeds: [],
+  },
+  reports: {
+    daily: {
+      enabled: true,
+      outputSubdir: 'daily',
+      watchlistSymbols: [],
+      maxNewsItemsPerFeed: 5,
+      includeLlmAnalysis: true,
+      llmTimeoutMs: 120_000,
+    },
+  },
+  execution: {
+    dryRun: true,
+  },
+  telemetry: {
+    console: {
+      enabled: false,
+      colors: true,
+    },
+  },
+  symbols: {
+    default: {
+      enabled: true,
+      strategy: 'llm_long_v1',
+      strategyProfile: 'single_stock',
+      timeframes: ['1m', '2m', '5m', '10m', '15m', '30m', '1h', '4h', '1d'],
+      evaluationTimeframes: ['10s', '30s', '1m', '2m', '5m', '10m'],
+      brokerProtection: {
+        enabled: true,
+        simpleStopLossPct: 0.02,
+      },
+      risk: {
+        maxPositionPct: 0.05,
+        maxPortfolioExposurePct: 0.5,
+      },
+    },
+  },
+  relatedSymbols: {
+    default: [],
+  },
+});

@@ -1,0 +1,178 @@
+{
+  "nvda_high_beta_reference": {
+    "description": "Compare the legacy single_stock behavior against the current high_beta_stock profile on the fixed NVDA window used during March 29, 2026 tuning.",
+    "symbol": "NVDA",
+    "start": "2026-02-27T16:06:17.517Z",
+    "end": "2026-03-29T16:06:17.517Z",
+    "stepTimeframe": "30m",
+    "initialCash": 100000,
+    "slippageBps": 3,
+    "feePerOrder": 0.5,
+    "feePerShare": 0,
+    "baselinePreset": "no_high_beta",
+    "candidatePreset": "current",
+    "expectations": {
+      "minNetPnlDelta": 100,
+      "maxCandidateTradeCount": 5,
+      "requireReducedDrawdown": true,
+      "requireImprovedNetPnl": true
+    }
+  },
+  "aapl_single_stock_reference": {
+    "description": "Check that AAPL remains cleaner under the dedicated single_stock_quality profile than under an ETF-like fallback on the fixed March 29, 2026 tuning window.",
+    "symbol": "AAPL",
+    "start": "2026-02-27T16:06:17.517Z",
+    "end": "2026-03-29T16:06:17.517Z",
+    "stepTimeframe": "30m",
+    "initialCash": 100000,
+    "slippageBps": 3,
+    "feePerOrder": 0.5,
+    "feePerShare": 0,
+    "baselinePreset": "force_index_etf",
+    "candidatePreset": "current",
+    "expectations": {
+      "minNetPnlDelta": 100,
+      "maxCandidateTradeCount": 8,
+      "requireReducedDrawdown": true,
+      "requireImprovedNetPnl": true
+    }
+  },
+  "spy_index_etf_reference": {
+    "description": "Check that SPY remains safer under the dedicated index_etf profile than under the generic single_stock logic on the same fixed window.",
+    "symbol": "SPY",
+    "start": "2026-02-27T16:06:17.517Z",
+    "end": "2026-03-29T16:06:17.517Z",
+    "stepTimeframe": "30m",
+    "initialCash": 100000,
+    "slippageBps": 3,
+    "feePerOrder": 0.5,
+    "feePerShare": 0,
+    "baselinePreset": "force_single_stock",
+    "candidatePreset": "current",
+    "expectations": {
+      "minNetPnlDelta": 100,
+      "maxCandidateTradeCount": 5,
+      "requireReducedDrawdown": true,
+      "requireImprovedNetPnl": true
+    }
+  },
+  "qqq_index_etf_reference": {
+    "description": "Check that QQQ remains safer under the dedicated index_etf profile than under the generic single_stock logic on the same fixed window.",
+    "symbol": "QQQ",
+    "start": "2026-02-27T16:06:17.517Z",
+    "end": "2026-03-29T16:06:17.517Z",
+    "stepTimeframe": "30m",
+    "initialCash": 100000,
+    "slippageBps": 3,
+    "feePerOrder": 0.5,
+    "feePerShare": 0,
+    "baselinePreset": "force_single_stock",
+    "candidatePreset": "current",
+    "expectations": {
+      "minNetPnlDelta": 100,
+      "maxCandidateTradeCount": 5,
+      "requireReducedDrawdown": true,
+      "requireImprovedNetPnl": true
+    }
+  },
+  "amzn_quality_symbol_rules_reference": {
+    "description": "Check that the AMZN quality profile with symbol-specific rules and sector-aligned related symbols improves on the generic quality baseline over the fixed March 30, 2026 tuning window.",
+    "symbol": "AMZN",
+    "start": "2026-02-28T17:50:51.941Z",
+    "end": "2026-03-30T17:50:51.941Z",
+    "stepTimeframe": "30m",
+    "initialCash": 100000,
+    "slippageBps": 3,
+    "feePerOrder": 0.5,
+    "feePerShare": 0,
+    "baselinePreset": "no_symbol_rules",
+    "candidatePreset": "current",
+    "baselineConfigPatch": {
+      "relatedSymbols": {
+        "AMZN": [
+          "SPY",
+          "QQQ",
+          "META"
+        ]
+      }
+    },
+    "expectations": {
+      "minNetPnlDelta": 40,
+      "maxCandidateTradeCount": 2,
+      "requireReducedDrawdown": true,
+      "requireImprovedNetPnl": true
+    }
+  },
+  "meta_quality_symbol_rules_reference": {
+    "description": "Check that the META quality profile with symbol-specific rules and communication-sector related symbols improves on the generic quality baseline over the fixed March 30, 2026 tuning window.",
+    "symbol": "META",
+    "start": "2026-02-28T17:50:51.941Z",
+    "end": "2026-03-30T17:50:51.941Z",
+    "stepTimeframe": "30m",
+    "initialCash": 100000,
+    "slippageBps": 3,
+    "feePerOrder": 0.5,
+    "feePerShare": 0,
+    "baselinePreset": "no_symbol_rules",
+    "candidatePreset": "current",
+    "baselineConfigPatch": {
+      "relatedSymbols": {
+        "META": [
+          "SPY",
+          "QQQ",
+          "GOOGL"
+        ]
+      }
+    },
+    "expectations": {
+      "minNetPnlDelta": 10,
+      "maxCandidateTradeCount": 2,
+      "requireImprovedNetPnl": true
+    }
+  },
+  "googl_quality_symbol_rules_reference": {
+    "description": "Check that the GOOGL quality profile with symbol-specific rules and communication-sector related symbols improves on the generic quality baseline over the fixed March 30, 2026 tuning window.",
+    "symbol": "GOOGL",
+    "start": "2026-02-28T17:50:51.941Z",
+    "end": "2026-03-30T17:50:51.941Z",
+    "stepTimeframe": "30m",
+    "initialCash": 100000,
+    "slippageBps": 3,
+    "feePerOrder": 0.5,
+    "feePerShare": 0,
+    "baselinePreset": "no_symbol_rules",
+    "candidatePreset": "current",
+    "baselineConfigPatch": {
+      "relatedSymbols": {
+        "GOOGL": [
+          "SPY",
+          "QQQ",
+          "META"
+        ]
+      }
+    },
+    "expectations": {
+      "maxCandidateTradeCount": 4,
+      "requireImprovedNetPnl": true
+    }
+  },
+  "amd_high_beta_symbol_rules_reference": {
+    "description": "Check that AMD-specific high beta rules improve on the generic high_beta_stock baseline over the fixed March 30, 2026 tuning window.",
+    "symbol": "AMD",
+    "start": "2026-02-28T17:50:51.941Z",
+    "end": "2026-03-30T17:50:51.941Z",
+    "stepTimeframe": "30m",
+    "initialCash": 100000,
+    "slippageBps": 3,
+    "feePerOrder": 0.5,
+    "feePerShare": 0,
+    "baselinePreset": "no_symbol_rules",
+    "candidatePreset": "current",
+    "expectations": {
+      "minNetPnlDelta": 80,
+      "maxCandidateTradeCount": 1,
+      "requireReducedDrawdown": true,
+      "requireImprovedNetPnl": true
+    }
+  }
+}

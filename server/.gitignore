@@ -1,0 +1,16 @@
+node_modules/
+.env
+.env.local
+.env.*
+
+storage/cache/**
+!storage/cache/
+
+storage/reports/**
+!storage/reports/
+
+storage/runs/**
+!storage/runs/
+
+storage/snapshots/**
+!storage/snapshots/
