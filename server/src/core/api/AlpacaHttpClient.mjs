@@ -16,6 +16,18 @@ const sleep = (delayMs) => new Promise((resolve) => {
   setTimeout(resolve, delayMs);
 });
 
+const buildHttpErrorMessage = ({ message, statusCode, url }) => {
+  const text = String(message ?? '').trim();
+  const host = url?.host ?? 'alpaca';
+  if (statusCode === 401) {
+    return `Alpaca auth failed on ${host} (401). Verify API key/secret and that ALPACA_PAPER matches the account environment.`;
+  }
+  if (statusCode === 403) {
+    return `Alpaca access forbidden on ${host} (403). Verify account permissions and endpoint configuration.`;
+  }
+  return text || `Alpaca request failed (${statusCode})`;
+};
+
 export class AlpacaHttpClient {
   constructor({
     keyId,
@@ -90,10 +102,16 @@ export class AlpacaHttpClient {
             continue;
           }
 
-          throw makeError(parsed?.message ?? parsed?.error ?? `Alpaca request failed (${response.statusCode})`, {
+          const rawMessage = parsed?.message ?? parsed?.error ?? '';
+
+          throw makeError(buildHttpErrorMessage({
+            message: rawMessage,
+            statusCode: response.statusCode,
+            url,
+          }), {
             statusCode: response.statusCode,
             code: parsed?.code ?? null,
-            category: this.#classifyError(parsed?.message ?? '', response.statusCode),
+            category: this.#classifyError(rawMessage, response.statusCode),
             details: parsed,
           });
         }

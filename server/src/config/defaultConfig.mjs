@@ -2,6 +2,10 @@ export const defaultConfig = Object.freeze({
   runtime: {
     mode: 'backtest',
     logLevel: 'info',
+    loopIntervalMs: 60_000,
+    idleIntervalMs: 300_000,
+    startupWarmup: true,
+    symbols: null,
   },
   market: {
     timezone: 'America/New_York',

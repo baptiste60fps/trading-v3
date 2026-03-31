@@ -42,6 +42,23 @@ const normalizeNumber = (value, fallback) => {
   return Number.isFinite(parsed) ? parsed : fallback;
 };
 
+const normalizeStringList = (value, fallback) => {
+  if (value === undefined || value === null || value === '') return fallback;
+  if (Array.isArray(value)) {
+    const normalized = value
+      .map((entry) => String(entry ?? '').trim())
+      .filter(Boolean);
+    return normalized.length ? normalized : fallback;
+  }
+
+  const normalized = String(value)
+    .split(',')
+    .map((entry) => entry.trim())
+    .filter(Boolean);
+
+  return normalized.length ? normalized : fallback;
+};
+
 export class ConfigStore {
   constructor({
     serverRootDir,
@@ -59,6 +76,11 @@ export class ConfigStore {
     const envConfig = this.#readEnvConfig();
 
     const merged = deepMerge(deepMerge(defaultConfig, fileConfig), envConfig);
+    merged.alpaca = this.#resolveAlpacaConfig({
+      mergedConfig: merged.alpaca,
+      fileConfig: fileConfig.alpaca,
+      envConfig: envConfig.alpaca,
+    });
     merged.runtime.mode = assertRuntimeMode(merged.runtime.mode);
     merged.storage = this.#resolveStoragePaths(merged.storage);
     this.config = deepFreeze(merged);
@@ -179,6 +201,10 @@ export class ConfigStore {
       runtime: {
         mode: this.env.BAPTISTO_RUNTIME_MODE ?? undefined,
         logLevel: this.env.BAPTISTO_LOG_LEVEL ?? undefined,
+        loopIntervalMs: this.env.BAPTISTO_RUNTIME_LOOP_INTERVAL_MS ? normalizeNumber(this.env.BAPTISTO_RUNTIME_LOOP_INTERVAL_MS, undefined) : undefined,
+        idleIntervalMs: this.env.BAPTISTO_RUNTIME_IDLE_INTERVAL_MS ? normalizeNumber(this.env.BAPTISTO_RUNTIME_IDLE_INTERVAL_MS, undefined) : undefined,
+        startupWarmup: normalizeBoolean(this.env.BAPTISTO_RUNTIME_STARTUP_WARMUP, undefined),
+        symbols: normalizeStringList(this.env.BAPTISTO_RUNTIME_SYMBOLS, undefined),
       },
       alpaca: {
         enabled: normalizeBoolean(this.env.ALPACA_ENABLED, undefined),
@@ -229,6 +255,24 @@ export class ConfigStore {
       resolved[key] = path.isAbsolute(value) ? value : path.resolve(this.serverRootDir, value);
     }
     return resolved;
+  }
+
+  #resolveAlpacaConfig({ mergedConfig = {}, fileConfig = {}, envConfig = {} } = {}) {
+    const hasExplicitBrokerUrl = Boolean(fileConfig?.brokerUrl || envConfig?.brokerUrl);
+    const hasExplicitDataUrl = Boolean(fileConfig?.dataUrl || envConfig?.dataUrl);
+    const paper = mergedConfig?.paper !== false;
+
+    return {
+      ...mergedConfig,
+      brokerUrl: hasExplicitBrokerUrl
+        ? mergedConfig?.brokerUrl
+        : paper
+          ? 'https://paper-api.alpaca.markets/v2'
+          : 'https://api.alpaca.markets/v2',
+      dataUrl: hasExplicitDataUrl
+        ? mergedConfig?.dataUrl
+        : 'https://data.alpaca.markets/v2',
+    };
   }
 
   #ensureLoaded() {

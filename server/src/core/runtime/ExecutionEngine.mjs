@@ -8,6 +8,13 @@ const toPositiveFiniteOrNull = (value) => {
   return Number.isFinite(numeric) && numeric > 0 ? numeric : null;
 };
 
+const resolveBrokerUnavailableReason = (portfolioState) => {
+  if (portfolioState?.brokerReady !== false) return null;
+  return ['auth', 'permission'].includes(String(portfolioState?.errorCategory ?? ''))
+    ? 'broker_auth_unavailable'
+    : 'broker_unavailable';
+};
+
 export class ExecutionEngine {
   constructor({
     brokerGateway,
@@ -29,6 +36,14 @@ export class ExecutionEngine {
       return {
         executionIntent: null,
         reason: 'noop_action',
+      };
+    }
+
+    const brokerUnavailableReason = resolveBrokerUnavailableReason(features?.portfolioState);
+    if (brokerUnavailableReason) {
+      return {
+        executionIntent: null,
+        reason: brokerUnavailableReason,
       };
     }
 

@@ -326,7 +326,7 @@ Etat actuel important:
 
 - le projet sait deja lire Alpaca en reel, evaluer une strategie, appeler le LLM et router un ordre paper,
 - `run:symbol` est aujourd'hui le chemin operationnel pour un tir manuel par symbole,
-- `main.mjs` ne demarre pas encore une boucle live multi-symboles autonome.
+- `main.mjs` demarre maintenant un orchestrateur persistant multi-symboles en mode `paper` ou `live`.
 
 ### 1. Preparer `.env.local`
 
@@ -396,9 +396,35 @@ Comportement attendu:
 - stop loss simple cote broker Alpaca a l'ouverture quand la config symbole l'active,
 - logs console colorises avec `Portfolio Delta`, `Session Delta`, ligne `desk trader`, et logs d'ouverture / fermeture.
 
-### 5. Lire les garde-fous actuels
+### 5. Lancer l'orchestrateur persistant
 
-- Le mode paper actuel est un run manuel par symbole, pas encore un orchestrateur live persistant.
+Commande:
+
+```bash
+npm start
+```
+
+Comportement attendu:
+
+- bootstrap du runtime complet,
+- resolution de la watchlist a partir de `runtime.symbols` ou des symboles `enabled`,
+- warmup initial des strategies,
+- boucle persistante multi-symboles,
+- cadence `runtime.loopIntervalMs` quand le marche est ouvert,
+- cadence `runtime.idleIntervalMs` hors session,
+- pause de `30s` puis retry indefini si Alpaca repond `too many requests` / `429`,
+- arret propre sur `SIGINT` / `SIGTERM`.
+
+Overrides utiles:
+
+- `BAPTISTO_RUNTIME_LOOP_INTERVAL_MS=60000`
+- `BAPTISTO_RUNTIME_IDLE_INTERVAL_MS=300000`
+- `BAPTISTO_RUNTIME_STARTUP_WARMUP=true`
+- `BAPTISTO_RUNTIME_SYMBOLS=AAPL,MSFT,NVDA`
+- `npm start -- --symbols AAPL,MSFT --loop-interval-ms 30000 --idle-interval-ms 120000`
+
+### 6. Lire les garde-fous actuels
+
 - Le stop loss actuellement supporte cote broker est un stop simple, pas un trailing stop.
 - `paper:preopen` est un check de readiness, pas une commande d'execution.
 - Si le LLM timeoute, l'ouverture peut ne pas partir.

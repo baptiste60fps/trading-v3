@@ -49,6 +49,15 @@ class FakeConfigStore {
   }
 }
 
+class UnauthorizedBrokerGateway {
+  async getAccountState() {
+    const error = new Error('unauthorized');
+    error.category = 'auth';
+    error.statusCode = 401;
+    throw error;
+  }
+}
+
 export const register = async ({ test }) => {
   test('PortfolioService computes snapshot and exposure', async () => {
     const service = new PortfolioService({
@@ -72,5 +81,31 @@ export const register = async ({ test }) => {
     const allowance = await service.canOpenLong('AAPL', 3_000);
     assert.equal(allowance.allowed, true);
     assert.equal(allowance.adjustedNotional, 950);
+  });
+
+  test('PortfolioService degrades gracefully when broker auth fails', async () => {
+    const service = new PortfolioService({
+      brokerGateway: new UnauthorizedBrokerGateway(),
+      configStore: new FakeConfigStore(),
+    });
+
+    const snapshot = await service.getSnapshot();
+    assert.equal(snapshot.cash, 0);
+    assert.equal(snapshot.equity, 0);
+    assert.deepEqual(snapshot.positions, []);
+    assert.equal(snapshot.brokerReady, false);
+    assert.equal(snapshot.errorCategory, 'auth');
+  });
+
+  test('PortfolioService blocks openings when broker auth is unavailable', async () => {
+    const service = new PortfolioService({
+      brokerGateway: new UnauthorizedBrokerGateway(),
+      configStore: new FakeConfigStore(),
+    });
+
+    const allowance = await service.canOpenLong('AAPL', 3_000);
+    assert.equal(allowance.allowed, false);
+    assert.equal(allowance.reason, 'broker_auth_unavailable');
+    assert.equal(allowance.adjustedNotional, 0);
   });
 };

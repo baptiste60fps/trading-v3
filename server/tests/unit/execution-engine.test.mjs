@@ -209,4 +209,44 @@ export const register = async ({ test }) => {
     assert.equal(result.executionIntent.referencePrice, 100);
     assert.equal(result.executionResult.status, 'closed');
   });
+
+  test('ExecutionEngine noops when the portfolio snapshot marks broker auth unavailable', async () => {
+    const broker = new FakeBrokerGateway();
+    const engine = new ExecutionEngine({
+      brokerGateway: broker,
+      portfolioService: new FakePortfolioService(),
+      configStore: new FakeConfigStore(),
+      dryRun: false,
+    });
+
+    const result = await engine.executeDecision({
+      symbol: 'AAPL',
+      decision: {
+        action: 'close_long',
+        confidence: 0.9,
+        reasoning: ['manual exit'],
+      },
+      features: {
+        ...baseFeatures,
+        portfolioState: {
+          ...baseFeatures.portfolioState,
+          brokerReady: false,
+          errorCategory: 'auth',
+          error: 'unauthorized',
+        },
+        position: {
+          symbol: 'AAPL',
+          side: 'long',
+          qty: 10,
+          entryPrice: 100,
+          openedAtMs: Date.now(),
+        },
+      },
+    });
+
+    assert.equal(result.executionIntent, null);
+    assert.equal(result.executionResult.status, 'noop');
+    assert.equal(result.executionResult.error.message, 'broker_auth_unavailable');
+    assert.equal(broker.closed.length, 0);
+  });
 };

@@ -19,6 +19,7 @@ const unitFiles = [
   './unit/alpaca-broker-gateway.test.mjs',
   './unit/console-trading-logger.test.mjs',
   './unit/execution-engine.test.mjs',
+  './unit/persistent-runtime-orchestrator.test.mjs',
   './unit/decision-engine.test.mjs',
   './unit/strategy-instance.test.mjs',
   './unit/backtest-engine.test.mjs',

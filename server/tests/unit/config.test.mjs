@@ -23,8 +23,29 @@ export const register = async ({ test }) => {
 
     assert.equal(store.getRuntimeConfig().mode, 'backtest');
     assert.equal(store.getAlpacaConfig().paper, false);
+    assert.equal(store.getAlpacaConfig().brokerUrl, 'https://api.alpaca.markets/v2');
     assert.deepEqual(store.getRelatedSymbols('AAPL'), ['QQQ', 'XLK']);
     assert.ok(path.isAbsolute(store.getStorageConfig().cacheDir));
+  });
+
+  test('ConfigStore preserves an explicit Alpaca broker URL override', async () => {
+    const rootDir = makeServerRootFixture({
+      runtimeConfig: {
+        alpaca: {
+          brokerUrl: 'https://custom-broker.example/v2',
+        },
+      },
+    });
+
+    const store = new ConfigStore({
+      serverRootDir: rootDir,
+      env: {
+        ALPACA_PAPER: 'false',
+      },
+    });
+    await store.load();
+
+    assert.equal(store.getAlpacaConfig().brokerUrl, 'https://custom-broker.example/v2');
   });
 
   test('ConfigStore resolves symbol-specific config on top of default config', async () => {

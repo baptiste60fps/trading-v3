@@ -18,6 +18,7 @@ import { DecisionEngine } from '../core/llm/DecisionEngine.mjs';
 import { UnavailableDecisionModelClient } from '../core/llm/UnavailableDecisionModelClient.mjs';
 import { OllamaDecisionModelClient } from '../core/llm/OllamaDecisionModelClient.mjs';
 import { ExecutionEngine } from '../core/runtime/ExecutionEngine.mjs';
+import { PersistentRuntimeOrchestrator } from '../core/runtime/PersistentRuntimeOrchestrator.mjs';
 import { StrategyInstance } from '../core/strategy/StrategyInstance.mjs';
 import { RssFeedService } from '../services/news/RssFeedService.mjs';
 import { DailyMarketReportService } from '../services/reports/DailyMarketReportService.mjs';
@@ -132,6 +133,30 @@ export const createRuntime = async ({ serverRootDir = DEFAULT_SERVER_ROOT, env =
     dailyMarketReportService,
     executionEngine,
     consoleTradingLogger,
+    createPersistentRuntimeOrchestrator(options = {}) {
+      const runtimeConfig = configStore.getRuntimeConfig();
+      return new PersistentRuntimeOrchestrator({
+        runtimeMode: options.runtimeMode ?? runtimeConfig.mode,
+        configStore,
+        marketCalendar,
+        symbols: options.symbols ?? runtimeConfig.symbols ?? null,
+        loopIntervalMs: options.loopIntervalMs ?? runtimeConfig.loopIntervalMs,
+        idleIntervalMs: options.idleIntervalMs ?? runtimeConfig.idleIntervalMs,
+        startupWarmup: options.startupWarmup ?? runtimeConfig.startupWarmup,
+        logger: options.logger ?? console,
+        scheduler: options.scheduler,
+        now: options.now,
+        strategyFactory: options.strategyFactory ?? ((symbol, runtimeMode) => new StrategyInstance({
+          symbol,
+          runtimeMode,
+          configStore,
+          featureSnapshotService,
+          decisionEngine,
+          executionEngine,
+          consoleLogger: consoleTradingLogger,
+        })),
+      });
+    },
     createStrategyInstance(symbol, runtimeMode = configStore.getRuntimeConfig().mode) {
       return new StrategyInstance({
         symbol,
@@ -153,6 +178,11 @@ export const createRuntime = async ({ serverRootDir = DEFAULT_SERVER_ROOT, env =
         llmEnabled: config.llm.enabled,
         llmProvider: config.llm.provider,
         executionDryRun: config.execution.dryRun,
+        runtimeLoopIntervalMs: config.runtime.loopIntervalMs,
+        runtimeIdleIntervalMs: config.runtime.idleIntervalMs,
+        runtimeStartupWarmup: config.runtime.startupWarmup,
+        runtimeSymbols: Array.isArray(config.runtime.symbols) ? config.runtime.symbols : null,
+        enabledSymbols: configStore.getEnabledSymbols(),
         consoleTelemetryEnabled: config.telemetry?.console?.enabled !== false,
         envFilePath: localEnv.path,
         storage,
