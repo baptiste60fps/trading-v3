@@ -139,7 +139,7 @@ const main = async () => {
       'execution_mode',
       runtimeSummary.executionDryRun ? 'watch' : 'ready',
       runtimeSummary.executionDryRun
-        ? 'Runtime execution is still in dry-run. Disable it explicitly before the March 31, 2026 paper-open test if you want real paper orders.'
+        ? `Runtime execution is still in dry-run. Disable it explicitly before the ${targetDate} paper-open test if you want real paper orders.`
         : 'Paper execution can route real paper orders.',
     ),
     buildCheck(

@@ -35,9 +35,9 @@ export class AlpacaHttpClient {
     brokerUrl,
     dataUrl,
     paper = true,
-    maxRetries = 4,
-    retryBaseDelayMs = 750,
-    retryMaxDelayMs = 5_000,
+    maxRetries = 6,
+    retryBaseDelayMs = 1_500,
+    retryMaxDelayMs = 30_000,
   } = {}) {
     this.keyId = keyId ?? null;
     this.secretKey = secretKey ?? null;

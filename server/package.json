@@ -13,6 +13,7 @@
     "warmup:symbol": "node ./scripts/warmup-symbol.mjs",
     "run:symbol": "node ./scripts/run-symbol-once.mjs",
     "report:daily": "node ./scripts/daily-market-report.mjs",
+    "rss:smoke": "node ./scripts/rss-smoke.mjs",
     "paper:preopen": "node ./scripts/preopen-paper-check.mjs",
     "backtest:symbol": "node ./scripts/backtest-symbol.mjs",
     "backtest:batch": "node ./scripts/backtest-batch.mjs",

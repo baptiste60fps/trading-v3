@@ -832,6 +832,139 @@ export const register = async ({ test }) => {
     assert.ok(decision.requestedSizePct <= 0.04);
   });
 
+  test('SimpleRuleDecisionEngine opens a financial quality scout entry on a measured pullback', async () => {
+    const engine = new SimpleRuleDecisionEngine();
+
+    const decision = await engine.decide({
+      symbol: 'JPM',
+      strategyConfig: {
+        strategyProfile: 'financial_quality',
+      },
+      features: {
+        currentPrice: 100,
+        marketState: {
+          isOpen: true,
+          isPreClose: false,
+          isNoTradeOpen: false,
+        },
+        position: null,
+        timeframes: {
+          '5m': {
+            values: {
+              emaGap12_26: 0.0002,
+              priceVsSma20: -0.001,
+              rsi14: 46.5,
+              atrPct14: 0.0014,
+            },
+          },
+          '1h': {
+            values: {
+              rsi14: 58,
+            },
+          },
+        },
+        relatedSymbols: [
+          { timeframes: { '1h': { values: { emaGap12_26: 0.0026, rsi14: 48 } } } },
+          { timeframes: { '1h': { values: { emaGap12_26: 0.0024, rsi14: 47.5 } } } },
+        ],
+      },
+    });
+
+    assert.equal(decision.action, 'open_long');
+    assert.equal(decision.reasoning[0], 'scout_entry');
+    assert.equal(decision.signalContext.strategyProfile, 'financial_quality');
+    assert.ok(decision.requestedSizePct <= 0.01);
+  });
+
+  test('SimpleRuleDecisionEngine opens a consumer quality soft scout entry on a clean retrace', async () => {
+    const engine = new SimpleRuleDecisionEngine();
+
+    const decision = await engine.decide({
+      symbol: 'WMT',
+      strategyConfig: {
+        strategyProfile: 'consumer_quality_soft',
+      },
+      features: {
+        currentPrice: 100,
+        marketState: {
+          isOpen: true,
+          isPreClose: false,
+          isNoTradeOpen: false,
+        },
+        position: null,
+        timeframes: {
+          '5m': {
+            values: {
+              emaGap12_26: 0.0002,
+              priceVsSma20: -0.0011,
+              rsi14: 46.8,
+              atrPct14: 0.0016,
+            },
+          },
+          '1h': {
+            values: {
+              rsi14: 57,
+            },
+          },
+        },
+        relatedSymbols: [
+          { timeframes: { '1h': { values: { emaGap12_26: 0.0025, rsi14: 47 } } } },
+          { timeframes: { '1h': { values: { emaGap12_26: 0.0022, rsi14: 46.5 } } } },
+        ],
+      },
+    });
+
+    assert.equal(decision.action, 'open_long');
+    assert.equal(decision.reasoning[0], 'scout_entry');
+    assert.equal(decision.signalContext.strategyProfile, 'consumer_quality_soft');
+    assert.ok(decision.requestedSizePct <= 0.01);
+  });
+
+  test('SimpleRuleDecisionEngine opens a base quality scout entry on a disciplined pullback', async () => {
+    const engine = new SimpleRuleDecisionEngine();
+
+    const decision = await engine.decide({
+      symbol: 'WMT',
+      strategyConfig: {
+        strategyProfile: 'single_stock_quality',
+      },
+      features: {
+        currentPrice: 100,
+        marketState: {
+          isOpen: true,
+          isPreClose: false,
+          isNoTradeOpen: false,
+        },
+        position: null,
+        timeframes: {
+          '5m': {
+            values: {
+              emaGap12_26: 0.0003,
+              priceVsSma20: -0.0012,
+              rsi14: 47.5,
+              atrPct14: 0.0018,
+            },
+          },
+          '1h': {
+            values: {
+              rsi14: 62,
+            },
+          },
+        },
+        relatedSymbols: [
+          { timeframes: { '1h': { values: { emaGap12_26: 0.0032, rsi14: 50.5 } } } },
+          { timeframes: { '1h': { values: { emaGap12_26: 0.0031, rsi14: 50.5 } } } },
+        ],
+      },
+    });
+
+    assert.equal(decision.action, 'open_long');
+    assert.equal(decision.reasoning[0], 'scout_entry');
+    assert.equal(decision.signalContext.strategyProfile, 'single_stock_quality');
+    assert.equal(decision.signalContext.scoutEntry, true);
+    assert.ok(decision.requestedSizePct <= 0.012);
+  });
+
   test('SimpleRuleDecisionEngine applies symbol quality overrides to reject weak related confirmation', async () => {
     const engine = new SimpleRuleDecisionEngine();
 

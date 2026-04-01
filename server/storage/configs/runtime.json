@@ -1,7 +1,12 @@
 {
   "runtime": {
     "mode": "paper",
-    "logLevel": "info"
+    "logLevel": "info",
+    "symbols": [
+      "AAPL",
+      "TGT",
+      "CVX"
+    ]
   },
   "market": {
     "timezone": "America/New_York",
@@ -16,9 +21,9 @@
     "paper": true,
     "feed": "iex",
     "adjustment": "raw",
-    "maxRetries": 4,
-    "retryBaseDelayMs": 750,
-    "retryMaxDelayMs": 5000
+    "maxRetries": 6,
+    "retryBaseDelayMs": 1500,
+    "retryMaxDelayMs": 30000
   },
   "llm": {
     "enabled": false,
@@ -63,13 +68,11 @@
       "outputSubdir": "daily",
       "watchlistSymbols": [
         "AAPL",
-        "AMZN",
-        "META",
-        "GOOGL",
-        "AMD",
-        "NVDA",
+        "TGT",
+        "CVX",
         "SPY",
-        "QQQ"
+        "QQQ",
+        "XLF"
       ],
       "maxNewsItemsPerFeed": 5,
       "includeLlmAnalysis": true,
@@ -231,6 +234,220 @@
     "TSLA": {
       "enabled": true,
       "strategyProfile": "high_beta_stock"
+    },
+    "ARKK": {
+      "enabled": true,
+      "strategyProfile": "high_beta_stock",
+      "strategyRules": {
+        "minimumFastEmaGap": 0.0012,
+        "minimumFastRsi": 55,
+        "maximumFastRsi": 57.5,
+        "primaryFastRsiCeiling": 56.5,
+        "primaryChasePriceVsSmaCeiling": 0.0006,
+        "requestedSizeScale": 0.45,
+        "maxRequestedSizePct": 0.02
+      },
+      "risk": {
+        "maxPositionPct": 0.025
+      }
+    },
+    "XLF": {
+      "enabled": true,
+      "strategyProfile": "index_etf"
+    },
+    "UBER": {
+      "enabled": true,
+      "strategyProfile": "high_beta_stock",
+      "strategyRules": {
+        "minimumFastEmaGap": 0.0007,
+        "minimumFastRsi": 53,
+        "maximumFastRsi": 58,
+        "primaryFastRsiCeiling": 58,
+        "primaryChasePriceVsSmaCeiling": 0.0008,
+        "requestedSizeScale": 0.65,
+        "maxRequestedSizePct": 0.028
+      },
+      "risk": {
+        "maxPositionPct": 0.03
+      }
+    },
+    "LYFT": {
+      "enabled": true,
+      "strategyProfile": "high_beta_stock",
+      "strategyRules": {
+        "minimumFastEmaGap": 0.001,
+        "minimumFastRsi": 55,
+        "maximumFastRsi": 57,
+        "primaryFastRsiCeiling": 57,
+        "primaryChasePriceVsSmaCeiling": 0.0006,
+        "requestedSizeScale": 0.5,
+        "maxRequestedSizePct": 0.018
+      },
+      "risk": {
+        "maxPositionPct": 0.025
+      }
+    },
+    "PYPL": {
+      "enabled": true,
+      "strategyProfile": "high_beta_stock",
+      "strategyRules": {
+        "minimumFastEmaGap": 0.0008,
+        "minimumFastRsi": 53,
+        "maximumFastRsi": 58,
+        "primaryFastRsiCeiling": 58,
+        "primaryChasePriceVsSmaCeiling": 0.0008,
+        "requestedSizeScale": 0.6,
+        "maxRequestedSizePct": 0.025
+      },
+      "risk": {
+        "maxPositionPct": 0.03
+      }
+    },
+    "XYZ": {
+      "enabled": true,
+      "strategyProfile": "high_beta_stock",
+      "strategyRules": {
+        "minimumFastEmaGap": 0.001,
+        "minimumFastRsi": 54,
+        "maximumFastRsi": 58,
+        "primaryFastRsiCeiling": 57,
+        "primaryChasePriceVsSmaCeiling": 0.0007,
+        "requestedSizeScale": 0.55,
+        "maxRequestedSizePct": 0.022
+      },
+      "risk": {
+        "maxPositionPct": 0.025
+      }
+    },
+    "BABA": {
+      "enabled": true,
+      "strategyProfile": "high_beta_stock",
+      "strategyRules": {
+        "minimumFastEmaGap": 0.001,
+        "minimumFastRsi": 55,
+        "maximumFastRsi": 58,
+        "primaryFastRsiCeiling": 57,
+        "primaryChasePriceVsSmaCeiling": 0.0006,
+        "requestedSizeScale": 0.5,
+        "maxRequestedSizePct": 0.02
+      },
+      "risk": {
+        "maxPositionPct": 0.025
+      }
+    },
+    "WMT": {
+      "enabled": true,
+      "strategyProfile": "consumer_quality_soft",
+      "strategyRules": {
+        "scoutMinimumContextScore": 3,
+        "scoutMinimumMediumRsi": 56,
+        "scoutMinimumRelatedTrend": -0.0005,
+        "scoutMinimumRelatedRsi": 46,
+        "scoutMaximumFastRsi": 49,
+        "scoutMaximumFastPriceVsSma": -0.0005,
+        "scoutRequestedSizeScale": 0.25,
+        "scoutMaxRequestedSizePct": 0.01
+      }
+    },
+    "TGT": {
+      "enabled": true,
+      "strategyProfile": "consumer_quality_soft"
+    },
+    "NKE": {
+      "enabled": true,
+      "strategyProfile": "consumer_quality_soft",
+      "strategyRules": {
+        "minimumRelatedTrend": 0.001,
+        "minimumRelatedRsi": 50,
+        "scoutMinimumContextScore": 5,
+        "scoutMinimumRelatedTrend": 0.0025,
+        "scoutMinimumRelatedRsi": 52,
+        "scoutMaximumFastRsi": 48.5,
+        "scoutMaximumFastPriceVsSma": -0.0012,
+        "scoutRequestedSizeScale": 0.25,
+        "scoutMaxRequestedSizePct": 0.01
+      }
+    },
+    "SBUX": {
+      "enabled": true,
+      "strategyProfile": "consumer_quality_soft",
+      "strategyRules": {
+        "minimumRelatedTrend": 0.001,
+        "minimumRelatedRsi": 50,
+        "scoutMinimumContextScore": 5,
+        "scoutMinimumRelatedTrend": 0.0025,
+        "scoutMinimumRelatedRsi": 52,
+        "scoutMaximumFastRsi": 48.5,
+        "scoutMaximumFastPriceVsSma": -0.0012,
+        "scoutRequestedSizeScale": 0.25,
+        "scoutMaxRequestedSizePct": 0.01
+      }
+    },
+    "MCD": {
+      "enabled": true,
+      "strategyProfile": "consumer_quality_soft"
+    },
+    "XOM": {
+      "enabled": true,
+      "strategyProfile": "single_stock_quality"
+    },
+    "CVX": {
+      "enabled": true,
+      "strategyProfile": "single_stock_quality",
+      "strategyRules": {
+        "minimumRelatedTrend": 0.001,
+        "scoutMinimumContextScore": 5,
+        "scoutMinimumRelatedTrend": 0.002,
+        "scoutMinimumRelatedRsi": 50,
+        "scoutMaximumFastRsi": 48.5,
+        "scoutMaximumFastPriceVsSma": -0.001,
+        "scoutRequestedSizeScale": 0.25,
+        "scoutMaxRequestedSizePct": 0.01
+      }
+    },
+    "BA": {
+      "enabled": true,
+      "strategyProfile": "high_beta_stock",
+      "strategyRules": {
+        "minimumFastEmaGap": 0.0008,
+        "minimumFastRsi": 53,
+        "maximumFastRsi": 57,
+        "primaryFastRsiCeiling": 57,
+        "primaryChasePriceVsSmaCeiling": 0.0007,
+        "requestedSizeScale": 0.55,
+        "maxRequestedSizePct": 0.022
+      },
+      "risk": {
+        "maxPositionPct": 0.025
+      }
+    },
+    "CAT": {
+      "enabled": true,
+      "strategyProfile": "single_stock_quality"
+    },
+    "GE": {
+      "enabled": true,
+      "strategyProfile": "single_stock_quality"
+    },
+    "JPM": {
+      "enabled": true,
+      "strategyProfile": "financial_quality"
+    },
+    "BAC": {
+      "enabled": true,
+      "strategyProfile": "financial_quality"
+    },
+    "GS": {
+      "enabled": true,
+      "strategyProfile": "financial_quality"
+    },
+    "MS": {
+      "enabled": true,
+      "strategyProfile": "financial_quality"
+    },
+    "C": {
+      "enabled": true,
+      "strategyProfile": "financial_quality"
     }
   },
   "relatedSymbols": {
@@ -297,6 +514,116 @@
       "SPY",
       "QQQ",
       "AMZN"
+    ],
+    "ARKK": [
+      "QQQ",
+      "IWM",
+      "NVDA"
+    ],
+    "XLF": [
+      "SPY",
+      "JPM",
+      "BAC"
+    ],
+    "UBER": [
+      "XLY",
+      "SPY",
+      "LYFT"
+    ],
+    "LYFT": [
+      "XLY",
+      "UBER",
+      "SPY"
+    ],
+    "PYPL": [
+      "QQQ",
+      "XYZ",
+      "V"
+    ],
+    "XYZ": [
+      "QQQ",
+      "PYPL",
+      "V"
+    ],
+    "BABA": [
+      "QQQ",
+      "FXI",
+      "AMZN"
+    ],
+    "WMT": [
+      "XLP",
+      "TGT",
+      "COST"
+    ],
+    "TGT": [
+      "XLY",
+      "WMT",
+      "COST"
+    ],
+    "NKE": [
+      "XLY",
+      "SBUX",
+      "MCD"
+    ],
+    "SBUX": [
+      "XLY",
+      "NKE",
+      "MCD"
+    ],
+    "MCD": [
+      "XLY",
+      "SBUX",
+      "WMT"
+    ],
+    "XOM": [
+      "XLE",
+      "CVX",
+      "SPY"
+    ],
+    "CVX": [
+      "XLE",
+      "XOM",
+      "SPY"
+    ],
+    "BA": [
+      "XLI",
+      "CAT",
+      "GE"
+    ],
+    "CAT": [
+      "XLI",
+      "BA",
+      "GE"
+    ],
+    "GE": [
+      "XLI",
+      "BA",
+      "CAT"
+    ],
+    "JPM": [
+      "XLF",
+      "BAC",
+      "GS"
+    ],
+    "BAC": [
+      "XLF",
+      "JPM",
+      "C"
+    ],
+    "GS": [
+      "XLF",
+      "JPM",
+      "MS"
+    ],
+    "MS": [
+      "XLF",
+      "GS",
+      "JPM"
+    ],
+    "C": [
+      "XLF",
+      "BAC",
+      "JPM"
     ]
   }
 }
