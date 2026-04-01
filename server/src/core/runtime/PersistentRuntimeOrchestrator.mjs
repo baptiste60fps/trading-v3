@@ -36,6 +36,9 @@ export class PersistentRuntimeOrchestrator {
     scheduler = defaultScheduler,
     sleep = null,
     logger = console,
+    onCycleStarted = null,
+    onStrategyEvaluated = null,
+    onCycleCompleted = null,
   } = {}) {
     this.runtimeMode = assertRuntimeMode(runtimeMode);
     this.configStore = configStore;
@@ -54,6 +57,9 @@ export class PersistentRuntimeOrchestrator {
         this.scheduler.setTimeout(resolve, delayMs);
       });
     this.logger = logger ?? console;
+    this.onCycleStarted = typeof onCycleStarted === 'function' ? onCycleStarted : null;
+    this.onStrategyEvaluated = typeof onStrategyEvaluated === 'function' ? onStrategyEvaluated : null;
+    this.onCycleCompleted = typeof onCycleCompleted === 'function' ? onCycleCompleted : null;
 
     this.strategies = new Map();
     this.cycleTimer = null;
@@ -238,18 +244,27 @@ export class PersistentRuntimeOrchestrator {
 
   async #runCycleInternal({ reason }) {
     const cycleStartedAtMs = this.now();
+    const cycleNumber = this.state.cycleCount + 1;
     const results = [];
     this.state.status = 'running';
     this.state.lastCycleStartedAtMs = cycleStartedAtMs;
     this.state.lastCycleReason = reason;
     this.state.lastError = null;
 
+    await this.#notifyHook(this.onCycleStarted, {
+      cycle: cycleNumber,
+      atMs: cycleStartedAtMs,
+      reason,
+      runtimeMode: this.runtimeMode,
+      symbols: this.state.symbols.slice(),
+    });
+
     for (const symbol of this.state.symbols) {
       const strategy = this.strategies.get(symbol);
       try {
         const result = await this.#retryOnRateLimit({
           symbol,
-          phase: `cycle #${this.state.cycleCount + 1}`,
+          phase: `cycle #${cycleNumber}`,
           operation: async () => await strategy.runOnce(cycleStartedAtMs),
         });
         if (result === null) break;
@@ -263,8 +278,18 @@ export class PersistentRuntimeOrchestrator {
           error: null,
         };
         results.push(summary);
+        await this.#notifyHook(this.onStrategyEvaluated, {
+          cycle: cycleNumber,
+          atMs: cycleStartedAtMs,
+          reason,
+          symbol,
+          ok: true,
+          result,
+          summary,
+          error: null,
+        });
         this.#logInfo(
-          `Cycle #${this.state.cycleCount + 1} ${symbol} -> decision=${summary.decisionAction ?? 'unknown'} exec=${summary.executionStatus ?? 'unknown'} market=${summary.marketSession ?? 'unknown'}`,
+          `Cycle #${cycleNumber} ${symbol} -> decision=${summary.decisionAction ?? 'unknown'} exec=${summary.executionStatus ?? 'unknown'} market=${summary.marketSession ?? 'unknown'}`,
         );
       } catch (error) {
         const summary = {
@@ -278,7 +303,17 @@ export class PersistentRuntimeOrchestrator {
         };
         results.push(summary);
         this.state.lastError = summary.error;
-        this.#logError(`Cycle #${this.state.cycleCount + 1} ${symbol} failed: ${summary.error}`);
+        await this.#notifyHook(this.onStrategyEvaluated, {
+          cycle: cycleNumber,
+          atMs: cycleStartedAtMs,
+          reason,
+          symbol,
+          ok: false,
+          result: null,
+          summary,
+          error,
+        });
+        this.#logError(`Cycle #${cycleNumber} ${symbol} failed: ${summary.error}`);
       }
 
       if (this.stopping) break;
@@ -290,6 +325,15 @@ export class PersistentRuntimeOrchestrator {
     this.state.lastCycleDurationMs = Math.max(0, cycleCompletedAtMs - cycleStartedAtMs);
     this.state.lastResults = results;
     this.state.status = this.stopping ? 'stopping' : 'idle';
+
+    await this.#notifyHook(this.onCycleCompleted, {
+      cycle: this.state.cycleCount,
+      startedAtMs: cycleStartedAtMs,
+      completedAtMs: cycleCompletedAtMs,
+      durationMs: this.state.lastCycleDurationMs,
+      reason,
+      results,
+    });
 
     this.#logInfo(
       `Cycle #${this.state.cycleCount} complete | ok=${results.filter((entry) => entry.ok).length}/${results.length} | duration=${this.state.lastCycleDurationMs}ms`,
@@ -362,6 +406,15 @@ export class PersistentRuntimeOrchestrator {
     }
     if (typeof this.logger?.log === 'function') {
       this.logger.log(`[RUNTIME] ${message}`);
+    }
+  }
+
+  async #notifyHook(hook, payload) {
+    if (typeof hook !== 'function') return;
+    try {
+      await hook(payload);
+    } catch (error) {
+      this.#logError(`Hook failure: ${toErrorMessage(error)}`);
     }
   }
 }

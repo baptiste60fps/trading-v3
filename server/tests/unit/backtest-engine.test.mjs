@@ -49,6 +49,49 @@ class FakeConfigStore {
   getStorageConfig() {
     return this.storage;
   }
+
+  getMarketConfig() {
+    return {
+      timezone: 'America/New_York',
+    };
+  }
+
+  getRuntimeConfig() {
+    return {
+      mode: 'backtest',
+    };
+  }
+
+  getExecutionConfig() {
+    return {
+      dryRun: false,
+    };
+  }
+
+  getLlmConfig() {
+    return {
+      enabled: false,
+      provider: 'ollama',
+      model: 'qwen2.5:7b',
+    };
+  }
+
+  getReportsConfig() {
+    return {
+      backtests: {
+        enabled: true,
+        outputSubdir: 'backtests',
+      },
+    };
+  }
+
+  getStrategyProfile() {
+    return 'single_stock';
+  }
+
+  getEnabledSymbols() {
+    return ['AAPL'];
+  }
 }
 
 class FakeMarketCalendar {
@@ -167,6 +210,51 @@ export const register = async ({ test }) => {
     assert.equal(report.events[0].signalContext, null);
     assert.ok(report.events.length > 0);
     assert.equal(report.reportPath, null);
+  });
+
+  test('BacktestEngine emits a runtime-like report labeled as backtests', async () => {
+    const dailyMarketReportService = {
+      async generate({ targetSessionDate, symbols }) {
+        return {
+          type: 'daily_market_report',
+          sessionDate: targetSessionDate,
+          symbolsTracked: symbols,
+          reportPath: `/tmp/daily-report-${targetSessionDate}.json`,
+        };
+      },
+    };
+    const engine = new BacktestEngine({
+      configStore: new FakeConfigStore(),
+      marketCalendar: new FakeMarketCalendar(),
+      sourceMarketDataProvider: new FakeSourceMarketDataProvider(),
+      indicatorEngine: new IndicatorEngine(),
+      dailyMarketReportService,
+      now: () => Date.parse('2026-03-23T20:00:00.000Z'),
+    });
+
+    const report = await engine.run({
+      symbol: 'AAPL',
+      startMs: Date.parse('2026-03-23T14:30:00.000Z'),
+      endMs: Date.parse('2026-03-23T16:30:00.000Z'),
+      stepTimeframe: '5m',
+      initialCash: 10_000,
+      decisionEngine: new ScriptedDecisionEngine(),
+      writeReport: false,
+    });
+
+    assert.equal(report.type, 'backtest_daily_report');
+    assert.equal(report.reportFamily, 'backtests');
+    assert.equal(report.runtime.mode, 'backtest');
+    assert.equal(report.market.timezone, 'America/New_York');
+    assert.equal(report.wakeupReportPath, '/tmp/daily-report-2026-03-23.json');
+    assert.equal(report.entries.length, 1);
+    assert.equal(report.exits.length, 1);
+    assert.equal(report.cycleSummaries.length, report.events.length);
+    assert.ok(report.symbols.AAPL);
+    assert.ok(Array.isArray(report.symbols.AAPL.shortBars));
+    assert.ok(report.symbols.AAPL.shortBars.length > 0);
+    assert.ok(report.symbols.AAPL.timeframes['5m']);
+    assert.equal(report.accountLatest.positions.length, 0);
   });
 
   test('SimpleRuleDecisionEngine opens on aligned trend and closes on stop loss', async () => {

@@ -1,6 +1,6 @@
 {
   "runtime": {
-    "mode": "backtest",
+    "mode": "paper",
     "logLevel": "info"
   },
   "market": {
@@ -74,6 +74,14 @@
       "maxNewsItemsPerFeed": 5,
       "includeLlmAnalysis": true,
       "llmTimeoutMs": 120000
+    },
+    "backtests": {
+      "enabled": true,
+      "outputSubdir": "backtests"
+    },
+    "runtimeDaily": {
+      "enabled": true,
+      "outputSubdir": "runtime-daily"
     }
   },
   "execution": {

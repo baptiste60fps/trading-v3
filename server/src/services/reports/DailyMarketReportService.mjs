@@ -193,22 +193,25 @@ const buildFallbackAnalysis = ({ watchlist, newsFeeds, portfolioState, runtime, 
   if ((portfolioState?.exposurePct ?? 0) > 0.35) keyRisks.push('portfolio_exposure_elevated');
   if (runtime?.executionDryRun) keyRisks.push('execution_still_dry_run');
   if (newsFeeds.some((feed) => feed.status !== 'ok')) keyRisks.push('rss_feed_partial_failure');
+  const isBacktest = safeString(runtime?.runtimeMode) === 'backtest';
 
   const preOpenChecklist = [
     {
-      item: 'Alpaca paper connectivity',
+      item: isBacktest ? 'Backtest simulated broker' : 'Alpaca paper connectivity',
       status: portfolioState?.error ? 'block' : 'ready',
-      note: portfolioState?.error ?? 'Paper account reachable.',
+      note: portfolioState?.error ?? (isBacktest ? 'Simulated broker and portfolio replay are ready.' : 'Paper account reachable.'),
     },
     {
       item: 'Ollama structured report',
-      status: llmError ? 'watch' : 'ready',
-      note: llmError ?? 'Structured JSON report generation ready.',
+      status: isBacktest ? 'ready' : (llmError ? 'watch' : 'ready'),
+      note: isBacktest ? 'Historical wake-up analysis is running in deterministic fallback mode.' : (llmError ?? 'Structured JSON report generation ready.'),
     },
     {
       item: 'Execution safety mode',
       status: runtime?.executionDryRun ? 'watch' : 'ready',
-      note: runtime?.executionDryRun ? 'Dry-run still enabled. Switch off explicitly before a live paper order test.' : 'Paper execution can route orders.',
+      note: runtime?.executionDryRun
+        ? 'Dry-run still enabled. Switch off explicitly before a live paper order test.'
+        : (isBacktest ? 'Backtest execution is simulated and can route fills inside the replay engine.' : 'Paper execution can route orders.'),
     },
   ];
 

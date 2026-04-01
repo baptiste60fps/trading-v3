@@ -62,6 +62,14 @@ export const defaultConfig = Object.freeze({
       includeLlmAnalysis: true,
       llmTimeoutMs: 120_000,
     },
+    backtests: {
+      enabled: true,
+      outputSubdir: 'backtests',
+    },
+    runtimeDaily: {
+      enabled: true,
+      outputSubdir: 'runtime-daily',
+    },
   },
   execution: {
     dryRun: true,

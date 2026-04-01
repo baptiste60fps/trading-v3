@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Baptisto Trading Reporter</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+    <script
+      type="text/javascript"
+      src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"
+    ></script>
+  </head>
+  <body>
+    <div class="shell">
+      <header class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">Baptisto Trading V3</p>
+          <h1>Reporter journalier runtime</h1>
+          <p class="lede">
+            Lecture humaine d’un rapport runtime quotidien: wake-up report, decisions, executions,
+            bars, cycles, risque et points de vigilance.
+          </p>
+        </div>
+        <div class="hero-controls">
+          <label class="control-block">
+            <span>Rapport journalier</span>
+            <select id="report-select"></select>
+          </label>
+          <div class="control-row">
+            <button id="reload-button" type="button">Rescanner</button>
+            <label class="file-pill" for="file-input">Charger un JSON</label>
+            <input id="file-input" type="file" accept=".json,application/json" hidden />
+          </div>
+          <p class="helper">
+            Auto-detection depuis <code>../server/storage/reports/runtime-daily/</code>. Si la page est ouverte hors serveur local,
+            utilise le chargement manuel.
+          </p>
+        </div>
+      </header>
+
+      <main id="app" class="app is-loading">
+        <section class="panel overview-panel">
+          <div class="panel-head">
+            <p class="eyebrow">Vue d’ensemble</p>
+            <h2 id="report-title">Chargement…</h2>
+          </div>
+          <div id="overview-grid" class="stat-grid"></div>
+        </section>
+
+        <section class="panel summary-panel">
+          <div class="panel-head">
+            <p class="eyebrow">Lecture humaine</p>
+            <h2>Synthèse de session</h2>
+          </div>
+          <div id="summary-narrative" class="narrative"></div>
+        </section>
+
+        <section class="panel wakeup-panel">
+          <div class="panel-head">
+            <p class="eyebrow">Wake-up</p>
+            <h2>Brief pré-ouverture</h2>
+          </div>
+          <div id="wakeup-content" class="grid-two"></div>
+        </section>
+
+        <section class="panel chart-panel">
+          <div class="panel-head">
+            <div>
+              <p class="eyebrow">Bars & executions</p>
+              <h2 id="symbol-title">Symbole</h2>
+            </div>
+            <label class="control-block symbol-block">
+              <span>Symbole analysé</span>
+              <select id="symbol-select"></select>
+            </label>
+          </div>
+          <div class="chart-wrap">
+            <div id="chart"></div>
+          </div>
+          <div id="symbol-analysis" class="symbol-analysis"></div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-head">
+            <p class="eyebrow">Executions</p>
+            <h2>Entrées et sorties</h2>
+          </div>
+          <div id="trade-tables" class="grid-two"></div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-head">
+            <p class="eyebrow">Cycles</p>
+            <h2>Cycle engine</h2>
+          </div>
+          <div id="cycle-analysis" class="narrative compact"></div>
+          <div id="cycle-table" class="table-wrap"></div>
+        </section>
+      </main>
+
+      <footer class="footer">
+        <p>
+          Charts powered by Lightweight Charts™ by
+          <a href="https://www.tradingview.com" target="_blank" rel="noreferrer">TradingView</a>.
+        </p>
+      </footer>
+    </div>
+
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>

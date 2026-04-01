@@ -6,6 +6,8 @@ const parseArgs = (argv) => {
   const args = {
     symbol: 'AAPL',
     days: 5,
+    startMs: null,
+    endMs: null,
     stepTimeframe: '30m',
     initialCash: 100_000,
     decisionMode: 'rule',
@@ -26,6 +28,14 @@ const parseArgs = (argv) => {
     const value = inlineValue ?? argv[index + 1];
 
     switch (flag) {
+      case '--start':
+        args.startMs = Date.parse(value);
+        if (inlineValue === undefined) index += 1;
+        break;
+      case '--end':
+        args.endMs = Date.parse(value);
+        if (inlineValue === undefined) index += 1;
+        break;
       case '--days':
         args.days = Number(value);
         if (inlineValue === undefined) index += 1;
@@ -63,12 +73,30 @@ const parseArgs = (argv) => {
   return args;
 };
 
+const resolveWindow = (options) => {
+  if (Number.isFinite(options.startMs) && Number.isFinite(options.endMs)) {
+    return {
+      startMs: options.startMs,
+      endMs: options.endMs,
+    };
+  }
+
+  const endMs = Number.isFinite(options.endMs) ? options.endMs : Date.now();
+  const startMs = Number.isFinite(options.startMs)
+    ? options.startMs
+    : endMs - Math.max(1, options.days) * 24 * 60 * 60 * 1000;
+
+  return {
+    startMs,
+    endMs,
+  };
+};
+
 const main = async () => {
   const options = parseArgs(process.argv.slice(2));
   const runtime = await createRuntime();
   const runtimeSummary = runtime.describe();
-  const endMs = Date.now();
-  const startMs = endMs - Math.max(1, options.days) * 24 * 60 * 60 * 1000;
+  const { startMs, endMs } = resolveWindow(options);
   const decisionEngine = options.decisionMode === 'llm'
     ? runtime.decisionEngine
     : new SimpleRuleDecisionEngine({

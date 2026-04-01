@@ -395,6 +395,15 @@ Comportement attendu:
 - creation d'un ordre paper si `dryRun=false`,
 - stop loss simple cote broker Alpaca a l'ouverture quand la config symbole l'active,
 - logs console colorises avec `Portfolio Delta`, `Session Delta`, ligne `desk trader`, et logs d'ouverture / fermeture.
+- mise a jour continue d'un rapport JSON journalier dans `storage/reports/runtime-daily/runtime-report-YYYY-MM-DD.json`
+
+Le rapport runtime journalier contient notamment:
+
+- le `wakeup report` du jour,
+- les snapshots de bars courts pour chaque symbole evalue,
+- les `entries` et `exits`,
+- les derniers etats portefeuille / position,
+- les resumes de cycle et dernieres decisions / executions.
 
 ### 5. Lancer l'orchestrateur persistant
 

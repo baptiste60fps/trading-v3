@@ -262,4 +262,51 @@ export const register = async ({ test }) => {
 
     await orchestrator.stop('unit_test_stop');
   });
+
+  test('PersistentRuntimeOrchestrator notifies lifecycle hooks for daily reporting', async () => {
+    const hookEvents = {
+      started: [],
+      evaluated: [],
+      completed: [],
+    };
+    const orchestrator = new PersistentRuntimeOrchestrator({
+      runtimeMode: 'paper',
+      configStore: new FakeConfigStore({ symbols: ['AAPL'] }),
+      marketCalendar: {
+        getMarketState() {
+          return {
+            isOpen: true,
+            sessionLabel: 'regular_open',
+          };
+        },
+      },
+      strategyFactory() {
+        return new FakeStrategy('AAPL');
+      },
+      onCycleStarted(payload) {
+        hookEvents.started.push(payload);
+      },
+      onStrategyEvaluated(payload) {
+        hookEvents.evaluated.push(payload);
+      },
+      onCycleCompleted(payload) {
+        hookEvents.completed.push(payload);
+      },
+      logger: {
+        info() {},
+        error() {},
+      },
+    });
+
+    await orchestrator.start();
+
+    assert.equal(hookEvents.started.length, 1);
+    assert.equal(hookEvents.evaluated.length, 1);
+    assert.equal(hookEvents.completed.length, 1);
+    assert.equal(hookEvents.started[0].symbols[0], 'AAPL');
+    assert.equal(hookEvents.evaluated[0].ok, true);
+    assert.equal(hookEvents.completed[0].results.length, 1);
+
+    await orchestrator.stop('unit_test_stop');
+  });
 };

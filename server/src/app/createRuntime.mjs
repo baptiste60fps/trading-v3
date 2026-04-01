@@ -22,6 +22,7 @@ import { PersistentRuntimeOrchestrator } from '../core/runtime/PersistentRuntime
 import { StrategyInstance } from '../core/strategy/StrategyInstance.mjs';
 import { RssFeedService } from '../services/news/RssFeedService.mjs';
 import { DailyMarketReportService } from '../services/reports/DailyMarketReportService.mjs';
+import { DailyRuntimeReportService } from '../services/reports/DailyRuntimeReportService.mjs';
 import { ConsoleTradingLogger } from '../core/telemetry/ConsoleTradingLogger.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -105,6 +106,10 @@ export const createRuntime = async ({ serverRootDir = DEFAULT_SERVER_ROOT, env =
     modelClient: decisionModelClient,
     llmConfig,
   });
+  const dailyRuntimeReportService = new DailyRuntimeReportService({
+    configStore,
+    dailyMarketReportService,
+  });
   const executionEngine = new ExecutionEngine({
     brokerGateway,
     portfolioService,
@@ -131,6 +136,7 @@ export const createRuntime = async ({ serverRootDir = DEFAULT_SERVER_ROOT, env =
     decisionEngine,
     rssFeedService,
     dailyMarketReportService,
+    dailyRuntimeReportService,
     executionEngine,
     consoleTradingLogger,
     createPersistentRuntimeOrchestrator(options = {}) {
@@ -146,6 +152,9 @@ export const createRuntime = async ({ serverRootDir = DEFAULT_SERVER_ROOT, env =
         logger: options.logger ?? console,
         scheduler: options.scheduler,
         now: options.now,
+        onCycleStarted: options.onCycleStarted ?? ((payload) => dailyRuntimeReportService.onCycleStarted(payload)),
+        onStrategyEvaluated: options.onStrategyEvaluated ?? ((payload) => dailyRuntimeReportService.onStrategyEvaluated(payload)),
+        onCycleCompleted: options.onCycleCompleted ?? ((payload) => dailyRuntimeReportService.onCycleCompleted(payload)),
         strategyFactory: options.strategyFactory ?? ((symbol, runtimeMode) => new StrategyInstance({
           symbol,
           runtimeMode,
