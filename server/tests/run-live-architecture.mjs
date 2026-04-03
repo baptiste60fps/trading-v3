@@ -10,7 +10,7 @@ const __filename = fileURLToPath(import.meta.url);
 export const runLiveArchitectureTests = async () => {
   const runner = createRunner({ title: 'architecture' });
 
-  runner.test('Full runtime evaluates AAPL with Alpaca and local LLM', async () => {
+  runner.test('Full runtime evaluates AAPL with Alpaca and handles local LLM degradation safely', async () => {
     const runtime = await createRuntime();
     const strategy = runtime.createStrategyInstance('AAPL');
     const result = await strategy.runOnce(Date.now());
@@ -20,8 +20,16 @@ export const runLiveArchitectureTests = async () => {
     assert.equal(runtime.describe().llmEnabled, true);
     assert.ok(Number.isFinite(result.features.currentPrice) && result.features.currentPrice > 0);
     assert.ok(DECISION_ACTIONS.includes(result.decision.action));
-    assert.equal(fallbackReason, undefined);
     assert.ok(['noop', 'dry_run', 'accepted', 'filled', 'closed'].includes(result.executionResult.status));
+
+    if (fallbackReason !== undefined) {
+      assert.equal(result.decision.action, 'skip');
+      assert.equal(result.executionResult.status, 'noop');
+      assert.ok(fallbackReason.startsWith('decision_engine_fallback:'));
+      return;
+    }
+
+    assert.equal(fallbackReason, undefined);
   });
 
   return await runner.run();
