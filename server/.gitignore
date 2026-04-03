@@ -6,8 +6,8 @@ node_modules/
 storage/cache/**
 !storage/cache/
 
-storage/reports/**
-!storage/reports/
+# storage/reports/**
+# !storage/reports/
 
 storage/runs/**
 !storage/runs/

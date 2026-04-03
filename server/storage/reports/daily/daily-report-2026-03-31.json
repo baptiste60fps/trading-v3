@@ -1,0 +1,703 @@
+{
+  "type": "daily_market_report",
+  "generatedAtMs": 1774958699378,
+  "reportDate": "2026-03-31",
+  "runtime": {
+    "mode": "paper",
+    "executionDryRun": false,
+    "llmEnabled": true,
+    "llmProvider": "ollama",
+    "llmModel": "qwen2.5:7b"
+  },
+  "market": {
+    "timezone": "America/New_York",
+    "currentState": {
+      "timezone": "America/New_York",
+      "sessionMode": "regular",
+      "isOpen": false,
+      "isPreClose": false,
+      "isNoTradeOpen": false,
+      "minutesFromOpen": -86,
+      "minutesToClose": 476,
+      "sessionLabel": "before_open"
+    },
+    "targetSessionDate": "2026-03-31",
+    "targetSessionOpenLocal": "09:30",
+    "targetWakeupLocal": "08:45"
+  },
+  "account": {
+    "cash": 0,
+    "equity": 0,
+    "exposurePct": 0,
+    "positionCount": 0,
+    "positions": [],
+    "error": "unauthorized."
+  },
+  "news": {
+    "feedCount": 4,
+    "okFeedCount": 2,
+    "feeds": [
+      {
+        "feedId": "sec_press_releases",
+        "name": "SEC Press Releases",
+        "url": "https://www.sec.gov/rss/pressrelease.xml",
+        "status": "error",
+        "error": "RSS request failed (403) for https://www.sec.gov/rss/pressrelease.xml",
+        "fetchedAtMs": 1774958698168,
+        "itemCount": 0,
+        "source": "network",
+        "items": []
+      },
+      {
+        "feedId": "sec_news",
+        "name": "SEC News",
+        "url": "https://www.sec.gov/rss/news/press.xml",
+        "status": "error",
+        "error": "RSS request failed (403) for https://www.sec.gov/rss/news/press.xml",
+        "fetchedAtMs": 1774958698264,
+        "itemCount": 0,
+        "source": "network",
+        "items": []
+      },
+      {
+        "feedId": "fed_press_all",
+        "name": "Federal Reserve Press Releases",
+        "url": "https://www.federalreserve.gov/feeds/press_all.xml",
+        "status": "ok",
+        "error": null,
+        "fetchedAtMs": 1774958395741,
+        "itemCount": 5,
+        "source": "cache",
+        "items": [
+          {
+            "title": "Federal Reserve Board announces it has made the joint findings with the Office of the Comptroller of the Currency required for the OCC to approve a request by Morgan Stanley Bank, N.A., for an exemption under section 23A of the Federal Reserve Act",
+            "link": "https://www.federalreserve.gov/newsevents/pressreleases/orders20260326a.htm",
+            "publishedAt": "2026-03-26T21:00:00.000Z",
+            "summary": "Federal Reserve Board announces it has made the joint findings with the Office of the Comptroller of the Currency required for the OCC to approve a request by Morgan Stanley Bank, N.A., for an exemption under section 23A of the Federal Reserve Act"
+          },
+          {
+            "title": "Federal Reserve Board releases annual audited financial statements",
+            "link": "https://www.federalreserve.gov/newsevents/pressreleases/other20260325a.htm",
+            "publishedAt": "2026-03-25T16:00:00.000Z",
+            "summary": "Federal Reserve Board releases annual audited financial statements"
+          },
+          {
+            "title": "Federal Reserve Board issues enforcement actions with former employee of Ally Bank and former employee of Regions Bank",
+            "link": "https://www.federalreserve.gov/newsevents/pressreleases/enforcement20260320a.htm",
+            "publishedAt": "2026-03-20T15:00:00.000Z",
+            "summary": "Federal Reserve Board issues enforcement actions with former employee of Ally Bank and former employee of Regions Bank"
+          },
+          {
+            "title": "Agencies request comment on proposals to modernize the regulatory capital framework and maintain the strength of the banking system",
+            "link": "https://www.federalreserve.gov/newsevents/pressreleases/bcreg20260319a.htm",
+            "publishedAt": "2026-03-19T16:30:00.000Z",
+            "summary": "Agencies request comment on proposals to modernize the regulatory capital framework and maintain the strength of the banking system"
+          },
+          {
+            "title": "Federal Reserve issues FOMC statement",
+            "link": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20260318a.htm",
+            "publishedAt": "2026-03-18T18:00:00.000Z",
+            "summary": "Federal Reserve issues FOMC statement"
+          }
+        ]
+      },
+      {
+        "feedId": "fed_monetary",
+        "name": "Federal Reserve Monetary Policy",
+        "url": "https://www.federalreserve.gov/feeds/press_monetary.xml",
+        "status": "ok",
+        "error": null,
+        "fetchedAtMs": 1774958395792,
+        "itemCount": 5,
+        "source": "cache",
+        "items": [
+          {
+            "title": "Federal Reserve issues FOMC statement",
+            "link": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20260318a.htm",
+            "publishedAt": "2026-03-18T18:00:00.000Z",
+            "summary": "Federal Reserve issues FOMC statement"
+          },
+          {
+            "title": "Federal Reserve Board and Federal Open Market Committee release economic projections from the March 17-18 FOMC meeting",
+            "link": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20260318b.htm",
+            "publishedAt": "2026-03-18T18:00:00.000Z",
+            "summary": "Federal Reserve Board and Federal Open Market Committee release economic projections from the March 17-18 FOMC meeting"
+          },
+          {
+            "title": "Minutes of the Board's discount rate meetings on January 20 and 28, 2026",
+            "link": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20260224a.htm",
+            "publishedAt": "2026-02-24T19:00:00.000Z",
+            "summary": "Minutes of the Board's discount rate meetings on January 20 and 28, 2026"
+          },
+          {
+            "title": "Minutes of the Federal Open Market Committee, January 27–28, 2026",
+            "link": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20260218a.htm",
+            "publishedAt": "2026-02-18T19:00:00.000Z",
+            "summary": "Minutes of the Federal Open Market Committee, January 27–28, 2026"
+          },
+          {
+            "title": "Federal Reserve issues FOMC statement",
+            "link": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20260128a.htm",
+            "publishedAt": "2026-01-28T19:00:00.000Z",
+            "summary": "Federal Reserve issues FOMC statement"
+          }
+        ]
+      }
+    ]
+  },
+  "watchlist": [
+    {
+      "symbol": "AAPL",
+      "strategyProfile": "single_stock_quality",
+      "currentPrice": null,
+      "marketState": {
+        "timezone": "America/New_York",
+        "sessionMode": "regular",
+        "isOpen": false,
+        "isPreClose": false,
+        "isNoTradeOpen": false,
+        "minutesFromOpen": -86,
+        "minutesToClose": 476,
+        "sessionLabel": "before_open"
+      },
+      "position": null,
+      "riskState": null,
+      "timeframes": {
+        "5m": {
+          "lastClose": null,
+          "rsi14": null,
+          "atrPct14": null,
+          "priceVsSma20": null,
+          "emaGap12_26": null,
+          "barCount": 0
+        },
+        "1h": {
+          "lastClose": null,
+          "rsi14": null,
+          "atrPct14": null,
+          "priceVsSma20": null,
+          "emaGap12_26": null,
+          "barCount": 0
+        },
+        "4h": {
+          "lastClose": null,
+          "rsi14": null,
+          "atrPct14": null,
+          "priceVsSma20": null,
+          "emaGap12_26": null,
+          "barCount": 0
+        },
+        "1d": {
+          "lastClose": null,
+          "rsi14": null,
+          "atrPct14": null,
+          "priceVsSma20": null,
+          "emaGap12_26": null,
+          "barCount": 0
+        }
+      },
+      "relatedContext": {
+        "oneHourTrend": null,
+        "oneHourRsi": null,
+        "fourHourTrend": null,
+        "fourHourRsi": null
+      },
+      "error": "Alpaca request failed (401)"
+    },
+    {
+      "symbol": "AMZN",
+      "strategyProfile": "single_stock_quality",
+      "currentPrice": null,
+      "marketState": {
+        "timezone": "America/New_York",
+        "sessionMode": "regular",
+        "isOpen": false,
+        "isPreClose": false,
+        "isNoTradeOpen": false,
+        "minutesFromOpen": -86,
+        "minutesToClose": 476,
+        "sessionLabel": "before_open"
+      },
+      "position": null,
+      "riskState": null,
+      "timeframes": {
+        "5m": {
+          "lastClose": null,
+          "rsi14": null,
+          "atrPct14": null,
+          "priceVsSma20": null,
+          "emaGap12_26": null,
+          "barCount": 0
+        },
+        "1h": {
+          "lastClose": null,
+          "rsi14": null,
+          "atrPct14": null,
+          "priceVsSma20": null,
+          "emaGap12_26": null,
+          "barCount": 0
+        },
+        "4h": {
+          "lastClose": null,
+          "rsi14": null,
+          "atrPct14": null,
+          "priceVsSma20": null,
+          "emaGap12_26": null,
+          "barCount": 0
+        },
+        "1d": {
+          "lastClose": null,
+          "rsi14": null,
+          "atrPct14": null,
+          "priceVsSma20": null,
+          "emaGap12_26": null,
+          "barCount": 0
+        }
+      },
+      "relatedContext": {
+        "oneHourTrend": null,
+        "oneHourRsi": null,
+        "fourHourTrend": null,
+        "fourHourRsi": null
+      },
+      "error": "Alpaca request failed (401)"
+    },
+    {
+      "symbol": "META",
+      "strategyProfile": "single_stock_quality",
+      "currentPrice": null,
+      "marketState": {
+        "timezone": "America/New_York",
+        "sessionMode": "regular",
+        "isOpen": false,
+        "isPreClose": false,
+        "isNoTradeOpen": false,
+        "minutesFromOpen": -86,
+        "minutesToClose": 476,
+        "sessionLabel": "before_open"
+      },
+      "position": null,
+      "riskState": null,
+      "timeframes": {
+        "5m": {
+          "lastClose": null,
+          "rsi14": null,
+          "atrPct14": null,
+          "priceVsSma20": null,
+          "emaGap12_26": null,
+          "barCount": 0
+        },
+        "1h": {
+          "lastClose": null,
+          "rsi14": null,
+          "atrPct14": null,
+          "priceVsSma20": null,
+          "emaGap12_26": null,
+          "barCount": 0
+        },
+        "4h": {
+          "lastClose": null,
+          "rsi14": null,
+          "atrPct14": null,
+          "priceVsSma20": null,
+          "emaGap12_26": null,
+          "barCount": 0
+        },
+        "1d": {
+          "lastClose": null,
+          "rsi14": null,
+          "atrPct14": null,
+          "priceVsSma20": null,
+          "emaGap12_26": null,
+          "barCount": 0
+        }
+      },
+      "relatedContext": {
+        "oneHourTrend": null,
+        "oneHourRsi": null,
+        "fourHourTrend": null,
+        "fourHourRsi": null
+      },
+      "error": "Alpaca request failed (401)"
+    },
+    {
+      "symbol": "GOOGL",
+      "strategyProfile": "single_stock_quality",
+      "currentPrice": null,
+      "marketState": {
+        "timezone": "America/New_York",
+        "sessionMode": "regular",
+        "isOpen": false,
+        "isPreClose": false,
+        "isNoTradeOpen": false,
+        "minutesFromOpen": -86,
+        "minutesToClose": 476,
+        "sessionLabel": "before_open"
+      },
+      "position": null,
+      "riskState": null,
+      "timeframes": {
+        "5m": {
+          "lastClose": null,
+          "rsi14": null,
+          "atrPct14": null,
+          "priceVsSma20": null,
+          "emaGap12_26": null,
+          "barCount": 0
+        },
+        "1h": {
+          "lastClose": null,
+          "rsi14": null,
+          "atrPct14": null,
+          "priceVsSma20": null,
+          "emaGap12_26": null,
+          "barCount": 0
+        },
+        "4h": {
+          "lastClose": null,
+          "rsi14": null,
+          "atrPct14": null,
+          "priceVsSma20": null,
+          "emaGap12_26": null,
+          "barCount": 0
+        },
+        "1d": {
+          "lastClose": null,
+          "rsi14": null,
+          "atrPct14": null,
+          "priceVsSma20": null,
+          "emaGap12_26": null,
+          "barCount": 0
+        }
+      },
+      "relatedContext": {
+        "oneHourTrend": null,
+        "oneHourRsi": null,
+        "fourHourTrend": null,
+        "fourHourRsi": null
+      },
+      "error": "Alpaca request failed (401)"
+    },
+    {
+      "symbol": "AMD",
+      "strategyProfile": "high_beta_stock",
+      "currentPrice": null,
+      "marketState": {
+        "timezone": "America/New_York",
+        "sessionMode": "regular",
+        "isOpen": false,
+        "isPreClose": false,
+        "isNoTradeOpen": false,
+        "minutesFromOpen": -86,
+        "minutesToClose": 476,
+        "sessionLabel": "before_open"
+      },
+      "position": null,
+      "riskState": null,
+      "timeframes": {
+        "5m": {
+          "lastClose": null,
+          "rsi14": null,
+          "atrPct14": null,
+          "priceVsSma20": null,
+          "emaGap12_26": null,
+          "barCount": 0
+        },
+        "1h": {
+          "lastClose": null,
+          "rsi14": null,
+          "atrPct14": null,
+          "priceVsSma20": null,
+          "emaGap12_26": null,
+          "barCount": 0
+        },
+        "4h": {
+          "lastClose": null,
+          "rsi14": null,
+          "atrPct14": null,
+          "priceVsSma20": null,
+          "emaGap12_26": null,
+          "barCount": 0
+        },
+        "1d": {
+          "lastClose": null,
+          "rsi14": null,
+          "atrPct14": null,
+          "priceVsSma20": null,
+          "emaGap12_26": null,
+          "barCount": 0
+        }
+      },
+      "relatedContext": {
+        "oneHourTrend": null,
+        "oneHourRsi": null,
+        "fourHourTrend": null,
+        "fourHourRsi": null
+      },
+      "error": "Alpaca request failed (401)"
+    },
+    {
+      "symbol": "NVDA",
+      "strategyProfile": "high_beta_stock",
+      "currentPrice": null,
+      "marketState": {
+        "timezone": "America/New_York",
+        "sessionMode": "regular",
+        "isOpen": false,
+        "isPreClose": false,
+        "isNoTradeOpen": false,
+        "minutesFromOpen": -86,
+        "minutesToClose": 476,
+        "sessionLabel": "before_open"
+      },
+      "position": null,
+      "riskState": null,
+      "timeframes": {
+        "5m": {
+          "lastClose": null,
+          "rsi14": null,
+          "atrPct14": null,
+          "priceVsSma20": null,
+          "emaGap12_26": null,
+          "barCount": 0
+        },
+        "1h": {
+          "lastClose": null,
+          "rsi14": null,
+          "atrPct14": null,
+          "priceVsSma20": null,
+          "emaGap12_26": null,
+          "barCount": 0
+        },
+        "4h": {
+          "lastClose": null,
+          "rsi14": null,
+          "atrPct14": null,
+          "priceVsSma20": null,
+          "emaGap12_26": null,
+          "barCount": 0
+        },
+        "1d": {
+          "lastClose": null,
+          "rsi14": null,
+          "atrPct14": null,
+          "priceVsSma20": null,
+          "emaGap12_26": null,
+          "barCount": 0
+        }
+      },
+      "relatedContext": {
+        "oneHourTrend": null,
+        "oneHourRsi": null,
+        "fourHourTrend": null,
+        "fourHourRsi": null
+      },
+      "error": "Alpaca request failed (401)"
+    },
+    {
+      "symbol": "SPY",
+      "strategyProfile": "index_etf",
+      "currentPrice": null,
+      "marketState": {
+        "timezone": "America/New_York",
+        "sessionMode": "regular",
+        "isOpen": false,
+        "isPreClose": false,
+        "isNoTradeOpen": false,
+        "minutesFromOpen": -86,
+        "minutesToClose": 476,
+        "sessionLabel": "before_open"
+      },
+      "position": null,
+      "riskState": null,
+      "timeframes": {
+        "5m": {
+          "lastClose": null,
+          "rsi14": null,
+          "atrPct14": null,
+          "priceVsSma20": null,
+          "emaGap12_26": null,
+          "barCount": 0
+        },
+        "1h": {
+          "lastClose": null,
+          "rsi14": null,
+          "atrPct14": null,
+          "priceVsSma20": null,
+          "emaGap12_26": null,
+          "barCount": 0
+        },
+        "4h": {
+          "lastClose": null,
+          "rsi14": null,
+          "atrPct14": null,
+          "priceVsSma20": null,
+          "emaGap12_26": null,
+          "barCount": 0
+        },
+        "1d": {
+          "lastClose": null,
+          "rsi14": null,
+          "atrPct14": null,
+          "priceVsSma20": null,
+          "emaGap12_26": null,
+          "barCount": 0
+        }
+      },
+      "relatedContext": {
+        "oneHourTrend": null,
+        "oneHourRsi": null,
+        "fourHourTrend": null,
+        "fourHourRsi": null
+      },
+      "error": "Alpaca request failed (401)"
+    },
+    {
+      "symbol": "QQQ",
+      "strategyProfile": "index_etf",
+      "currentPrice": null,
+      "marketState": {
+        "timezone": "America/New_York",
+        "sessionMode": "regular",
+        "isOpen": false,
+        "isPreClose": false,
+        "isNoTradeOpen": false,
+        "minutesFromOpen": -86,
+        "minutesToClose": 476,
+        "sessionLabel": "before_open"
+      },
+      "position": null,
+      "riskState": null,
+      "timeframes": {
+        "5m": {
+          "lastClose": null,
+          "rsi14": null,
+          "atrPct14": null,
+          "priceVsSma20": null,
+          "emaGap12_26": null,
+          "barCount": 0
+        },
+        "1h": {
+          "lastClose": null,
+          "rsi14": null,
+          "atrPct14": null,
+          "priceVsSma20": null,
+          "emaGap12_26": null,
+          "barCount": 0
+        },
+        "4h": {
+          "lastClose": null,
+          "rsi14": null,
+          "atrPct14": null,
+          "priceVsSma20": null,
+          "emaGap12_26": null,
+          "barCount": 0
+        },
+        "1d": {
+          "lastClose": null,
+          "rsi14": null,
+          "atrPct14": null,
+          "priceVsSma20": null,
+          "emaGap12_26": null,
+          "barCount": 0
+        }
+      },
+      "relatedContext": {
+        "oneHourTrend": null,
+        "oneHourRsi": null,
+        "fourHourTrend": null,
+        "fourHourRsi": null
+      },
+      "error": "Alpaca request failed (401)"
+    }
+  ],
+  "llm": {
+    "provider": "ollama",
+    "model": "qwen2.5:7b",
+    "status": "fallback",
+    "error": "model 'qwen2.5:7b' not found",
+    "analysis": {
+      "marketTone": "risk_off",
+      "summary": "No strong long candidate stands out right now; the watchlist is mostly defensive.",
+      "keyRisks": [
+        "llm_fallback:model 'qwen2.5:7b' not found",
+        "rss_feed_partial_failure"
+      ],
+      "keyCatalysts": [
+        "Federal Reserve Board announces it has made the joint findings with the Office of the Comptroller of the Currency required for the OCC to approve a request by Morgan Stanley Bank, N.A., for an exemption under section 23A of the Federal Reserve Act",
+        "Federal Reserve Board releases annual audited financial statements",
+        "Federal Reserve Board issues enforcement actions with former employee of Ally Bank and former employee of Regions Bank",
+        "Agencies request comment on proposals to modernize the regulatory capital framework and maintain the strength of the banking system",
+        "Federal Reserve issues FOMC statement"
+      ],
+      "watchlist": [
+        {
+          "symbol": "AAPL",
+          "bias": "stand_aside",
+          "confidence": 0.46,
+          "note": "Heuristic fallback generated without LLM."
+        },
+        {
+          "symbol": "AMZN",
+          "bias": "stand_aside",
+          "confidence": 0.46,
+          "note": "Heuristic fallback generated without LLM."
+        },
+        {
+          "symbol": "META",
+          "bias": "stand_aside",
+          "confidence": 0.46,
+          "note": "Heuristic fallback generated without LLM."
+        },
+        {
+          "symbol": "GOOGL",
+          "bias": "stand_aside",
+          "confidence": 0.46,
+          "note": "Heuristic fallback generated without LLM."
+        },
+        {
+          "symbol": "AMD",
+          "bias": "stand_aside",
+          "confidence": 0.46,
+          "note": "Heuristic fallback generated without LLM."
+        },
+        {
+          "symbol": "NVDA",
+          "bias": "stand_aside",
+          "confidence": 0.46,
+          "note": "Heuristic fallback generated without LLM."
+        },
+        {
+          "symbol": "SPY",
+          "bias": "stand_aside",
+          "confidence": 0.46,
+          "note": "Heuristic fallback generated without LLM."
+        },
+        {
+          "symbol": "QQQ",
+          "bias": "stand_aside",
+          "confidence": 0.46,
+          "note": "Heuristic fallback generated without LLM."
+        }
+      ],
+      "preOpenChecklist": [
+        {
+          "item": "Alpaca paper connectivity",
+          "status": "block",
+          "note": "unauthorized."
+        },
+        {
+          "item": "Ollama structured report",
+          "status": "watch",
+          "note": "model 'qwen2.5:7b' not found"
+        },
+        {
+          "item": "Execution safety mode",
+          "status": "ready",
+          "note": "Paper execution can route orders."
+        }
+      ]
+    }
+  },
+  "reportPath": null
+}
