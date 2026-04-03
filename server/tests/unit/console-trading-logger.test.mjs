@@ -131,4 +131,150 @@ export const register = async ({ test }) => {
     assert.match(lines[5], /CLOSE LONG/);
     assert.match(lines[5], /\x1b\[32m\+16\.00\$/);
   });
+
+  test('ConsoleTradingLogger logs blocking llm errors in red once and resolves them when cleared', async () => {
+    const lines = [];
+    const logger = new ConsoleTradingLogger({
+      timezone: 'America/New_York',
+      colors: true,
+      writer: (line) => lines.push(line),
+    });
+
+    logger.logEvaluation({
+      symbol: 'AAPL',
+      atMs: Date.UTC(2026, 3, 2, 14, 0, 0),
+      features: {
+        currentPrice: 201,
+        portfolioState: {
+          equity: 100000,
+          cash: 100000,
+          brokerReady: true,
+        },
+        marketState: {
+          isOpen: true,
+          sessionLabel: 'regular',
+        },
+      },
+      decision: {
+        action: 'skip',
+        reasoning: ["decision_engine_fallback:model 'qwen2.5:7b' not found"],
+      },
+      executionResult: {
+        status: 'noop',
+        accepted: false,
+        error: {
+          message: 'noop_action',
+        },
+      },
+    });
+
+    logger.logEvaluation({
+      symbol: 'AAPL',
+      atMs: Date.UTC(2026, 3, 2, 14, 1, 0),
+      features: {
+        currentPrice: 202,
+        portfolioState: {
+          equity: 100010,
+          cash: 100010,
+          brokerReady: true,
+        },
+        marketState: {
+          isOpen: true,
+          sessionLabel: 'regular',
+        },
+      },
+      decision: {
+        action: 'skip',
+        reasoning: ["decision_engine_fallback:model 'qwen2.5:7b' not found"],
+      },
+      executionResult: {
+        status: 'noop',
+        accepted: false,
+        error: {
+          message: 'noop_action',
+        },
+      },
+    });
+
+    logger.logEvaluation({
+      symbol: 'AAPL',
+      atMs: Date.UTC(2026, 3, 2, 14, 2, 0),
+      features: {
+        currentPrice: 203,
+        portfolioState: {
+          equity: 100020,
+          cash: 100020,
+          brokerReady: true,
+        },
+        marketState: {
+          isOpen: true,
+          sessionLabel: 'regular',
+        },
+      },
+      decision: {
+        action: 'hold',
+        reasoning: ['llm_ok'],
+      },
+      executionResult: {
+        status: 'noop',
+        accepted: false,
+        error: {
+          message: 'noop_action',
+        },
+      },
+    });
+
+    assert.equal(lines.filter((line) => line.includes('TRADING BLOCKER')).length, 2);
+    assert.match(lines[0], /TRADING BLOCKER/);
+    assert.match(lines[0], /\x1b\[31mLLM/);
+    assert.match(lines[0], /model 'qwen2\.5:7b' not found/);
+    assert.ok(lines.some((line) => /TRADING BLOCKER RESOLVED/.test(line)));
+  });
+
+  test('ConsoleTradingLogger logs blocking broker auth errors in red', async () => {
+    const lines = [];
+    const logger = new ConsoleTradingLogger({
+      timezone: 'America/New_York',
+      colors: true,
+      writer: (line) => lines.push(line),
+    });
+
+    logger.logEvaluation({
+      symbol: 'AAPL',
+      atMs: Date.UTC(2026, 3, 2, 14, 0, 0),
+      features: {
+        portfolioState: {
+          equity: 0,
+          cash: 0,
+          brokerReady: false,
+          errorCategory: 'auth',
+          error: 'Unauthorized Alpaca credentials',
+        },
+        marketState: {
+          isOpen: true,
+          sessionLabel: 'regular',
+        },
+        timeframes: {
+          '1m': {
+            lastClose: null,
+          },
+        },
+      },
+      decision: {
+        action: 'skip',
+        reasoning: [],
+      },
+      executionResult: {
+        status: 'noop',
+        accepted: false,
+        error: {
+          message: 'broker_auth_unavailable',
+        },
+      },
+    });
+
+    assert.match(lines[0], /TRADING BLOCKER/);
+    assert.match(lines[0], /BROKER AUTH/);
+    assert.match(lines[0], /Unauthorized Alpaca credentials/);
+  });
 };

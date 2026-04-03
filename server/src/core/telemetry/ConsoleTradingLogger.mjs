@@ -90,6 +90,20 @@ const resolveStopPrice = (referencePrice, stopLossPct) => {
 };
 
 const isAcceptedExecutionStatus = (status) => ['dry_run', 'accepted', 'filled', 'closed'].includes(String(status ?? ''));
+const extractDecisionFallbackReason = (decision) => {
+  const entries = Array.isArray(decision?.reasoning) ? decision.reasoning : [];
+  const match = entries.find((entry) => String(entry ?? '').startsWith('decision_engine_fallback:'));
+  return match ? String(match).slice('decision_engine_fallback:'.length) : null;
+};
+const hasNoMarketData = (features) => {
+  if (toPositiveFiniteOrNull(features?.currentPrice) !== null) return false;
+  const snapshots = Object.values(features?.timeframes ?? {});
+  if (!snapshots.length) return true;
+  return snapshots.every((snapshot) => {
+    const lastClose = toPositiveFiniteOrNull(snapshot?.values?.lastClose ?? snapshot?.lastClose);
+    return lastClose === null;
+  });
+};
 
 export class ConsoleTradingLogger {
   constructor({
@@ -107,6 +121,7 @@ export class ConsoleTradingLogger {
       baselineEquity: null,
       previousEquity: null,
     };
+    this.activeBlockingAlerts = new Map();
   }
 
   logEvaluation({
@@ -122,6 +137,16 @@ export class ConsoleTradingLogger {
     const safeSymbol = String(symbol ?? features?.symbol ?? '').toUpperCase() || 'UNKNOWN';
     const timeMs = Number.isFinite(Number(atMs)) ? Number(atMs) : Date.now();
     const prefix = colorize(`[TRADE][${safeSymbol}][${formatTimestamp(timeMs, this.timezone)}]`, 'cyan', this.colors);
+    const blockingLines = this.#buildBlockingAlertLines({
+      prefix,
+      symbol: safeSymbol,
+      features,
+      decision,
+      executionResult,
+    });
+    for (const line of blockingLines) {
+      this.writer(line);
+    }
 
     const portfolioLine = this.#buildPortfolioLine({
       prefix,
@@ -147,6 +172,77 @@ export class ConsoleTradingLogger {
       executionResult,
     });
     if (executionLine) this.writer(executionLine);
+  }
+
+  #buildBlockingAlertLines({ prefix, symbol, features, decision, executionResult }) {
+    const lines = [];
+    const nextAlerts = new Map();
+    const blockers = this.#collectBlockingAlerts({
+      symbol,
+      features,
+      decision,
+      executionResult,
+    });
+
+    for (const blocker of blockers) {
+      nextAlerts.set(blocker.key, blocker);
+      if (!this.activeBlockingAlerts.has(blocker.key)) {
+        lines.push(
+          `${prefix} ${colorize('TRADING BLOCKER', 'red', this.colors)} ${colorize(blocker.label, 'red', this.colors)} | ${colorize(blocker.message, 'red', this.colors)}`,
+        );
+      }
+    }
+
+    for (const [key, blocker] of this.activeBlockingAlerts.entries()) {
+      if (nextAlerts.has(key)) continue;
+      lines.push(`${prefix} ${colorize('TRADING BLOCKER RESOLVED', 'green', this.colors)} ${colorize(blocker.label, 'green', this.colors)}`);
+    }
+
+    this.activeBlockingAlerts = nextAlerts;
+    return lines;
+  }
+
+  #collectBlockingAlerts({ symbol, features, decision, executionResult }) {
+    const alerts = [];
+    const brokerReady = features?.portfolioState?.brokerReady;
+    const brokerErrorCategory = String(features?.portfolioState?.errorCategory ?? '').toLowerCase();
+    const brokerError = String(features?.portfolioState?.error ?? '').trim();
+    if (brokerReady === false) {
+      const label = ['auth', 'permission'].includes(brokerErrorCategory) ? 'BROKER AUTH' : 'BROKER';
+      alerts.push({
+        key: `broker:${brokerErrorCategory || 'unavailable'}`,
+        label,
+        message: brokerError || 'Broker gateway unavailable',
+      });
+    }
+
+    const fallbackReason = extractDecisionFallbackReason(decision);
+    if (fallbackReason) {
+      alerts.push({
+        key: `llm:${fallbackReason}`,
+        label: 'LLM',
+        message: fallbackReason,
+      });
+    }
+
+    const executionErrorMessage = String(executionResult?.error?.message ?? '').trim();
+    if (executionErrorMessage === 'broker_auth_unavailable' || executionErrorMessage === 'broker_unavailable') {
+      alerts.push({
+        key: `execution:${executionErrorMessage}`,
+        label: 'EXECUTION',
+        message: executionErrorMessage,
+      });
+    }
+
+    if (features?.marketState?.isOpen === true && hasNoMarketData(features)) {
+      alerts.push({
+        key: `market-data:${symbol}`,
+        label: 'MARKET DATA',
+        message: `No live price or timeframe bars available for ${symbol}`,
+      });
+    }
+
+    return alerts.filter((alert, index, list) => list.findIndex((entry) => entry.key === alert.key) === index);
   }
 
   #buildPortfolioLine({ prefix, timeMs, features, decision, executionResult }) {
