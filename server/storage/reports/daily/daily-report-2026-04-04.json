@@ -1,0 +1,593 @@
+{
+  "type": "daily_market_report",
+  "generatedAtMs": 1775198265009,
+  "reportDate": "2026-04-04",
+  "runtime": {
+    "mode": "paper",
+    "executionDryRun": false,
+    "llmEnabled": true,
+    "llmProvider": "ollama",
+    "llmModel": "qwen2.5:7b"
+  },
+  "market": {
+    "timezone": "America/New_York",
+    "currentState": {
+      "timezone": "America/New_York",
+      "sessionMode": "regular",
+      "isOpen": false,
+      "isPreClose": false,
+      "isNoTradeOpen": false,
+      "minutesFromOpen": -413,
+      "minutesToClose": 803,
+      "sessionLabel": "before_open"
+    },
+    "targetSessionDate": "2026-04-04",
+    "targetSessionOpenLocal": "09:30",
+    "targetWakeupLocal": "08:45"
+  },
+  "account": {
+    "cash": 96700.76,
+    "equity": 96700.76,
+    "exposurePct": 0,
+    "positionCount": 0,
+    "positions": [],
+    "error": null
+  },
+  "news": {
+    "feedCount": 4,
+    "okFeedCount": 2,
+    "feeds": [
+      {
+        "feedId": "sec_press_releases",
+        "name": "SEC Press Releases",
+        "url": "https://www.sec.gov/rss/pressrelease.xml",
+        "status": "error",
+        "error": "RSS request failed (403) for https://www.sec.gov/rss/pressrelease.xml",
+        "fetchedAtMs": 1775198261078,
+        "itemCount": 0,
+        "source": "network",
+        "items": []
+      },
+      {
+        "feedId": "sec_news",
+        "name": "SEC News",
+        "url": "https://www.sec.gov/rss/news/press.xml",
+        "status": "error",
+        "error": "RSS request failed (403) for https://www.sec.gov/rss/news/press.xml",
+        "fetchedAtMs": 1775198261156,
+        "itemCount": 0,
+        "source": "network",
+        "items": []
+      },
+      {
+        "feedId": "fed_press_all",
+        "name": "Federal Reserve Press Releases",
+        "url": "https://www.federalreserve.gov/feeds/press_all.xml",
+        "status": "ok",
+        "error": null,
+        "fetchedAtMs": 1775197880604,
+        "itemCount": 5,
+        "source": "cache",
+        "items": [
+          {
+            "title": "Federal Reserve Board announces it has made the joint findings with the Office of the Comptroller of the Currency required for the OCC to approve a request by Morgan Stanley Bank, N.A., for an exemption under section 23A of the Federal Reserve Act",
+            "link": "https://www.federalreserve.gov/newsevents/pressreleases/orders20260326a.htm",
+            "publishedAt": "2026-03-26T21:00:00.000Z",
+            "summary": "Federal Reserve Board announces it has made the joint findings with the Office of the Comptroller of the Currency required for the OCC to approve a request by Morgan Stanley Bank, N.A., for an exemption under section 23A of the Federal Reserve Act"
+          },
+          {
+            "title": "Federal Reserve Board releases annual audited financial statements",
+            "link": "https://www.federalreserve.gov/newsevents/pressreleases/other20260325a.htm",
+            "publishedAt": "2026-03-25T16:00:00.000Z",
+            "summary": "Federal Reserve Board releases annual audited financial statements"
+          },
+          {
+            "title": "Federal Reserve Board issues enforcement actions with former employee of Ally Bank and former employee of Regions Bank",
+            "link": "https://www.federalreserve.gov/newsevents/pressreleases/enforcement20260320a.htm",
+            "publishedAt": "2026-03-20T15:00:00.000Z",
+            "summary": "Federal Reserve Board issues enforcement actions with former employee of Ally Bank and former employee of Regions Bank"
+          },
+          {
+            "title": "Agencies request comment on proposals to modernize the regulatory capital framework and maintain the strength of the banking system",
+            "link": "https://www.federalreserve.gov/newsevents/pressreleases/bcreg20260319a.htm",
+            "publishedAt": "2026-03-19T16:30:00.000Z",
+            "summary": "Agencies request comment on proposals to modernize the regulatory capital framework and maintain the strength of the banking system"
+          },
+          {
+            "title": "Federal Reserve issues FOMC statement",
+            "link": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20260318a.htm",
+            "publishedAt": "2026-03-18T18:00:00.000Z",
+            "summary": "Federal Reserve issues FOMC statement"
+          }
+        ]
+      },
+      {
+        "feedId": "fed_monetary",
+        "name": "Federal Reserve Monetary Policy",
+        "url": "https://www.federalreserve.gov/feeds/press_monetary.xml",
+        "status": "ok",
+        "error": null,
+        "fetchedAtMs": 1775197880777,
+        "itemCount": 5,
+        "source": "cache",
+        "items": [
+          {
+            "title": "Federal Reserve issues FOMC statement",
+            "link": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20260318a.htm",
+            "publishedAt": "2026-03-18T18:00:00.000Z",
+            "summary": "Federal Reserve issues FOMC statement"
+          },
+          {
+            "title": "Federal Reserve Board and Federal Open Market Committee release economic projections from the March 17-18 FOMC meeting",
+            "link": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20260318b.htm",
+            "publishedAt": "2026-03-18T18:00:00.000Z",
+            "summary": "Federal Reserve Board and Federal Open Market Committee release economic projections from the March 17-18 FOMC meeting"
+          },
+          {
+            "title": "Minutes of the Board's discount rate meetings on January 20 and 28, 2026",
+            "link": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20260224a.htm",
+            "publishedAt": "2026-02-24T19:00:00.000Z",
+            "summary": "Minutes of the Board's discount rate meetings on January 20 and 28, 2026"
+          },
+          {
+            "title": "Minutes of the Federal Open Market Committee, January 27–28, 2026",
+            "link": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20260218a.htm",
+            "publishedAt": "2026-02-18T19:00:00.000Z",
+            "summary": "Minutes of the Federal Open Market Committee, January 27–28, 2026"
+          },
+          {
+            "title": "Federal Reserve issues FOMC statement",
+            "link": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20260128a.htm",
+            "publishedAt": "2026-01-28T19:00:00.000Z",
+            "summary": "Federal Reserve issues FOMC statement"
+          }
+        ]
+      }
+    ]
+  },
+  "watchlist": [
+    {
+      "symbol": "AAPL",
+      "strategyProfile": "single_stock_quality",
+      "currentPrice": 255.89,
+      "marketState": {
+        "timezone": "America/New_York",
+        "sessionMode": "regular",
+        "isOpen": false,
+        "isPreClose": false,
+        "isNoTradeOpen": false,
+        "minutesFromOpen": -413,
+        "minutesToClose": 803,
+        "sessionLabel": "before_open"
+      },
+      "position": null,
+      "riskState": {
+        "canOpen": true,
+        "canClose": true,
+        "flags": []
+      },
+      "timeframes": {
+        "5m": {
+          "lastClose": 255.89,
+          "rsi14": 63.50806451612914,
+          "atrPct14": 0.0013552140149506097,
+          "priceVsSma20": 0.0024965450910911756,
+          "emaGap12_26": 0.000596130238317352,
+          "barCount": 80
+        },
+        "1h": {
+          "lastClose": 255.89,
+          "rsi14": 55.74660633484157,
+          "atrPct14": 0.006570903792366122,
+          "priceVsSma20": 0.006224759837519101,
+          "emaGap12_26": 0.003901685304335761,
+          "barCount": 61
+        },
+        "4h": {
+          "lastClose": 248.67,
+          "rsi14": 49.23343224530168,
+          "atrPct14": 0.012775106423314923,
+          "priceVsSma20": -0.011449998558936109,
+          "emaGap12_26": -0.00158215863989469,
+          "barCount": 76
+        },
+        "1d": {
+          "lastClose": 255.89,
+          "rsi14": 59.67608659725664,
+          "atrPct14": 0.019714107066094257,
+          "priceVsSma20": 0.00985724701525017,
+          "emaGap12_26": -0.009448254924075009,
+          "barCount": 173
+        }
+      },
+      "relatedContext": {
+        "oneHourTrend": 0.0039061274404354005,
+        "oneHourRsi": 49.43579312014533,
+        "fourHourTrend": -0.011548970584265607,
+        "fourHourRsi": 31.32828627127067
+      }
+    },
+    {
+      "symbol": "TGT",
+      "strategyProfile": "consumer_quality_soft",
+      "currentPrice": 120.49,
+      "marketState": {
+        "timezone": "America/New_York",
+        "sessionMode": "regular",
+        "isOpen": false,
+        "isPreClose": false,
+        "isNoTradeOpen": false,
+        "minutesFromOpen": -413,
+        "minutesToClose": 803,
+        "sessionLabel": "before_open"
+      },
+      "position": null,
+      "riskState": {
+        "canOpen": true,
+        "canClose": true,
+        "flags": []
+      },
+      "timeframes": {
+        "5m": {
+          "lastClose": 120.49,
+          "rsi14": 51.293103448275915,
+          "atrPct14": 0.0014435104276584911,
+          "priceVsSma20": 0.0005002916638123933,
+          "emaGap12_26": 0.0007105594392664243,
+          "barCount": 78
+        },
+        "1h": {
+          "lastClose": 120.49,
+          "rsi14": 43.7751004016064,
+          "atrPct14": 0.007297582490544556,
+          "priceVsSma20": -0.0004334579784267757,
+          "emaGap12_26": 0.0032276352757538854,
+          "barCount": 56
+        },
+        "4h": {
+          "lastClose": 120.49,
+          "rsi14": 49.218749999999936,
+          "atrPct14": 0.011669610993206332,
+          "priceVsSma20": 0.009636333165744979,
+          "emaGap12_26": 0.008770194720720305,
+          "barCount": 89
+        },
+        "1d": {
+          "lastClose": 120.49,
+          "rsi14": 60.384870603848675,
+          "atrPct14": 0.02220694070640126,
+          "priceVsSma20": 0.023358721247497202,
+          "emaGap12_26": 0.011756430736081161,
+          "barCount": 173
+        }
+      },
+      "relatedContext": {
+        "oneHourTrend": 0.003179287551446707,
+        "oneHourRsi": 61.08792750570864,
+        "fourHourTrend": -0.00016142081799437139,
+        "fourHourRsi": 60.645514942715316
+      }
+    },
+    {
+      "symbol": "CVX",
+      "strategyProfile": "single_stock_quality",
+      "currentPrice": 198.97,
+      "marketState": {
+        "timezone": "America/New_York",
+        "sessionMode": "regular",
+        "isOpen": false,
+        "isPreClose": false,
+        "isNoTradeOpen": false,
+        "minutesFromOpen": -413,
+        "minutesToClose": 803,
+        "sessionLabel": "before_open"
+      },
+      "position": null,
+      "riskState": {
+        "canOpen": true,
+        "canClose": true,
+        "flags": []
+      },
+      "timeframes": {
+        "5m": {
+          "lastClose": 198.97,
+          "rsi14": 54.975124378109186,
+          "atrPct14": 0.0014036574070749861,
+          "priceVsSma20": 0.0014167906043883896,
+          "emaGap12_26": -0.0005391765271039562,
+          "barCount": 78
+        },
+        "1h": {
+          "lastClose": 198.97,
+          "rsi14": 32.2623828647925,
+          "atrPct14": 0.013058321785768134,
+          "priceVsSma20": -0.01238673619056347,
+          "emaGap12_26": -0.012357158406535429,
+          "barCount": 56
+        },
+        "4h": {
+          "lastClose": 206.92,
+          "rsi14": 52.128427128427084,
+          "atrPct14": 0.014287785479550409,
+          "priceVsSma20": -0.00668109216114804,
+          "emaGap12_26": 0.011132160110491889,
+          "barCount": 83
+        },
+        "1d": {
+          "lastClose": 198.97,
+          "rsi14": 53.24340709305848,
+          "atrPct14": 0.0274179883543104,
+          "priceVsSma20": -0.004629919132746716,
+          "emaGap12_26": 0.025336614619966474,
+          "barCount": 173
+        }
+      },
+      "relatedContext": {
+        "oneHourTrend": -0.006085703504347538,
+        "oneHourRsi": 41.864943897681364,
+        "fourHourTrend": 0.010181773825716734,
+        "fourHourRsi": 66.62252168760311
+      }
+    },
+    {
+      "symbol": "SPY",
+      "strategyProfile": "index_etf",
+      "currentPrice": 655.93,
+      "marketState": {
+        "timezone": "America/New_York",
+        "sessionMode": "regular",
+        "isOpen": false,
+        "isPreClose": false,
+        "isNoTradeOpen": false,
+        "minutesFromOpen": -413,
+        "minutesToClose": 803,
+        "sessionLabel": "before_open"
+      },
+      "position": null,
+      "riskState": {
+        "canOpen": true,
+        "canClose": true,
+        "flags": []
+      },
+      "timeframes": {
+        "5m": {
+          "lastClose": 655.93,
+          "rsi14": 75.17241379310035,
+          "atrPct14": 0.0004916683182656796,
+          "priceVsSma20": 0.0012371788658404057,
+          "emaGap12_26": 0.000796921037109222,
+          "barCount": 92
+        },
+        "1h": {
+          "lastClose": 655.93,
+          "rsi14": 46.74991447143331,
+          "atrPct14": 0.005036469483895289,
+          "priceVsSma20": 0.0030753044337293355,
+          "emaGap12_26": 0.0035439393143108728,
+          "barCount": 70
+        },
+        "4h": {
+          "lastClose": 649.7,
+          "rsi14": 38.347000431592605,
+          "atrPct14": 0.009270762329866537,
+          "priceVsSma20": -0.010559539469300857,
+          "emaGap12_26": -0.005996603834484827,
+          "barCount": 73
+        },
+        "1d": {
+          "lastClose": 655.76,
+          "rsi14": 46.43713227282634,
+          "atrPct14": 0.016575097160982225,
+          "priceVsSma20": -0.004894644874583924,
+          "emaGap12_26": -0.01320454201376677,
+          "barCount": 173
+        }
+      },
+      "relatedContext": {
+        "oneHourTrend": 0.004134528320330168,
+        "oneHourRsi": 46.71721945059782,
+        "fourHourTrend": -0.0025051141441854675,
+        "fourHourRsi": 53.84048086281785
+      }
+    },
+    {
+      "symbol": "QQQ",
+      "strategyProfile": "index_etf",
+      "currentPrice": 584.71,
+      "marketState": {
+        "timezone": "America/New_York",
+        "sessionMode": "regular",
+        "isOpen": false,
+        "isPreClose": false,
+        "isNoTradeOpen": false,
+        "minutesFromOpen": -413,
+        "minutesToClose": 803,
+        "sessionLabel": "before_open"
+      },
+      "position": null,
+      "riskState": {
+        "canOpen": true,
+        "canClose": true,
+        "flags": []
+      },
+      "timeframes": {
+        "5m": {
+          "lastClose": 584.71,
+          "rsi14": 69.9745547073777,
+          "atrPct14": 0.0008331358402333957,
+          "priceVsSma20": 0.002028185523708169,
+          "emaGap12_26": 0.0009217908922081563,
+          "barCount": 84
+        },
+        "1h": {
+          "lastClose": 584.71,
+          "rsi14": 46.89298043728427,
+          "atrPct14": 0.00604939689272089,
+          "priceVsSma20": 0.004068494262165372,
+          "emaGap12_26": 0.004712961875084434,
+          "barCount": 72
+        },
+        "4h": {
+          "lastClose": 581.37,
+          "rsi14": 40.14913657770805,
+          "atrPct14": 0.0107793414078568,
+          "priceVsSma20": -0.01470560819731332,
+          "emaGap12_26": -0.0063089470921634935,
+          "barCount": 72
+        },
+        "1d": {
+          "lastClose": 584.95,
+          "rsi14": 45.74447174447177,
+          "atrPct14": 0.019295910517382407,
+          "priceVsSma20": -0.00759214488696634,
+          "emaGap12_26": -0.013833646014227034,
+          "barCount": 173
+        }
+      },
+      "relatedContext": {
+        "oneHourTrend": 0.003744854133405647,
+        "oneHourRsi": 46.66953079531417,
+        "fourHourTrend": -0.0024009997249592454,
+        "fourHourRsi": 53.2397688141127
+      }
+    },
+    {
+      "symbol": "XLF",
+      "strategyProfile": "index_etf",
+      "currentPrice": 49.54,
+      "marketState": {
+        "timezone": "America/New_York",
+        "sessionMode": "regular",
+        "isOpen": false,
+        "isPreClose": false,
+        "isNoTradeOpen": false,
+        "minutesFromOpen": -413,
+        "minutesToClose": 803,
+        "sessionLabel": "before_open"
+      },
+      "position": null,
+      "riskState": {
+        "canOpen": true,
+        "canClose": true,
+        "flags": []
+      },
+      "timeframes": {
+        "5m": {
+          "lastClose": 49.54,
+          "rsi14": 54.09836065573728,
+          "atrPct14": 0.0009083568833265879,
+          "priceVsSma20": 0.0009749099597406821,
+          "emaGap12_26": 0.0001683367481047498,
+          "barCount": 78
+        },
+        "1h": {
+          "lastClose": 49.54,
+          "rsi14": 54.7337278106508,
+          "atrPct14": 0.006632447084606957,
+          "priceVsSma20": 0.0036670110820722565,
+          "emaGap12_26": 0.0032021565726554602,
+          "barCount": 58
+        },
+        "4h": {
+          "lastClose": 47.97,
+          "rsi14": 32.54716981132087,
+          "atrPct14": 0.010944340212632908,
+          "priceVsSma20": -0.023764824396721423,
+          "emaGap12_26": -0.00457707556711514,
+          "barCount": 76
+        },
+        "1d": {
+          "lastClose": 49.54,
+          "rsi14": 56.68016194331978,
+          "atrPct14": 0.017453428686775463,
+          "priceVsSma20": 0.005240276572970658,
+          "emaGap12_26": -0.012703466935134071,
+          "barCount": 173
+        }
+      },
+      "relatedContext": {
+        "oneHourTrend": 0.004477438117082514,
+        "oneHourRsi": 49.545440987205076,
+        "fourHourTrend": -0.002703955145209014,
+        "fourHourRsi": 44.49177102207684
+      }
+    }
+  ],
+  "llm": {
+    "provider": "ollama",
+    "model": "qwen2.5:7b",
+    "status": "fallback",
+    "error": "model 'qwen2.5:7b' not found",
+    "analysis": {
+      "marketTone": "risk_on",
+      "summary": "Positive momentum candidates are currently concentrated in XLF.",
+      "keyRisks": [
+        "llm_fallback:model 'qwen2.5:7b' not found",
+        "rss_feed_partial_failure"
+      ],
+      "keyCatalysts": [
+        "Federal Reserve Board announces it has made the joint findings with the Office of the Comptroller of the Currency required for the OCC to approve a request by Morgan Stanley Bank, N.A., for an exemption under section 23A of the Federal Reserve Act",
+        "Federal Reserve Board releases annual audited financial statements",
+        "Federal Reserve Board issues enforcement actions with former employee of Ally Bank and former employee of Regions Bank",
+        "Agencies request comment on proposals to modernize the regulatory capital framework and maintain the strength of the banking system",
+        "Federal Reserve issues FOMC statement"
+      ],
+      "watchlist": [
+        {
+          "symbol": "AAPL",
+          "bias": "stand_aside",
+          "confidence": 0.46,
+          "note": "Heuristic fallback generated without LLM."
+        },
+        {
+          "symbol": "TGT",
+          "bias": "stand_aside",
+          "confidence": 0.46,
+          "note": "Heuristic fallback generated without LLM."
+        },
+        {
+          "symbol": "CVX",
+          "bias": "stand_aside",
+          "confidence": 0.46,
+          "note": "Heuristic fallback generated without LLM."
+        },
+        {
+          "symbol": "SPY",
+          "bias": "stand_aside",
+          "confidence": 0.46,
+          "note": "Heuristic fallback generated without LLM."
+        },
+        {
+          "symbol": "QQQ",
+          "bias": "stand_aside",
+          "confidence": 0.46,
+          "note": "Heuristic fallback generated without LLM."
+        },
+        {
+          "symbol": "XLF",
+          "bias": "watch_long",
+          "confidence": 0.58,
+          "note": "Heuristic fallback generated without LLM."
+        }
+      ],
+      "preOpenChecklist": [
+        {
+          "item": "Alpaca paper connectivity",
+          "status": "ready",
+          "note": "Paper account reachable."
+        },
+        {
+          "item": "Ollama structured report",
+          "status": "watch",
+          "note": "model 'qwen2.5:7b' not found"
+        },
+        {
+          "item": "Execution safety mode",
+          "status": "ready",
+          "note": "Paper execution can route orders."
+        }
+      ]
+    }
+  },
+  "reportPath": null
+}
