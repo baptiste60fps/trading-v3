@@ -1,5 +1,13 @@
 import { normalizeEpochMs } from './time.mjs';
 
+const DATE_PATTERN = /^\d{4}-\d{2}-\d{2}$/;
+
+const normalizeClosedDates = (closedDates = []) => new Set(
+  (Array.isArray(closedDates) ? closedDates : [])
+    .map((entry) => String(entry ?? '').trim())
+    .filter((entry) => DATE_PATTERN.test(entry)),
+);
+
 export class MarketCalendar {
   constructor({
     timezone = 'America/New_York',
@@ -8,6 +16,7 @@ export class MarketCalendar {
     closeMinutes = 16 * 60,
     preCloseMinutes = 10,
     noTradeOpenMinutes = 10,
+    closedDates = [],
   } = {}) {
     this.timezone = timezone;
     this.sessionMode = sessionMode;
@@ -15,6 +24,7 @@ export class MarketCalendar {
     this.closeMinutes = closeMinutes;
     this.preCloseMinutes = preCloseMinutes;
     this.noTradeOpenMinutes = noTradeOpenMinutes;
+    this.closedDates = normalizeClosedDates(closedDates);
   }
 
   getMarketState(atMs, context = null) {
@@ -35,6 +45,7 @@ export class MarketCalendar {
 
     const map = Object.fromEntries(parts.map((part) => [part.type, part.value]));
     const weekday = map.weekday;
+    const localDate = `${map.year}-${map.month}-${map.day}`;
     const hour = Number(map.hour);
     const minute = Number(map.minute);
     if (assetClass === 'crypto') {
@@ -51,6 +62,22 @@ export class MarketCalendar {
     }
 
     const isWeekday = weekday !== 'Sat' && weekday !== 'Sun';
+    const isConfiguredClosedDate = isWeekday && this.closedDates.has(localDate);
+    if (isConfiguredClosedDate) {
+      return {
+        timezone: this.timezone,
+        sessionMode: this.sessionMode,
+        isOpen: false,
+        isPreClose: false,
+        isNoTradeOpen: false,
+        minutesFromOpen: null,
+        minutesToClose: null,
+        sessionLabel: 'market_closed',
+        closedReason: 'configured_closed_date',
+        localDate,
+      };
+    }
+
     const minutes = hour * 60 + minute;
 
     const isOpen = isWeekday && minutes >= this.openMinutes && minutes < this.closeMinutes;

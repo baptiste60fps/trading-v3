@@ -48,11 +48,13 @@ export class StrategyInstance {
       atMs,
       runtimeMode: this.runtimeMode,
     });
-    const decision = await this.decisionEngine.decide({
-      symbol: this.symbol,
-      features,
-      strategyConfig,
-    });
+    const decision = !features?.position && this.#shouldBypassOpeningDecision(features)
+      ? this.#buildMarketGateDecision(features)
+      : await this.decisionEngine.decide({
+          symbol: this.symbol,
+          features,
+          strategyConfig,
+        });
     const execution = await this.executionEngine.executeDecision({
       symbol: this.symbol,
       decision,
@@ -103,6 +105,27 @@ export class StrategyInstance {
       lastDecision: this.lastDecision,
       lastExecution: this.lastExecution,
       lastFallbackExit: this.lastFallbackExit,
+    };
+  }
+
+  #shouldBypassOpeningDecision(features) {
+    const marketState = features?.marketState ?? {};
+    return marketState.isOpen !== true || marketState.isPreClose === true || marketState.isNoTradeOpen === true;
+  }
+
+  #buildMarketGateDecision(features) {
+    return {
+      action: 'skip',
+      confidence: 0.1,
+      reasoning: ['market_gate', features?.marketState?.sessionLabel ?? 'market_closed'],
+      requestedSizePct: null,
+      stopLossPct: null,
+      takeProfitPct: null,
+      signalContext: {
+        symbol: this.symbol,
+        assetClass: features?.assetClass ?? null,
+        marketSession: features?.marketState?.sessionLabel ?? null,
+      },
     };
   }
 }

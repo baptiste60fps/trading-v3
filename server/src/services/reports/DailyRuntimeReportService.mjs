@@ -127,10 +127,13 @@ export class DailyRuntimeReportService {
         symbol: safeSymbol,
         ok: ok === true,
         decisionAction: safeString(summary?.decisionAction ?? result?.decision?.action),
+        decisionReasoning: Array.isArray(result?.decision?.reasoning) ? result.decision.reasoning.slice(0, 5) : [],
         executionStatus: safeString(summary?.executionStatus ?? result?.executionResult?.status),
+        executionErrorCategory: safeString(result?.executionResult?.error?.category),
+        executionErrorMessage: safeString(result?.executionResult?.error?.message),
         marketSession: safeString(summary?.marketSession ?? result?.features?.marketState?.sessionLabel),
         currentPrice: toFiniteOrNull(summary?.currentPrice ?? result?.features?.currentPrice),
-        error: safeString(error?.message ?? error ?? summary?.error),
+        error: safeString(error?.message ?? error ?? summary?.error ?? result?.executionResult?.error?.message),
       });
       if (report.cycleSummaries.length > MAX_CYCLE_SUMMARIES) {
         report.cycleSummaries.splice(0, report.cycleSummaries.length - MAX_CYCLE_SUMMARIES);

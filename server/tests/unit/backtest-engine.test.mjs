@@ -108,6 +108,7 @@ class FakeMarketCalendar {
 class FakeSourceMarketDataProvider {
   constructor() {
     const startMs = Date.parse('2026-03-23T13:30:00.000Z');
+    this.requests = [];
     this.dataset = {
       AAPL: {
         '1m': makeBars({ symbol: 'AAPL', timeframe: '1m', count: 300, stepMs: 60_000, startMs, startPrice: 100 }),
@@ -137,7 +138,8 @@ class FakeSourceMarketDataProvider {
     return ['1m', '5m', '15m', '1h', '1d'].includes(timeframe);
   }
 
-  async getBars({ symbol, timeframe, startMs, endMs, limit = 10_000 }) {
+  async getBars({ symbol, assetClass = 'stock', timeframe, startMs, endMs, limit = 10_000 }) {
+    this.requests.push({ symbol, timeframe, assetClass });
     const rows = this.dataset?.[symbol]?.[timeframe] ?? [];
     const filtered = rows.filter((bar) => bar.startMs >= startMs && bar.endMs <= endMs);
     return filtered.slice(0, limit);
@@ -255,6 +257,65 @@ export const register = async ({ test }) => {
     assert.ok(report.symbols.AAPL.shortBars.length > 0);
     assert.ok(report.symbols.AAPL.timeframes['5m']);
     assert.equal(report.accountLatest.positions.length, 0);
+  });
+
+  test('BacktestEngine forwards crypto asset class while preloading replay data', async () => {
+    class CryptoConfigStore extends FakeConfigStore {
+      getAssetClass(symbol) {
+        return String(symbol ?? '').includes('/') ? 'crypto' : 'stock';
+      }
+
+      getStrategyProfile() {
+        return 'crypto_momentum';
+      }
+
+      getRelatedSymbols(symbol) {
+        return symbol === 'BTC/USD' ? ['ETH/USD', 'SOL/USD'] : [];
+      }
+
+      getSymbolConfig(symbol) {
+        return {
+          ...super.getSymbolConfig(symbol),
+          assetClass: this.getAssetClass(symbol),
+          strategyProfile: this.getStrategyProfile(symbol),
+        };
+      }
+    }
+
+    const startMs = Date.parse('2026-03-23T13:30:00.000Z');
+    const sourceMarketDataProvider = new FakeSourceMarketDataProvider();
+    for (const [symbol, startPrice] of [['BTC/USD', 67000], ['ETH/USD', 2100], ['SOL/USD', 140]]) {
+      sourceMarketDataProvider.dataset[symbol] = {
+        '1m': makeBars({ symbol, timeframe: '1m', count: 300, stepMs: 60_000, startMs, startPrice }),
+        '5m': makeBars({ symbol, timeframe: '5m', count: 120, stepMs: 300_000, startMs, startPrice }),
+        '15m': makeBars({ symbol, timeframe: '15m', count: 120, stepMs: 900_000, startMs, startPrice }),
+        '1h': makeBars({ symbol, timeframe: '1h', count: 80, stepMs: 3_600_000, startMs, startPrice }),
+        '1d': makeBars({ symbol, timeframe: '1d', count: 40, stepMs: 86_400_000, startMs, startPrice }),
+      };
+    }
+
+    const engine = new BacktestEngine({
+      configStore: new CryptoConfigStore(),
+      marketCalendar: new FakeMarketCalendar(),
+      sourceMarketDataProvider,
+      indicatorEngine: new IndicatorEngine(),
+    });
+
+    const report = await engine.run({
+      symbol: 'BTC/USD',
+      startMs: Date.parse('2026-03-23T14:30:00.000Z'),
+      endMs: Date.parse('2026-03-23T16:30:00.000Z'),
+      stepTimeframe: '5m',
+      initialCash: 10_000,
+      decisionEngine: new ScriptedDecisionEngine(),
+      writeReport: false,
+    });
+
+    const cryptoRequests = sourceMarketDataProvider.requests.filter((request) => request.symbol.includes('/USD'));
+
+    assert.equal(report.symbol, 'BTC/USD');
+    assert.ok(cryptoRequests.length > 0);
+    assert.ok(cryptoRequests.every((request) => request.assetClass === 'crypto'));
   });
 
   test('SimpleRuleDecisionEngine opens on aligned trend and closes on stop loss', async () => {
@@ -1275,6 +1336,103 @@ export const register = async ({ test }) => {
     assert.equal(decision.action, 'open_long');
     assert.equal(decision.signalContext.strategyProfile, 'high_beta_stock');
     assert.ok(decision.requestedSizePct <= 0.03);
+  });
+
+  test('SimpleRuleDecisionEngine opens a measured crypto momentum setup with crypto-specific risk', async () => {
+    const engine = new SimpleRuleDecisionEngine();
+
+    const decision = await engine.decide({
+      symbol: 'BTC/USD',
+      strategyConfig: {
+        assetClass: 'crypto',
+        strategyProfile: 'crypto_momentum',
+      },
+      features: {
+        assetClass: 'crypto',
+        currentPrice: 67000,
+        marketState: {
+          isOpen: true,
+          isPreClose: false,
+          isNoTradeOpen: false,
+          sessionLabel: 'continuous_open',
+        },
+        position: null,
+        timeframes: {
+          '5m': {
+            values: {
+              emaGap12_26: 0.0012,
+              priceVsSma20: 0.001,
+              rsi14: 56,
+              atrPct14: 0.018,
+            },
+          },
+          '1h': {
+            values: {
+              emaGap12_26: 0.004,
+              rsi14: 60,
+            },
+          },
+        },
+        relatedSymbols: [
+          { timeframes: { '1h': { values: { emaGap12_26: 0.002, rsi14: 55 } } } },
+          { timeframes: { '1h': { values: { emaGap12_26: 0.0015, rsi14: 53 } } } },
+        ],
+      },
+    });
+
+    assert.equal(decision.action, 'open_long');
+    assert.equal(decision.signalContext.assetClass, 'crypto');
+    assert.equal(decision.signalContext.strategyProfile, 'crypto_momentum');
+    assert.equal(decision.stopLossPct, 0.035);
+    assert.equal(decision.takeProfitPct, 0.065);
+    assert.ok(decision.requestedSizePct <= 0.02);
+  });
+
+  test('SimpleRuleDecisionEngine skips crypto momentum entries when short-term RSI is overheated', async () => {
+    const engine = new SimpleRuleDecisionEngine();
+
+    const decision = await engine.decide({
+      symbol: 'SOL/USD',
+      strategyConfig: {
+        assetClass: 'crypto',
+        strategyProfile: 'crypto_momentum',
+      },
+      features: {
+        assetClass: 'crypto',
+        currentPrice: 140,
+        marketState: {
+          isOpen: true,
+          isPreClose: false,
+          isNoTradeOpen: false,
+          sessionLabel: 'continuous_open',
+        },
+        position: null,
+        timeframes: {
+          '5m': {
+            values: {
+              emaGap12_26: 0.002,
+              priceVsSma20: 0.001,
+              rsi14: 73,
+              atrPct14: 0.022,
+            },
+          },
+          '1h': {
+            values: {
+              emaGap12_26: 0.003,
+              rsi14: 58,
+            },
+          },
+        },
+        relatedSymbols: [
+          { timeframes: { '1h': { values: { emaGap12_26: 0.002, rsi14: 55 } } } },
+          { timeframes: { '1h': { values: { emaGap12_26: 0.0015, rsi14: 53 } } } },
+        ],
+      },
+    });
+
+    assert.equal(decision.action, 'skip');
+    assert.equal(decision.reasoning[0], 'fast_context_overheated');
+    assert.equal(decision.signalContext.strategyProfile, 'crypto_momentum');
   });
 
   test('BacktestEngine accounts for slippage and fees in cost metrics', async () => {

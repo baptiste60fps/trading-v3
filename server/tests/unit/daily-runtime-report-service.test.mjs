@@ -218,6 +218,7 @@ export const register = async ({ test }) => {
     assert.equal(report.entries.length, 1);
     assert.equal(report.exits.length, 1);
     assert.equal(report.exits[0].pnl, 20);
+    assert.deepEqual(report.cycleSummaries[0].decisionReasoning, ['entry_signal']);
     assert.equal(report.symbols.AAPL.shortBars.length, 2);
     assert.equal(report.symbols.AAPL.strategyProfile, 'single_stock_quality');
     assert.equal(report.wakeupReport.reportDate, '2026-04-01');
@@ -267,5 +268,68 @@ export const register = async ({ test }) => {
     assert.deepEqual(secondReport.entries, []);
     assert.ok(fs.existsSync(secondReport.reportPath));
     assert.equal(path.basename(secondReport.reportPath), 'runtime-report-2026-04-02.json');
+  });
+
+  test('DailyRuntimeReportService records execution rejection details in cycle summaries', async () => {
+    const { configStore } = await makeConfigStore();
+    const service = new DailyRuntimeReportService({
+      configStore,
+      now: () => Date.UTC(2026, 3, 1, 12, 0, 0),
+    });
+
+    await service.onStrategyEvaluated({
+      symbol: 'AAPL',
+      atMs: Date.UTC(2026, 3, 1, 13, 30, 0),
+      cycle: 1,
+      reason: 'scheduled',
+      ok: true,
+      result: {
+        features: {
+          symbol: 'AAPL',
+          currentPrice: 101,
+          marketState: {
+            sessionLabel: 'regular_open',
+            isOpen: true,
+          },
+          portfolioState: {
+            cash: 10_000,
+            equity: 10_000,
+            exposurePct: 0,
+            positions: [],
+          },
+          position: null,
+          riskState: {
+            canOpen: true,
+            canClose: true,
+            flags: [],
+          },
+          shortBars: baseBars,
+          timeframes: baseTimeframes,
+          relatedSymbols: [],
+        },
+        decision: {
+          action: 'open_long',
+          reasoning: ['llm_open'],
+        },
+        executionIntent: {
+          action: 'open_long',
+        },
+        executionResult: {
+          accepted: false,
+          status: 'rejected',
+          error: {
+            category: 'market',
+            message: 'market is closed',
+          },
+        },
+      },
+    });
+
+    const report = service.getCurrentReport();
+    assert.equal(report.cycleSummaries[0].executionStatus, 'rejected');
+    assert.equal(report.cycleSummaries[0].executionErrorCategory, 'market');
+    assert.equal(report.cycleSummaries[0].executionErrorMessage, 'market is closed');
+    assert.equal(report.cycleSummaries[0].error, 'market is closed');
+    assert.deepEqual(report.cycleSummaries[0].decisionReasoning, ['llm_open']);
   });
 };

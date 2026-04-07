@@ -35,6 +35,7 @@ export const register = async ({ test }) => {
   test('MarketCalendar keeps crypto markets open continuously, including weekends', async () => {
     const calendar = new MarketCalendar({
       timezone: 'America/New_York',
+      closedDates: ['2026-04-03'],
     });
 
     const weekendCrypto = calendar.getMarketState(Date.parse('2026-03-28T15:00:00.000Z'), { assetClass: 'crypto' });
@@ -42,5 +43,22 @@ export const register = async ({ test }) => {
     assert.equal(weekendCrypto.isPreClose, false);
     assert.equal(weekendCrypto.isNoTradeOpen, false);
     assert.equal(weekendCrypto.sessionLabel, 'continuous_open');
+
+    const holidayCrypto = calendar.getMarketState(Date.parse('2026-04-03T15:00:00.000Z'), { assetClass: 'crypto' });
+    assert.equal(holidayCrypto.isOpen, true);
+    assert.equal(holidayCrypto.sessionLabel, 'continuous_open');
+  });
+
+  test('MarketCalendar marks configured equity market holidays as closed', async () => {
+    const calendar = new MarketCalendar({
+      timezone: 'America/New_York',
+      closedDates: ['2026-04-03'],
+    });
+
+    const holiday = calendar.getMarketState(Date.parse('2026-04-03T15:00:00.000Z'));
+    assert.equal(holiday.isOpen, false);
+    assert.equal(holiday.sessionLabel, 'market_closed');
+    assert.equal(holiday.closedReason, 'configured_closed_date');
+    assert.equal(holiday.localDate, '2026-04-03');
   });
 };

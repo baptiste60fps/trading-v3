@@ -139,7 +139,7 @@ export const register = async ({ test }) => {
           'BTC/USD': {
             enabled: true,
             assetClass: 'crypto',
-            strategyProfile: 'high_beta_stock',
+            strategyProfile: 'crypto_momentum',
             brokerProtection: {
               enabled: false,
             },
@@ -158,6 +158,7 @@ export const register = async ({ test }) => {
     await store.load();
 
     assert.equal(store.getAssetClass('BTC/USD'), 'crypto');
+    assert.equal(store.getStrategyProfile('BTC/USD'), 'crypto_momentum');
     assert.equal(store.getSymbolConfig('BTC/USD').brokerProtection.enabled, false);
     assert.deepEqual(store.getRelatedSymbols('BTC/USD'), ['ETH/USD']);
     assert.deepEqual(store.getEnabledSymbols(), ['BTC/USD']);

@@ -381,6 +381,9 @@ Ce script:
 - teste un passage strategie en `dryRun`,
 - ne soumet jamais d'ordre broker pendant ce controle.
 
+Point calendrier:
+les fermetures marche actions connues sont configurees dans `storage/configs/runtime.json` via `market.closedDates`. La crypto ignore ces dates et reste traitee en `continuous_open`.
+
 ### 4. Lancer un run paper trading manuel
 
 Commande:
@@ -410,7 +413,9 @@ Point crypto:
 - les endpoints data crypto passent par Alpaca `v1beta3`,
 - le calendrier runtime traite la crypto en `continuous_open` 24/7,
 - le stop loss simple cote broker n'est pas active pour la crypto dans cette version,
-- les exemples crypto sont preconfigures dans `storage/configs/runtime.json` mais laisses `enabled=false` par defaut.
+- le panier pilote `BTC/USD`, `ETH/USD`, `SOL/USD` utilise le profil separe `crypto_momentum`,
+- les tailles crypto sont volontairement plus petites que les actions dans `storage/configs/runtime.json`,
+- le panier crypto est actif dans `runtime.symbols`; garde `BAPTISTO_EXECUTION_DRY_RUN=true` tant que tu veux uniquement valider la chaine sans ordre paper.
 
 Le rapport runtime journalier contient notamment:
 

@@ -14,6 +14,7 @@ export const defaultConfig = Object.freeze({
     closeMinutes: 16 * 60,
     preCloseMinutes: 10,
     noTradeOpenMinutes: 10,
+    closedDates: [],
   },
   storage: {
     rootDir: 'storage',

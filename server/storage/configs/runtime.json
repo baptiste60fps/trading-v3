@@ -3,9 +3,9 @@
     "mode": "paper",
     "logLevel": "info",
     "symbols": [
-      "AAPL",
-      "TGT",
-      "CVX"
+      "BTC/USD",
+      "ETH/USD",
+      "SOL/USD"
     ]
   },
   "market": {
@@ -14,7 +14,19 @@
     "openMinutes": 570,
     "closeMinutes": 960,
     "preCloseMinutes": 10,
-    "noTradeOpenMinutes": 10
+    "noTradeOpenMinutes": 10,
+    "closedDates": [
+      "2026-01-01",
+      "2026-01-19",
+      "2026-02-16",
+      "2026-04-03",
+      "2026-05-25",
+      "2026-06-19",
+      "2026-07-03",
+      "2026-09-07",
+      "2026-11-26",
+      "2026-12-25"
+    ]
   },
   "alpaca": {
     "enabled": true,
@@ -67,12 +79,11 @@
       "enabled": true,
       "outputSubdir": "daily",
       "watchlistSymbols": [
-        "AAPL",
-        "TGT",
-        "CVX",
+        "BTC/USD",
+        "ETH/USD",
+        "SOL/USD",
         "SPY",
-        "QQQ",
-        "XLF"
+        "QQQ"
       ],
       "maxNewsItemsPerFeed": 5,
       "includeLlmAnalysis": true,
@@ -451,39 +462,70 @@
       "strategyProfile": "financial_quality"
     },
     "BTC/USD": {
-      "enabled": false,
+      "enabled": true,
       "assetClass": "crypto",
-      "strategyProfile": "high_beta_stock",
+      "strategyProfile": "crypto_momentum",
+      "strategyRules": {
+        "minimumRelatedTrend": -0.01,
+        "minimumRelatedRsi": 34,
+        "minimumFastRsi": 40,
+        "maximumFastRsi": 68,
+        "requestedSizeScale": 0.3,
+        "maxRequestedSizePct": 0.012,
+        "stopLossPct": 0.035,
+        "takeProfitPct": 0.065
+      },
       "brokerProtection": {
         "enabled": false
       },
       "risk": {
-        "maxPositionPct": 0.03,
-        "maxPortfolioExposurePct": 0.2
+        "maxPositionPct": 0.015,
+        "maxPortfolioExposurePct": 0.05
       }
     },
     "ETH/USD": {
-      "enabled": false,
+      "enabled": true,
       "assetClass": "crypto",
-      "strategyProfile": "high_beta_stock",
+      "strategyProfile": "crypto_momentum",
+      "strategyRules": {
+        "minimumRelatedTrend": -0.012,
+        "minimumRelatedRsi": 34,
+        "minimumFastRsi": 40,
+        "maximumFastRsi": 70,
+        "requestedSizeScale": 0.28,
+        "maxRequestedSizePct": 0.012,
+        "stopLossPct": 0.04,
+        "takeProfitPct": 0.07
+      },
       "brokerProtection": {
         "enabled": false
       },
       "risk": {
-        "maxPositionPct": 0.03,
-        "maxPortfolioExposurePct": 0.2
+        "maxPositionPct": 0.015,
+        "maxPortfolioExposurePct": 0.05
       }
     },
     "SOL/USD": {
-      "enabled": false,
+      "enabled": true,
       "assetClass": "crypto",
-      "strategyProfile": "high_beta_stock",
+      "strategyProfile": "crypto_momentum",
+      "strategyRules": {
+        "minimumMediumGap": 0.003,
+        "minimumRelatedTrend": -0.008,
+        "minimumRelatedRsi": 42,
+        "minimumFastRsi": 46,
+        "maximumFastRsi": 62,
+        "requestedSizeScale": 0.12,
+        "maxRequestedSizePct": 0.004,
+        "stopLossPct": 0.045,
+        "takeProfitPct": 0.08
+      },
       "brokerProtection": {
         "enabled": false
       },
       "risk": {
-        "maxPositionPct": 0.025,
-        "maxPortfolioExposurePct": 0.2
+        "maxPositionPct": 0.005,
+        "maxPortfolioExposurePct": 0.05
       }
     }
   },

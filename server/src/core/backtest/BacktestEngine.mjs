@@ -155,6 +155,7 @@ export class BacktestEngine {
     }
 
     const symbolConfig = this.configStore.getSymbolConfig(safeSymbol);
+    const assetClass = safeString(this.configStore.getAssetClass?.(safeSymbol), symbolConfig?.assetClass ?? 'stock');
     const relatedSymbols = this.configStore.getRelatedSymbols(safeSymbol);
     const lookbackBars = Number.isFinite(Number(symbolConfig.lookbackBars)) ? Number(symbolConfig.lookbackBars) : 250;
     const preloadPlan = this.#buildPreloadPlan({
@@ -200,6 +201,7 @@ export class BacktestEngine {
     });
     const timelineBars = await barsRepository.getBars({
       symbol: safeSymbol,
+      assetClass,
       timeframe: safeStepTimeframe,
       startMs: safeStartMs,
       endMs: safeEndMs,
@@ -411,11 +413,14 @@ export class BacktestEngine {
     const dataset = {};
 
     for (const symbol of symbols) {
+      const symbolConfig = this.configStore.getSymbolConfig(symbol);
+      const assetClass = safeString(this.configStore.getAssetClass?.(symbol), symbolConfig?.assetClass ?? 'stock');
       dataset[symbol] = {};
       for (const [timeframe, historyMs] of preloadPlan.entries()) {
         const preloadStartMs = Math.max(1, startMs - historyMs);
         dataset[symbol][timeframe] = await this.#fetchRange({
           symbol,
+          assetClass,
           timeframe,
           startMs: preloadStartMs,
           endMs,
@@ -426,8 +431,8 @@ export class BacktestEngine {
     return dataset;
   }
 
-  async #fetchRange({ symbol, timeframe, startMs, endMs, chunkBars = 8_000 }) {
-    const cacheKey = `${symbol}|${timeframe}|${startMs}|${endMs}|${chunkBars}`;
+  async #fetchRange({ symbol, assetClass = 'stock', timeframe, startMs, endMs, chunkBars = 8_000 }) {
+    const cacheKey = `${symbol}|${assetClass}|${timeframe}|${startMs}|${endMs}|${chunkBars}`;
     if (this.sourceRangeCache.has(cacheKey)) {
       return this.sourceRangeCache.get(cacheKey);
     }
@@ -441,6 +446,7 @@ export class BacktestEngine {
       const windowEndMs = Math.min(endMs, windowStartMs + windowSizeMs);
       const bars = await this.sourceMarketDataProvider.getBars({
         symbol,
+        assetClass,
         timeframe,
         startMs: windowStartMs,
         endMs: windowEndMs,

@@ -46,7 +46,12 @@ class FakeFeatureSnapshotService {
 }
 
 class FakeDecisionEngine {
+  constructor() {
+    this.calls = 0;
+  }
+
   async decide() {
+    this.calls += 1;
     return {
       action: 'skip',
       confidence: 0.1,
@@ -156,5 +161,40 @@ export const register = async ({ test }) => {
     assert.equal(result.decision.action, 'hold');
     assert.equal(executionEngine.calls[0].decision.action, 'hold');
     assert.equal(result.fallbackExit, null);
+  });
+
+  test('StrategyInstance bypasses the LLM opening decision when the equity market is closed and no position is open', async () => {
+    class ClosedFeatureSnapshotService extends FakeFeatureSnapshotService {
+      async build(payload) {
+        const snapshot = await super.build(payload);
+        return {
+          ...snapshot,
+          marketState: {
+            isOpen: false,
+            isPreClose: false,
+            isNoTradeOpen: false,
+            sessionLabel: 'market_closed',
+          },
+        };
+      }
+    }
+
+    const decisionEngine = new FakeDecisionEngine();
+    const executionEngine = new FakeExecutionEngine();
+    const strategy = new StrategyInstance({
+      symbol: 'AAPL',
+      runtimeMode: 'paper',
+      configStore: new FakeConfigStore(),
+      featureSnapshotService: new ClosedFeatureSnapshotService(),
+      decisionEngine,
+      executionEngine,
+    });
+
+    const result = await strategy.runOnce(Date.now());
+
+    assert.equal(decisionEngine.calls, 0);
+    assert.equal(result.decision.action, 'skip');
+    assert.deepEqual(result.decision.reasoning, ['market_gate', 'market_closed']);
+    assert.equal(executionEngine.calls[0].decision.action, 'skip');
   });
 };

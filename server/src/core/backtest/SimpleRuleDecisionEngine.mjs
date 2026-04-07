@@ -7,6 +7,7 @@ const ALLOWED_STRATEGY_PROFILES = new Set([
   'consumer_quality_soft',
   'financial_quality',
   'high_beta_stock',
+  'crypto_momentum',
   'index_etf',
 ]);
 
@@ -154,6 +155,7 @@ export class SimpleRuleDecisionEngine {
     const mediumTrendConfirmed = !isPresent(medium?.emaGap12_26) || medium.emaGap12_26 > profileRules.mediumTrendConfirmationFloor;
     const baseSignalContext = {
       symbol: strategySymbol || null,
+      assetClass: features?.assetClass ?? strategyConfig?.assetClass ?? null,
       strategyProfile,
       entrySignalScore,
       contextScore: contextGuard.contextScore,
@@ -187,9 +189,11 @@ export class SimpleRuleDecisionEngine {
       const takeProfitPct = isFiniteNumber(position?.takeProfitPct) ? position.takeProfitPct : this.defaultTakeProfitPct;
       const entryPrice = Number(position?.entryPrice);
       const heldMs = Math.max(0, Number(features?.atMs ?? 0) - Number(position?.openedAtMs ?? 0));
+      const minimumHoldMs = profileRules.minHoldMs ?? this.minHoldMs;
       const positionSignalContext = {
         ...baseSignalContext,
         heldMs,
+        minimumHoldMs,
         entryPrice: isFiniteNumber(entryPrice) ? entryPrice : null,
       };
 
@@ -205,7 +209,7 @@ export class SimpleRuleDecisionEngine {
         return this.#decision('close_long', 0.9, ['take_profit_hit'], positionSignalContext);
       }
 
-      if (heldMs < this.minHoldMs) {
+      if (heldMs < minimumHoldMs) {
         return this.#decision('hold', 0.52, ['minimum_holding_period'], positionSignalContext);
       }
 
@@ -430,8 +434,8 @@ export class SimpleRuleDecisionEngine {
       confidence,
       reasoning: [`signal_score_${entrySignalScore}`],
       requestedSizePct,
-      stopLossPct: this.defaultStopLossPct,
-      takeProfitPct: this.defaultTakeProfitPct,
+      stopLossPct: profileRules.stopLossPct ?? this.defaultStopLossPct,
+      takeProfitPct: profileRules.takeProfitPct ?? this.defaultTakeProfitPct,
       signalContext: baseSignalContext,
     };
   }
@@ -481,8 +485,8 @@ export class SimpleRuleDecisionEngine {
       confidence: clamp(0.42 + Math.max(0, contextGuard.contextScore) * 0.02, 0.42, 0.64),
       reasoning: ['scout_entry', `signal_score_${entrySignalScore}`],
       requestedSizePct: baseRequestedSizePct,
-      stopLossPct: this.defaultStopLossPct,
-      takeProfitPct: this.defaultTakeProfitPct,
+      stopLossPct: profileRules.stopLossPct ?? this.defaultStopLossPct,
+      takeProfitPct: profileRules.takeProfitPct ?? this.defaultTakeProfitPct,
       signalContext: {
         ...baseSignalContext,
         scoutEntry: true,
@@ -617,6 +621,52 @@ export class SimpleRuleDecisionEngine {
         minimumRelatedRsiWhenFallback: null,
         requestedSizeScale: 0.8,
         maxRequestedSizePct: 0.035,
+      };
+    }
+
+    if (profile === 'crypto_momentum') {
+      return {
+        requireMediumTrendConfirmed: true,
+        mediumTrendConfirmationFloor: -0.002,
+        minimumEntryScore: 9,
+        secondaryPullbackFastRsiCeiling: 42,
+        secondaryPullbackPriceVsSmaCeiling: -0.0015,
+        secondaryMinimumMediumRsiWhenRelatedWeak: 100,
+        secondaryRelatedTrendCeilingWhenMediumHot: 1,
+        primaryFastRsiCeiling: 66,
+        primaryChasePriceVsSmaCeiling: 0.003,
+        requireFastTrendTurn: true,
+        fastTrendTurnFloor: -0.0005,
+        maximumMediumGapForPrimaryEntry: 0.018,
+        maximumMediumRsiForPrimaryEntry: 78,
+        minimumFastEmaGap: -0.001,
+        minimumFastRsi: 38,
+        maximumFastRsi: 72,
+        enableScoutEntries: false,
+        scoutMinimumEntryScore: null,
+        scoutMinimumContextScore: null,
+        scoutRequirePrimaryMediumContext: false,
+        scoutMinimumMediumRsi: null,
+        scoutMinimumRelatedTrend: null,
+        scoutMinimumRelatedRsi: null,
+        scoutMinimumFastRsi: null,
+        scoutMaximumFastRsi: null,
+        scoutMaximumFastPriceVsSma: null,
+        scoutRequestedSizeScale: null,
+        scoutMaxRequestedSizePct: null,
+        minimumMediumGap: -0.002,
+        minimumMediumRsi: 40,
+        minimumRelatedTrend: -0.012,
+        minimumRelatedRsi: 34,
+        minimumMediumGapWhenFallback: 0,
+        minimumMediumRsiWhenFallback: 45,
+        minimumRelatedTrendWhenFallback: -0.006,
+        minimumRelatedRsiWhenFallback: 38,
+        requestedSizeScale: 0.32,
+        maxRequestedSizePct: 0.015,
+        stopLossPct: 0.035,
+        takeProfitPct: 0.065,
+        minHoldMs: 6 * 60 * 60 * 1000,
       };
     }
 

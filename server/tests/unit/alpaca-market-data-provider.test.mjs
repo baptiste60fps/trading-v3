@@ -9,6 +9,27 @@ class FakeClient {
   async requestData(path, options = {}) {
     this.calls.push({ path, options });
     if (path === '../v1beta3/crypto/us/bars') {
+      if (options.query?.symbols === 'ETH/USD') {
+        if (options.query?.page_token === 'page-2') {
+          return {
+            bars: {
+              'ETH/USD': [
+                { t: '2026-04-02T01:00:00Z', o: 2110, h: 2120, l: 2100, c: 2115, v: 220.5, n: 1100 },
+              ],
+            },
+          };
+        }
+
+        return {
+          bars: {
+            'ETH/USD': [
+              { t: '2026-04-02T00:00:00Z', o: 2100, h: 2110, l: 2090, c: 2105, v: 210.5, n: 1000 },
+            ],
+          },
+          next_page_token: 'page-2',
+        };
+      }
+
       return {
         bars: {
           'BTC/USD': [
@@ -95,5 +116,28 @@ export const register = async ({ test }) => {
     assert.equal(client.calls[0].options.query.symbols, 'BTC/USD');
     assert.equal(client.calls[1].path, '../v1beta3/crypto/us/bars');
     assert.equal(client.calls[1].options.query.symbols, 'BTC/USD');
+  });
+
+  test('AlpacaMarketDataProvider follows crypto bars pagination', async () => {
+    const client = new FakeClient();
+    const provider = new AlpacaMarketDataProvider({
+      client,
+      cryptoLocation: 'us',
+    });
+
+    const bars = await provider.getBars({
+      symbol: 'ETH/USD',
+      assetClass: 'crypto',
+      timeframe: '1h',
+      startMs: Date.parse('2026-04-02T00:00:00Z'),
+      endMs: Date.parse('2026-04-02T02:00:00Z'),
+      limit: 10,
+    });
+
+    assert.equal(bars.length, 2);
+    assert.equal(bars[0].symbol, 'ETH/USD');
+    assert.equal(client.calls.length, 2);
+    assert.equal(client.calls[0].options.query.page_token, undefined);
+    assert.equal(client.calls[1].options.query.page_token, 'page-2');
   });
 };
