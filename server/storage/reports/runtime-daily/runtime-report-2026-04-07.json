@@ -1,7 +1,7 @@
 {
   "type": "runtime_daily_report",
   "generatedAtMs": 1775549208899,
-  "updatedAtMs": 1775549950946,
+  "updatedAtMs": 1775553147815,
   "sessionDate": "2026-04-07",
   "runtime": {
     "mode": "paper",
@@ -18,8 +18,8 @@
       "isOpen": false,
       "isPreClose": false,
       "isNoTradeOpen": false,
-      "minutesFromOpen": -312,
-      "minutesToClose": 702,
+      "minutesFromOpen": -259,
+      "minutesToClose": 649,
       "sessionLabel": "before_open"
     }
   },
@@ -534,21 +534,345 @@
       "marketSession": "before_open",
       "currentPrice": 198.835,
       "error": null
+    },
+    {
+      "cycle": 4,
+      "reason": "scheduled",
+      "atMs": 1775550250950,
+      "symbol": "AAPL",
+      "ok": true,
+      "decisionAction": "open_long",
+      "executionStatus": "noop",
+      "marketSession": "before_open",
+      "currentPrice": 258.87,
+      "error": null
+    },
+    {
+      "cycle": 4,
+      "reason": "scheduled",
+      "atMs": 1775550250950,
+      "symbol": "TGT",
+      "ok": true,
+      "decisionAction": "open_long",
+      "executionStatus": "noop",
+      "marketSession": "before_open",
+      "currentPrice": 122.22,
+      "error": null
+    },
+    {
+      "cycle": 4,
+      "reason": "scheduled",
+      "atMs": 1775550250950,
+      "symbol": "CVX",
+      "ok": true,
+      "decisionAction": "open_long",
+      "executionStatus": "noop",
+      "marketSession": "before_open",
+      "currentPrice": 198.835,
+      "error": null
+    },
+    {
+      "cycle": 5,
+      "reason": "scheduled",
+      "atMs": 1775550607131,
+      "symbol": "AAPL",
+      "ok": true,
+      "decisionAction": "open_long",
+      "executionStatus": "noop",
+      "marketSession": "before_open",
+      "currentPrice": 258.87,
+      "error": null
+    },
+    {
+      "cycle": 5,
+      "reason": "scheduled",
+      "atMs": 1775550607131,
+      "symbol": "TGT",
+      "ok": true,
+      "decisionAction": "open_long",
+      "executionStatus": "noop",
+      "marketSession": "before_open",
+      "currentPrice": 122.22,
+      "error": null
+    },
+    {
+      "cycle": 5,
+      "reason": "scheduled",
+      "atMs": 1775550607131,
+      "symbol": "CVX",
+      "ok": true,
+      "decisionAction": "open_long",
+      "executionStatus": "noop",
+      "marketSession": "before_open",
+      "currentPrice": 198.835,
+      "error": null
+    },
+    {
+      "cycle": 6,
+      "reason": "scheduled",
+      "atMs": 1775550968468,
+      "symbol": "AAPL",
+      "ok": true,
+      "decisionAction": "open_long",
+      "executionStatus": "noop",
+      "marketSession": "before_open",
+      "currentPrice": 258.87,
+      "error": null
+    },
+    {
+      "cycle": 6,
+      "reason": "scheduled",
+      "atMs": 1775550968468,
+      "symbol": "TGT",
+      "ok": true,
+      "decisionAction": "open_long",
+      "executionStatus": "noop",
+      "marketSession": "before_open",
+      "currentPrice": 122.22,
+      "error": null
+    },
+    {
+      "cycle": 6,
+      "reason": "scheduled",
+      "atMs": 1775550968468,
+      "symbol": "CVX",
+      "ok": true,
+      "decisionAction": "open_long",
+      "executionStatus": "noop",
+      "marketSession": "before_open",
+      "currentPrice": 198.835,
+      "error": null
+    },
+    {
+      "cycle": 7,
+      "reason": "scheduled",
+      "atMs": 1775551328486,
+      "symbol": "AAPL",
+      "ok": true,
+      "decisionAction": "open_long",
+      "executionStatus": "noop",
+      "marketSession": "before_open",
+      "currentPrice": 258.87,
+      "error": null
+    },
+    {
+      "cycle": 7,
+      "reason": "scheduled",
+      "atMs": 1775551328486,
+      "symbol": "TGT",
+      "ok": true,
+      "decisionAction": "open_long",
+      "executionStatus": "noop",
+      "marketSession": "before_open",
+      "currentPrice": 122.22,
+      "error": null
+    },
+    {
+      "cycle": 7,
+      "reason": "scheduled",
+      "atMs": 1775551328486,
+      "symbol": "CVX",
+      "ok": true,
+      "decisionAction": "open_long",
+      "executionStatus": "noop",
+      "marketSession": "before_open",
+      "currentPrice": 198.835,
+      "error": null
+    },
+    {
+      "cycle": 8,
+      "reason": "scheduled",
+      "atMs": 1775551681951,
+      "symbol": "AAPL",
+      "ok": true,
+      "decisionAction": "open_long",
+      "executionStatus": "noop",
+      "marketSession": "before_open",
+      "currentPrice": 258.87,
+      "error": null
+    },
+    {
+      "cycle": 8,
+      "reason": "scheduled",
+      "atMs": 1775551681951,
+      "symbol": "TGT",
+      "ok": true,
+      "decisionAction": "open_long",
+      "executionStatus": "noop",
+      "marketSession": "before_open",
+      "currentPrice": 122.22,
+      "error": null
+    },
+    {
+      "cycle": 8,
+      "reason": "scheduled",
+      "atMs": 1775551681951,
+      "symbol": "CVX",
+      "ok": true,
+      "decisionAction": "open_long",
+      "executionStatus": "noop",
+      "marketSession": "before_open",
+      "currentPrice": 198.835,
+      "error": null
+    },
+    {
+      "cycle": 9,
+      "reason": "scheduled",
+      "atMs": 1775552039697,
+      "symbol": "AAPL",
+      "ok": true,
+      "decisionAction": "open_long",
+      "executionStatus": "noop",
+      "marketSession": "before_open",
+      "currentPrice": 258.87,
+      "error": null
+    },
+    {
+      "cycle": 9,
+      "reason": "scheduled",
+      "atMs": 1775552039697,
+      "symbol": "TGT",
+      "ok": true,
+      "decisionAction": "open_long",
+      "executionStatus": "noop",
+      "marketSession": "before_open",
+      "currentPrice": 122.22,
+      "error": null
+    },
+    {
+      "cycle": 9,
+      "reason": "scheduled",
+      "atMs": 1775552039697,
+      "symbol": "CVX",
+      "ok": true,
+      "decisionAction": "open_long",
+      "executionStatus": "noop",
+      "marketSession": "before_open",
+      "currentPrice": 198.835,
+      "error": null
+    },
+    {
+      "cycle": 10,
+      "reason": "scheduled",
+      "atMs": 1775552387597,
+      "symbol": "AAPL",
+      "ok": true,
+      "decisionAction": "open_long",
+      "executionStatus": "noop",
+      "marketSession": "before_open",
+      "currentPrice": 258.87,
+      "error": null
+    },
+    {
+      "cycle": 10,
+      "reason": "scheduled",
+      "atMs": 1775552387597,
+      "symbol": "TGT",
+      "ok": true,
+      "decisionAction": "open_long",
+      "executionStatus": "noop",
+      "marketSession": "before_open",
+      "currentPrice": 122.22,
+      "error": null
+    },
+    {
+      "cycle": 10,
+      "reason": "scheduled",
+      "atMs": 1775552387597,
+      "symbol": "CVX",
+      "ok": true,
+      "decisionAction": "open_long",
+      "executionStatus": "noop",
+      "marketSession": "before_open",
+      "currentPrice": 198.835,
+      "error": null
+    },
+    {
+      "cycle": 11,
+      "reason": "scheduled",
+      "atMs": 1775552738163,
+      "symbol": "AAPL",
+      "ok": true,
+      "decisionAction": "open_long",
+      "executionStatus": "noop",
+      "marketSession": "before_open",
+      "currentPrice": 258.87,
+      "error": null
+    },
+    {
+      "cycle": 11,
+      "reason": "scheduled",
+      "atMs": 1775552738163,
+      "symbol": "TGT",
+      "ok": true,
+      "decisionAction": "open_long",
+      "executionStatus": "noop",
+      "marketSession": "before_open",
+      "currentPrice": 122.22,
+      "error": null
+    },
+    {
+      "cycle": 11,
+      "reason": "scheduled",
+      "atMs": 1775552738163,
+      "symbol": "CVX",
+      "ok": true,
+      "decisionAction": "open_long",
+      "executionStatus": "noop",
+      "marketSession": "before_open",
+      "currentPrice": 198.835,
+      "error": null
+    },
+    {
+      "cycle": 12,
+      "reason": "scheduled",
+      "atMs": 1775553089015,
+      "symbol": "AAPL",
+      "ok": true,
+      "decisionAction": "open_long",
+      "executionStatus": "noop",
+      "marketSession": "before_open",
+      "currentPrice": 258.87,
+      "error": null
+    },
+    {
+      "cycle": 12,
+      "reason": "scheduled",
+      "atMs": 1775553089015,
+      "symbol": "TGT",
+      "ok": true,
+      "decisionAction": "open_long",
+      "executionStatus": "noop",
+      "marketSession": "before_open",
+      "currentPrice": 122.22,
+      "error": null
+    },
+    {
+      "cycle": 12,
+      "reason": "scheduled",
+      "atMs": 1775553089015,
+      "symbol": "CVX",
+      "ok": true,
+      "decisionAction": "open_long",
+      "executionStatus": "noop",
+      "marketSession": "before_open",
+      "currentPrice": 198.835,
+      "error": null
     }
   ],
   "symbols": {
     "AAPL": {
       "symbol": "AAPL",
       "strategyProfile": "single_stock_quality",
-      "updatedAtMs": 1775549903129,
+      "updatedAtMs": 1775553089015,
       "marketState": {
         "timezone": "America/New_York",
         "sessionMode": "regular",
         "isOpen": false,
         "isPreClose": false,
         "isNoTradeOpen": false,
-        "minutesFromOpen": -312,
-        "minutesToClose": 702,
+        "minutesFromOpen": -259,
+        "minutesToClose": 649,
         "sessionLabel": "before_open"
       },
       "currentPrice": 258.87,
@@ -562,10 +886,10 @@
         "action": "open_long",
         "confidence": 0.75,
         "reasoning": [
-          "AAPL's RSI values are in the overbought range, indicating potential for a pullback.",
-          "The price is slightly above its 20-period SMA, suggesting recent strength but not yet overextended.",
-          "The 1-hour timeframe shows positive returns and an upward EMA gap, which could indicate buying pressure.",
-          "AAPL's position in the portfolio is currently empty, allowing for a new long position."
+          "AAPL's RSI values are in the overbought range, suggesting potential for a pullback.",
+          "The price is slightly above its 20-period SMA, indicating recent positive momentum.",
+          "The EMA gap suggests that the short-term EMA is below the long-term EMA, which could be a bearish signal.",
+          "AAPL's daily return over the past 50 periods is negative, but not significantly so, suggesting a potential for reversal."
         ],
         "requestedSizePct": null,
         "stopLossPct": null,
@@ -643,12 +967,12 @@
           "barCount": 37
         },
         "4h": {
-          "lastClose": 254.62,
-          "rsi14": 55.07092198581564,
-          "atrPct14": 0.01335884286948619,
-          "priceVsSma20": 0.009257405825566304,
-          "emaGap12_26": -0.0016029370869159922,
-          "barCount": 60
+          "lastClose": 254.04,
+          "rsi14": 53.73563218390799,
+          "atrPct14": 0.012287153879029164,
+          "priceVsSma20": 0.0089600610046709,
+          "emaGap12_26": -0.0006995401915465308,
+          "barCount": 71
         },
         "1d": {
           "lastClose": 258.87,
@@ -684,8 +1008,8 @@
               "rsi14": 58.9015151515128,
               "atrPct14": 0.0005312770382063817,
               "priceVsSma20": 0.0008237779772127644,
-              "emaGap12_26": 0.00045578370819019135,
-              "barCount": 83
+              "emaGap12_26": 0.0004531382166937991,
+              "barCount": 81
             },
             "10m": {
               "lastClose": 658.79,
@@ -720,11 +1044,11 @@
               "barCount": 44
             },
             "4h": {
-              "lastClose": 633.56,
-              "rsi14": 26.55988524982071,
-              "atrPct14": 0.008535103226213769,
-              "priceVsSma20": -0.02378931870876604,
-              "emaGap12_26": -0.011646358842047339,
+              "lastClose": 631.78,
+              "rsi14": 23.194330880348986,
+              "atrPct14": 0.00865694658628911,
+              "priceVsSma20": -0.02544858280266444,
+              "emaGap12_26": -0.01254183903800946,
               "barCount": 73
             },
             "1d": {
@@ -761,8 +1085,8 @@
               "rsi14": 53.45454545454673,
               "atrPct14": 0.0005672115298192614,
               "priceVsSma20": -0.00007268767127821982,
-              "emaGap12_26": 0.0003415719519392008,
-              "barCount": 88
+              "emaGap12_26": 0.0003407490856257828,
+              "barCount": 87
             },
             "10m": {
               "lastClose": 588.09,
@@ -797,12 +1121,12 @@
               "barCount": 45
             },
             "4h": {
-              "lastClose": 562.09,
-              "rsi14": 21.604671280276833,
-              "atrPct14": 0.009683248488421985,
-              "priceVsSma20": -0.03244408181251692,
-              "emaGap12_26": -0.014261484955330153,
-              "barCount": 73
+              "lastClose": 560.1,
+              "rsi14": 15.84038694074981,
+              "atrPct14": 0.010472619685260285,
+              "priceVsSma20": -0.034025132420564,
+              "emaGap12_26": -0.015311515921311171,
+              "barCount": 72
             },
             "1d": {
               "lastClose": 588.4,
@@ -874,12 +1198,12 @@
               "barCount": 41
             },
             "4h": {
-              "lastClose": 368.34,
-              "rsi14": 34.077759777829144,
-              "atrPct14": 0.014456751913992478,
-              "priceVsSma20": -0.007433336432240954,
-              "emaGap12_26": -0.019891977298532818,
-              "barCount": 67
+              "lastClose": 370.52,
+              "rsi14": 46.56072106261856,
+              "atrPct14": 0.013937940500609187,
+              "priceVsSma20": 0.0056658953811075845,
+              "emaGap12_26": -0.016363196229319664,
+              "barCount": 75
             },
             "1d": {
               "lastClose": 372.75,
@@ -896,15 +1220,15 @@
     "TGT": {
       "symbol": "TGT",
       "strategyProfile": "consumer_quality_soft",
-      "updatedAtMs": 1775549903129,
+      "updatedAtMs": 1775553089015,
       "marketState": {
         "timezone": "America/New_York",
         "sessionMode": "regular",
         "isOpen": false,
         "isPreClose": false,
         "isNoTradeOpen": false,
-        "minutesFromOpen": -312,
-        "minutesToClose": 702,
+        "minutesFromOpen": -259,
+        "minutesToClose": 649,
         "sessionLabel": "before_open"
       },
       "currentPrice": 122.22,
@@ -920,12 +1244,12 @@
         "reasoning": [
           "TGT's RSI values are above 60, indicating bullish momentum.",
           "The price is slightly above the 20-period SMA, suggesting a positive bias.",
-          "ATR percentage indicators are low, reducing volatility risk.",
-          "Related symbols like XLY and WMT show positive returns over various timeframes."
+          "ATR percentage indicators are low, which may indicate lower volatility and reduced risk of sharp price movements.",
+          "Related symbols like XLY, WMT, and COST show mixed signals but generally positive trends."
         ],
-        "requestedSizePct": 0.03,
-        "stopLossPct": 0.02,
-        "takeProfitPct": 0.05
+        "requestedSizePct": 0.02,
+        "stopLossPct": 0.015,
+        "takeProfitPct": 0.03
       },
       "executionIntent": null,
       "executionResult": {
@@ -1000,11 +1324,11 @@
         },
         "4h": {
           "lastClose": 122.22,
-          "rsi14": 72.97614391865463,
-          "atrPct14": 0.015548659326273466,
-          "priceVsSma20": 0.02940526199425192,
-          "emaGap12_26": 0.011005487108093985,
-          "barCount": 57
+          "rsi14": 60.92715231788073,
+          "atrPct14": 0.0119135282979171,
+          "priceVsSma20": 0.01798464527333074,
+          "emaGap12_26": 0.010398403369079804,
+          "barCount": 77
         },
         "1d": {
           "lastClose": 122.22,
@@ -1076,12 +1400,12 @@
               "barCount": 35
             },
             "4h": {
-              "lastClose": 108.795,
-              "rsi14": 43.05605141021068,
-              "atrPct14": 0.014095973423148393,
-              "priceVsSma20": 0.0003057140952586303,
-              "emaGap12_26": -0.007270651537226574,
-              "barCount": 57
+              "lastClose": 109.04,
+              "rsi14": 62.15195847097687,
+              "atrPct14": 0.012564196625091714,
+              "priceVsSma20": 0.010356993113097632,
+              "emaGap12_26": -0.002627104006554437,
+              "barCount": 77
             },
             "1d": {
               "lastClose": 109.04,
@@ -1153,12 +1477,12 @@
               "barCount": 37
             },
             "4h": {
-              "lastClose": 123.93,
-              "rsi14": 66.14372469635632,
-              "atrPct14": 0.012927804866802709,
-              "priceVsSma20": 0.013431462741490444,
-              "emaGap12_26": 0.00008811726119189882,
-              "barCount": 53
+              "lastClose": 124.57,
+              "rsi14": 62.622149837133584,
+              "atrPct14": 0.01148522345439743,
+              "priceVsSma20": 0.010525461883226065,
+              "emaGap12_26": 0.003139568778788009,
+              "barCount": 70
             },
             "1d": {
               "lastClose": 126.755,
@@ -1231,11 +1555,11 @@
             },
             "4h": {
               "lastClose": 1018.52,
-              "rsi14": 79.39053728949492,
-              "atrPct14": 0.011147477291981069,
-              "priceVsSma20": 0.02798776733717517,
-              "emaGap12_26": 0.006722139788230997,
-              "barCount": 57
+              "rsi14": 72.22843381783773,
+              "atrPct14": 0.009736466357347623,
+              "priceVsSma20": 0.020212788068602737,
+              "emaGap12_26": 0.008053610315107493,
+              "barCount": 77
             },
             "1d": {
               "lastClose": 1018.52,
@@ -1252,15 +1576,15 @@
     "CVX": {
       "symbol": "CVX",
       "strategyProfile": "single_stock_quality",
-      "updatedAtMs": 1775549903129,
+      "updatedAtMs": 1775553089015,
       "marketState": {
         "timezone": "America/New_York",
         "sessionMode": "regular",
         "isOpen": false,
         "isPreClose": false,
         "isNoTradeOpen": false,
-        "minutesFromOpen": -312,
-        "minutesToClose": 702,
+        "minutesFromOpen": -259,
+        "minutesToClose": 649,
         "sessionLabel": "before_open"
       },
       "currentPrice": 198.835,
@@ -1272,15 +1596,15 @@
       },
       "decision": {
         "action": "open_long",
-        "confidence": 0.75,
+        "confidence": 0.65,
         "reasoning": [
           "CVX shows positive RSI values across multiple timeframes, indicating potential upward momentum.",
           "Price vs SMA20 is slightly positive, suggesting the stock may be outperforming its moving average.",
-          "Related symbols XLE and XOM also show positive trends, which could support CVX's performance."
+          "Related symbols like XLE and XOM are showing mixed but generally positive trends, which could support CVX's performance."
         ],
-        "requestedSizePct": 0.01,
+        "requestedSizePct": null,
         "stopLossPct": null,
-        "takeProfitPct": null
+        "takeProfitPct": 0.03
       },
       "executionIntent": null,
       "executionResult": {
@@ -1355,11 +1679,11 @@
         },
         "4h": {
           "lastClose": 198.97,
-          "rsi14": 36.92953020134229,
-          "atrPct14": 0.020685099691985134,
-          "priceVsSma20": -0.03205288025929329,
-          "emaGap12_26": 0.0034749680966783994,
-          "barCount": 56
+          "rsi14": 35.571065989847696,
+          "atrPct14": 0.020760487941469983,
+          "priceVsSma20": -0.03389758498673845,
+          "emaGap12_26": -0.0051534274161177795,
+          "barCount": 75
         },
         "1d": {
           "lastClose": 198.835,
@@ -1431,12 +1755,12 @@
               "barCount": 42
             },
             "4h": {
-              "lastClose": 59.41,
-              "rsi14": 42.18749999999996,
-              "atrPct14": 0.01567196479669126,
-              "priceVsSma20": -0.025766116634211435,
-              "emaGap12_26": 0.009725289880324605,
-              "barCount": 61
+              "lastClose": 58.96,
+              "rsi14": 40.98998887652948,
+              "atrPct14": 0.01680315952704011,
+              "priceVsSma20": -0.03786685813594867,
+              "emaGap12_26": 0.004545576500139045,
+              "barCount": 75
             },
             "1d": {
               "lastClose": 59.68,
@@ -1508,12 +1832,12 @@
               "barCount": 35
             },
             "4h": {
-              "lastClose": 161.58,
-              "rsi14": 51.43936667866141,
-              "atrPct14": 0.021928544904779596,
-              "priceVsSma20": -0.018802043403344258,
-              "emaGap12_26": 0.020522751514684152,
-              "barCount": 52
+              "lastClose": 160.94,
+              "rsi14": 46.493386650261456,
+              "atrPct14": 0.021758330522466226,
+              "priceVsSma20": -0.03728040987663934,
+              "emaGap12_26": 0.010662591735806047,
+              "barCount": 71
             },
             "1d": {
               "lastClose": 163.37,
@@ -1549,8 +1873,8 @@
               "rsi14": 58.9015151515128,
               "atrPct14": 0.0005312770382063817,
               "priceVsSma20": 0.0008237779772127644,
-              "emaGap12_26": 0.00045578370819019135,
-              "barCount": 83
+              "emaGap12_26": 0.0004531382166937991,
+              "barCount": 81
             },
             "10m": {
               "lastClose": 658.79,
@@ -1585,11 +1909,11 @@
               "barCount": 44
             },
             "4h": {
-              "lastClose": 633.56,
-              "rsi14": 26.55988524982071,
-              "atrPct14": 0.008535103226213769,
-              "priceVsSma20": -0.02378931870876604,
-              "emaGap12_26": -0.011646358842047339,
+              "lastClose": 631.78,
+              "rsi14": 23.194330880348986,
+              "atrPct14": 0.00865694658628911,
+              "priceVsSma20": -0.02544858280266444,
+              "emaGap12_26": -0.01254183903800946,
               "barCount": 73
             },
             "1d": {
@@ -1607,9 +1931,9 @@
   },
   "lastCycleReason": "scheduled",
   "lastCompletedCycle": {
-    "cycle": 3,
+    "cycle": 12,
     "reason": "scheduled",
-    "completedAtMs": 1775549950945,
+    "completedAtMs": 1775553147815,
     "okCount": 3,
     "totalCount": 3
   },
