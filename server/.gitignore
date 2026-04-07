@@ -12,5 +12,5 @@ storage/cache/**
 storage/runs/**
 !storage/runs/
 
-storage/snapshots/**
-!storage/snapshots/
+# storage/snapshots/**
+# !storage/snapshots/

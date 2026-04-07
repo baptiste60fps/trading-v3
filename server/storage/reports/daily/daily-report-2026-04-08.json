@@ -1,7 +1,7 @@
 {
   "type": "daily_market_report",
-  "generatedAtMs": 1775199197824,
-  "reportDate": "2026-04-04",
+  "generatedAtMs": 1775543853187,
+  "reportDate": "2026-04-08",
   "runtime": {
     "mode": "paper",
     "executionDryRun": false,
@@ -17,11 +17,11 @@
       "isOpen": false,
       "isPreClose": false,
       "isNoTradeOpen": false,
-      "minutesFromOpen": -398,
-      "minutesToClose": 788,
+      "minutesFromOpen": -414,
+      "minutesToClose": 804,
       "sessionLabel": "before_open"
     },
-    "targetSessionDate": "2026-04-04",
+    "targetSessionDate": "2026-04-08",
     "targetSessionOpenLocal": "09:30",
     "targetWakeupLocal": "08:45"
   },
@@ -43,7 +43,7 @@
         "url": "https://www.sec.gov/rss/pressrelease.xml",
         "status": "error",
         "error": "RSS request failed (403) for https://www.sec.gov/rss/pressrelease.xml",
-        "fetchedAtMs": 1775199172059,
+        "fetchedAtMs": 1775543820071,
         "itemCount": 0,
         "source": "network",
         "items": []
@@ -54,7 +54,7 @@
         "url": "https://www.sec.gov/rss/news/press.xml",
         "status": "error",
         "error": "RSS request failed (403) for https://www.sec.gov/rss/news/press.xml",
-        "fetchedAtMs": 1775199172133,
+        "fetchedAtMs": 1775543820135,
         "itemCount": 0,
         "source": "network",
         "items": []
@@ -65,10 +65,16 @@
         "url": "https://www.federalreserve.gov/feeds/press_all.xml",
         "status": "ok",
         "error": null,
-        "fetchedAtMs": 1775198908476,
+        "fetchedAtMs": 1775543820284,
         "itemCount": 5,
-        "source": "cache",
+        "source": "network",
         "items": [
+          {
+            "title": "Federal Reserve Board issues enforcement action with former employee of United Bank",
+            "link": "https://www.federalreserve.gov/newsevents/pressreleases/enforcement20260403a.htm",
+            "publishedAt": "2026-04-03T15:00:00.000Z",
+            "summary": "Federal Reserve Board issues enforcement action with former employee of United Bank"
+          },
           {
             "title": "Federal Reserve Board announces it has made the joint findings with the Office of the Comptroller of the Currency required for the OCC to approve a request by Morgan Stanley Bank, N.A., for an exemption under section 23A of the Federal Reserve Act",
             "link": "https://www.federalreserve.gov/newsevents/pressreleases/orders20260326a.htm",
@@ -92,12 +98,6 @@
             "link": "https://www.federalreserve.gov/newsevents/pressreleases/bcreg20260319a.htm",
             "publishedAt": "2026-03-19T16:30:00.000Z",
             "summary": "Agencies request comment on proposals to modernize the regulatory capital framework and maintain the strength of the banking system"
-          },
-          {
-            "title": "Federal Reserve issues FOMC statement",
-            "link": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20260318a.htm",
-            "publishedAt": "2026-03-18T18:00:00.000Z",
-            "summary": "Federal Reserve issues FOMC statement"
           }
         ]
       },
@@ -107,9 +107,9 @@
         "url": "https://www.federalreserve.gov/feeds/press_monetary.xml",
         "status": "ok",
         "error": null,
-        "fetchedAtMs": 1775198908520,
+        "fetchedAtMs": 1775543820347,
         "itemCount": 5,
-        "source": "cache",
+        "source": "network",
         "items": [
           {
             "title": "Federal Reserve issues FOMC statement",
@@ -149,15 +149,15 @@
     {
       "symbol": "AAPL",
       "strategyProfile": "single_stock_quality",
-      "currentPrice": 255.89,
+      "currentPrice": 258.87,
       "marketState": {
         "timezone": "America/New_York",
         "sessionMode": "regular",
         "isOpen": false,
         "isPreClose": false,
         "isNoTradeOpen": false,
-        "minutesFromOpen": -398,
-        "minutesToClose": 788,
+        "minutesFromOpen": -414,
+        "minutesToClose": 804,
         "sessionLabel": "before_open"
       },
       "position": null,
@@ -168,57 +168,57 @@
       },
       "timeframes": {
         "5m": {
-          "lastClose": 255.89,
-          "rsi14": 63.50806451612914,
-          "atrPct14": 0.0013552140149506097,
-          "priceVsSma20": 0.0024965450910911756,
-          "emaGap12_26": 0.000596130238317352,
-          "barCount": 80
+          "lastClose": 258.87,
+          "rsi14": 46.86192468619308,
+          "atrPct14": 0.001134049633296379,
+          "priceVsSma20": 0.00016903231414892666,
+          "emaGap12_26": -0.000137199677976902,
+          "barCount": 78
         },
         "1h": {
-          "lastClose": 255.89,
-          "rsi14": 55.74660633484157,
-          "atrPct14": 0.006570903792366122,
-          "priceVsSma20": 0.006224759837519101,
-          "emaGap12_26": 0.003901685304335761,
-          "barCount": 61
+          "lastClose": 258.87,
+          "rsi14": 73.89240506329097,
+          "atrPct14": 0.007400294687349964,
+          "priceVsSma20": 0.010428447501105,
+          "emaGap12_26": 0.009370545307470507,
+          "barCount": 37
         },
         "4h": {
-          "lastClose": 248.67,
-          "rsi14": 49.23343224530168,
-          "atrPct14": 0.012775106423314923,
-          "priceVsSma20": -0.011449998558936109,
-          "emaGap12_26": -0.00158215863989469,
+          "lastClose": 253.74,
+          "rsi14": 54.14572864321611,
+          "atrPct14": 0.012584591651747018,
+          "priceVsSma20": 0.009367096915988605,
+          "emaGap12_26": -0.004692179140117337,
           "barCount": 76
         },
         "1d": {
-          "lastClose": 255.89,
-          "rsi14": 59.67608659725664,
-          "atrPct14": 0.019714107066094257,
-          "priceVsSma20": 0.00985724701525017,
-          "emaGap12_26": -0.009448254924075009,
-          "barCount": 173
+          "lastClose": 258.87,
+          "rsi14": 59.93431855500823,
+          "atrPct14": 0.02012179306767324,
+          "priceVsSma20": 0.021325450580406132,
+          "emaGap12_26": -0.006934572461223503,
+          "barCount": 170
         }
       },
       "relatedContext": {
-        "oneHourTrend": 0.0039061274404354005,
-        "oneHourRsi": 49.43579312014533,
-        "fourHourTrend": -0.011548970584265607,
-        "fourHourRsi": 31.32828627127067
+        "oneHourTrend": 0.005595308470296881,
+        "oneHourRsi": 71.63166706912759,
+        "fourHourTrend": -0.015151254905172211,
+        "fourHourRsi": 26.98307052624951
       }
     },
     {
       "symbol": "TGT",
       "strategyProfile": "consumer_quality_soft",
-      "currentPrice": 120.49,
+      "currentPrice": 122.22,
       "marketState": {
         "timezone": "America/New_York",
         "sessionMode": "regular",
         "isOpen": false,
         "isPreClose": false,
         "isNoTradeOpen": false,
-        "minutesFromOpen": -398,
-        "minutesToClose": 788,
+        "minutesFromOpen": -414,
+        "minutesToClose": 804,
         "sessionLabel": "before_open"
       },
       "position": null,
@@ -229,57 +229,57 @@
       },
       "timeframes": {
         "5m": {
-          "lastClose": 120.49,
-          "rsi14": 51.293103448275915,
-          "atrPct14": 0.0014435104276584911,
-          "priceVsSma20": 0.0005002916638123933,
-          "emaGap12_26": 0.0007105594392664243,
+          "lastClose": 122.22,
+          "rsi14": 67.11711711711715,
+          "atrPct14": 0.0008591065292095964,
+          "priceVsSma20": 0.0021770414375852365,
+          "emaGap12_26": 0.0015629583685130928,
           "barCount": 78
         },
         "1h": {
-          "lastClose": 120.49,
-          "rsi14": 43.7751004016064,
-          "atrPct14": 0.007297582490544556,
-          "priceVsSma20": -0.0004334579784267757,
-          "emaGap12_26": 0.0032276352757538854,
-          "barCount": 56
+          "lastClose": 122.22,
+          "rsi14": 66.95821185617105,
+          "atrPct14": 0.006940061247866836,
+          "priceVsSma20": 0.010099340484966883,
+          "emaGap12_26": 0.004038732986937059,
+          "barCount": 35
         },
         "4h": {
-          "lastClose": 120.49,
-          "rsi14": 49.218749999999936,
-          "atrPct14": 0.011669610993206332,
-          "priceVsSma20": 0.009636333165744979,
-          "emaGap12_26": 0.008770194720720305,
-          "barCount": 89
+          "lastClose": 122.22,
+          "rsi14": 64.65638148667605,
+          "atrPct14": 0.010332655398929335,
+          "priceVsSma20": 0.017740934886064125,
+          "emaGap12_26": 0.010127652052858675,
+          "barCount": 86
         },
         "1d": {
-          "lastClose": 120.49,
-          "rsi14": 60.384870603848675,
-          "atrPct14": 0.02220694070640126,
-          "priceVsSma20": 0.023358721247497202,
-          "emaGap12_26": 0.011756430736081161,
-          "barCount": 173
+          "lastClose": 122.22,
+          "rsi14": 65.57674841053583,
+          "atrPct14": 0.021723122238586166,
+          "priceVsSma20": 0.03740013368558461,
+          "emaGap12_26": 0.013390030141818679,
+          "barCount": 170
         }
       },
       "relatedContext": {
-        "oneHourTrend": 0.003179287551446707,
-        "oneHourRsi": 61.08792750570864,
-        "fourHourTrend": -0.00016142081799437139,
-        "fourHourRsi": 60.645514942715316
+        "oneHourTrend": 0.004846431143215019,
+        "oneHourRsi": 64.36027061091255,
+        "fourHourTrend": 0.002687101314413211,
+        "fourHourRsi": 61.56016292698566
       }
     },
     {
       "symbol": "CVX",
       "strategyProfile": "single_stock_quality",
-      "currentPrice": 198.97,
+      "currentPrice": 198.835,
       "marketState": {
         "timezone": "America/New_York",
         "sessionMode": "regular",
         "isOpen": false,
         "isPreClose": false,
         "isNoTradeOpen": false,
-        "minutesFromOpen": -398,
-        "minutesToClose": 788,
+        "minutesFromOpen": -414,
+        "minutesToClose": 804,
         "sessionLabel": "before_open"
       },
       "position": null,
@@ -290,218 +290,227 @@
       },
       "timeframes": {
         "5m": {
-          "lastClose": 198.97,
-          "rsi14": 54.975124378109186,
-          "atrPct14": 0.0014036574070749861,
-          "priceVsSma20": 0.0014167906043883896,
-          "emaGap12_26": -0.0005391765271039562,
+          "lastClose": 198.835,
+          "rsi14": 62.416107382550415,
+          "atrPct14": 0.0010399864927488473,
+          "priceVsSma20": 0.0013370633455794137,
+          "emaGap12_26": 0.0003752095711590549,
           "barCount": 78
         },
         "1h": {
-          "lastClose": 198.97,
-          "rsi14": 32.2623828647925,
-          "atrPct14": 0.013058321785768134,
-          "priceVsSma20": -0.01238673619056347,
-          "emaGap12_26": -0.012357158406535429,
-          "barCount": 56
+          "lastClose": 198.835,
+          "rsi14": 55.20572450805014,
+          "atrPct14": 0.009289827531082857,
+          "priceVsSma20": 0.002365579743478986,
+          "emaGap12_26": -0.014257625225852019,
+          "barCount": 35
         },
         "4h": {
-          "lastClose": 206.92,
-          "rsi14": 52.128427128427084,
-          "atrPct14": 0.014287785479550409,
-          "priceVsSma20": -0.00668109216114804,
-          "emaGap12_26": 0.011132160110491889,
-          "barCount": 83
+          "lastClose": 198.68,
+          "rsi14": 37.56448547379854,
+          "atrPct14": 0.02032521786649026,
+          "priceVsSma20": -0.03696684302239626,
+          "emaGap12_26": -0.0047468231863655634,
+          "barCount": 82
         },
         "1d": {
-          "lastClose": 198.97,
-          "rsi14": 53.24340709305848,
-          "atrPct14": 0.0274179883543104,
-          "priceVsSma20": -0.004629919132746716,
-          "emaGap12_26": 0.025336614619966474,
-          "barCount": 173
+          "lastClose": 198.835,
+          "rsi14": 53.09052440683092,
+          "atrPct14": 0.027864094062198006,
+          "priceVsSma20": -0.007528329504487941,
+          "emaGap12_26": 0.021959753286357735,
+          "barCount": 170
         }
       },
       "relatedContext": {
-        "oneHourTrend": -0.006085703504347538,
-        "oneHourRsi": 41.864943897681364,
-        "fourHourTrend": 0.010181773825716734,
-        "fourHourRsi": 66.62252168760311
+        "oneHourTrend": -0.0053422993679436035,
+        "oneHourRsi": 62.9645259785755,
+        "fourHourTrend": 0.007349049620619857,
+        "fourHourRsi": 46.11309663898887
       }
     },
     {
       "symbol": "SPY",
       "strategyProfile": "index_etf",
-      "currentPrice": null,
+      "currentPrice": 658.79,
       "marketState": {
         "timezone": "America/New_York",
         "sessionMode": "regular",
         "isOpen": false,
         "isPreClose": false,
         "isNoTradeOpen": false,
-        "minutesFromOpen": -398,
-        "minutesToClose": 788,
+        "minutesFromOpen": -414,
+        "minutesToClose": 804,
         "sessionLabel": "before_open"
       },
       "position": null,
-      "riskState": null,
+      "riskState": {
+        "canOpen": true,
+        "canClose": true,
+        "flags": []
+      },
       "timeframes": {
         "5m": {
-          "lastClose": null,
-          "rsi14": null,
-          "atrPct14": null,
-          "priceVsSma20": null,
-          "emaGap12_26": null,
-          "barCount": 0
+          "lastClose": 658.79,
+          "rsi14": 58.9015151515128,
+          "atrPct14": 0.0005312770382063817,
+          "priceVsSma20": 0.0008237779772127644,
+          "emaGap12_26": 0.00045578370819019135,
+          "barCount": 83
         },
         "1h": {
-          "lastClose": null,
-          "rsi14": null,
-          "atrPct14": null,
-          "priceVsSma20": null,
-          "emaGap12_26": null,
-          "barCount": 0
+          "lastClose": 658.79,
+          "rsi14": 70.31114952463228,
+          "atrPct14": 0.002663974863006414,
+          "priceVsSma20": 0.005127172335087148,
+          "emaGap12_26": 0.005136007887511036,
+          "barCount": 44
         },
         "4h": {
-          "lastClose": null,
-          "rsi14": null,
-          "atrPct14": null,
-          "priceVsSma20": null,
-          "emaGap12_26": null,
-          "barCount": 0
+          "lastClose": 637.31,
+          "rsi14": 23.84125144843567,
+          "atrPct14": 0.008279778623096645,
+          "priceVsSma20": -0.018996730938330292,
+          "emaGap12_26": -0.01120416750944946,
+          "barCount": 73
         },
         "1d": {
-          "lastClose": null,
-          "rsi14": null,
-          "atrPct14": null,
-          "priceVsSma20": null,
-          "emaGap12_26": null,
-          "barCount": 0
+          "lastClose": 658.885,
+          "rsi14": 44.2851476171587,
+          "atrPct14": 0.015860127336333334,
+          "priceVsSma20": 0.000876869518853356,
+          "emaGap12_26": -0.011503643130452384,
+          "barCount": 170
         }
       },
       "relatedContext": {
-        "oneHourTrend": null,
-        "oneHourRsi": null,
-        "fourHourTrend": null,
-        "fourHourRsi": null
-      },
-      "error": "too many requests."
+        "oneHourTrend": 0.005954933426569238,
+        "oneHourRsi": 68.37002671593109,
+        "fourHourTrend": -0.006638295246742854,
+        "fourHourRsi": 43.750811610447435
+      }
     },
     {
       "symbol": "QQQ",
       "strategyProfile": "index_etf",
-      "currentPrice": null,
+      "currentPrice": 588.09,
       "marketState": {
         "timezone": "America/New_York",
         "sessionMode": "regular",
         "isOpen": false,
         "isPreClose": false,
         "isNoTradeOpen": false,
-        "minutesFromOpen": -398,
-        "minutesToClose": 788,
+        "minutesFromOpen": -414,
+        "minutesToClose": 804,
         "sessionLabel": "before_open"
       },
       "position": null,
-      "riskState": null,
+      "riskState": {
+        "canOpen": true,
+        "canClose": true,
+        "flags": []
+      },
       "timeframes": {
         "5m": {
-          "lastClose": null,
-          "rsi14": null,
-          "atrPct14": null,
-          "priceVsSma20": null,
-          "emaGap12_26": null,
-          "barCount": 0
+          "lastClose": 588.09,
+          "rsi14": 53.45454545454673,
+          "atrPct14": 0.0005672115298192614,
+          "priceVsSma20": -0.00007268767127821982,
+          "emaGap12_26": 0.0003415719519392008,
+          "barCount": 88
         },
         "1h": {
-          "lastClose": null,
-          "rsi14": null,
-          "atrPct14": null,
-          "priceVsSma20": null,
-          "emaGap12_26": null,
-          "barCount": 0
+          "lastClose": 588.09,
+          "rsi14": 65.90628853267616,
+          "atrPct14": 0.00378829285119138,
+          "priceVsSma20": 0.006094666204755122,
+          "emaGap12_26": 0.006833105270933727,
+          "barCount": 45
         },
         "4h": {
-          "lastClose": null,
-          "rsi14": null,
-          "atrPct14": null,
-          "priceVsSma20": null,
-          "emaGap12_26": null,
-          "barCount": 0
+          "lastClose": 564.145,
+          "rsi14": 19.39497716894975,
+          "atrPct14": 0.009705584810389451,
+          "priceVsSma20": -0.029865247836673988,
+          "emaGap12_26": -0.01410719166230056,
+          "barCount": 72
         },
         "1d": {
-          "lastClose": null,
-          "rsi14": null,
-          "atrPct14": null,
-          "priceVsSma20": null,
-          "emaGap12_26": null,
-          "barCount": 0
+          "lastClose": 588.4,
+          "rsi14": 43.85741889555576,
+          "atrPct14": 0.018653491308147974,
+          "priceVsSma20": -0.0007697163936857597,
+          "emaGap12_26": -0.01195900934505317,
+          "barCount": 170
         }
       },
       "relatedContext": {
-        "oneHourTrend": null,
-        "oneHourRsi": null,
-        "fourHourTrend": null,
-        "fourHourRsi": null
-      },
-      "error": "too many requests."
+        "oneHourTrend": 0.005389234298761675,
+        "oneHourRsi": 69.8383137132498,
+        "fourHourTrend": -0.005670620529125821,
+        "fourHourRsi": 45.23290303694274
+      }
     },
     {
       "symbol": "XLF",
       "strategyProfile": "index_etf",
-      "currentPrice": null,
+      "currentPrice": 49.89,
       "marketState": {
         "timezone": "America/New_York",
         "sessionMode": "regular",
         "isOpen": false,
         "isPreClose": false,
         "isNoTradeOpen": false,
-        "minutesFromOpen": -398,
-        "minutesToClose": 788,
+        "minutesFromOpen": -414,
+        "minutesToClose": 804,
         "sessionLabel": "before_open"
       },
       "position": null,
-      "riskState": null,
+      "riskState": {
+        "canOpen": true,
+        "canClose": true,
+        "flags": []
+      },
       "timeframes": {
         "5m": {
-          "lastClose": null,
-          "rsi14": null,
-          "atrPct14": null,
-          "priceVsSma20": null,
-          "emaGap12_26": null,
-          "barCount": 0
+          "lastClose": 49.89,
+          "rsi14": 60.4651162790707,
+          "atrPct14": 0.0005655298800217157,
+          "priceVsSma20": 0.000546500142892141,
+          "emaGap12_26": 0.00013700354092675664,
+          "barCount": 78
         },
         "1h": {
-          "lastClose": null,
-          "rsi14": null,
-          "atrPct14": null,
-          "priceVsSma20": null,
-          "emaGap12_26": null,
-          "barCount": 0
+          "lastClose": 49.89,
+          "rsi14": 64.77611940298485,
+          "atrPct14": 0.005526443890845584,
+          "priceVsSma20": 0.005370439408748028,
+          "emaGap12_26": 0.005666862827398769,
+          "barCount": 35
         },
         "4h": {
-          "lastClose": null,
-          "rsi14": null,
-          "atrPct14": null,
-          "priceVsSma20": null,
-          "emaGap12_26": null,
-          "barCount": 0
+          "lastClose": 49.36,
+          "rsi14": 47.081218274111635,
+          "atrPct14": 0.01106303542486685,
+          "priceVsSma20": 0.007156812234425237,
+          "emaGap12_26": -0.004531988879458075,
+          "barCount": 76
         },
         "1d": {
-          "lastClose": null,
-          "rsi14": null,
-          "atrPct14": null,
-          "priceVsSma20": null,
-          "emaGap12_26": null,
-          "barCount": 0
+          "lastClose": 49.89,
+          "rsi14": 55.96707818930038,
+          "atrPct14": 0.016901468945966842,
+          "priceVsSma20": 0.013041204928144012,
+          "emaGap12_26": -0.010681558456035998,
+          "barCount": 170
         }
       },
       "relatedContext": {
-        "oneHourTrend": null,
-        "oneHourRsi": null,
-        "fourHourTrend": null,
-        "fourHourRsi": null
-      },
-      "error": "too many requests."
+        "oneHourTrend": 0.007296424063243633,
+        "oneHourRsi": 72.44038405440587,
+        "fourHourTrend": -0.002666081660549482,
+        "fourHourRsi": 42.78046173681353
+      }
     }
   ],
   "llm": {
@@ -511,50 +520,50 @@
     "error": null,
     "analysis": {
       "marketTone": "risk_on",
-      "summary": "The market is showing signs of risk-on sentiment, with several key indicators pointing towards potential upward momentum. However, caution may be warranted as some stocks are showing mixed signals.",
+      "summary": "The market is showing signs of risk-on sentiment, with key indices like SPY and QQQ displaying positive momentum in the short-term timeframes. However, longer-term indicators suggest caution, particularly for energy stocks such as CVX. Apple (AAPL) and Target (TGT) are also trending positively but remain within their respective mean reversion zones.",
       "keyRisks": [
-        "Market volatility",
-        "Economic data releases"
+        "Potential reversal of SPY's upward trend",
+        "CVX's declining long-term momentum"
       ],
       "keyCatalysts": [
-        "FOMC meeting outcomes",
-        "Corporate earnings reports"
+        "FOMC statement release on March 18th",
+        "Upcoming earnings reports from tech giants like AAPL and TGT"
       ],
       "watchlist": [
         {
           "symbol": "AAPL",
           "bias": "watch_long",
-          "confidence": 0.7,
-          "note": "Strong RSI and positive price vs SMA20, but mixed longer-term trends."
+          "confidence": 0.6,
+          "note": "Positive short-term momentum, but caution due to overbought conditions."
         },
         {
           "symbol": "TGT",
-          "bias": "stand_aside",
-          "confidence": 0.5,
-          "note": "Mixed signals across timeframes; no clear direction yet."
+          "bias": "watch_long",
+          "confidence": 0.7,
+          "note": "Consistent positive trend across timeframes with strong RSI readings."
         },
         {
           "symbol": "CVX",
-          "bias": "watch_long",
-          "confidence": 0.6,
-          "note": "Positive RSI and EMA gap, but declining one-hour trend."
+          "bias": "stand_aside",
+          "confidence": 0.8,
+          "note": "Declining long-term momentum and overbought conditions suggest caution."
         }
       ],
       "preOpenChecklist": [
         {
-          "item": "Review FOMC meeting outcomes",
+          "item": "Review FOMC statement for any policy changes or signals",
           "status": "ready",
           "note": ""
         },
         {
-          "item": "Monitor corporate earnings reports",
+          "item": "Monitor earnings reports from tech companies like AAPL and TGT",
           "status": "watch",
-          "note": "Several key companies are expected to release results."
+          "note": "Earnings season is approaching, with key dates to watch."
         },
         {
-          "item": "Check for any unexpected market-moving news",
+          "item": "Check for any new regulatory or economic news that could impact market sentiment",
           "status": "block",
-          "note": "Federal Reserve press releases and financial statements have been published recently, but no immediate concerns."
+          "note": "Federal Reserve press releases and monetary policy updates are critical."
         }
       ]
     }

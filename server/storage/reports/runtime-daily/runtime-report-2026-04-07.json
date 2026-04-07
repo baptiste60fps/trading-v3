@@ -1,0 +1,1617 @@
+{
+  "type": "runtime_daily_report",
+  "generatedAtMs": 1775549208899,
+  "updatedAtMs": 1775549950946,
+  "sessionDate": "2026-04-07",
+  "runtime": {
+    "mode": "paper",
+    "executionDryRun": false,
+    "llmEnabled": true,
+    "llmProvider": "ollama",
+    "llmModel": "qwen2.5:7b"
+  },
+  "market": {
+    "timezone": "America/New_York",
+    "currentState": {
+      "timezone": "America/New_York",
+      "sessionMode": "regular",
+      "isOpen": false,
+      "isPreClose": false,
+      "isNoTradeOpen": false,
+      "minutesFromOpen": -312,
+      "minutesToClose": 702,
+      "sessionLabel": "before_open"
+    }
+  },
+  "symbolsTracked": [
+    "AAPL",
+    "CVX",
+    "TGT"
+  ],
+  "wakeupReport": {
+    "type": "daily_market_report",
+    "generatedAtMs": 1775549208897,
+    "reportDate": "2026-04-07",
+    "runtime": {
+      "mode": "paper",
+      "executionDryRun": false,
+      "llmEnabled": true,
+      "llmProvider": "ollama",
+      "llmModel": "qwen2.5:7b"
+    },
+    "market": {
+      "timezone": "America/New_York",
+      "currentState": {
+        "timezone": "America/New_York",
+        "sessionMode": "regular",
+        "isOpen": false,
+        "isPreClose": false,
+        "isNoTradeOpen": false,
+        "minutesFromOpen": -324,
+        "minutesToClose": 714,
+        "sessionLabel": "before_open"
+      },
+      "targetSessionDate": "2026-04-07",
+      "targetSessionOpenLocal": "09:30",
+      "targetWakeupLocal": "08:45"
+    },
+    "account": {
+      "cash": 96700.76,
+      "equity": 96700.76,
+      "exposurePct": 0,
+      "positionCount": 0,
+      "positions": [],
+      "error": null
+    },
+    "news": {
+      "feedCount": 4,
+      "okFeedCount": 2,
+      "feeds": [
+        {
+          "feedId": "sec_press_releases",
+          "name": "SEC Press Releases",
+          "url": "https://www.sec.gov/rss/pressrelease.xml",
+          "status": "error",
+          "error": "RSS request failed (403) for https://www.sec.gov/rss/pressrelease.xml",
+          "fetchedAtMs": 1775549181886,
+          "itemCount": 0,
+          "source": "network",
+          "items": []
+        },
+        {
+          "feedId": "sec_news",
+          "name": "SEC News",
+          "url": "https://www.sec.gov/rss/news/press.xml",
+          "status": "error",
+          "error": "RSS request failed (403) for https://www.sec.gov/rss/news/press.xml",
+          "fetchedAtMs": 1775549181952,
+          "itemCount": 0,
+          "source": "network",
+          "items": []
+        },
+        {
+          "feedId": "fed_press_all",
+          "name": "Federal Reserve Press Releases",
+          "url": "https://www.federalreserve.gov/feeds/press_all.xml",
+          "status": "ok",
+          "error": null,
+          "fetchedAtMs": 1775549182201,
+          "itemCount": 5,
+          "source": "network",
+          "items": [
+            {
+              "title": "Federal Reserve Board issues enforcement action with former employee of United Bank",
+              "link": "https://www.federalreserve.gov/newsevents/pressreleases/enforcement20260403a.htm",
+              "publishedAt": "2026-04-03T15:00:00.000Z",
+              "summary": "Federal Reserve Board issues enforcement action with former employee of United Bank"
+            },
+            {
+              "title": "Federal Reserve Board announces it has made the joint findings with the Office of the Comptroller of the Currency required for the OCC to approve a request by Morgan Stanley Bank, N.A., for an exemption under section 23A of the Federal Reserve Act",
+              "link": "https://www.federalreserve.gov/newsevents/pressreleases/orders20260326a.htm",
+              "publishedAt": "2026-03-26T21:00:00.000Z",
+              "summary": "Federal Reserve Board announces it has made the joint findings with the Office of the Comptroller of the Currency required for the OCC to approve a request by Morgan Stanley Bank, N.A., for an exemption under section 23A of the Federal Reserve Act"
+            },
+            {
+              "title": "Federal Reserve Board releases annual audited financial statements",
+              "link": "https://www.federalreserve.gov/newsevents/pressreleases/other20260325a.htm",
+              "publishedAt": "2026-03-25T16:00:00.000Z",
+              "summary": "Federal Reserve Board releases annual audited financial statements"
+            },
+            {
+              "title": "Federal Reserve Board issues enforcement actions with former employee of Ally Bank and former employee of Regions Bank",
+              "link": "https://www.federalreserve.gov/newsevents/pressreleases/enforcement20260320a.htm",
+              "publishedAt": "2026-03-20T15:00:00.000Z",
+              "summary": "Federal Reserve Board issues enforcement actions with former employee of Ally Bank and former employee of Regions Bank"
+            },
+            {
+              "title": "Agencies request comment on proposals to modernize the regulatory capital framework and maintain the strength of the banking system",
+              "link": "https://www.federalreserve.gov/newsevents/pressreleases/bcreg20260319a.htm",
+              "publishedAt": "2026-03-19T16:30:00.000Z",
+              "summary": "Agencies request comment on proposals to modernize the regulatory capital framework and maintain the strength of the banking system"
+            }
+          ]
+        },
+        {
+          "feedId": "fed_monetary",
+          "name": "Federal Reserve Monetary Policy",
+          "url": "https://www.federalreserve.gov/feeds/press_monetary.xml",
+          "status": "ok",
+          "error": null,
+          "fetchedAtMs": 1775549182255,
+          "itemCount": 5,
+          "source": "network",
+          "items": [
+            {
+              "title": "Federal Reserve issues FOMC statement",
+              "link": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20260318a.htm",
+              "publishedAt": "2026-03-18T18:00:00.000Z",
+              "summary": "Federal Reserve issues FOMC statement"
+            },
+            {
+              "title": "Federal Reserve Board and Federal Open Market Committee release economic projections from the March 17-18 FOMC meeting",
+              "link": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20260318b.htm",
+              "publishedAt": "2026-03-18T18:00:00.000Z",
+              "summary": "Federal Reserve Board and Federal Open Market Committee release economic projections from the March 17-18 FOMC meeting"
+            },
+            {
+              "title": "Minutes of the Board's discount rate meetings on January 20 and 28, 2026",
+              "link": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20260224a.htm",
+              "publishedAt": "2026-02-24T19:00:00.000Z",
+              "summary": "Minutes of the Board's discount rate meetings on January 20 and 28, 2026"
+            },
+            {
+              "title": "Minutes of the Federal Open Market Committee, January 27–28, 2026",
+              "link": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20260218a.htm",
+              "publishedAt": "2026-02-18T19:00:00.000Z",
+              "summary": "Minutes of the Federal Open Market Committee, January 27–28, 2026"
+            },
+            {
+              "title": "Federal Reserve issues FOMC statement",
+              "link": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20260128a.htm",
+              "publishedAt": "2026-01-28T19:00:00.000Z",
+              "summary": "Federal Reserve issues FOMC statement"
+            }
+          ]
+        }
+      ]
+    },
+    "watchlist": [
+      {
+        "symbol": "AAPL",
+        "strategyProfile": "single_stock_quality",
+        "currentPrice": 258.87,
+        "marketState": {
+          "timezone": "America/New_York",
+          "sessionMode": "regular",
+          "isOpen": false,
+          "isPreClose": false,
+          "isNoTradeOpen": false,
+          "minutesFromOpen": -324,
+          "minutesToClose": 714,
+          "sessionLabel": "before_open"
+        },
+        "position": null,
+        "riskState": {
+          "canOpen": true,
+          "canClose": true,
+          "flags": []
+        },
+        "timeframes": {
+          "5m": {
+            "lastClose": 258.87,
+            "rsi14": 46.86192468619308,
+            "atrPct14": 0.001134049633296379,
+            "priceVsSma20": 0.00016903231414892666,
+            "emaGap12_26": -0.000137199677976902,
+            "barCount": 78
+          },
+          "1h": {
+            "lastClose": 258.87,
+            "rsi14": 73.89240506329097,
+            "atrPct14": 0.007400294687349964,
+            "priceVsSma20": 0.010428447501105,
+            "emaGap12_26": 0.009370545307470507,
+            "barCount": 37
+          },
+          "4h": {
+            "lastClose": 254.62,
+            "rsi14": 55.07092198581564,
+            "atrPct14": 0.01335884286948619,
+            "priceVsSma20": 0.009257405825566304,
+            "emaGap12_26": -0.0016029370869159922,
+            "barCount": 60
+          },
+          "1d": {
+            "lastClose": 258.87,
+            "rsi14": 59.93431855500823,
+            "atrPct14": 0.02012179306767324,
+            "priceVsSma20": 0.021325450580406132,
+            "emaGap12_26": -0.006934572461223503,
+            "barCount": 170
+          }
+        },
+        "relatedContext": {
+          "oneHourTrend": 0.005595308470296881,
+          "oneHourRsi": 71.63166706912759,
+          "fourHourTrend": -0.015266607031970103,
+          "fourHourRsi": 27.41410543597556
+        }
+      },
+      {
+        "symbol": "TGT",
+        "strategyProfile": "consumer_quality_soft",
+        "currentPrice": 122.22,
+        "marketState": {
+          "timezone": "America/New_York",
+          "sessionMode": "regular",
+          "isOpen": false,
+          "isPreClose": false,
+          "isNoTradeOpen": false,
+          "minutesFromOpen": -324,
+          "minutesToClose": 714,
+          "sessionLabel": "before_open"
+        },
+        "position": null,
+        "riskState": {
+          "canOpen": true,
+          "canClose": true,
+          "flags": []
+        },
+        "timeframes": {
+          "5m": {
+            "lastClose": 122.22,
+            "rsi14": 67.11711711711715,
+            "atrPct14": 0.0008591065292095964,
+            "priceVsSma20": 0.0021770414375852365,
+            "emaGap12_26": 0.0015629583685130928,
+            "barCount": 78
+          },
+          "1h": {
+            "lastClose": 122.22,
+            "rsi14": 66.95821185617105,
+            "atrPct14": 0.006940061247866836,
+            "priceVsSma20": 0.010099340484966883,
+            "emaGap12_26": 0.004038732986937059,
+            "barCount": 35
+          },
+          "4h": {
+            "lastClose": 122.22,
+            "rsi14": 72.97614391865463,
+            "atrPct14": 0.015548659326273466,
+            "priceVsSma20": 0.02940526199425192,
+            "emaGap12_26": 0.011005487108093985,
+            "barCount": 57
+          },
+          "1d": {
+            "lastClose": 122.22,
+            "rsi14": 65.57674841053583,
+            "atrPct14": 0.021723122238586166,
+            "priceVsSma20": 0.03740013368558461,
+            "emaGap12_26": 0.013390030141818679,
+            "barCount": 170
+          }
+        },
+        "relatedContext": {
+          "oneHourTrend": 0.004846431143215019,
+          "oneHourRsi": 64.36027061091255,
+          "fourHourTrend": -0.00015346482926789263,
+          "fourHourRsi": 62.8634377986873
+        }
+      },
+      {
+        "symbol": "CVX",
+        "strategyProfile": "single_stock_quality",
+        "currentPrice": 198.835,
+        "marketState": {
+          "timezone": "America/New_York",
+          "sessionMode": "regular",
+          "isOpen": false,
+          "isPreClose": false,
+          "isNoTradeOpen": false,
+          "minutesFromOpen": -324,
+          "minutesToClose": 714,
+          "sessionLabel": "before_open"
+        },
+        "position": null,
+        "riskState": {
+          "canOpen": true,
+          "canClose": true,
+          "flags": []
+        },
+        "timeframes": {
+          "5m": {
+            "lastClose": 198.835,
+            "rsi14": 62.416107382550415,
+            "atrPct14": 0.0010399864927488473,
+            "priceVsSma20": 0.0013370633455794137,
+            "emaGap12_26": 0.0003752095711590549,
+            "barCount": 78
+          },
+          "1h": {
+            "lastClose": 198.835,
+            "rsi14": 55.20572450805014,
+            "atrPct14": 0.009289827531082857,
+            "priceVsSma20": 0.002365579743478986,
+            "emaGap12_26": -0.014257625225852019,
+            "barCount": 35
+          },
+          "4h": {
+            "lastClose": 198.97,
+            "rsi14": 36.92953020134229,
+            "atrPct14": 0.020685099691985134,
+            "priceVsSma20": -0.03205288025929329,
+            "emaGap12_26": 0.0034749680966783994,
+            "barCount": 56
+          },
+          "1d": {
+            "lastClose": 198.835,
+            "rsi14": 53.09052440683092,
+            "atrPct14": 0.027864094062198006,
+            "priceVsSma20": -0.007528329504487941,
+            "emaGap12_26": 0.021959753286357735,
+            "barCount": 170
+          }
+        },
+        "relatedContext": {
+          "oneHourTrend": -0.0053422993679436035,
+          "oneHourRsi": 62.9645259785755,
+          "fourHourTrend": 0.00620056085098714,
+          "fourHourRsi": 40.06225064282736
+        }
+      }
+    ],
+    "llm": {
+      "provider": "ollama",
+      "model": "qwen2.5:7b",
+      "status": "ready",
+      "error": null,
+      "analysis": {
+        "marketTone": "risk_on",
+        "summary": "The market is showing signs of risk-on sentiment, with key indices and sectors potentially benefiting from positive economic data and easing concerns over interest rates. However, the pre-market session may see some volatility as investors digest recent Federal Reserve news.",
+        "keyRisks": [
+          "Potential for sudden market correction based on upcoming FOMC meeting outcomes",
+          "Volatility due to mixed economic reports"
+        ],
+        "keyCatalysts": [
+          "Positive earnings reports from tech giants like Apple (AAPL)",
+          "Economic data releases that could influence interest rate expectations"
+        ],
+        "watchlist": [
+          {
+            "symbol": "AAPL",
+            "bias": "watch_long",
+            "confidence": 0.6,
+            "note": "Technical indicators suggest a potential uptrend, but recent economic data may impact investor sentiment."
+          },
+          {
+            "symbol": "TGT",
+            "bias": "stand_aside",
+            "confidence": 0.5,
+            "note": "While the stock shows positive technicals, the overall market tone might not support aggressive long positions at this time."
+          },
+          {
+            "symbol": "CVX",
+            "bias": "watch_long",
+            "confidence": 0.7,
+            "note": "Strong technical indicators and a stable market environment suggest potential for growth in energy stocks like CVX."
+          }
+        ],
+        "preOpenChecklist": [
+          {
+            "item": "Review recent Federal Reserve news and economic projections",
+            "status": "ready",
+            "note": ""
+          },
+          {
+            "item": "Analyze key earnings reports from tech companies",
+            "status": "watch",
+            "note": "Earnings reports could provide insights into the health of the consumer sector."
+          },
+          {
+            "item": "Monitor global economic indicators and their impact on market sentiment",
+            "status": "block",
+            "note": "Global events can significantly affect market stability, especially in volatile pre-market sessions."
+          }
+        ]
+      }
+    },
+    "reportPath": "/Applications/MAMP/htdocs/trading-v3/server/storage/reports/daily/daily-report-2026-04-07.json"
+  },
+  "wakeupReportPath": "/Applications/MAMP/htdocs/trading-v3/server/storage/reports/daily/daily-report-2026-04-07.json",
+  "accountLatest": {
+    "cash": 96700.76,
+    "equity": 96700.76,
+    "exposurePct": 0,
+    "positions": []
+  },
+  "entries": [],
+  "exits": [],
+  "cycleSummaries": [
+    {
+      "cycle": 1,
+      "reason": "startup",
+      "atMs": 1775549181512,
+      "symbol": "AAPL",
+      "ok": true,
+      "decisionAction": "open_long",
+      "executionStatus": "noop",
+      "marketSession": "before_open",
+      "currentPrice": 258.87,
+      "error": null
+    },
+    {
+      "cycle": 1,
+      "reason": "startup",
+      "atMs": 1775549181512,
+      "symbol": "TGT",
+      "ok": true,
+      "decisionAction": "open_long",
+      "executionStatus": "noop",
+      "marketSession": "before_open",
+      "currentPrice": 122.22,
+      "error": null
+    },
+    {
+      "cycle": 1,
+      "reason": "startup",
+      "atMs": 1775549181512,
+      "symbol": "CVX",
+      "ok": true,
+      "decisionAction": "open_long",
+      "executionStatus": "noop",
+      "marketSession": "before_open",
+      "currentPrice": 198.835,
+      "error": null
+    },
+    {
+      "cycle": 2,
+      "reason": "scheduled",
+      "atMs": 1775549556044,
+      "symbol": "AAPL",
+      "ok": true,
+      "decisionAction": "open_long",
+      "executionStatus": "noop",
+      "marketSession": "before_open",
+      "currentPrice": 258.87,
+      "error": null
+    },
+    {
+      "cycle": 2,
+      "reason": "scheduled",
+      "atMs": 1775549556044,
+      "symbol": "TGT",
+      "ok": true,
+      "decisionAction": "open_long",
+      "executionStatus": "noop",
+      "marketSession": "before_open",
+      "currentPrice": 122.22,
+      "error": null
+    },
+    {
+      "cycle": 2,
+      "reason": "scheduled",
+      "atMs": 1775549556044,
+      "symbol": "CVX",
+      "ok": true,
+      "decisionAction": "open_long",
+      "executionStatus": "noop",
+      "marketSession": "before_open",
+      "currentPrice": 198.835,
+      "error": null
+    },
+    {
+      "cycle": 3,
+      "reason": "scheduled",
+      "atMs": 1775549903129,
+      "symbol": "AAPL",
+      "ok": true,
+      "decisionAction": "open_long",
+      "executionStatus": "noop",
+      "marketSession": "before_open",
+      "currentPrice": 258.87,
+      "error": null
+    },
+    {
+      "cycle": 3,
+      "reason": "scheduled",
+      "atMs": 1775549903129,
+      "symbol": "TGT",
+      "ok": true,
+      "decisionAction": "open_long",
+      "executionStatus": "noop",
+      "marketSession": "before_open",
+      "currentPrice": 122.22,
+      "error": null
+    },
+    {
+      "cycle": 3,
+      "reason": "scheduled",
+      "atMs": 1775549903129,
+      "symbol": "CVX",
+      "ok": true,
+      "decisionAction": "open_long",
+      "executionStatus": "noop",
+      "marketSession": "before_open",
+      "currentPrice": 198.835,
+      "error": null
+    }
+  ],
+  "symbols": {
+    "AAPL": {
+      "symbol": "AAPL",
+      "strategyProfile": "single_stock_quality",
+      "updatedAtMs": 1775549903129,
+      "marketState": {
+        "timezone": "America/New_York",
+        "sessionMode": "regular",
+        "isOpen": false,
+        "isPreClose": false,
+        "isNoTradeOpen": false,
+        "minutesFromOpen": -312,
+        "minutesToClose": 702,
+        "sessionLabel": "before_open"
+      },
+      "currentPrice": 258.87,
+      "position": null,
+      "riskState": {
+        "canOpen": true,
+        "canClose": true,
+        "flags": []
+      },
+      "decision": {
+        "action": "open_long",
+        "confidence": 0.75,
+        "reasoning": [
+          "AAPL's RSI values are in the overbought range, indicating potential for a pullback.",
+          "The price is slightly above its 20-period SMA, suggesting recent strength but not yet overextended.",
+          "The 1-hour timeframe shows positive returns and an upward EMA gap, which could indicate buying pressure.",
+          "AAPL's position in the portfolio is currently empty, allowing for a new long position."
+        ],
+        "requestedSizePct": null,
+        "stopLossPct": null,
+        "takeProfitPct": 0.03
+      },
+      "executionIntent": null,
+      "executionResult": {
+        "accepted": false,
+        "brokerOrderId": null,
+        "filledQty": null,
+        "avgFillPrice": null,
+        "status": "noop",
+        "error": {
+          "category": "noop",
+          "code": null,
+          "message": "market_gate"
+        }
+      },
+      "shortBars": [],
+      "timeframes": {
+        "1m": {
+          "lastClose": null,
+          "rsi14": null,
+          "atrPct14": null,
+          "priceVsSma20": null,
+          "emaGap12_26": null,
+          "barCount": 0
+        },
+        "2m": {
+          "lastClose": null,
+          "rsi14": null,
+          "atrPct14": null,
+          "priceVsSma20": null,
+          "emaGap12_26": null,
+          "barCount": 0
+        },
+        "5m": {
+          "lastClose": 258.87,
+          "rsi14": 46.86192468619308,
+          "atrPct14": 0.001134049633296379,
+          "priceVsSma20": 0.00016903231414892666,
+          "emaGap12_26": -0.000137199677976902,
+          "barCount": 78
+        },
+        "10m": {
+          "lastClose": 258.87,
+          "rsi14": 51.38427464008857,
+          "atrPct14": 0.0016996948275196113,
+          "priceVsSma20": 0.0004918012195510933,
+          "emaGap12_26": -0.0008195902238490011,
+          "barCount": 39
+        },
+        "15m": {
+          "lastClose": 258.87,
+          "rsi14": 48.673300165837745,
+          "atrPct14": 0.002393644907261784,
+          "priceVsSma20": -0.00015352840130552326,
+          "emaGap12_26": -0.001343406214190706,
+          "barCount": 26
+        },
+        "30m": {
+          "lastClose": 258.87,
+          "rsi14": 64.12098298676764,
+          "atrPct14": 0.005524008189438718,
+          "priceVsSma20": 0.003954814858624068,
+          "emaGap12_26": 0.006551417759551103,
+          "barCount": 28
+        },
+        "1h": {
+          "lastClose": 258.87,
+          "rsi14": 73.89240506329097,
+          "atrPct14": 0.007400294687349964,
+          "priceVsSma20": 0.010428447501105,
+          "emaGap12_26": 0.009370545307470507,
+          "barCount": 37
+        },
+        "4h": {
+          "lastClose": 254.62,
+          "rsi14": 55.07092198581564,
+          "atrPct14": 0.01335884286948619,
+          "priceVsSma20": 0.009257405825566304,
+          "emaGap12_26": -0.0016029370869159922,
+          "barCount": 60
+        },
+        "1d": {
+          "lastClose": 258.87,
+          "rsi14": 59.93431855500823,
+          "atrPct14": 0.02012179306767324,
+          "priceVsSma20": 0.021325450580406132,
+          "emaGap12_26": -0.006934572461223503,
+          "barCount": 170
+        }
+      },
+      "relatedSymbols": [
+        {
+          "symbol": "SPY",
+          "timeframes": {
+            "1m": {
+              "lastClose": null,
+              "rsi14": null,
+              "atrPct14": null,
+              "priceVsSma20": null,
+              "emaGap12_26": null,
+              "barCount": 0
+            },
+            "2m": {
+              "lastClose": null,
+              "rsi14": null,
+              "atrPct14": null,
+              "priceVsSma20": null,
+              "emaGap12_26": null,
+              "barCount": 0
+            },
+            "5m": {
+              "lastClose": 658.79,
+              "rsi14": 58.9015151515128,
+              "atrPct14": 0.0005312770382063817,
+              "priceVsSma20": 0.0008237779772127644,
+              "emaGap12_26": 0.00045578370819019135,
+              "barCount": 83
+            },
+            "10m": {
+              "lastClose": 658.79,
+              "rsi14": 79.00763358778545,
+              "atrPct14": 0.0008289006034873192,
+              "priceVsSma20": 0.0014951205255647904,
+              "emaGap12_26": 0.0005780592349950885,
+              "barCount": 44
+            },
+            "15m": {
+              "lastClose": 658.79,
+              "rsi14": 54.96894409937848,
+              "atrPct14": 0.001336866506343886,
+              "priceVsSma20": 0.0014829408594674103,
+              "emaGap12_26": 0.0006274805877899261,
+              "barCount": 31
+            },
+            "30m": {
+              "lastClose": 658.79,
+              "rsi14": 51.778656126482055,
+              "atrPct14": 0.002045958716521415,
+              "priceVsSma20": 0.0019787403287356057,
+              "emaGap12_26": 0.002752871515750558,
+              "barCount": 35
+            },
+            "1h": {
+              "lastClose": 658.79,
+              "rsi14": 70.31114952463228,
+              "atrPct14": 0.002663974863006414,
+              "priceVsSma20": 0.005127172335087148,
+              "emaGap12_26": 0.005136007887511036,
+              "barCount": 44
+            },
+            "4h": {
+              "lastClose": 633.56,
+              "rsi14": 26.55988524982071,
+              "atrPct14": 0.008535103226213769,
+              "priceVsSma20": -0.02378931870876604,
+              "emaGap12_26": -0.011646358842047339,
+              "barCount": 73
+            },
+            "1d": {
+              "lastClose": 658.885,
+              "rsi14": 44.2851476171587,
+              "atrPct14": 0.015860127336333334,
+              "priceVsSma20": 0.000876869518853356,
+              "emaGap12_26": -0.011503643130452384,
+              "barCount": 170
+            }
+          }
+        },
+        {
+          "symbol": "QQQ",
+          "timeframes": {
+            "1m": {
+              "lastClose": null,
+              "rsi14": null,
+              "atrPct14": null,
+              "priceVsSma20": null,
+              "emaGap12_26": null,
+              "barCount": 0
+            },
+            "2m": {
+              "lastClose": null,
+              "rsi14": null,
+              "atrPct14": null,
+              "priceVsSma20": null,
+              "emaGap12_26": null,
+              "barCount": 0
+            },
+            "5m": {
+              "lastClose": 588.09,
+              "rsi14": 53.45454545454673,
+              "atrPct14": 0.0005672115298192614,
+              "priceVsSma20": -0.00007268767127821982,
+              "emaGap12_26": 0.0003415719519392008,
+              "barCount": 88
+            },
+            "10m": {
+              "lastClose": 588.09,
+              "rsi14": 47.01986754966958,
+              "atrPct14": 0.000716605573005087,
+              "priceVsSma20": 0.0006235925567041089,
+              "emaGap12_26": 0.00045038342744138177,
+              "barCount": 48
+            },
+            "15m": {
+              "lastClose": 588.09,
+              "rsi14": 59.77822580645226,
+              "atrPct14": 0.0012085127883730193,
+              "priceVsSma20": 0.0009254590596060234,
+              "emaGap12_26": 0.00042157180358814886,
+              "barCount": 33
+            },
+            "30m": {
+              "lastClose": 588.09,
+              "rsi14": 41.54113557358098,
+              "atrPct14": 0.0027425345488907237,
+              "priceVsSma20": 0.001615027376268218,
+              "emaGap12_26": 0.0035370362920894042,
+              "barCount": 33
+            },
+            "1h": {
+              "lastClose": 588.09,
+              "rsi14": 65.90628853267616,
+              "atrPct14": 0.00378829285119138,
+              "priceVsSma20": 0.006094666204755122,
+              "emaGap12_26": 0.006833105270933727,
+              "barCount": 45
+            },
+            "4h": {
+              "lastClose": 562.09,
+              "rsi14": 21.604671280276833,
+              "atrPct14": 0.009683248488421985,
+              "priceVsSma20": -0.03244408181251692,
+              "emaGap12_26": -0.014261484955330153,
+              "barCount": 73
+            },
+            "1d": {
+              "lastClose": 588.4,
+              "rsi14": 43.85741889555576,
+              "atrPct14": 0.018653491308147974,
+              "priceVsSma20": -0.0007697163936857597,
+              "emaGap12_26": -0.01195900934505317,
+              "barCount": 170
+            }
+          }
+        },
+        {
+          "symbol": "MSFT",
+          "timeframes": {
+            "1m": {
+              "lastClose": null,
+              "rsi14": null,
+              "atrPct14": null,
+              "priceVsSma20": null,
+              "emaGap12_26": null,
+              "barCount": 0
+            },
+            "2m": {
+              "lastClose": null,
+              "rsi14": null,
+              "atrPct14": null,
+              "priceVsSma20": null,
+              "emaGap12_26": null,
+              "barCount": 0
+            },
+            "5m": {
+              "lastClose": 372.75,
+              "rsi14": 59.844559585491204,
+              "atrPct14": 0.0009849573632269566,
+              "priceVsSma20": 0.00041063132553377046,
+              "emaGap12_26": 0.00027114226795818866,
+              "barCount": 78
+            },
+            "10m": {
+              "lastClose": 372.75,
+              "rsi14": 58.62913096695187,
+              "atrPct14": 0.0016182811152629837,
+              "priceVsSma20": 0.0010641762034087454,
+              "emaGap12_26": 0.0004773406537857621,
+              "barCount": 39
+            },
+            "15m": {
+              "lastClose": 372.75,
+              "rsi14": 55.02425502425508,
+              "atrPct14": 0.002421193829644543,
+              "priceVsSma20": 0.0015375717651041655,
+              "emaGap12_26": 0.000702324793756511,
+              "barCount": 26
+            },
+            "30m": {
+              "lastClose": 372.75,
+              "rsi14": 46.69565217391311,
+              "atrPct14": 0.004136246047714857,
+              "priceVsSma20": 0.0018148234998476744,
+              "emaGap12_26": 0.0027708866902277384,
+              "barCount": 30
+            },
+            "1h": {
+              "lastClose": 372.75,
+              "rsi14": 78.67756315007432,
+              "atrPct14": 0.0063102424068218746,
+              "priceVsSma20": 0.005308378850900865,
+              "emaGap12_26": 0.004816812252445878,
+              "barCount": 41
+            },
+            "4h": {
+              "lastClose": 368.34,
+              "rsi14": 34.077759777829144,
+              "atrPct14": 0.014456751913992478,
+              "priceVsSma20": -0.007433336432240954,
+              "emaGap12_26": -0.019891977298532818,
+              "barCount": 67
+            },
+            "1d": {
+              "lastClose": 372.75,
+              "rsi14": 28.876422004051747,
+              "atrPct14": 0.021732298553224113,
+              "priceVsSma20": -0.02850373938097892,
+              "emaGap12_26": -0.028053710183081993,
+              "barCount": 170
+            }
+          }
+        }
+      ]
+    },
+    "TGT": {
+      "symbol": "TGT",
+      "strategyProfile": "consumer_quality_soft",
+      "updatedAtMs": 1775549903129,
+      "marketState": {
+        "timezone": "America/New_York",
+        "sessionMode": "regular",
+        "isOpen": false,
+        "isPreClose": false,
+        "isNoTradeOpen": false,
+        "minutesFromOpen": -312,
+        "minutesToClose": 702,
+        "sessionLabel": "before_open"
+      },
+      "currentPrice": 122.22,
+      "position": null,
+      "riskState": {
+        "canOpen": true,
+        "canClose": true,
+        "flags": []
+      },
+      "decision": {
+        "action": "open_long",
+        "confidence": 0.75,
+        "reasoning": [
+          "TGT's RSI values are above 60, indicating bullish momentum.",
+          "The price is slightly above the 20-period SMA, suggesting a positive bias.",
+          "ATR percentage indicators are low, reducing volatility risk.",
+          "Related symbols like XLY and WMT show positive returns over various timeframes."
+        ],
+        "requestedSizePct": 0.03,
+        "stopLossPct": 0.02,
+        "takeProfitPct": 0.05
+      },
+      "executionIntent": null,
+      "executionResult": {
+        "accepted": false,
+        "brokerOrderId": null,
+        "filledQty": null,
+        "avgFillPrice": null,
+        "status": "noop",
+        "error": {
+          "category": "noop",
+          "code": null,
+          "message": "market_gate"
+        }
+      },
+      "shortBars": [],
+      "timeframes": {
+        "1m": {
+          "lastClose": null,
+          "rsi14": null,
+          "atrPct14": null,
+          "priceVsSma20": null,
+          "emaGap12_26": null,
+          "barCount": 0
+        },
+        "2m": {
+          "lastClose": null,
+          "rsi14": null,
+          "atrPct14": null,
+          "priceVsSma20": null,
+          "emaGap12_26": null,
+          "barCount": 0
+        },
+        "5m": {
+          "lastClose": 122.22,
+          "rsi14": 67.11711711711715,
+          "atrPct14": 0.0008591065292095964,
+          "priceVsSma20": 0.0021770414375852365,
+          "emaGap12_26": 0.0015629583685130928,
+          "barCount": 78
+        },
+        "10m": {
+          "lastClose": 122.22,
+          "rsi14": 80.83333333333377,
+          "atrPct14": 0.0012652827454005362,
+          "priceVsSma20": 0.004336759325265029,
+          "emaGap12_26": 0.0014471496255952473,
+          "barCount": 39
+        },
+        "15m": {
+          "lastClose": 122.22,
+          "rsi14": 83.44827586206853,
+          "atrPct14": 0.0015867171610912426,
+          "priceVsSma20": 0.005084219593879227,
+          "emaGap12_26": 0.0018410430262485891,
+          "barCount": 26
+        },
+        "30m": {
+          "lastClose": 122.22,
+          "rsi14": 74.0088105726872,
+          "atrPct14": 0.0036497416836150463,
+          "priceVsSma20": 0.008072747517862038,
+          "emaGap12_26": 0.005154260516918564,
+          "barCount": 26
+        },
+        "1h": {
+          "lastClose": 122.22,
+          "rsi14": 66.95821185617105,
+          "atrPct14": 0.006940061247866836,
+          "priceVsSma20": 0.010099340484966883,
+          "emaGap12_26": 0.004038732986937059,
+          "barCount": 35
+        },
+        "4h": {
+          "lastClose": 122.22,
+          "rsi14": 72.97614391865463,
+          "atrPct14": 0.015548659326273466,
+          "priceVsSma20": 0.02940526199425192,
+          "emaGap12_26": 0.011005487108093985,
+          "barCount": 57
+        },
+        "1d": {
+          "lastClose": 122.22,
+          "rsi14": 65.57674841053583,
+          "atrPct14": 0.021723122238586166,
+          "priceVsSma20": 0.03740013368558461,
+          "emaGap12_26": 0.013390030141818679,
+          "barCount": 170
+        }
+      },
+      "relatedSymbols": [
+        {
+          "symbol": "XLY",
+          "timeframes": {
+            "1m": {
+              "lastClose": null,
+              "rsi14": null,
+              "atrPct14": null,
+              "priceVsSma20": null,
+              "emaGap12_26": null,
+              "barCount": 0
+            },
+            "2m": {
+              "lastClose": null,
+              "rsi14": null,
+              "atrPct14": null,
+              "priceVsSma20": null,
+              "emaGap12_26": null,
+              "barCount": 0
+            },
+            "5m": {
+              "lastClose": 109.04,
+              "rsi14": 84.21052631578928,
+              "atrPct14": 0.0006452415889319495,
+              "priceVsSma20": 0.002088450112693576,
+              "emaGap12_26": 0.0011499587181891765,
+              "barCount": 78
+            },
+            "10m": {
+              "lastClose": 109.04,
+              "rsi14": 89.20454545454697,
+              "atrPct14": 0.001048108164762572,
+              "priceVsSma20": 0.003977607542722602,
+              "emaGap12_26": 0.000922331844983544,
+              "barCount": 39
+            },
+            "15m": {
+              "lastClose": 109.04,
+              "rsi14": 59.06735751295349,
+              "atrPct14": 0.0018931453726024436,
+              "priceVsSma20": 0.003956808864725132,
+              "emaGap12_26": 0.0010648471341993687,
+              "barCount": 26
+            },
+            "30m": {
+              "lastClose": 109.04,
+              "rsi14": 70.03816793893148,
+              "atrPct14": 0.0035340897180588726,
+              "priceVsSma20": 0.005500560199550974,
+              "emaGap12_26": 0.002352262819109839,
+              "barCount": 26
+            },
+            "1h": {
+              "lastClose": 109.04,
+              "rsi14": 44.25872093023261,
+              "atrPct14": 0.0071860916046535715,
+              "priceVsSma20": 0.0013637428082082874,
+              "emaGap12_26": 0.002502902390610692,
+              "barCount": 35
+            },
+            "4h": {
+              "lastClose": 108.795,
+              "rsi14": 43.05605141021068,
+              "atrPct14": 0.014095973423148393,
+              "priceVsSma20": 0.0003057140952586303,
+              "emaGap12_26": -0.007270651537226574,
+              "barCount": 57
+            },
+            "1d": {
+              "lastClose": 109.04,
+              "rsi14": 42.792894085900606,
+              "atrPct14": 0.02127332040666597,
+              "priceVsSma20": -0.011248588825767252,
+              "emaGap12_26": -0.019726541577876608,
+              "barCount": 170
+            }
+          }
+        },
+        {
+          "symbol": "WMT",
+          "timeframes": {
+            "1m": {
+              "lastClose": null,
+              "rsi14": null,
+              "atrPct14": null,
+              "priceVsSma20": null,
+              "emaGap12_26": null,
+              "barCount": 0
+            },
+            "2m": {
+              "lastClose": null,
+              "rsi14": null,
+              "atrPct14": null,
+              "priceVsSma20": null,
+              "emaGap12_26": null,
+              "barCount": 0
+            },
+            "5m": {
+              "lastClose": 126.755,
+              "rsi14": 60.88888888888887,
+              "atrPct14": 0.0009833368083535595,
+              "priceVsSma20": 0.0012263057391502037,
+              "emaGap12_26": 0.000510944094428774,
+              "barCount": 78
+            },
+            "10m": {
+              "lastClose": 126.755,
+              "rsi14": 60.72874493927128,
+              "atrPct14": 0.0013242644697025084,
+              "priceVsSma20": 0.0019306659710735558,
+              "emaGap12_26": 0.0005693802097986398,
+              "barCount": 39
+            },
+            "15m": {
+              "lastClose": 126.755,
+              "rsi14": 63.25301204819274,
+              "atrPct14": 0.001665192131051473,
+              "priceVsSma20": 0.0019722462659724944,
+              "emaGap12_26": 0.0006722200132343953,
+              "barCount": 26
+            },
+            "30m": {
+              "lastClose": 126.755,
+              "rsi14": 75.67567567567546,
+              "atrPct14": 0.003338837014037218,
+              "priceVsSma20": 0.004807825697491311,
+              "emaGap12_26": 0.003909057731536819,
+              "barCount": 26
+            },
+            "1h": {
+              "lastClose": 126.755,
+              "rsi14": 73.11212814645295,
+              "atrPct14": 0.005359044726328071,
+              "priceVsSma20": 0.009951715455834629,
+              "emaGap12_26": 0.005862945458635412,
+              "barCount": 37
+            },
+            "4h": {
+              "lastClose": 123.93,
+              "rsi14": 66.14372469635632,
+              "atrPct14": 0.012927804866802709,
+              "priceVsSma20": 0.013431462741490444,
+              "emaGap12_26": 0.00008811726119189882,
+              "barCount": 53
+            },
+            "1d": {
+              "lastClose": 126.755,
+              "rsi14": 52.273420811718,
+              "atrPct14": 0.018787649965907236,
+              "priceVsSma20": 0.024736196418213143,
+              "emaGap12_26": 0.0012905648826315585,
+              "barCount": 170
+            }
+          }
+        },
+        {
+          "symbol": "COST",
+          "timeframes": {
+            "1m": {
+              "lastClose": null,
+              "rsi14": null,
+              "atrPct14": null,
+              "priceVsSma20": null,
+              "emaGap12_26": null,
+              "barCount": 0
+            },
+            "2m": {
+              "lastClose": null,
+              "rsi14": null,
+              "atrPct14": null,
+              "priceVsSma20": null,
+              "emaGap12_26": null,
+              "barCount": 0
+            },
+            "5m": {
+              "lastClose": 1018.52,
+              "rsi14": 38.90532544378697,
+              "atrPct14": 0.0007374145118126572,
+              "priceVsSma20": -0.0009899176507196354,
+              "emaGap12_26": 0.00039844167230909704,
+              "barCount": 72
+            },
+            "10m": {
+              "lastClose": 1018.52,
+              "rsi14": 54.16841223292836,
+              "atrPct14": 0.0011245308318512475,
+              "priceVsSma20": 0.00021850196037991664,
+              "emaGap12_26": 0.0013193936484049138,
+              "barCount": 39
+            },
+            "15m": {
+              "lastClose": 1018.52,
+              "rsi14": 69.54887218045093,
+              "atrPct14": 0.0012486605214288404,
+              "priceVsSma20": 0.001046483371136206,
+              "emaGap12_26": 0.0020931463054547957,
+              "barCount": 26
+            },
+            "30m": {
+              "lastClose": 1018.52,
+              "rsi14": 67.55646817248459,
+              "atrPct14": 0.0032420991803232477,
+              "priceVsSma20": 0.004141695068316681,
+              "emaGap12_26": 0.004186513818155711,
+              "barCount": 26
+            },
+            "1h": {
+              "lastClose": 1018.52,
+              "rsi14": 75.7099627560521,
+              "atrPct14": 0.005397537603581662,
+              "priceVsSma20": 0.010824090784810015,
+              "emaGap12_26": 0.006173445580398955,
+              "barCount": 35
+            },
+            "4h": {
+              "lastClose": 1018.52,
+              "rsi14": 79.39053728949492,
+              "atrPct14": 0.011147477291981069,
+              "priceVsSma20": 0.02798776733717517,
+              "emaGap12_26": 0.006722139788230997,
+              "barCount": 57
+            },
+            "1d": {
+              "lastClose": 1018.52,
+              "rsi14": 59.27022798390705,
+              "atrPct14": 0.015439419101104674,
+              "priceVsSma20": 0.02712370168718263,
+              "emaGap12_26": 0.004894355252793436,
+              "barCount": 170
+            }
+          }
+        }
+      ]
+    },
+    "CVX": {
+      "symbol": "CVX",
+      "strategyProfile": "single_stock_quality",
+      "updatedAtMs": 1775549903129,
+      "marketState": {
+        "timezone": "America/New_York",
+        "sessionMode": "regular",
+        "isOpen": false,
+        "isPreClose": false,
+        "isNoTradeOpen": false,
+        "minutesFromOpen": -312,
+        "minutesToClose": 702,
+        "sessionLabel": "before_open"
+      },
+      "currentPrice": 198.835,
+      "position": null,
+      "riskState": {
+        "canOpen": true,
+        "canClose": true,
+        "flags": []
+      },
+      "decision": {
+        "action": "open_long",
+        "confidence": 0.75,
+        "reasoning": [
+          "CVX shows positive RSI values across multiple timeframes, indicating potential upward momentum.",
+          "Price vs SMA20 is slightly positive, suggesting the stock may be outperforming its moving average.",
+          "Related symbols XLE and XOM also show positive trends, which could support CVX's performance."
+        ],
+        "requestedSizePct": 0.01,
+        "stopLossPct": null,
+        "takeProfitPct": null
+      },
+      "executionIntent": null,
+      "executionResult": {
+        "accepted": false,
+        "brokerOrderId": null,
+        "filledQty": null,
+        "avgFillPrice": null,
+        "status": "noop",
+        "error": {
+          "category": "noop",
+          "code": null,
+          "message": "market_gate"
+        }
+      },
+      "shortBars": [],
+      "timeframes": {
+        "1m": {
+          "lastClose": null,
+          "rsi14": null,
+          "atrPct14": null,
+          "priceVsSma20": null,
+          "emaGap12_26": null,
+          "barCount": 0
+        },
+        "2m": {
+          "lastClose": null,
+          "rsi14": null,
+          "atrPct14": null,
+          "priceVsSma20": null,
+          "emaGap12_26": null,
+          "barCount": 0
+        },
+        "5m": {
+          "lastClose": 198.835,
+          "rsi14": 62.416107382550415,
+          "atrPct14": 0.0010399864927488473,
+          "priceVsSma20": 0.0013370633455794137,
+          "emaGap12_26": 0.0003752095711590549,
+          "barCount": 78
+        },
+        "10m": {
+          "lastClose": 198.835,
+          "rsi14": 50.55432372505554,
+          "atrPct14": 0.001523158110278118,
+          "priceVsSma20": 0.00104844891234449,
+          "emaGap12_26": 0.0013011221435398302,
+          "barCount": 39
+        },
+        "15m": {
+          "lastClose": 198.835,
+          "rsi14": 66.66666666666734,
+          "atrPct14": 0.0018482661503256708,
+          "priceVsSma20": 0.002792750197005269,
+          "emaGap12_26": 0.002045833399795847,
+          "barCount": 26
+        },
+        "30m": {
+          "lastClose": 198.835,
+          "rsi14": 52.25390984360627,
+          "atrPct14": 0.004296455424274996,
+          "priceVsSma20": 0.0025841747658487844,
+          "emaGap12_26": -0.001345257247129642,
+          "barCount": 26
+        },
+        "1h": {
+          "lastClose": 198.835,
+          "rsi14": 55.20572450805014,
+          "atrPct14": 0.009289827531082857,
+          "priceVsSma20": 0.002365579743478986,
+          "emaGap12_26": -0.014257625225852019,
+          "barCount": 35
+        },
+        "4h": {
+          "lastClose": 198.97,
+          "rsi14": 36.92953020134229,
+          "atrPct14": 0.020685099691985134,
+          "priceVsSma20": -0.03205288025929329,
+          "emaGap12_26": 0.0034749680966783994,
+          "barCount": 56
+        },
+        "1d": {
+          "lastClose": 198.835,
+          "rsi14": 53.09052440683092,
+          "atrPct14": 0.027864094062198006,
+          "priceVsSma20": -0.007528329504487941,
+          "emaGap12_26": 0.021959753286357735,
+          "barCount": 170
+        }
+      },
+      "relatedSymbols": [
+        {
+          "symbol": "XLE",
+          "timeframes": {
+            "1m": {
+              "lastClose": null,
+              "rsi14": null,
+              "atrPct14": null,
+              "priceVsSma20": null,
+              "emaGap12_26": null,
+              "barCount": 0
+            },
+            "2m": {
+              "lastClose": null,
+              "rsi14": null,
+              "atrPct14": null,
+              "priceVsSma20": null,
+              "emaGap12_26": null,
+              "barCount": 0
+            },
+            "5m": {
+              "lastClose": 59.68,
+              "rsi14": 72.50000000000004,
+              "atrPct14": 0.0008677230945997718,
+              "priceVsSma20": 0.0024860579184304787,
+              "emaGap12_26": 0.0005906039855751357,
+              "barCount": 79
+            },
+            "10m": {
+              "lastClose": 59.68,
+              "rsi14": 65.11627906976776,
+              "atrPct14": 0.0011310321715817784,
+              "priceVsSma20": 0.002317691713412469,
+              "emaGap12_26": 0.00151757656792331,
+              "barCount": 41
+            },
+            "15m": {
+              "lastClose": 59.68,
+              "rsi14": 75.17730496453808,
+              "atrPct14": 0.0015798544618920213,
+              "priceVsSma20": 0.004075692636413822,
+              "emaGap12_26": 0.0024516130003776402,
+              "barCount": 27
+            },
+            "30m": {
+              "lastClose": 59.68,
+              "rsi14": 65.74074074074056,
+              "atrPct14": 0.0037701072386059045,
+              "priceVsSma20": 0.006484471840190159,
+              "emaGap12_26": 0.0005828648743067411,
+              "barCount": 30
+            },
+            "1h": {
+              "lastClose": 59.68,
+              "rsi14": 55.95854922279785,
+              "atrPct14": 0.004799406357717348,
+              "priceVsSma20": 0.006022141589862245,
+              "emaGap12_26": -0.006959160031112634,
+              "barCount": 42
+            },
+            "4h": {
+              "lastClose": 59.41,
+              "rsi14": 42.18749999999996,
+              "atrPct14": 0.01567196479669126,
+              "priceVsSma20": -0.025766116634211435,
+              "emaGap12_26": 0.009725289880324605,
+              "barCount": 61
+            },
+            "1d": {
+              "lastClose": 59.68,
+              "rsi14": 59.18472652218783,
+              "atrPct14": 0.025816258138644216,
+              "priceVsSma20": 0.008159197256617682,
+              "emaGap12_26": 0.022236364712982033,
+              "barCount": 170
+            }
+          }
+        },
+        {
+          "symbol": "XOM",
+          "timeframes": {
+            "1m": {
+              "lastClose": null,
+              "rsi14": null,
+              "atrPct14": null,
+              "priceVsSma20": null,
+              "emaGap12_26": null,
+              "barCount": 0
+            },
+            "2m": {
+              "lastClose": null,
+              "rsi14": null,
+              "atrPct14": null,
+              "priceVsSma20": null,
+              "emaGap12_26": null,
+              "barCount": 0
+            },
+            "5m": {
+              "lastClose": 163.37,
+              "rsi14": 89.7058823529404,
+              "atrPct14": 0.0011783069106935148,
+              "priceVsSma20": 0.0051574538513245345,
+              "emaGap12_26": 0.0012355079950704109,
+              "barCount": 78
+            },
+            "10m": {
+              "lastClose": 163.37,
+              "rsi14": 69.48051948051935,
+              "atrPct14": 0.0016373875252494233,
+              "priceVsSma20": 0.005073971709416618,
+              "emaGap12_26": 0.0024926462488282734,
+              "barCount": 39
+            },
+            "15m": {
+              "lastClose": 163.37,
+              "rsi14": 72.15189873417734,
+              "atrPct14": 0.0023434972323997296,
+              "priceVsSma20": 0.007231946336861975,
+              "emaGap12_26": 0.003676407779213752,
+              "barCount": 26
+            },
+            "30m": {
+              "lastClose": 163.37,
+              "rsi14": 78.04878048780512,
+              "atrPct14": 0.005154819472013568,
+              "priceVsSma20": 0.011671344596487894,
+              "emaGap12_26": 0.0049042368709002054,
+              "barCount": 26
+            },
+            "1h": {
+              "lastClose": 163.37,
+              "rsi14": 62.623879188296385,
+              "atrPct14": 0.010630995374216282,
+              "priceVsSma20": 0.012616644301126004,
+              "emaGap12_26": -0.01420374596022921,
+              "barCount": 35
+            },
+            "4h": {
+              "lastClose": 161.58,
+              "rsi14": 51.43936667866141,
+              "atrPct14": 0.021928544904779596,
+              "priceVsSma20": -0.018802043403344258,
+              "emaGap12_26": 0.020522751514684152,
+              "barCount": 52
+            },
+            "1d": {
+              "lastClose": 163.37,
+              "rsi14": 58.91766075065464,
+              "atrPct14": 0.032878916394861776,
+              "priceVsSma20": 0.020072710697901182,
+              "emaGap12_26": 0.02636887635444487,
+              "barCount": 170
+            }
+          }
+        },
+        {
+          "symbol": "SPY",
+          "timeframes": {
+            "1m": {
+              "lastClose": null,
+              "rsi14": null,
+              "atrPct14": null,
+              "priceVsSma20": null,
+              "emaGap12_26": null,
+              "barCount": 0
+            },
+            "2m": {
+              "lastClose": null,
+              "rsi14": null,
+              "atrPct14": null,
+              "priceVsSma20": null,
+              "emaGap12_26": null,
+              "barCount": 0
+            },
+            "5m": {
+              "lastClose": 658.79,
+              "rsi14": 58.9015151515128,
+              "atrPct14": 0.0005312770382063817,
+              "priceVsSma20": 0.0008237779772127644,
+              "emaGap12_26": 0.00045578370819019135,
+              "barCount": 83
+            },
+            "10m": {
+              "lastClose": 658.79,
+              "rsi14": 79.00763358778545,
+              "atrPct14": 0.0008289006034873192,
+              "priceVsSma20": 0.0014951205255647904,
+              "emaGap12_26": 0.0005780592349950885,
+              "barCount": 44
+            },
+            "15m": {
+              "lastClose": 658.79,
+              "rsi14": 54.96894409937848,
+              "atrPct14": 0.001336866506343886,
+              "priceVsSma20": 0.0014829408594674103,
+              "emaGap12_26": 0.0006274805877899261,
+              "barCount": 31
+            },
+            "30m": {
+              "lastClose": 658.79,
+              "rsi14": 51.778656126482055,
+              "atrPct14": 0.002045958716521415,
+              "priceVsSma20": 0.0019787403287356057,
+              "emaGap12_26": 0.002752871515750558,
+              "barCount": 35
+            },
+            "1h": {
+              "lastClose": 658.79,
+              "rsi14": 70.31114952463228,
+              "atrPct14": 0.002663974863006414,
+              "priceVsSma20": 0.005127172335087148,
+              "emaGap12_26": 0.005136007887511036,
+              "barCount": 44
+            },
+            "4h": {
+              "lastClose": 633.56,
+              "rsi14": 26.55988524982071,
+              "atrPct14": 0.008535103226213769,
+              "priceVsSma20": -0.02378931870876604,
+              "emaGap12_26": -0.011646358842047339,
+              "barCount": 73
+            },
+            "1d": {
+              "lastClose": 658.885,
+              "rsi14": 44.2851476171587,
+              "atrPct14": 0.015860127336333334,
+              "priceVsSma20": 0.000876869518853356,
+              "emaGap12_26": -0.011503643130452384,
+              "barCount": 170
+            }
+          }
+        }
+      ]
+    }
+  },
+  "lastCycleReason": "scheduled",
+  "lastCompletedCycle": {
+    "cycle": 3,
+    "reason": "scheduled",
+    "completedAtMs": 1775549950945,
+    "okCount": 3,
+    "totalCount": 3
+  },
+  "reportPath": "/Applications/MAMP/htdocs/trading-v3/server/storage/reports/runtime-daily/runtime-report-2026-04-07.json"
+}
