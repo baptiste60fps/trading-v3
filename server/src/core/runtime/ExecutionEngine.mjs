@@ -7,6 +7,10 @@ const toPositiveFiniteOrNull = (value) => {
   const numeric = Number(value);
   return Number.isFinite(numeric) && numeric > 0 ? numeric : null;
 };
+const toPositiveIntegerOrNull = (value) => {
+  const numeric = Math.floor(Number(value));
+  return Number.isFinite(numeric) && numeric > 0 ? numeric : null;
+};
 
 const resolveBrokerUnavailableReason = (portfolioState) => {
   if (portfolioState?.brokerReady !== false) return null;
@@ -125,8 +129,14 @@ export class ExecutionEngine {
     }
 
     const qty = stopLossPct !== null && referencePrice !== null
-      ? allowance.adjustedNotional / referencePrice
+      ? toPositiveIntegerOrNull(allowance.adjustedNotional / referencePrice)
       : null;
+    if (stopLossPct !== null && qty === null) {
+      return {
+        executionIntent: null,
+        reason: 'insufficient_notional_for_whole_share_stop_order',
+      };
+    }
 
     return {
       executionIntent: {

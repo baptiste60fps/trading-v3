@@ -62,12 +62,30 @@ export const register = async ({ test }) => {
       side: 'buy',
       type: 'market',
       time_in_force: 'gtc',
-      qty: '8.000000',
+      qty: '8',
       order_class: 'oto',
       stop_loss: {
         stop_price: '98.00',
       },
     });
+  });
+
+  test('AlpacaBrokerGateway rounds broker-protected stock quantities down to whole shares', async () => {
+    const client = new FakeClient();
+    const gateway = new AlpacaBrokerGateway({ client, paper: true });
+
+    const result = await gateway.submit({
+      symbol: 'AAPL',
+      action: 'open_long',
+      qty: 8.75,
+      referencePrice: 100,
+      stopLossPct: 0.02,
+    });
+
+    assert.equal(result.accepted, true);
+    assert.equal(client.calls[0].options.body.qty, '8');
+    assert.equal(client.calls[0].options.body.time_in_force, 'gtc');
+    assert.equal(client.calls[0].options.body.order_class, 'oto');
   });
 
   test('AlpacaBrokerGateway rejects a broker-side stop loss without reference price', async () => {

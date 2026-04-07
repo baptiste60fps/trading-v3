@@ -7,6 +7,7 @@ const toPositiveFiniteOrNull = (value) => {
 };
 
 const formatQty = (value) => Number(value).toFixed(6);
+const formatWholeQty = (value) => String(Math.floor(Number(value)));
 const formatMoneyPrice = (value) => (value >= 1 ? Number(value).toFixed(2) : Number(value).toFixed(4));
 
 const buildSimpleStopLoss = (referencePrice, stopLossPct) => {
@@ -116,7 +117,11 @@ export class AlpacaBrokerGateway extends BrokerGateway {
     if (stopLoss) {
       const qty = toPositiveFiniteOrNull(intent?.qty);
       if (qty === null) throw new Error('ExecutionIntent for open_long with stop loss requires qty');
-      body.qty = formatQty(qty);
+      const wholeQty = Math.floor(qty);
+      if (!Number.isFinite(wholeQty) || wholeQty <= 0) {
+        throw new Error('ExecutionIntent for broker-side stop loss requires at least one whole share');
+      }
+      body.qty = formatWholeQty(wholeQty);
       body.order_class = 'oto';
       body.stop_loss = stopLoss;
     } else if (Number.isFinite(Number(intent?.qty)) && Number(intent.qty) > 0) {

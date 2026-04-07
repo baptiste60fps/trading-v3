@@ -11,6 +11,26 @@ class FakePortfolioService {
   }
 }
 
+class FractionalStopPortfolioService {
+  async canOpenLong() {
+    return {
+      allowed: true,
+      reason: null,
+      adjustedNotional: 875,
+    };
+  }
+}
+
+class TinyStopPortfolioService {
+  async canOpenLong() {
+    return {
+      allowed: true,
+      reason: null,
+      adjustedNotional: 80,
+    };
+  }
+}
+
 class RejectingPortfolioService {
   async canOpenLong() {
     return {
@@ -166,6 +186,58 @@ export const register = async ({ test }) => {
     assert.equal(result.executionIntent.stopLossPct, 0.02);
     assert.equal(result.executionIntent.qty, 8);
     assert.equal(result.executionResult.status, 'dry_run');
+  });
+
+  test('ExecutionEngine floors broker-protected stock entries to whole shares', async () => {
+    const engine = new ExecutionEngine({
+      brokerGateway: new FakeBrokerGateway(),
+      portfolioService: new FractionalStopPortfolioService(),
+      configStore: new StopLossConfigStore(),
+      dryRun: true,
+    });
+
+    const result = await engine.executeDecision({
+      symbol: 'AAPL',
+      decision: {
+        action: 'open_long',
+        confidence: 0.82,
+        reasoning: ['trend aligned'],
+        requestedSizePct: 0.08,
+      },
+      features: baseFeatures,
+    });
+
+    assert.ok(result.executionIntent);
+    assert.equal(result.executionIntent.qty, 8);
+    assert.equal(result.executionIntent.notional, null);
+    assert.equal(result.executionResult.status, 'dry_run');
+  });
+
+  test('ExecutionEngine noops broker-protected stock entries when notional is below one whole share', async () => {
+    const engine = new ExecutionEngine({
+      brokerGateway: new FakeBrokerGateway(),
+      portfolioService: new TinyStopPortfolioService(),
+      configStore: new StopLossConfigStore(),
+      dryRun: true,
+    });
+
+    const result = await engine.executeDecision({
+      symbol: 'AAPL',
+      decision: {
+        action: 'open_long',
+        confidence: 0.82,
+        reasoning: ['trend aligned'],
+        requestedSizePct: 0.08,
+      },
+      features: {
+        ...baseFeatures,
+        currentPrice: 100,
+      },
+    });
+
+    assert.equal(result.executionIntent, null);
+    assert.equal(result.executionResult.status, 'noop');
+    assert.equal(result.executionResult.error.message, 'insufficient_notional_for_whole_share_stop_order');
   });
 
   test('ExecutionEngine disables broker-side simple stop loss for crypto intents', async () => {
