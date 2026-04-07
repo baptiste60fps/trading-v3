@@ -1,6 +1,6 @@
 {
   "type": "daily_market_report",
-  "generatedAtMs": 1775553444494,
+  "generatedAtMs": 1775555644964,
   "reportDate": "2026-04-07",
   "runtime": {
     "mode": "paper",
@@ -17,8 +17,8 @@
       "isOpen": false,
       "isPreClose": false,
       "isNoTradeOpen": false,
-      "minutesFromOpen": -254,
-      "minutesToClose": 644,
+      "minutesFromOpen": -217,
+      "minutesToClose": 607,
       "sessionLabel": "before_open"
     },
     "targetSessionDate": "2026-04-07",
@@ -26,8 +26,8 @@
     "targetWakeupLocal": "08:45"
   },
   "account": {
-    "cash": 96700.76,
-    "equity": 96700.76,
+    "cash": 96684.43,
+    "equity": 96684.43,
     "exposurePct": 0,
     "positionCount": 0,
     "positions": [],
@@ -43,7 +43,7 @@
         "url": "https://www.sec.gov/rss/pressrelease.xml",
         "status": "error",
         "error": "RSS request failed (403) for https://www.sec.gov/rss/pressrelease.xml",
-        "fetchedAtMs": 1775553418737,
+        "fetchedAtMs": 1775555618221,
         "itemCount": 0,
         "source": "network",
         "items": []
@@ -54,7 +54,7 @@
         "url": "https://www.sec.gov/rss/news/press.xml",
         "status": "error",
         "error": "RSS request failed (403) for https://www.sec.gov/rss/news/press.xml",
-        "fetchedAtMs": 1775553418799,
+        "fetchedAtMs": 1775555618278,
         "itemCount": 0,
         "source": "network",
         "items": []
@@ -65,9 +65,9 @@
         "url": "https://www.federalreserve.gov/feeds/press_all.xml",
         "status": "ok",
         "error": null,
-        "fetchedAtMs": 1775553418942,
+        "fetchedAtMs": 1775555552615,
         "itemCount": 5,
-        "source": "network",
+        "source": "cache",
         "items": [
           {
             "title": "Federal Reserve Board issues enforcement action with former employee of United Bank",
@@ -107,9 +107,9 @@
         "url": "https://www.federalreserve.gov/feeds/press_monetary.xml",
         "status": "ok",
         "error": null,
-        "fetchedAtMs": 1775553419169,
+        "fetchedAtMs": 1775555552751,
         "itemCount": 5,
-        "source": "network",
+        "source": "cache",
         "items": [
           {
             "title": "Federal Reserve issues FOMC statement",
@@ -148,71 +148,67 @@
   "watchlist": [
     {
       "symbol": "BTC/USD",
-      "assetClass": "crypto",
       "strategyProfile": "crypto_momentum",
-      "currentPrice": 69129.0865,
+      "currentPrice": null,
       "marketState": {
         "timezone": "America/New_York",
-        "sessionMode": "continuous",
-        "isOpen": true,
+        "sessionMode": "regular",
+        "isOpen": false,
         "isPreClose": false,
         "isNoTradeOpen": false,
-        "minutesFromOpen": null,
-        "minutesToClose": null,
-        "sessionLabel": "continuous_open"
+        "minutesFromOpen": -217,
+        "minutesToClose": 607,
+        "sessionLabel": "before_open"
       },
       "position": null,
-      "riskState": {
-        "canOpen": true,
-        "canClose": true,
-        "flags": []
-      },
+      "riskState": null,
       "timeframes": {
         "5m": {
-          "lastClose": 69103.5895,
-          "rsi14": 74.35185495511912,
-          "atrPct14": 0.0017586537341057209,
-          "priceVsSma20": 0.0037237108666010096,
-          "emaGap12_26": 0.001767642901604476,
-          "barCount": 250
+          "lastClose": null,
+          "rsi14": null,
+          "atrPct14": null,
+          "priceVsSma20": null,
+          "emaGap12_26": null,
+          "barCount": 0
         },
         "1h": {
-          "lastClose": 69103.5895,
-          "rsi14": 38.41033089203712,
-          "atrPct14": 0.005933126013147046,
-          "priceVsSma20": -0.0007635583148542439,
-          "emaGap12_26": -0.0003272752471687666,
-          "barCount": 250
+          "lastClose": null,
+          "rsi14": null,
+          "atrPct14": null,
+          "priceVsSma20": null,
+          "emaGap12_26": null,
+          "barCount": 0
         },
         "4h": {
-          "lastClose": 69129.0865,
-          "rsi14": 68.2244941132221,
-          "atrPct14": 0.012737501084810603,
-          "priceVsSma20": 0.015889580630351854,
-          "emaGap12_26": 0.007751675161794128,
-          "barCount": 250
+          "lastClose": null,
+          "rsi14": null,
+          "atrPct14": null,
+          "priceVsSma20": null,
+          "emaGap12_26": null,
+          "barCount": 0
         },
         "1d": {
-          "lastClose": 69103.5895,
-          "rsi14": 44.18294399572031,
-          "atrPct14": 0.03171052862204898,
-          "priceVsSma20": 0.009915627970942125,
-          "emaGap12_26": -0.006515663130520648,
-          "barCount": 250
+          "lastClose": null,
+          "rsi14": null,
+          "atrPct14": null,
+          "priceVsSma20": null,
+          "emaGap12_26": null,
+          "barCount": 0
         }
       },
       "relatedContext": {
-        "oneHourTrend": -0.0028580185554657766,
-        "oneHourRsi": 36.80463099365957,
-        "fourHourTrend": 0.0036323821561838054,
-        "fourHourRsi": 57.20800718947284
-      }
+        "oneHourTrend": null,
+        "oneHourRsi": null,
+        "fourHourTrend": null,
+        "fourHourRsi": null
+      },
+      "error": "too many requests."
     },
     {
       "symbol": "ETH/USD",
       "assetClass": "crypto",
       "strategyProfile": "crypto_momentum",
-      "currentPrice": 2127.43,
+      "currentPrice": 2128.598,
       "marketState": {
         "timezone": "America/New_York",
         "sessionMode": "continuous",
@@ -231,50 +227,50 @@
       },
       "timeframes": {
         "5m": {
-          "lastClose": 2127.43,
-          "rsi14": 79.60157326025524,
-          "atrPct14": 0.0020408259194023906,
-          "priceVsSma20": 0.007165442687625118,
-          "emaGap12_26": 0.0025823884303005974,
+          "lastClose": 2128.598,
+          "rsi14": 74.4046397043725,
+          "atrPct14": 0.001826000695561774,
+          "priceVsSma20": 0.003857434047958414,
+          "emaGap12_26": 0.0027870462850793625,
           "barCount": 247
         },
         "1h": {
-          "lastClose": 2127.43,
-          "rsi14": 42.52357900008351,
-          "atrPct14": 0.007242088207031855,
-          "priceVsSma20": 0.0014233388740968829,
-          "emaGap12_26": -0.0006781892669580373,
+          "lastClose": 2128.598,
+          "rsi14": 43.0784936104086,
+          "atrPct14": 0.007238114343002191,
+          "priceVsSma20": 0.0019455960352174411,
+          "emaGap12_26": -0.0006341521116942986,
           "barCount": 250
         },
         "4h": {
-          "lastClose": 2127.43,
-          "rsi14": 65.43743137228952,
-          "atrPct14": 0.01626922423500925,
-          "priceVsSma20": 0.01951452140155371,
-          "emaGap12_26": 0.008201291772200378,
+          "lastClose": 2128.598,
+          "rsi14": 65.61453923267591,
+          "atrPct14": 0.016260297019111043,
+          "priceVsSma20": 0.020045706821811168,
+          "emaGap12_26": 0.0082454906942416,
           "barCount": 250
         },
         "1d": {
-          "lastClose": 2127.43,
-          "rsi14": 47.31128060085927,
-          "atrPct14": 0.04021656738267704,
-          "priceVsSma20": 0.020066922907277997,
-          "emaGap12_26": -0.00024470421676059807,
+          "lastClose": 2128.598,
+          "rsi14": 47.42834804592499,
+          "atrPct14": 0.04019449982896188,
+          "priceVsSma20": 0.0205983806627925,
+          "emaGap12_26": -0.00020011394806712624,
           "barCount": 250
         }
       },
       "relatedContext": {
-        "oneHourTrend": -0.002682561545571141,
-        "oneHourRsi": 34.748006939636376,
-        "fourHourTrend": 0.0034075738509806806,
-        "fourHourRsi": 58.60153855993913
+        "oneHourTrend": -0.002617048928343805,
+        "oneHourRsi": 35.89656752734673,
+        "fourHourTrend": 0.0034583215153765044,
+        "fourHourRsi": 58.869724179257815
       }
     },
     {
       "symbol": "SOL/USD",
       "assetClass": "crypto",
       "strategyProfile": "crypto_momentum",
-      "currentPrice": 80.3415,
+      "currentPrice": 80.3855,
       "marketState": {
         "timezone": "America/New_York",
         "sessionMode": "continuous",
@@ -293,43 +289,43 @@
       },
       "timeframes": {
         "5m": {
-          "lastClose": 80.3415,
-          "rsi14": 66.22497340168294,
-          "atrPct14": 0.0023014257886646377,
-          "priceVsSma20": 0.003127660937943794,
-          "emaGap12_26": 0.0018437205176354153,
+          "lastClose": 80.3855,
+          "rsi14": 60.64467167279102,
+          "atrPct14": 0.0020011160506025597,
+          "priceVsSma20": 0.00143586834187008,
+          "emaGap12_26": 0.0018655664548346482,
           "barCount": 248
         },
         "1h": {
-          "lastClose": 80.3415,
-          "rsi14": 31.08568298723563,
-          "atrPct14": 0.007855635439254412,
-          "priceVsSma20": -0.004269452743248927,
-          "emaGap12_26": -0.005037847843973516,
+          "lastClose": 80.3855,
+          "rsi14": 31.800292232277442,
+          "atrPct14": 0.007914379978798607,
+          "priceVsSma20": -0.003751292707848255,
+          "emaGap12_26": -0.004994094501039334,
           "barCount": 250
         },
         "4h": {
-          "lastClose": 80.3415,
-          "rsi14": 48.97858300665616,
-          "atrPct14": 0.018223480657568025,
-          "priceVsSma20": -0.00357773283377944,
-          "emaGap12_26": -0.0009365274598327666,
+          "lastClose": 80.3855,
+          "rsi14": 49.23536207350129,
+          "atrPct14": 0.018276550228497158,
+          "priceVsSma20": -0.0030592317229205567,
+          "emaGap12_26": -0.0008930251378526343,
           "barCount": 250
         },
         "1d": {
-          "lastClose": 80.3415,
-          "rsi14": 26.208519554985372,
-          "atrPct14": 0.04855285745091713,
-          "priceVsSma20": -0.04827503366631636,
-          "emaGap12_26": -0.02599977153736697,
+          "lastClose": 80.3855,
+          "rsi14": 26.356446108916572,
+          "atrPct14": 0.04858932586145158,
+          "priceVsSma20": -0.04777862592887953,
+          "emaGap12_26": -0.025957104671224945,
           "barCount": 250
         }
       },
       "relatedContext": {
-        "oneHourTrend": -0.0005027322570634019,
-        "oneHourRsi": 40.46695494606031,
-        "fourHourTrend": 0.007976483466997253,
-        "fourHourRsi": 66.83096274275582
+        "oneHourTrend": -0.0004370777336712872,
+        "oneHourRsi": 41.53566821641231,
+        "fourHourTrend": 0.00802757943142362,
+        "fourHourRsi": 67.05931275884512
       }
     }
   ],
@@ -340,50 +336,50 @@
     "error": null,
     "analysis": {
       "marketTone": "risk_on",
-      "summary": "The market is showing signs of risk-on sentiment, with crypto assets like BTC/USD and ETH/USD displaying positive momentum indicators in the short to medium term. However, SOL/USD shows a mixed signal, indicating caution for this asset.",
+      "summary": "The market is showing signs of risk-on sentiment, with the pre-market session indicating potential for growth across various assets. Cryptocurrencies like ETH/USD and SOL/USD are currently trending positively, while BTC/USD remains volatile without a clear direction.",
       "keyRisks": [
-        "BTC/USD's RSI14 above 70 suggests overbought conditions",
-        "SOL/USD's significant downward trend and negative EMA gap"
+        "Potential regulatory changes from Federal Reserve actions",
+        "Volatility in BTC/USD"
       ],
       "keyCatalysts": [
-        "Positive momentum in BTC/USD and ETH/USD could drive further gains",
-        "Potential FOMC statement release may impact broader market sentiment"
+        "Positive economic projections from the FOMC meeting",
+        "Continued positive trends in ETH and SOL"
       ],
       "watchlist": [
         {
           "symbol": "BTC/USD",
-          "bias": "watch_long",
-          "confidence": 0.7,
-          "note": "Positive momentum indicators suggest a potential buying opportunity."
+          "bias": "stand_aside",
+          "confidence": 0.5,
+          "note": "No clear trend or significant news to justify a position."
         },
         {
           "symbol": "ETH/USD",
           "bias": "watch_long",
-          "confidence": 0.65,
-          "note": "Short-term positive trends and RSI indicate favorable conditions for long positions."
+          "confidence": 0.7,
+          "note": "Positive momentum and recent positive economic projections support a long bias."
         },
         {
           "symbol": "SOL/USD",
-          "bias": "stand_aside",
-          "confidence": 0.45,
-          "note": "Mixed signals with a significant downward trend; caution advised."
+          "bias": "watch_long",
+          "confidence": 0.6,
+          "note": "Trending positively with strong RSI readings, indicating potential for further gains."
         }
       ],
       "preOpenChecklist": [
         {
-          "item": "Review FOMC statement and economic projections for potential market impact.",
+          "item": "Review news on Federal Reserve actions and their impact on crypto markets",
           "status": "ready",
           "note": ""
         },
         {
-          "item": "Monitor BTC/USD and ETH/USD for further positive momentum signals.",
+          "item": "Monitor ETH/USD and SOL/USD for further positive momentum",
           "status": "watch",
-          "note": "Keep an eye on these assets as they show strong short-term trends."
+          "note": "ETH/USD has shown strong trends, while SOL/USD is also trending positively."
         },
         {
-          "item": "Evaluate SOL/USD's technical indicators to determine if a trade is warranted.",
+          "item": "Prepare for potential volatility in BTC/USD",
           "status": "block",
-          "note": "Given the mixed signals and negative trend, it may be best to avoid trading this asset until further clarity is provided."
+          "note": "BTC/USD remains volatile and lacks clear direction; avoid opening positions until clearer signals emerge."
         }
       ]
     }
