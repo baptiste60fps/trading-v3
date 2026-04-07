@@ -4,7 +4,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "start": "node ./main.mjs",
+    "start": "node ./main.mjs --symbols AAPL,TGT,CVX",
+    "start:classic": "node ./main.mjs --symbols AAPL,TGT,CVX",
+    "start:crypto": "node ./main.mjs --symbols BTC/USD,ETH/USD,SOL/USD",
     "smoke": "node ./scripts/smoke.mjs",
     "test": "node ./tests/run-all.mjs",
     "test:unit": "node ./tests/run-unit.mjs",

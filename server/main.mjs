@@ -57,9 +57,15 @@ const run = async () => {
   const args = parseArgs(process.argv.slice(2));
   const runtime = await createRuntime();
   const summary = runtime.describe();
+  const launchSymbols = Array.isArray(args.symbols) && args.symbols.length
+    ? args.symbols
+    : summary.runtimeSymbols ?? summary.enabledSymbols ?? null;
 
   console.log('[SERVER] Runtime ready');
-  console.log(JSON.stringify(summary, null, 2));
+  console.log(JSON.stringify({
+    ...summary,
+    launchSymbols,
+  }, null, 2));
 
   if (!['paper', 'live'].includes(summary.runtimeMode)) {
     console.log(`[SERVER] Runtime mode ${summary.runtimeMode} does not start the persistent orchestrator.`);

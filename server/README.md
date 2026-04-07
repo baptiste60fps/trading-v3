@@ -427,16 +427,33 @@ Le rapport runtime journalier contient notamment:
 
 ### 5. Lancer l'orchestrateur persistant
 
-Commande:
+Commande classique actions:
 
 ```bash
 npm start
 ```
 
+Alias explicite:
+
+```bash
+npm run start:classic
+```
+
+Commande crypto:
+
+```bash
+npm run start:crypto
+```
+
+Paniers actuellement cables:
+
+- `start:classic`: `AAPL`, `TGT`, `CVX`
+- `start:crypto`: `BTC/USD`, `ETH/USD`, `SOL/USD`
+
 Comportement attendu:
 
 - bootstrap du runtime complet,
-- resolution de la watchlist a partir de `runtime.symbols` ou des symboles `enabled`,
+- resolution du panier a partir du script de lancement, puis de `runtime.symbols` ou des symboles `enabled` en fallback,
 - warmup initial des strategies,
 - boucle persistante multi-symboles,
 - cadence `runtime.loopIntervalMs` quand le marche est ouvert,
@@ -452,6 +469,7 @@ Overrides utiles:
 - `BAPTISTO_RUNTIME_SYMBOLS=AAPL,MSFT,NVDA`
 - `BAPTISTO_RUNTIME_SYMBOLS=AAPL,'BTC/USD'`
 - `npm start -- --symbols AAPL,MSFT --loop-interval-ms 30000 --idle-interval-ms 120000`
+- `npm run start:crypto -- --loop-interval-ms 60000`
 
 ### 6. Lire les garde-fous actuels
 
