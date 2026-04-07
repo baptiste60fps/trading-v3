@@ -351,7 +351,7 @@ export class PersistentRuntimeOrchestrator {
   #scheduleNext() {
     if (!this.started || this.stopping) return;
 
-    const marketState = this.marketCalendar?.getMarketState?.(this.now()) ?? null;
+    const marketState = this.#resolveSchedulingMarketState();
     const nextDelay = marketState?.isOpen ? this.loopIntervalMs : this.idleIntervalMs;
     this.state.lastScheduleDelayMs = nextDelay;
 
@@ -362,6 +362,35 @@ export class PersistentRuntimeOrchestrator {
     this.#logInfo(
       `Next cycle scheduled in ${nextDelay}ms (${marketState?.sessionLabel ?? 'unknown_session'})`,
     );
+  }
+
+  #resolveSchedulingMarketState() {
+    const symbols = Array.isArray(this.state.symbols) && this.state.symbols.length
+      ? this.state.symbols
+      : this.#resolveSymbols();
+    if (!symbols.length) return this.marketCalendar?.getMarketState?.(this.now()) ?? null;
+
+    const states = symbols
+      .map((symbol) => {
+        const assetClass = this.configStore?.getAssetClass?.(symbol) ?? 'stock';
+        return this.marketCalendar?.getMarketState?.(this.now(), { symbol, assetClass }) ?? null;
+      })
+      .filter(Boolean);
+
+    if (!states.length) return null;
+    if (states.length === 1) return states[0];
+    if (states.some((entry) => entry.isOpen)) {
+      return {
+        ...states[0],
+        isOpen: true,
+        isPreClose: states.every((entry) => entry.isPreClose === true),
+        isNoTradeOpen: states.every((entry) => entry.isNoTradeOpen === true),
+        sessionLabel: states.every((entry) => entry.sessionLabel === states[0].sessionLabel)
+          ? states[0].sessionLabel
+          : 'mixed_open',
+      };
+    }
+    return states[0];
   }
 
   #clearTimer() {

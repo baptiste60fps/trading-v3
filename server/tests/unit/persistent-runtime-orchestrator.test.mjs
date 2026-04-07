@@ -2,9 +2,10 @@ import assert from 'assert/strict';
 import { PersistentRuntimeOrchestrator } from '../../src/core/runtime/PersistentRuntimeOrchestrator.mjs';
 
 class FakeConfigStore {
-  constructor({ symbols = ['AAPL', 'MSFT'], runtime = {} } = {}) {
+  constructor({ symbols = ['AAPL', 'MSFT'], runtime = {}, assetClasses = {} } = {}) {
     this.symbols = symbols;
     this.runtime = runtime;
+    this.assetClasses = assetClasses;
   }
 
   getEnabledSymbols() {
@@ -19,6 +20,10 @@ class FakeConfigStore {
       startupWarmup: true,
       ...this.runtime,
     };
+  }
+
+  getAssetClass(symbol) {
+    return this.assetClasses[symbol] ?? 'stock';
   }
 }
 
@@ -306,6 +311,51 @@ export const register = async ({ test }) => {
     assert.equal(hookEvents.started[0].symbols[0], 'AAPL');
     assert.equal(hookEvents.evaluated[0].ok, true);
     assert.equal(hookEvents.completed[0].results.length, 1);
+
+    await orchestrator.stop('unit_test_stop');
+  });
+
+  test('PersistentRuntimeOrchestrator keeps loop cadence active for crypto symbols outside equity hours', async () => {
+    const scheduler = makeScheduler();
+    const marketCalendarCalls = [];
+    const orchestrator = new PersistentRuntimeOrchestrator({
+      runtimeMode: 'paper',
+      configStore: new FakeConfigStore({
+        symbols: ['BTC/USD'],
+        assetClasses: {
+          'BTC/USD': 'crypto',
+        },
+      }),
+      marketCalendar: {
+        getMarketState(atMs, context = null) {
+          marketCalendarCalls.push({ atMs, context });
+          return context?.assetClass === 'crypto'
+            ? {
+                isOpen: true,
+                isPreClose: false,
+                isNoTradeOpen: false,
+                sessionLabel: 'continuous_open',
+              }
+            : {
+                isOpen: false,
+                sessionLabel: 'after_close',
+              };
+        },
+      },
+      strategyFactory(symbol) {
+        return new FakeStrategy(symbol);
+      },
+      scheduler,
+      logger: {
+        info() {},
+        error() {},
+      },
+    });
+
+    await orchestrator.start();
+
+    assert.equal(orchestrator.getState().lastScheduleDelayMs, 60_000);
+    assert.ok(marketCalendarCalls.some((entry) => entry.context?.assetClass === 'crypto'));
 
     await orchestrator.stop('unit_test_stop');
   });

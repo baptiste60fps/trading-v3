@@ -15,6 +15,7 @@ const compactIndicatorValues = (values) => ({
 
 const compactFeatureSnapshot = (features) => ({
   symbol: features?.symbol ?? null,
+  assetClass: features?.assetClass ?? null,
   atMs: features?.atMs ?? null,
   currentPrice: features?.currentPrice ?? null,
   marketState: features?.marketState ?? null,

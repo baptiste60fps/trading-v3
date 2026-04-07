@@ -31,4 +31,16 @@ export const register = async ({ test }) => {
     assert.equal(weekend.isOpen, false);
     assert.equal(weekend.sessionLabel, 'closed');
   });
+
+  test('MarketCalendar keeps crypto markets open continuously, including weekends', async () => {
+    const calendar = new MarketCalendar({
+      timezone: 'America/New_York',
+    });
+
+    const weekendCrypto = calendar.getMarketState(Date.parse('2026-03-28T15:00:00.000Z'), { assetClass: 'crypto' });
+    assert.equal(weekendCrypto.isOpen, true);
+    assert.equal(weekendCrypto.isPreClose, false);
+    assert.equal(weekendCrypto.isNoTradeOpen, false);
+    assert.equal(weekendCrypto.sessionLabel, 'continuous_open');
+  });
 };

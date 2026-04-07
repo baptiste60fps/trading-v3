@@ -8,6 +8,7 @@ storage/cache/**
 
 # storage/reports/**
 # !storage/reports/
+storage/reports/backtests/**
 
 storage/runs/**
 !storage/runs/

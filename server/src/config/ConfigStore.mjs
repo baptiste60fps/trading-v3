@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { defaultConfig } from './defaultConfig.mjs';
-import { assertRuntimeMode } from '../core/types/validators.mjs';
+import { assertAssetClass, assertRuntimeMode, normalizeSymbolId } from '../core/types/validators.mjs';
 
 const clone = (value) => {
   if (value === undefined) return undefined;
@@ -134,15 +134,21 @@ export class ConfigStore {
 
   getSymbolConfig(symbol) {
     this.#ensureLoaded();
-    const symbolKey = String(symbol ?? '').toUpperCase();
+    const symbolKey = normalizeSymbolId(symbol ?? '');
     const base = this.config.symbols.default ?? {};
     const specific = symbolKey ? this.config.symbols[symbolKey] ?? {} : {};
     return deepFreeze(deepMerge(base, specific));
   }
 
+  getAssetClass(symbol) {
+    this.#ensureLoaded();
+    const assetClass = this.getSymbolConfig(symbol)?.assetClass ?? this.config.symbols?.default?.assetClass ?? 'stock';
+    return assertAssetClass(assetClass);
+  }
+
   getRelatedSymbols(symbol) {
     this.#ensureLoaded();
-    const symbolKey = String(symbol ?? '').toUpperCase();
+    const symbolKey = normalizeSymbolId(symbol ?? '');
     const direct = this.config.relatedSymbols[symbolKey];
     if (Array.isArray(direct)) return direct.slice();
     const fallback = this.config.relatedSymbols.default;
@@ -165,7 +171,7 @@ export class ConfigStore {
       if (key === 'default') continue;
       if (!value || typeof value !== 'object') continue;
       if (typeof value.strategyProfile !== 'string' || !value.strategyProfile) continue;
-      result[String(key).toUpperCase()] = value.strategyProfile;
+      result[normalizeSymbolId(key)] = value.strategyProfile;
     }
 
     return deepFreeze(result);
@@ -176,7 +182,7 @@ export class ConfigStore {
     return Object.entries(this.config.symbols ?? {})
       .filter(([key]) => key !== 'default')
       .filter(([, value]) => value?.enabled !== false)
-      .map(([key]) => String(key).toUpperCase())
+      .map(([key]) => normalizeSymbolId(key))
       .sort();
   }
 
@@ -215,6 +221,7 @@ export class ConfigStore {
         dataUrl: this.env.ALPACA_DATA_URL ?? undefined,
         feed: this.env.ALPACA_FEED ?? undefined,
         adjustment: this.env.ALPACA_ADJUSTMENT ?? undefined,
+        cryptoLocation: this.env.ALPACA_CRYPTO_LOCATION ?? undefined,
       },
       llm: {
         enabled: normalizeBoolean(this.env.BAPTISTO_LLM_ENABLED, undefined),

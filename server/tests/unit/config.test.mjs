@@ -126,4 +126,40 @@ export const register = async ({ test }) => {
     });
     assert.deepEqual(store.getEnabledSymbols(), ['AAPL', 'NVDA', 'SPY']);
   });
+
+  test('ConfigStore supports crypto symbols and asset classes', async () => {
+    const rootDir = makeServerRootFixture({
+      runtimeConfig: {
+        symbols: {
+          default: {
+            enabled: true,
+            assetClass: 'stock',
+            strategyProfile: 'single_stock',
+          },
+          'BTC/USD': {
+            enabled: true,
+            assetClass: 'crypto',
+            strategyProfile: 'high_beta_stock',
+            brokerProtection: {
+              enabled: false,
+            },
+          },
+        },
+        relatedSymbols: {
+          'BTC/USD': ['ETH/USD'],
+        },
+      },
+    });
+
+    const store = new ConfigStore({
+      serverRootDir: rootDir,
+      env: {},
+    });
+    await store.load();
+
+    assert.equal(store.getAssetClass('BTC/USD'), 'crypto');
+    assert.equal(store.getSymbolConfig('BTC/USD').brokerProtection.enabled, false);
+    assert.deepEqual(store.getRelatedSymbols('BTC/USD'), ['ETH/USD']);
+    assert.deepEqual(store.getEnabledSymbols(), ['BTC/USD']);
+  });
 };

@@ -17,6 +17,7 @@ const unitFiles = [
   './unit/feature-snapshot-service.test.mjs',
   './unit/portfolio-service.test.mjs',
   './unit/alpaca-broker-gateway.test.mjs',
+  './unit/alpaca-market-data-provider.test.mjs',
   './unit/console-trading-logger.test.mjs',
   './unit/execution-engine.test.mjs',
   './unit/persistent-runtime-orchestrator.test.mjs',

@@ -1,5 +1,5 @@
 import { getTimeframeMs } from '../../core/market/time.mjs';
-import { assertRuntimeMode, assertSymbolId, isFiniteNumber } from '../../core/types/validators.mjs';
+import { assertRuntimeMode, assertSymbolId, isFiniteNumber, normalizeSymbolId } from '../../core/types/validators.mjs';
 
 const pickHistoricalShortTimeframe = (evaluationTimeframes = []) => {
   const list = Array.isArray(evaluationTimeframes) ? evaluationTimeframes : [];
@@ -30,7 +30,7 @@ const makeIndicatorSnapshot = ({ symbol, timeframe, atMs }) => ({
 
 const resolveSymbolPosition = (portfolioState, symbol) => {
   const positions = Array.isArray(portfolioState?.positions) ? portfolioState.positions : [];
-  return positions.find((entry) => String(entry?.symbol ?? '').toUpperCase() === symbol) ?? null;
+  return positions.find((entry) => normalizeSymbolId(entry?.symbol ?? '') === symbol) ?? null;
 };
 
 export class FeatureSnapshotService {
@@ -59,17 +59,19 @@ export class FeatureSnapshotService {
     const safeSymbol = assertSymbolId(String(symbol ?? '').toUpperCase());
     const safeRuntimeMode = assertRuntimeMode(runtimeMode);
     const symbolConfig = this.configStore.getSymbolConfig(safeSymbol);
+    const assetClass = this.configStore.getAssetClass?.(safeSymbol) ?? symbolConfig.assetClass ?? 'stock';
     const relatedSymbols = this.configStore.getRelatedSymbols(safeSymbol);
     const timeframes = Array.isArray(symbolConfig.timeframes) && symbolConfig.timeframes.length ? symbolConfig.timeframes : ['1m', '5m', '15m', '1h', '1d'];
     const evaluationTimeframe = pickHistoricalShortTimeframe(symbolConfig.evaluationTimeframes);
     const lookbackBars = Number.isFinite(Number(symbolConfig.lookbackBars)) ? Number(symbolConfig.lookbackBars) : 250;
 
-    const marketState = this.marketCalendar.getMarketState(atMs, safeSymbol);
+    const marketState = this.marketCalendar.getMarketState(atMs, { symbol: safeSymbol, assetClass });
     const resolvedPortfolioState = portfolioState ?? (this.portfolioService ? await this.portfolioService.getSnapshot() : emptyPortfolioState);
     const resolvedPosition = position ?? resolveSymbolPosition(resolvedPortfolioState, safeSymbol);
 
     const mainTimeframes = await this.#buildSymbolSnapshots({
       symbol: safeSymbol,
+      assetClass,
       atMs,
       timeframes,
       lookbackBars,
@@ -77,6 +79,7 @@ export class FeatureSnapshotService {
 
     const shortBars = await this.#loadBars({
       symbol: safeSymbol,
+      assetClass,
       timeframe: evaluationTimeframe,
       atMs,
       lookbackBars: Math.min(lookbackBars, 180),
@@ -88,8 +91,10 @@ export class FeatureSnapshotService {
       relatedSymbols.map(async (relatedSymbol) => ({
         symbol: relatedSymbol,
         relation: 'related',
+        assetClass: this.configStore.getAssetClass?.(relatedSymbol) ?? this.configStore.getSymbolConfig(relatedSymbol)?.assetClass ?? 'stock',
         timeframes: await this.#buildSymbolSnapshots({
           symbol: relatedSymbol,
+          assetClass: this.configStore.getAssetClass?.(relatedSymbol) ?? this.configStore.getSymbolConfig(relatedSymbol)?.assetClass ?? 'stock',
           atMs,
           timeframes,
           lookbackBars,
@@ -99,6 +104,7 @@ export class FeatureSnapshotService {
 
     return {
       symbol: safeSymbol,
+      assetClass,
       atMs,
       runtimeMode: safeRuntimeMode,
       currentPrice,
@@ -112,11 +118,12 @@ export class FeatureSnapshotService {
     };
   }
 
-  async #buildSymbolSnapshots({ symbol, atMs, timeframes, lookbackBars }) {
+  async #buildSymbolSnapshots({ symbol, assetClass, atMs, timeframes, lookbackBars }) {
     const snapshots = await Promise.all(
       timeframes.map(async (timeframe) => {
         const bars = await this.#loadBars({
           symbol,
+          assetClass,
           timeframe,
           atMs,
           lookbackBars,
@@ -139,7 +146,7 @@ export class FeatureSnapshotService {
     return Object.fromEntries(snapshots);
   }
 
-  async #loadBars({ symbol, timeframe, atMs, lookbackBars }) {
+  async #loadBars({ symbol, assetClass, timeframe, atMs, lookbackBars }) {
     const timeframeMs = getTimeframeMs(timeframe);
     const endMs = atMs;
     const startMs = endMs - timeframeMs * Math.max(lookbackBars, 20);
@@ -147,6 +154,7 @@ export class FeatureSnapshotService {
     try {
       return await this.barsRepository.getBars({
         symbol,
+        assetClass,
         timeframe,
         startMs,
         endMs,

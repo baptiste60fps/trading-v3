@@ -1,6 +1,7 @@
 export const RUNTIME_MODES = Object.freeze(['backtest', 'replay', 'paper', 'live']);
 export const DECISION_ACTIONS = Object.freeze(['open_long', 'hold', 'close_long', 'skip']);
 export const POSITION_SIDES = Object.freeze(['long']);
+export const ASSET_CLASSES = Object.freeze(['stock', 'crypto']);
 export const SUPPORTED_TIMEFRAMES = Object.freeze([
   '10s',
   '30s',

@@ -31,6 +31,7 @@ export const defaultConfig = Object.freeze({
     dataUrl: 'https://data.alpaca.markets/v2',
     feed: 'iex',
     adjustment: 'raw',
+    cryptoLocation: 'us',
     maxRetries: 4,
     retryBaseDelayMs: 750,
     retryMaxDelayMs: 5_000,
@@ -83,6 +84,7 @@ export const defaultConfig = Object.freeze({
   symbols: {
     default: {
       enabled: true,
+      assetClass: 'stock',
       strategy: 'llm_long_v1',
       strategyProfile: 'single_stock',
       timeframes: ['1m', '2m', '5m', '10m', '15m', '30m', '1h', '4h', '1d'],

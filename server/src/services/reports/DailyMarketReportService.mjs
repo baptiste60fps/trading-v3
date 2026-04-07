@@ -59,6 +59,7 @@ const summarizeWatchlistSnapshot = ({ snapshot, strategyConfig = {} }) => {
   const relatedSymbols = Array.isArray(snapshot?.relatedSymbols) ? snapshot.relatedSymbols : [];
   return {
     symbol: safeString(snapshot?.symbol),
+    assetClass: safeString(snapshot?.assetClass, 'stock'),
     strategyProfile: safeString(strategyConfig?.strategyProfile, 'single_stock'),
     currentPrice: isFiniteNumber(snapshot?.currentPrice) ? snapshot.currentPrice : null,
     marketState: snapshot?.marketState ?? null,

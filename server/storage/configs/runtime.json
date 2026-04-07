@@ -99,6 +99,7 @@
   "symbols": {
     "default": {
       "enabled": true,
+      "assetClass": "stock",
       "strategy": "llm_long_v1",
       "strategyProfile": "single_stock",
       "timeframes": [
@@ -448,6 +449,42 @@
     "C": {
       "enabled": true,
       "strategyProfile": "financial_quality"
+    },
+    "BTC/USD": {
+      "enabled": false,
+      "assetClass": "crypto",
+      "strategyProfile": "high_beta_stock",
+      "brokerProtection": {
+        "enabled": false
+      },
+      "risk": {
+        "maxPositionPct": 0.03,
+        "maxPortfolioExposurePct": 0.2
+      }
+    },
+    "ETH/USD": {
+      "enabled": false,
+      "assetClass": "crypto",
+      "strategyProfile": "high_beta_stock",
+      "brokerProtection": {
+        "enabled": false
+      },
+      "risk": {
+        "maxPositionPct": 0.03,
+        "maxPortfolioExposurePct": 0.2
+      }
+    },
+    "SOL/USD": {
+      "enabled": false,
+      "assetClass": "crypto",
+      "strategyProfile": "high_beta_stock",
+      "brokerProtection": {
+        "enabled": false
+      },
+      "risk": {
+        "maxPositionPct": 0.025,
+        "maxPortfolioExposurePct": 0.2
+      }
     }
   },
   "relatedSymbols": {
@@ -624,6 +661,18 @@
       "XLF",
       "BAC",
       "JPM"
+    ],
+    "BTC/USD": [
+      "ETH/USD",
+      "SOL/USD"
+    ],
+    "ETH/USD": [
+      "BTC/USD",
+      "SOL/USD"
+    ],
+    "SOL/USD": [
+      "BTC/USD",
+      "ETH/USD"
     ]
   }
 }

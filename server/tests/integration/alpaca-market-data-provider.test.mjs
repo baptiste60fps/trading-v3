@@ -53,4 +53,28 @@ export const register = async ({ test }) => {
     assert.equal(bars[0].symbol, 'AAPL');
     assert.equal(bars[0].timeframe, '1d');
   });
+
+  test('AlpacaMarketDataProvider returns crypto latest price and daily bars', async () => {
+    const provider = createProvider();
+    const latest = await provider.getLatestPrice('BTC/USD', { assetClass: 'crypto' });
+    const endMs = Date.now();
+    const startMs = endMs - 10 * 24 * 60 * 60 * 1000;
+    const bars = await provider.getBars({
+      symbol: 'BTC/USD',
+      assetClass: 'crypto',
+      timeframe: '1d',
+      startMs,
+      endMs,
+      limit: 10,
+    });
+
+    assert.ok(latest);
+    assert.equal(latest.symbol, 'BTC/USD');
+    assert.ok(Number.isFinite(latest.price));
+    assert.ok(Number.isFinite(latest.atMs));
+    assert.ok(Array.isArray(bars));
+    assert.ok(bars.length > 0);
+    assert.equal(bars[0].symbol, 'BTC/USD');
+    assert.equal(bars[0].timeframe, '1d');
+  });
 };

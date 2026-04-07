@@ -3,9 +3,10 @@ import { assertSymbolId, assertTimeframe } from '../../core/types/validators.mjs
 
 const DIRECT_TIMEFRAME_CANDIDATES = ['1d', '1h', '15m', '5m', '1m'];
 
-const buildCacheKey = ({ symbol, timeframe, startMs, endMs, limit, direct }) =>
+const buildCacheKey = ({ symbol, assetClass, timeframe, startMs, endMs, limit, direct }) =>
   JSON.stringify({
     symbol,
+    assetClass,
     timeframe,
     startMs,
     endMs,
@@ -20,8 +21,9 @@ export class BarsRepository {
     this.cacheNamespace = cacheNamespace;
   }
 
-  async getBars({ symbol, timeframe, startMs, endMs, preferCache = true, limit = 10_000 } = {}) {
+  async getBars({ symbol, assetClass = 'stock', timeframe, startMs, endMs, preferCache = true, limit = 10_000 } = {}) {
     const safeSymbol = assertSymbolId(String(symbol ?? '').toUpperCase());
+    const safeAssetClass = String(assetClass ?? 'stock').trim().toLowerCase() || 'stock';
     const safeTimeframe = assertTimeframe(timeframe);
     const direct = this.#resolveDirectTimeframe(safeTimeframe);
     const targetMs = getTimeframeMs(safeTimeframe);
@@ -30,6 +32,7 @@ export class BarsRepository {
 
     const cacheKey = buildCacheKey({
       symbol: safeSymbol,
+      assetClass: safeAssetClass,
       timeframe: safeTimeframe,
       startMs,
       endMs,
@@ -46,6 +49,7 @@ export class BarsRepository {
     if (direct === safeTimeframe) {
       result = await this.marketDataProvider.getBars({
         symbol: safeSymbol,
+        assetClass: safeAssetClass,
         timeframe: safeTimeframe,
         startMs,
         endMs,
@@ -54,6 +58,7 @@ export class BarsRepository {
     } else {
       const rawBars = await this.marketDataProvider.getBars({
         symbol: safeSymbol,
+        assetClass: safeAssetClass,
         timeframe: direct,
         startMs,
         endMs,

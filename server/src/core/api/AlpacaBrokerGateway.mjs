@@ -1,5 +1,5 @@
 import { BrokerGateway } from './BrokerGateway.mjs';
-import { assertDecisionAction, assertSymbolId } from '../types/validators.mjs';
+import { assertAssetClass, assertDecisionAction, assertSymbolId, normalizeSymbolId } from '../types/validators.mjs';
 
 const toPositiveFiniteOrNull = (value) => {
   const numeric = Number(value);
@@ -47,7 +47,7 @@ const normalizeExecutionError = (error) => ({
 });
 
 const normalizePosition = (position) => ({
-  symbol: String(position?.symbol ?? '').toUpperCase(),
+  symbol: normalizeSymbolId(position?.symbol ?? ''),
   side: 'long',
   qty: Number(position?.qty ?? 0),
   entryPrice: Number(position?.avg_entry_price ?? 0),
@@ -93,11 +93,15 @@ export class AlpacaBrokerGateway extends BrokerGateway {
   async submit(intent) {
     const action = assertDecisionAction(intent?.action);
     const symbol = assertSymbolId(String(intent?.symbol ?? '').toUpperCase());
+    const assetClass = assertAssetClass(intent?.assetClass ?? 'stock');
     if (action !== 'open_long') {
       throw new Error(`AlpacaBrokerGateway.submit() only supports open_long, received ${action}`);
     }
 
     const requestedStopLossPct = toPositiveFiniteOrNull(intent?.stopLossPct);
+    if (assetClass === 'crypto' && requestedStopLossPct !== null) {
+      throw new Error('Crypto market orders do not support broker-side simple stop loss in this gateway');
+    }
     const stopLoss = requestedStopLossPct === null ? null : buildSimpleStopLoss(intent?.referencePrice, requestedStopLossPct);
     if (requestedStopLossPct !== null && stopLoss === null) {
       throw new Error('ExecutionIntent for open_long with stop loss requires referencePrice');
@@ -106,7 +110,7 @@ export class AlpacaBrokerGateway extends BrokerGateway {
       symbol,
       side: 'buy',
       type: 'market',
-      time_in_force: stopLoss ? 'gtc' : 'day',
+      time_in_force: assetClass === 'crypto' ? 'gtc' : (stopLoss ? 'gtc' : 'day'),
     };
 
     if (stopLoss) {

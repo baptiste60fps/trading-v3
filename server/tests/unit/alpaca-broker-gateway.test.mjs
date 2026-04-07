@@ -85,4 +85,43 @@ export const register = async ({ test }) => {
     );
     assert.equal(client.calls.length, 0);
   });
+
+  test('AlpacaBrokerGateway submits crypto market orders with gtc and no advanced stop wrapper', async () => {
+    const client = new FakeClient();
+    const gateway = new AlpacaBrokerGateway({ client, paper: true });
+
+    const result = await gateway.submit({
+      symbol: 'BTC/USD',
+      assetClass: 'crypto',
+      action: 'open_long',
+      notional: 500,
+    });
+
+    assert.equal(result.accepted, true);
+    assert.deepEqual(client.calls[0].options.body, {
+      symbol: 'BTC/USD',
+      side: 'buy',
+      type: 'market',
+      time_in_force: 'gtc',
+      notional: '500.00',
+    });
+  });
+
+  test('AlpacaBrokerGateway rejects broker-side stop loss for crypto market orders', async () => {
+    const client = new FakeClient();
+    const gateway = new AlpacaBrokerGateway({ client, paper: true });
+
+    await assert.rejects(
+      gateway.submit({
+        symbol: 'BTC/USD',
+        assetClass: 'crypto',
+        action: 'open_long',
+        qty: 0.01,
+        referencePrice: 90000,
+        stopLossPct: 0.03,
+      }),
+      /do not support broker-side simple stop loss/i,
+    );
+    assert.equal(client.calls.length, 0);
+  });
 };

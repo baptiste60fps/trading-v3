@@ -17,8 +17,11 @@ export class MarketCalendar {
     this.noTradeOpenMinutes = noTradeOpenMinutes;
   }
 
-  getMarketState(atMs) {
+  getMarketState(atMs, context = null) {
     const date = new Date(normalizeEpochMs(atMs, 'atMs'));
+    const assetClass = typeof context === 'string'
+      ? String(context).trim().toLowerCase()
+      : String(context?.assetClass ?? '').trim().toLowerCase();
     const parts = new Intl.DateTimeFormat('en-US', {
       timeZone: this.timezone,
       hour12: false,
@@ -34,6 +37,19 @@ export class MarketCalendar {
     const weekday = map.weekday;
     const hour = Number(map.hour);
     const minute = Number(map.minute);
+    if (assetClass === 'crypto') {
+      return {
+        timezone: this.timezone,
+        sessionMode: 'continuous',
+        isOpen: true,
+        isPreClose: false,
+        isNoTradeOpen: false,
+        minutesFromOpen: null,
+        minutesToClose: null,
+        sessionLabel: 'continuous_open',
+      };
+    }
+
     const isWeekday = weekday !== 'Sat' && weekday !== 'Sun';
     const minutes = hour * 60 + minute;
 

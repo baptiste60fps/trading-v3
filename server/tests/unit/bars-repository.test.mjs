@@ -102,4 +102,34 @@ export const register = async ({ test }) => {
     assert.equal(bars.length, 1);
     assert.equal(bars[0].timeframe, '4h');
   });
+
+  test('BarsRepository keeps asset class in the cache key', async () => {
+    const provider = new FakeMarketDataProvider();
+    const cache = new FileCacheStore({
+      rootDir: path.join(makeTempDir(), 'bars-cache-asset-class'),
+      defaultTtlMs: 60_000,
+    });
+    const repository = new BarsRepository({
+      marketDataProvider: provider,
+      cacheStore: cache,
+    });
+    const startMs = Date.parse('2026-03-25T13:30:00.000Z');
+
+    await repository.getBars({
+      symbol: 'BTC/USD',
+      assetClass: 'crypto',
+      timeframe: '1m',
+      startMs,
+      endMs: startMs + 240_000,
+    });
+    await repository.getBars({
+      symbol: 'BTC/USD',
+      assetClass: 'stock',
+      timeframe: '1m',
+      startMs,
+      endMs: startMs + 240_000,
+    });
+
+    assert.equal(provider.calls, 2);
+  });
 };

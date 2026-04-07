@@ -76,6 +76,21 @@ class StopLossConfigStore {
   }
 }
 
+class CryptoConfigStore {
+  getSymbolConfig() {
+    return {
+      assetClass: 'crypto',
+      brokerProtection: {
+        enabled: true,
+        simpleStopLossPct: 0.02,
+      },
+      risk: {
+        maxPositionPct: 0.1,
+      },
+    };
+  }
+}
+
 const baseFeatures = {
   symbol: 'AAPL',
   atMs: Date.now(),
@@ -150,6 +165,38 @@ export const register = async ({ test }) => {
     assert.equal(result.executionIntent.referencePrice, 100);
     assert.equal(result.executionIntent.stopLossPct, 0.02);
     assert.equal(result.executionIntent.qty, 8);
+    assert.equal(result.executionResult.status, 'dry_run');
+  });
+
+  test('ExecutionEngine disables broker-side simple stop loss for crypto intents', async () => {
+    const engine = new ExecutionEngine({
+      brokerGateway: new FakeBrokerGateway(),
+      portfolioService: new FakePortfolioService(),
+      configStore: new CryptoConfigStore(),
+      dryRun: true,
+    });
+
+    const result = await engine.executeDecision({
+      symbol: 'BTC/USD',
+      decision: {
+        action: 'open_long',
+        confidence: 0.8,
+        reasoning: ['crypto setup'],
+        requestedSizePct: 0.05,
+      },
+      features: {
+        ...baseFeatures,
+        symbol: 'BTC/USD',
+        assetClass: 'crypto',
+        currentPrice: 90000,
+      },
+    });
+
+    assert.ok(result.executionIntent);
+    assert.equal(result.executionIntent.assetClass, 'crypto');
+    assert.equal(result.executionIntent.stopLossPct, null);
+    assert.equal(result.executionIntent.notional, 800);
+    assert.equal(result.executionIntent.qty, null);
     assert.equal(result.executionResult.status, 'dry_run');
   });
 

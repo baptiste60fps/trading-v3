@@ -152,6 +152,7 @@ export class DailyRuntimeReportService {
 
       report.symbols[safeSymbol] = {
         symbol: safeSymbol,
+        assetClass: safeString(features.assetClass, 'stock'),
         strategyProfile: safeString(this.configStore.getStrategyProfile?.(safeSymbol), 'single_stock'),
         updatedAtMs: Number(atMs),
         marketState: features.marketState ?? null,
@@ -291,6 +292,7 @@ export class DailyRuntimeReportService {
       report.entries.push({
         atMs: Number(atMs),
         symbol,
+        assetClass: safeString(features.assetClass, 'stock'),
         action: 'open_long',
         status: executionResult.status,
         brokerOrderId: safeString(executionResult.brokerOrderId),
@@ -312,6 +314,7 @@ export class DailyRuntimeReportService {
       report.exits.push({
         atMs: Number(atMs),
         symbol,
+        assetClass: safeString(features.assetClass, 'stock'),
         action: 'close_long',
         status: executionResult.status,
         brokerOrderId: safeString(executionResult.brokerOrderId),

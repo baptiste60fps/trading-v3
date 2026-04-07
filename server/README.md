@@ -343,6 +343,7 @@ Variables a verifier:
 - `ALPACA_API_KEY=...`
 - `ALPACA_SECRET_KEY=...`
 - `BAPTISTO_RUNTIME_MODE=paper`
+- `ALPACA_CRYPTO_LOCATION=us` pour les endpoints crypto Alpaca
 - `BAPTISTO_LLM_ENABLED=true`
 - `BAPTISTO_LLM_PROVIDER=ollama`
 - `BAPTISTO_LLM_MODEL=qwen2.5:7b`
@@ -388,6 +389,12 @@ Commande:
 npm run run:symbol -- AAPL
 ```
 
+Exemple crypto:
+
+```bash
+npm run run:symbol -- 'BTC/USD'
+```
+
 Comportement attendu:
 
 - snapshot marche + portefeuille,
@@ -396,6 +403,14 @@ Comportement attendu:
 - stop loss simple cote broker Alpaca a l'ouverture quand la config symbole l'active,
 - logs console colorises avec `Portfolio Delta`, `Session Delta`, ligne `desk trader`, et logs d'ouverture / fermeture.
 - mise a jour continue d'un rapport JSON journalier dans `storage/reports/runtime-daily/runtime-report-YYYY-MM-DD.json`
+
+Point crypto:
+
+- les symboles crypto Alpaca sont attendus au format `BTC/USD`, `ETH/USD`, `SOL/USD`,
+- les endpoints data crypto passent par Alpaca `v1beta3`,
+- le calendrier runtime traite la crypto en `continuous_open` 24/7,
+- le stop loss simple cote broker n'est pas active pour la crypto dans cette version,
+- les exemples crypto sont preconfigures dans `storage/configs/runtime.json` mais laisses `enabled=false` par defaut.
 
 Le rapport runtime journalier contient notamment:
 
@@ -430,6 +445,7 @@ Overrides utiles:
 - `BAPTISTO_RUNTIME_IDLE_INTERVAL_MS=300000`
 - `BAPTISTO_RUNTIME_STARTUP_WARMUP=true`
 - `BAPTISTO_RUNTIME_SYMBOLS=AAPL,MSFT,NVDA`
+- `BAPTISTO_RUNTIME_SYMBOLS=AAPL,'BTC/USD'`
 - `npm start -- --symbols AAPL,MSFT --loop-interval-ms 30000 --idle-interval-ms 120000`
 
 ### 6. Lire les garde-fous actuels

@@ -62,6 +62,7 @@ export const createRuntime = async ({ serverRootDir = DEFAULT_SERVER_ROOT, env =
       client,
       feed: alpacaConfig.feed,
       adjustment: alpacaConfig.adjustment,
+      cryptoLocation: alpacaConfig.cryptoLocation,
     });
     brokerGateway = new AlpacaBrokerGateway({
       client,

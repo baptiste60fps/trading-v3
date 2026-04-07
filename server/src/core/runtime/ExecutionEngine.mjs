@@ -31,6 +31,8 @@ export class ExecutionEngine {
   async createExecutionIntent({ symbol, decision, features }) {
     const safeSymbol = String(symbol ?? '').toUpperCase();
     const action = decision?.action ?? 'skip';
+    const symbolConfig = this.configStore?.getSymbolConfig?.(safeSymbol) ?? {};
+    const assetClass = String(symbolConfig?.assetClass ?? features?.assetClass ?? 'stock').trim().toLowerCase() || 'stock';
 
     if (action === 'skip' || action === 'hold') {
       return {
@@ -51,6 +53,7 @@ export class ExecutionEngine {
       return {
         executionIntent: {
           symbol: safeSymbol,
+          assetClass,
           action: 'close_long',
           side: 'long',
           referencePrice: features?.currentPrice ?? null,
@@ -94,7 +97,6 @@ export class ExecutionEngine {
       };
     }
 
-    const symbolConfig = this.configStore?.getSymbolConfig?.(safeSymbol) ?? {};
     const risk = symbolConfig.risk ?? {};
     const maxPositionPct = toFinite(risk.maxPositionPct, 0.05);
     const requestedSizePct = decision?.requestedSizePct === null || decision?.requestedSizePct === undefined ? maxPositionPct : decision.requestedSizePct;
@@ -111,7 +113,7 @@ export class ExecutionEngine {
       };
     }
 
-    const configuredStopLossPct = symbolConfig?.brokerProtection?.enabled === false
+    const configuredStopLossPct = assetClass === 'crypto' || symbolConfig?.brokerProtection?.enabled === false
       ? null
       : symbolConfig?.brokerProtection?.simpleStopLossPct ?? null;
     const stopLossPct = toPositiveFiniteOrNull(decision?.stopLossPct ?? configuredStopLossPct);
@@ -129,6 +131,7 @@ export class ExecutionEngine {
     return {
       executionIntent: {
         symbol: safeSymbol,
+        assetClass,
         action: 'open_long',
         side: 'long',
         notional: stopLossPct === null ? allowance.adjustedNotional : null,
