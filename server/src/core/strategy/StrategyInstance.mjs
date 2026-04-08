@@ -6,6 +6,7 @@ export class StrategyInstance {
     featureSnapshotService,
     decisionEngine,
     executionEngine,
+    entryPolicy = null,
     consoleLogger = null,
   } = {}) {
     this.symbol = String(symbol ?? '').toUpperCase();
@@ -14,6 +15,7 @@ export class StrategyInstance {
     this.featureSnapshotService = featureSnapshotService;
     this.decisionEngine = decisionEngine;
     this.executionEngine = executionEngine;
+    this.entryPolicy = entryPolicy;
     this.consoleLogger = consoleLogger;
     this.warmedUp = false;
     this.lastWarmupMs = null;
@@ -22,6 +24,9 @@ export class StrategyInstance {
     this.lastDecision = null;
     this.lastExecution = null;
     this.lastFallbackExit = null;
+    this.lastOpenRejectionMs = null;
+    this.lastOpenRejectionCategory = null;
+    this.lastOpenRejectionMessage = null;
   }
 
   async warmup(atMs = Date.now()) {
@@ -48,18 +53,28 @@ export class StrategyInstance {
       atMs,
       runtimeMode: this.runtimeMode,
     });
-    const decision = !features?.position && this.#shouldBypassOpeningDecision(features)
+    let decision = !features?.position && this.#shouldBypassOpeningDecision(features)
       ? this.#buildMarketGateDecision(features)
       : await this.decisionEngine.decide({
           symbol: this.symbol,
           features,
           strategyConfig,
         });
+    if (!features?.position && this.entryPolicy?.review) {
+      decision = await this.entryPolicy.review({
+        symbol: this.symbol,
+        features,
+        strategyConfig,
+        modelDecision: decision,
+      });
+    }
+    decision = this.#applyOpenRejectionCooldown(decision, features, atMs);
     const execution = await this.executionEngine.executeDecision({
       symbol: this.symbol,
       decision,
       features,
     });
+    this.#recordOpenRejection(decision, execution.executionResult, atMs);
 
     this.lastEvaluationMs = atMs;
     this.lastSnapshot = features;
@@ -105,6 +120,9 @@ export class StrategyInstance {
       lastDecision: this.lastDecision,
       lastExecution: this.lastExecution,
       lastFallbackExit: this.lastFallbackExit,
+      lastOpenRejectionMs: this.lastOpenRejectionMs,
+      lastOpenRejectionCategory: this.lastOpenRejectionCategory,
+      lastOpenRejectionMessage: this.lastOpenRejectionMessage,
     };
   }
 
@@ -127,5 +145,57 @@ export class StrategyInstance {
         marketSession: features?.marketState?.sessionLabel ?? null,
       },
     };
+  }
+
+  #applyOpenRejectionCooldown(decision, features, atMs) {
+    if (decision?.action !== 'open_long') return decision;
+    if (features?.position) return decision;
+
+    const cooldownMs = this.#getOpenRejectionCooldownMs();
+    if (!(cooldownMs > 0) || !Number.isFinite(this.lastOpenRejectionMs)) return decision;
+    if ((Number(atMs) - this.lastOpenRejectionMs) >= cooldownMs) return decision;
+
+    return {
+      ...decision,
+      action: 'skip',
+      confidence: Math.min(Number(decision?.confidence ?? 0.3), 0.22),
+      reasoning: [
+        `open_rejection_cooldown:${this.lastOpenRejectionCategory ?? 'broker_reject'}`,
+        this.lastOpenRejectionMessage ?? 'recent_broker_reject',
+      ],
+      requestedSizePct: null,
+      stopLossPct: null,
+      takeProfitPct: null,
+      signalContext: {
+        ...(decision?.signalContext ?? {}),
+        openRejectionCooldownMs: cooldownMs,
+        lastOpenRejectionCategory: this.lastOpenRejectionCategory,
+        lastOpenRejectionMessage: this.lastOpenRejectionMessage,
+        lastOpenRejectionMs: this.lastOpenRejectionMs,
+      },
+    };
+  }
+
+  #recordOpenRejection(decision, executionResult, atMs) {
+    if (decision?.action !== 'open_long') return;
+
+    if (executionResult?.accepted === true || ['accepted', 'filled', 'dry_run'].includes(executionResult?.status)) {
+      this.lastOpenRejectionMs = null;
+      this.lastOpenRejectionCategory = null;
+      this.lastOpenRejectionMessage = null;
+      return;
+    }
+
+    if (executionResult?.status !== 'rejected') return;
+
+    this.lastOpenRejectionMs = Number(atMs);
+    this.lastOpenRejectionCategory = executionResult?.error?.category ?? 'unknown';
+    this.lastOpenRejectionMessage = executionResult?.error?.message ?? executionResult?.status ?? 'rejected';
+  }
+
+  #getOpenRejectionCooldownMs() {
+    const executionConfig = this.configStore?.getExecutionConfig?.() ?? {};
+    const value = Number(executionConfig?.openRejectionCooldownMs);
+    return Number.isFinite(value) && value > 0 ? value : 0;
   }
 }

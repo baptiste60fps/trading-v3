@@ -22,6 +22,7 @@ const unitFiles = [
   './unit/execution-engine.test.mjs',
   './unit/persistent-runtime-orchestrator.test.mjs',
   './unit/decision-engine.test.mjs',
+  './unit/heuristic-entry-policy.test.mjs',
   './unit/strategy-instance.test.mjs',
   './unit/backtest-engine.test.mjs',
   './unit/rss-feed-service.test.mjs',

@@ -75,6 +75,9 @@ export const defaultConfig = Object.freeze({
   },
   execution: {
     dryRun: true,
+    entryPolicyGuardEnabled: true,
+    clampEntrySizeToHeuristic: true,
+    openRejectionCooldownMs: 5 * 60 * 1000,
   },
   telemetry: {
     console: {

@@ -159,7 +159,20 @@
     },
     "AAPL": {
       "enabled": true,
-      "strategyProfile": "single_stock_quality"
+      "strategyProfile": "single_stock_quality",
+      "strategyRules": {
+        "minimumRelatedTrend": 0.0005,
+        "maximumMediumRsiForPrimaryEntry": 72,
+        "primaryFastRsiCeiling": 58,
+        "primaryChasePriceVsSmaCeiling": 0.0006,
+        "scoutMinimumContextScore": 5,
+        "scoutMinimumRelatedTrend": 0.001,
+        "scoutMinimumRelatedRsi": 50,
+        "scoutMaximumFastRsi": 48.5,
+        "scoutMaximumFastPriceVsSma": -0.0011,
+        "requestedSizeScale": 0.8,
+        "maxRequestedSizePct": 0.035
+      }
     },
     "MSFT": {
       "enabled": true,

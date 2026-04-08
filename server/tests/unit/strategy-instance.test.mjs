@@ -7,6 +7,12 @@ class FakeConfigStore {
       strategy: 'llm_long_v1',
     };
   }
+
+  getExecutionConfig() {
+    return {
+      openRejectionCooldownMs: 300_000,
+    };
+  }
 }
 
 class FakeFeatureSnapshotService {
@@ -80,6 +86,40 @@ class FakeExecutionEngine {
         status: 'noop',
         error: null,
       },
+    };
+  }
+}
+
+class RejectingOpenExecutionEngine extends FakeExecutionEngine {
+  async executeDecision(payload) {
+    this.calls.push(payload);
+    return {
+      executionIntent: payload?.decision?.action === 'open_long'
+        ? {
+            symbol: payload.symbol,
+            action: 'open_long',
+          }
+        : null,
+      executionResult: payload?.decision?.action === 'open_long'
+        ? {
+            accepted: false,
+            brokerOrderId: null,
+            filledQty: null,
+            avgFillPrice: null,
+            status: 'rejected',
+            error: {
+              category: 'validation',
+              message: 'fractional orders must be DAY orders',
+            },
+          }
+        : {
+            accepted: false,
+            brokerOrderId: null,
+            filledQty: null,
+            avgFillPrice: null,
+            status: 'noop',
+            error: null,
+          },
     };
   }
 }
@@ -196,5 +236,79 @@ export const register = async ({ test }) => {
     assert.equal(result.decision.action, 'skip');
     assert.deepEqual(result.decision.reasoning, ['market_gate', 'market_closed']);
     assert.equal(executionEngine.calls[0].decision.action, 'skip');
+  });
+
+  test('StrategyInstance lets an entry policy downgrade an LLM open into a skip', async () => {
+    class OpenDecisionEngine {
+      async decide() {
+        return {
+          action: 'open_long',
+          confidence: 0.8,
+          reasoning: ['llm_open'],
+          requestedSizePct: 0.05,
+          stopLossPct: null,
+          takeProfitPct: null,
+        };
+      }
+    }
+
+    const executionEngine = new FakeExecutionEngine();
+    const strategy = new StrategyInstance({
+      symbol: 'AAPL',
+      runtimeMode: 'paper',
+      configStore: new FakeConfigStore(),
+      featureSnapshotService: new FakeFeatureSnapshotService(),
+      decisionEngine: new OpenDecisionEngine(),
+      executionEngine,
+      entryPolicy: {
+        async review({ modelDecision }) {
+          return {
+            ...modelDecision,
+            action: 'skip',
+            reasoning: ['entry_policy_block:test_gate'],
+            requestedSizePct: null,
+          };
+        },
+      },
+    });
+
+    const result = await strategy.runOnce(Date.now());
+
+    assert.equal(result.decision.action, 'skip');
+    assert.equal(result.decision.reasoning[0], 'entry_policy_block:test_gate');
+    assert.equal(executionEngine.calls[0].decision.action, 'skip');
+  });
+
+  test('StrategyInstance applies an open rejection cooldown after a rejected broker open', async () => {
+    class OpenDecisionEngine {
+      async decide() {
+        return {
+          action: 'open_long',
+          confidence: 0.8,
+          reasoning: ['llm_open'],
+          requestedSizePct: 0.05,
+          stopLossPct: null,
+          takeProfitPct: null,
+        };
+      }
+    }
+
+    const executionEngine = new RejectingOpenExecutionEngine();
+    const strategy = new StrategyInstance({
+      symbol: 'AAPL',
+      runtimeMode: 'paper',
+      configStore: new FakeConfigStore(),
+      featureSnapshotService: new FakeFeatureSnapshotService(),
+      decisionEngine: new OpenDecisionEngine(),
+      executionEngine,
+    });
+
+    const firstResult = await strategy.runOnce(1_000_000);
+    const secondResult = await strategy.runOnce(1_060_000);
+
+    assert.equal(firstResult.executionResult.status, 'rejected');
+    assert.equal(secondResult.decision.action, 'skip');
+    assert.equal(secondResult.decision.reasoning[0], 'open_rejection_cooldown:validation');
+    assert.equal(executionEngine.calls[1].decision.action, 'skip');
   });
 };

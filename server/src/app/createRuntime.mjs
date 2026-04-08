@@ -20,6 +20,7 @@ import { OllamaDecisionModelClient } from '../core/llm/OllamaDecisionModelClient
 import { ExecutionEngine } from '../core/runtime/ExecutionEngine.mjs';
 import { PersistentRuntimeOrchestrator } from '../core/runtime/PersistentRuntimeOrchestrator.mjs';
 import { StrategyInstance } from '../core/strategy/StrategyInstance.mjs';
+import { HeuristicEntryPolicy } from '../core/strategy/HeuristicEntryPolicy.mjs';
 import { RssFeedService } from '../services/news/RssFeedService.mjs';
 import { DailyMarketReportService } from '../services/reports/DailyMarketReportService.mjs';
 import { DailyRuntimeReportService } from '../services/reports/DailyRuntimeReportService.mjs';
@@ -111,6 +112,11 @@ export const createRuntime = async ({ serverRootDir = DEFAULT_SERVER_ROOT, env =
     configStore,
     dailyMarketReportService,
   });
+  const entryPolicy = new HeuristicEntryPolicy({
+    configStore,
+    enabled: executionConfig.entryPolicyGuardEnabled !== false,
+    clampRequestedSize: executionConfig.clampEntrySizeToHeuristic !== false,
+  });
   const executionEngine = new ExecutionEngine({
     brokerGateway,
     portfolioService,
@@ -163,6 +169,7 @@ export const createRuntime = async ({ serverRootDir = DEFAULT_SERVER_ROOT, env =
           featureSnapshotService,
           decisionEngine,
           executionEngine,
+          entryPolicy,
           consoleLogger: consoleTradingLogger,
         })),
       });
@@ -175,6 +182,7 @@ export const createRuntime = async ({ serverRootDir = DEFAULT_SERVER_ROOT, env =
         featureSnapshotService,
         decisionEngine,
         executionEngine,
+        entryPolicy,
         consoleLogger: consoleTradingLogger,
       });
     },
