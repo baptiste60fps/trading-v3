@@ -1,7 +1,7 @@
 {
   "type": "runtime_daily_report",
   "generatedAtMs": 1775659916439,
-  "updatedAtMs": 1775660074949,
+  "updatedAtMs": 1775664415497,
   "sessionDate": "2026-04-08",
   "runtime": {
     "mode": "paper",
@@ -485,53 +485,53 @@
   "wakeupReportPath": "/Applications/MAMP/htdocs/trading-v3/server/storage/reports/daily/daily-report-2026-04-08.json",
   "accountLatest": {
     "cash": 88687.33,
-    "equity": 96816.57,
-    "exposurePct": 0.08396538950925446,
+    "equity": 96842.68,
+    "exposurePct": 0.08421238511780138,
     "positions": [
       {
         "symbol": "AAPL",
         "qty": 7,
         "entryPrice": 248.45,
-        "currentPrice": 258.58,
-        "marketValue": 1810.06,
-        "unrealizedPnl": 70.91,
-        "openedAtMs": 1775660057861
+        "currentPrice": 258.01,
+        "marketValue": 1806.07,
+        "unrealizedPnl": 66.92,
+        "openedAtMs": 1775664402568
       },
       {
         "symbol": "BTC/USD",
         "qty": 0.020497376,
         "entryPrice": 69182.965071863,
-        "currentPrice": 70893.12,
-        "marketValue": 1453.122936,
-        "unrealizedPnl": 35.053688,
-        "openedAtMs": 1775660057861
+        "currentPrice": 71396.406,
+        "marketValue": 1463.438979,
+        "unrealizedPnl": 45.369731,
+        "openedAtMs": 1775664402568
       },
       {
         "symbol": "ETH/USD",
         "qty": 0.66737467,
         "entryPrice": 2124.827151055,
-        "currentPrice": 2193.1,
-        "marketValue": 1463.619389,
-        "unrealizedPnl": 45.56357,
-        "openedAtMs": 1775660057861
+        "currentPrice": 2215.56,
+        "marketValue": 1478.608624,
+        "unrealizedPnl": 60.552805,
+        "openedAtMs": 1775664402568
       },
       {
         "symbol": "SOL/USD",
         "qty": 5.870367238,
         "entryPrice": 80.38,
-        "currentPrice": 82.659,
-        "marketValue": 485.238686,
-        "unrealizedPnl": 13.378567,
-        "openedAtMs": 1775660057861
+        "currentPrice": 83.517,
+        "marketValue": 490.275461,
+        "unrealizedPnl": 18.415342,
+        "openedAtMs": 1775664402568
       },
       {
         "symbol": "TGT",
         "qty": 24,
         "entryPrice": 120.11,
-        "currentPrice": 121.55,
-        "marketValue": 2917.2,
-        "unrealizedPnl": 34.56,
-        "openedAtMs": 1775660057861
+        "currentPrice": 121.54,
+        "marketValue": 2916.96,
+        "unrealizedPnl": 34.32,
+        "openedAtMs": 1775664402568
       }
     ]
   },
@@ -632,6 +632,1982 @@
       "marketSession": "continuous_open",
       "currentPrice": 2192.6145,
       "error": "noop_action"
+    },
+    {
+      "cycle": 2,
+      "reason": "scheduled",
+      "atMs": 1775660032452,
+      "symbol": "SOL/USD",
+      "ok": true,
+      "decisionAction": "hold",
+      "decisionReasoning": [
+        "The current price of SOL/USD is slightly above the entry price, indicating a positive trend.",
+        "RSI values are within acceptable ranges, suggesting no overbought or oversold conditions.",
+        "Related symbols like BTC/USD and ETH/USD show positive returns in higher timeframes, which could support SOL/USD's upward momentum."
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 82.7495,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 3,
+      "reason": "scheduled",
+      "atMs": 1775660162320,
+      "symbol": "BTC/USD",
+      "ok": true,
+      "decisionAction": "hold",
+      "decisionReasoning": [
+        "The current RSI values for BTC/USD are above the minimum required (34), suggesting momentum is still positive.",
+        "The price vs SMA20 and EMA gap indicators on higher timeframes show slight bullish signals, indicating potential for further gains.",
+        "The related symbols ETH/USD and SOL/USD also exhibit positive trends, supporting a hold strategy."
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 70847.83,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 3,
+      "reason": "scheduled",
+      "atMs": 1775660162320,
+      "symbol": "ETH/USD",
+      "ok": true,
+      "decisionAction": "hold",
+      "decisionReasoning": [
+        "The current RSI values across multiple timeframes are above the minimum required (34), suggesting momentum is still positive.",
+        "The price vs SMA20 and EMA gap indicators show a slight bullish bias, with some timeframes indicating a return greater than -1% over 20 bars.",
+        "ETH/USD has an existing position that hasn't been fully realized yet, which aligns with the strategy's risk management rules."
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 2192.177,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 3,
+      "reason": "scheduled",
+      "atMs": 1775660162320,
+      "symbol": "SOL/USD",
+      "ok": true,
+      "decisionAction": "hold",
+      "decisionReasoning": [
+        "The current price of SOL/USD is slightly above the entry price, indicating a positive trend.",
+        "RSI values are within acceptable ranges, suggesting no overbought or oversold conditions.",
+        "Related symbols like BTC/USD and ETH/USD show positive returns in higher timeframes, which could support SOL/USD's upward momentum."
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 82.745,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 4,
+      "reason": "scheduled",
+      "atMs": 1775660267689,
+      "symbol": "BTC/USD",
+      "ok": true,
+      "decisionAction": "hold",
+      "decisionReasoning": [
+        "The current price of BTC/USD is slightly above the entry price, indicating a positive trend.",
+        "RSI values are within acceptable ranges, suggesting no overbought or oversold conditions.",
+        "Related symbols like ETH/USD and SOL/USD show mixed signals but overall positive trends in higher timeframes."
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 70802.984,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 4,
+      "reason": "scheduled",
+      "atMs": 1775660267689,
+      "symbol": "ETH/USD",
+      "ok": true,
+      "decisionAction": "hold",
+      "decisionReasoning": [
+        "The current RSI values for ETH/USD are within the acceptable range, with no strong bearish signals.",
+        "ETH/USD has shown positive returns over the last 20 and 50 bars on multiple timeframes, indicating a potential uptrend.",
+        "Related assets like BTC/USD and SOL/USD show mixed but generally stable trends, which supports holding ETH/USD."
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 2190.2705,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 4,
+      "reason": "scheduled",
+      "atMs": 1775660267689,
+      "symbol": "SOL/USD",
+      "ok": true,
+      "decisionAction": "hold",
+      "decisionReasoning": [
+        "The current price of SOL/USD is slightly above the entry price, indicating a positive trend.",
+        "RSI values are within acceptable ranges, suggesting no overbought or oversold conditions.",
+        "Related symbols like BTC/USD and ETH/USD show positive returns in the short to medium term, which could support SOL/USD's upward momentum."
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 82.74305,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 5,
+      "reason": "scheduled",
+      "atMs": 1775660371785,
+      "symbol": "BTC/USD",
+      "ok": true,
+      "decisionAction": "hold",
+      "decisionReasoning": [
+        "The current RSI values are within acceptable ranges, with the 4h timeframe showing a strong positive momentum.",
+        "The price vs SMA20 and EMA gap indicators suggest a bullish trend in the short to medium term.",
+        "Related symbols like ETH/USD and SOL/USD also show positive trends, supporting the overall market sentiment."
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 70849.3665,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 5,
+      "reason": "scheduled",
+      "atMs": 1775660371785,
+      "symbol": "ETH/USD",
+      "ok": true,
+      "decisionAction": "hold",
+      "decisionReasoning": [
+        "The current price of ETH/USD is slightly above the entry price, indicating a positive trend.",
+        "RSI values are within acceptable ranges, suggesting no overbought or oversold conditions.",
+        "Related symbols like BTC/USD and SOL/USD show mixed signals but overall stable trends."
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 2191.8915,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 5,
+      "reason": "scheduled",
+      "atMs": 1775660371785,
+      "symbol": "SOL/USD",
+      "ok": true,
+      "decisionAction": "hold",
+      "decisionReasoning": [
+        "The current price of SOL/USD is slightly above the entry price, indicating a positive trend.",
+        "RSI values are within acceptable ranges, suggesting no overbought or oversold conditions.",
+        "Related symbols like BTC/USD and ETH/USD show positive returns in the short to medium term, which could support holding SOL/USD."
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 82.8605,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 6,
+      "reason": "scheduled",
+      "atMs": 1775660489433,
+      "symbol": "BTC/USD",
+      "ok": true,
+      "decisionAction": "hold",
+      "decisionReasoning": [
+        "The current RSI values for BTC/USD are within the acceptable range (minimumFastRsi: 40, maximumFastRsi: 68).",
+        "The price vs SMA20 and EMA gap indicators suggest a neutral to slightly bullish trend.",
+        "The related symbols ETH/USD and SOL/USD show mixed signals but no strong bearish trends that would warrant closing the position."
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 70870.413,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 6,
+      "reason": "scheduled",
+      "atMs": 1775660489433,
+      "symbol": "ETH/USD",
+      "ok": true,
+      "decisionAction": "hold",
+      "decisionReasoning": [
+        "The current price of ETH/USD is slightly above the entry price, indicating a positive trend.",
+        "RSI values are within acceptable ranges, suggesting no overbought or oversold conditions.",
+        "Related symbols like BTC/USD and SOL/USD show mixed signals but overall neutral to slightly bullish trends."
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 2194.945,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 6,
+      "reason": "scheduled",
+      "atMs": 1775660489433,
+      "symbol": "SOL/USD",
+      "ok": true,
+      "decisionAction": "hold",
+      "decisionReasoning": [
+        "The current price of SOL/USD is slightly above the entry price, indicating a positive trend.",
+        "RSI values are within acceptable ranges, suggesting no overbought or oversold conditions.",
+        "Related symbols like BTC/USD and ETH/USD show positive returns, which could support the continuation of the upward trend in SOL/USD."
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 82.87035,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 7,
+      "reason": "scheduled",
+      "atMs": 1775660623963,
+      "symbol": "BTC/USD",
+      "ok": true,
+      "decisionAction": "skip",
+      "decisionReasoning": [
+        "decision_engine_fallback:Ollama request timed out"
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 70966.955,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 7,
+      "reason": "scheduled",
+      "atMs": 1775660623963,
+      "symbol": "ETH/USD",
+      "ok": true,
+      "decisionAction": "hold",
+      "decisionReasoning": [
+        "The current RSI values are within acceptable ranges, with no strong bearish signals.",
+        "ETH/USD has shown positive returns over the last 20 and 50 bars on higher timeframes (1h, 4h, 1d).",
+        "Related assets like BTC/USD and SOL/USD show mixed but generally neutral to slightly bullish trends."
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 2198.0915,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 7,
+      "reason": "scheduled",
+      "atMs": 1775660623963,
+      "symbol": "SOL/USD",
+      "ok": true,
+      "decisionAction": "hold",
+      "decisionReasoning": [
+        "The current price of SOL/USD is slightly above the entry price, indicating a positive trend.",
+        "RSI values are within acceptable ranges, suggesting momentum.",
+        "Related symbols like BTC/USD and ETH/USD show positive returns over various timeframes, which could support holding SOL/USD."
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 83.0009,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 8,
+      "reason": "scheduled",
+      "atMs": 1775660758212,
+      "symbol": "BTC/USD",
+      "ok": true,
+      "decisionAction": "skip",
+      "decisionReasoning": [
+        "decision_engine_fallback:Ollama request timed out"
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 70968.868,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 8,
+      "reason": "scheduled",
+      "atMs": 1775660758212,
+      "symbol": "ETH/USD",
+      "ok": true,
+      "decisionAction": "hold",
+      "decisionReasoning": [
+        "The current price of ETH/USD is slightly above the entry price, indicating a positive trend.",
+        "RSI values are within acceptable ranges, suggesting no overbought or oversold conditions.",
+        "Related symbols like BTC/USD and SOL/USD show mixed signals but overall stable trends."
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 2197.15,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 8,
+      "reason": "scheduled",
+      "atMs": 1775660758212,
+      "symbol": "SOL/USD",
+      "ok": true,
+      "decisionAction": "hold",
+      "decisionReasoning": [
+        "The current price of SOL/USD is above the EMA gap, indicating potential upward momentum.",
+        "RSI values are within a healthy range, suggesting no overbought or oversold conditions.",
+        "Related symbols like BTC/USD and ETH/USD show positive returns in the 1h timeframe, which could support SOL/USD's performance."
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 83.01395,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 9,
+      "reason": "scheduled",
+      "atMs": 1775660898841,
+      "symbol": "BTC/USD",
+      "ok": true,
+      "decisionAction": "skip",
+      "decisionReasoning": [
+        "decision_engine_fallback:Ollama request timed out"
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 71092.444,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 9,
+      "reason": "scheduled",
+      "atMs": 1775660898841,
+      "symbol": "ETH/USD",
+      "ok": true,
+      "decisionAction": "hold",
+      "decisionReasoning": [
+        "The current RSI values across multiple timeframes are within acceptable ranges, suggesting no immediate overbought or oversold conditions.",
+        "ETH/USD's price is slightly above the SMA20 in the 1h timeframe, indicating a positive trend.",
+        "Related symbols like BTC/USD and SOL/USD show mixed signals but do not indicate strong bearish pressure on ETH/USD."
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 2203.9695,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 9,
+      "reason": "scheduled",
+      "atMs": 1775660898841,
+      "symbol": "SOL/USD",
+      "ok": true,
+      "decisionAction": "hold",
+      "decisionReasoning": [
+        "The current price of SOL/USD is slightly above the entry price, indicating a positive trend.",
+        "RSI values are within acceptable ranges, suggesting momentum.",
+        "Related symbols like BTC/USD and ETH/USD show positive returns over various timeframes, supporting the overall market sentiment."
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 82.925,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 10,
+      "reason": "scheduled",
+      "atMs": 1775661021550,
+      "symbol": "BTC/USD",
+      "ok": true,
+      "decisionAction": "skip",
+      "decisionReasoning": [
+        "decision_engine_fallback:Ollama request timed out"
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 70881.35,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 10,
+      "reason": "scheduled",
+      "atMs": 1775661021550,
+      "symbol": "ETH/USD",
+      "ok": true,
+      "decisionAction": "hold",
+      "decisionReasoning": [
+        "The current RSI values are above the minimum required (40 for fast RSI), indicating bullish momentum.",
+        "The price is slightly above the SMA20, suggesting a positive trend.",
+        "The related symbols BTC/USD and SOL/USD show mixed signals but overall positive trends in higher timeframes."
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 2197.2595,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 10,
+      "reason": "scheduled",
+      "atMs": 1775661021550,
+      "symbol": "SOL/USD",
+      "ok": true,
+      "decisionAction": "hold",
+      "decisionReasoning": [
+        "The current price of SOL/USD is slightly above the entry price, indicating a positive trend.",
+        "RSI values are within acceptable ranges, suggesting no overbought or oversold conditions.",
+        "Related symbols like BTC/USD and ETH/USD show positive returns in the short to medium term, which could support SOL/USD's upward momentum."
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 82.8595,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 11,
+      "reason": "scheduled",
+      "atMs": 1775661155943,
+      "symbol": "BTC/USD",
+      "ok": true,
+      "decisionAction": "hold",
+      "decisionReasoning": [
+        "The current RSI values for BTC/USD across multiple timeframes are above the minimum required (40) and indicate a bullish momentum.",
+        "The price vs SMA20 is positive, suggesting that the asset is trading above its short-term moving average.",
+        "The EMA gap 12_26 is positive in the 1h timeframe, indicating potential upward momentum.",
+        "Related assets like ETH/USD and SOL/USD are showing mixed signals but generally not conflicting with BTC/USD's bullish trend."
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 71003.306,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 11,
+      "reason": "scheduled",
+      "atMs": 1775661155943,
+      "symbol": "ETH/USD",
+      "ok": true,
+      "decisionAction": "hold",
+      "decisionReasoning": [
+        "The current RSI values across multiple timeframes are within the acceptable range, suggesting no immediate overbought or oversold conditions.",
+        "ETH/USD has shown positive returns in the last 20 and 50 bars on higher timeframes (1h, 4h, 1d), indicating a potential uptrend.",
+        "Related symbols like BTC/USD and SOL/USD are also showing positive trends, which could support ETH/USD's current position."
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 2202.96,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 11,
+      "reason": "scheduled",
+      "atMs": 1775661155943,
+      "symbol": "SOL/USD",
+      "ok": true,
+      "decisionAction": "hold",
+      "decisionReasoning": [
+        "The current price of SOL/USD is above the EMA gap, indicating potential upward momentum.",
+        "RSI values are within a neutral to bullish range, suggesting no immediate overbought conditions.",
+        "Related symbols like BTC/USD and ETH/USD show positive returns in the 4-hour timeframe, which could support SOL/USD's performance."
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 83.0015,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 12,
+      "reason": "scheduled",
+      "atMs": 1775661281374,
+      "symbol": "BTC/USD",
+      "ok": true,
+      "decisionAction": "hold",
+      "decisionReasoning": [
+        "The current price of BTC/USD is slightly above the entry price, indicating a positive trend.",
+        "RSI values are within acceptable ranges, suggesting no overbought or oversold conditions.",
+        "Related symbols like ETH/USD and SOL/USD show mixed signals but overall stable trends."
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 71036.965,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 12,
+      "reason": "scheduled",
+      "atMs": 1775661281374,
+      "symbol": "ETH/USD",
+      "ok": true,
+      "decisionAction": "hold",
+      "decisionReasoning": [
+        "The current price of ETH/USD is slightly above the entry price, indicating a positive trend.",
+        "RSI values are within acceptable limits, suggesting no overbought or oversold conditions.",
+        "Related symbols like BTC/USD and SOL/USD show mixed signals but overall neutral to slightly bullish trends."
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 2203.73,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 12,
+      "reason": "scheduled",
+      "atMs": 1775661281374,
+      "symbol": "SOL/USD",
+      "ok": true,
+      "decisionAction": "hold",
+      "decisionReasoning": [
+        "The current price of SOL/USD is slightly above the entry price, indicating a positive trend.",
+        "RSI values are within acceptable ranges, suggesting no overbought or oversold conditions.",
+        "Related symbols like BTC/USD and ETH/USD show positive returns in the short to medium term, which could support SOL/USD's upward momentum."
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 83.0175,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 13,
+      "reason": "scheduled",
+      "atMs": 1775661386396,
+      "symbol": "BTC/USD",
+      "ok": true,
+      "decisionAction": "hold",
+      "decisionReasoning": [
+        "The current price of BTC/USD is above the EMA gap, indicating potential upward momentum.",
+        "RSI values are in a favorable range, suggesting the asset is not overbought.",
+        "The related symbols ETH/USD and SOL/USD show mixed signals but overall positive trends."
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 71120.208,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 13,
+      "reason": "scheduled",
+      "atMs": 1775661386396,
+      "symbol": "ETH/USD",
+      "ok": true,
+      "decisionAction": "hold",
+      "decisionReasoning": [
+        "The current RSI values are within acceptable ranges, with the 1m timeframe showing an RSI of 69.26, which is above the minimum required RSI of 40.",
+        "The price vs SMA20 and EMA gap indicators suggest a slight positive trend across multiple timeframes.",
+        "The overall momentum from the 1h to 1d timeframes indicates a bullish sentiment.",
+        "No significant stop-loss conditions are triggered, as the current price is above the stop loss threshold of 4%."
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 2206.235,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 13,
+      "reason": "scheduled",
+      "atMs": 1775661386396,
+      "symbol": "SOL/USD",
+      "ok": true,
+      "decisionAction": "hold",
+      "decisionReasoning": [
+        "The current RSI values for SOL/USD are within the acceptable range, with no strong overbought or oversold conditions.",
+        "The price action shows a slight upward trend across multiple timeframes, suggesting continued momentum.",
+        "Related crypto assets like BTC/USD and ETH/USD also show positive returns, indicating broader market support."
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 83.105,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 14,
+      "reason": "scheduled",
+      "atMs": 1775661494376,
+      "symbol": "BTC/USD",
+      "ok": true,
+      "decisionAction": "hold",
+      "decisionReasoning": [
+        "The current price of BTC/USD is slightly above the entry price, indicating a positive trend.",
+        "RSI values are within acceptable ranges, suggesting no overbought or oversold conditions.",
+        "Momentum indicators like return20 and return50 on higher timeframes (4h and 1d) show positive trends."
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 71099.4,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 14,
+      "reason": "scheduled",
+      "atMs": 1775661494376,
+      "symbol": "ETH/USD",
+      "ok": true,
+      "decisionAction": "open_long",
+      "decisionReasoning": [
+        "The RSI on the 4h timeframe is above the minimum required value of 34, indicating potential upward momentum.",
+        "The price vs SMA20 and EMA gap indicators are positive across multiple timeframes, suggesting a bullish trend.",
+        "ETH/USD has not yet reached its maximum position percentage limit, allowing for new positions to be opened."
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "position_already_open",
+      "marketSession": "continuous_open",
+      "currentPrice": 2203.02,
+      "error": "position_already_open"
+    },
+    {
+      "cycle": 14,
+      "reason": "scheduled",
+      "atMs": 1775661494376,
+      "symbol": "SOL/USD",
+      "ok": true,
+      "decisionAction": "hold",
+      "decisionReasoning": [
+        "The current price of SOL/USD is slightly above the entry price, indicating a positive trend.",
+        "RSI values are within acceptable ranges, suggesting no overbought or oversold conditions.",
+        "Related symbols like BTC/USD and ETH/USD show positive returns in the short to medium term, which could support holding SOL/USD."
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 83.10885,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 15,
+      "reason": "scheduled",
+      "atMs": 1775661606852,
+      "symbol": "BTC/USD",
+      "ok": true,
+      "decisionAction": "hold",
+      "decisionReasoning": [
+        "The current RSI values on multiple timeframes are above the minimum required (40 for fast RSI), suggesting momentum is still positive.",
+        "The price vs SMA20 and EMA gap indicators show a slight bullish bias, with some recent gains in higher timeframes.",
+        "No strong bearish signals from related symbols that could warrant closing positions."
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 71184.2205,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 15,
+      "reason": "scheduled",
+      "atMs": 1775661606852,
+      "symbol": "ETH/USD",
+      "ok": true,
+      "decisionAction": "hold",
+      "decisionReasoning": [
+        "The current price of ETH/USD is slightly above the entry price, indicating a positive trend.",
+        "RSI values are within acceptable ranges, suggesting no overbought or oversold conditions.",
+        "Related symbols like BTC/USD and SOL/USD show mixed signals but overall neutral to slightly bullish trends."
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 2205.3795,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 15,
+      "reason": "scheduled",
+      "atMs": 1775661606852,
+      "symbol": "SOL/USD",
+      "ok": true,
+      "decisionAction": "hold",
+      "decisionReasoning": [
+        "The current price of SOL/USD is slightly above the entry price, indicating a positive trend.",
+        "RSI values are within acceptable ranges, suggesting no overbought or oversold conditions.",
+        "Related symbols like BTC/USD and ETH/USD show positive returns in the short to medium term, which could support holding SOL/USD."
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 83.19,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 16,
+      "reason": "scheduled",
+      "atMs": 1775661716404,
+      "symbol": "BTC/USD",
+      "ok": true,
+      "decisionAction": "hold",
+      "decisionReasoning": [
+        "The current price of BTC/USD is slightly above the EMA gap, indicating potential upward momentum.",
+        "RSI values are in a favorable range for holding, with no strong overbought signals.",
+        "The related symbols ETH/USD and SOL/USD show mixed signals but overall positive trends."
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 71196.605,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 16,
+      "reason": "scheduled",
+      "atMs": 1775661716404,
+      "symbol": "ETH/USD",
+      "ok": true,
+      "decisionAction": "hold",
+      "decisionReasoning": [
+        "The current price of ETH/USD is slightly above the entry price, indicating a positive trend.",
+        "RSI values are within acceptable ranges, suggesting no overbought or oversold conditions.",
+        "Related symbols like BTC/USD and SOL/USD show mixed signals but overall neutral to positive trends."
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 2205.006,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 16,
+      "reason": "scheduled",
+      "atMs": 1775661716404,
+      "symbol": "SOL/USD",
+      "ok": true,
+      "decisionAction": "hold",
+      "decisionReasoning": [
+        "The current price of SOL/USD is above the entry price, indicating a positive trend.",
+        "RSI values are within acceptable ranges, suggesting no overbought or oversold conditions.",
+        "Related symbols BTC/USD and ETH/USD show positive returns in the short to medium term, which could support SOL/USD's upward momentum."
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 83.14,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 17,
+      "reason": "scheduled",
+      "atMs": 1775661827388,
+      "symbol": "BTC/USD",
+      "ok": true,
+      "decisionAction": "hold",
+      "decisionReasoning": [
+        "The current RSI values across multiple timeframes are above the minimum required (40 for fast RSI), indicating bullish momentum.",
+        "The price is above its SMA20 in most timeframes, suggesting a positive trend.",
+        "The related symbols ETH/USD and SOL/USD also show positive trends, supporting the overall market sentiment.",
+        "No significant bearish signals are present, such as a high ATR percentage or negative return values."
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 71153.222,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 17,
+      "reason": "scheduled",
+      "atMs": 1775661827388,
+      "symbol": "ETH/USD",
+      "ok": true,
+      "decisionAction": "hold",
+      "decisionReasoning": [
+        "The current price of ETH/USD is slightly above the entry price, indicating a positive trend.",
+        "RSI values are within acceptable ranges, suggesting no overbought or oversold conditions.",
+        "Related symbols like BTC/USD and SOL/USD show mixed signals but overall stable trends."
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 2207.931,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 17,
+      "reason": "scheduled",
+      "atMs": 1775661827388,
+      "symbol": "SOL/USD",
+      "ok": true,
+      "decisionAction": "hold",
+      "decisionReasoning": [
+        "The current price of SOL/USD is slightly above the entry price, indicating a positive trend.",
+        "RSI values are within acceptable ranges, suggesting no overbought or oversold conditions.",
+        "Related symbols like BTC/USD and ETH/USD show positive returns, which could support the continuation of the upward trend in SOL/USD."
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 83.185,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 18,
+      "reason": "scheduled",
+      "atMs": 1775661937368,
+      "symbol": "BTC/USD",
+      "ok": true,
+      "decisionAction": "open_long",
+      "decisionReasoning": [
+        "The RSI on the 4h timeframe is above 68, indicating overbought conditions for BTC/USD.",
+        "However, the price vs SMA20 and EMA gap indicators are positive, suggesting potential upward momentum.",
+        "The related symbols ETH/USD and SOL/USD show strong positive returns in the 1d timeframe, which could indicate a broader market trend favoring crypto assets.",
+        "The current position size is within acceptable limits, allowing for additional exposure."
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "position_already_open",
+      "marketSession": "continuous_open",
+      "currentPrice": 71166.95,
+      "error": "position_already_open"
+    },
+    {
+      "cycle": 18,
+      "reason": "scheduled",
+      "atMs": 1775661937368,
+      "symbol": "ETH/USD",
+      "ok": true,
+      "decisionAction": "hold",
+      "decisionReasoning": [
+        "The current RSI values across multiple timeframes are above the minimum required (40 for fast RSI), indicating bullish momentum.",
+        "ETH/USD has a positive return over the last 20 and 50 bars, suggesting recent upward movement.",
+        "Related symbols like BTC/USD and SOL/USD show mixed signals but no strong bearish trends that would warrant closing positions."
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 2208.255,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 18,
+      "reason": "scheduled",
+      "atMs": 1775661937368,
+      "symbol": "SOL/USD",
+      "ok": true,
+      "decisionAction": "hold",
+      "decisionReasoning": [
+        "The current price of SOL/USD is above the EMA gap, indicating potential upward momentum.",
+        "RSI values are in a favorable range, suggesting the asset may continue to rise.",
+        "Related assets like BTC/USD and ETH/USD show positive returns over various timeframes, which could support SOL/USD's performance."
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 83.1807,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 19,
+      "reason": "scheduled",
+      "atMs": 1775662046150,
+      "symbol": "BTC/USD",
+      "ok": true,
+      "decisionAction": "open_long",
+      "decisionReasoning": [
+        "The RSI values on multiple timeframes are above the minimum required (40 for fast RSI) indicating bullish momentum.",
+        "The price vs SMA20 and EMA gap indicators suggest that BTC/USD is in an uptrend across various timeframes.",
+        "The related symbols ETH/USD and SOL/USD also show positive trends, suggesting a broader market sentiment favoring crypto assets."
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "position_already_open",
+      "marketSession": "continuous_open",
+      "currentPrice": 71191.8455,
+      "error": "position_already_open"
+    },
+    {
+      "cycle": 19,
+      "reason": "scheduled",
+      "atMs": 1775662046150,
+      "symbol": "ETH/USD",
+      "ok": true,
+      "decisionAction": "hold",
+      "decisionReasoning": [
+        "The current RSI values for ETH/USD across multiple timeframes are above the minimum required (34), indicating bullish momentum.",
+        "The price is slightly above the SMA20, suggesting a positive trend.",
+        "Related assets like BTC/USD and SOL/USD show mixed signals but no strong bearish trends that would warrant closing positions."
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 2207.36,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 19,
+      "reason": "scheduled",
+      "atMs": 1775662046150,
+      "symbol": "SOL/USD",
+      "ok": true,
+      "decisionAction": "hold",
+      "decisionReasoning": [
+        "The current price of SOL/USD is slightly above the entry price, indicating a positive trend.",
+        "RSI values are within acceptable ranges, suggesting no overbought or oversold conditions.",
+        "Related symbols like BTC/USD and ETH/USD show positive returns, which could support further growth in SOL/USD."
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 83.14605,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 20,
+      "reason": "scheduled",
+      "atMs": 1775662154470,
+      "symbol": "BTC/USD",
+      "ok": true,
+      "decisionAction": "skip",
+      "decisionReasoning": [
+        "decision_engine_fallback:Ollama request timed out"
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 71149.2465,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 20,
+      "reason": "scheduled",
+      "atMs": 1775662154470,
+      "symbol": "ETH/USD",
+      "ok": true,
+      "decisionAction": "hold",
+      "decisionReasoning": [
+        "The current price of ETH/USD is slightly above the entry price, indicating a positive trend.",
+        "RSI values are within acceptable ranges, suggesting no overbought or oversold conditions.",
+        "Related symbols like BTC/USD and SOL/USD show mixed signals but overall neutral to positive trends."
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 2206.06,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 20,
+      "reason": "scheduled",
+      "atMs": 1775662154470,
+      "symbol": "SOL/USD",
+      "ok": true,
+      "decisionAction": "hold",
+      "decisionReasoning": [
+        "The current price of SOL/USD is slightly above the entry price, indicating a positive trend.",
+        "RSI values are within acceptable ranges, suggesting momentum.",
+        "Related symbols like BTC/USD and ETH/USD show positive returns over various timeframes, which could support holding SOL/USD."
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 83.125,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 21,
+      "reason": "scheduled",
+      "atMs": 1775662292889,
+      "symbol": "BTC/USD",
+      "ok": true,
+      "decisionAction": "hold",
+      "decisionReasoning": [
+        "The current price of BTC/USD is slightly above the entry price, indicating a positive trend.",
+        "RSI values are in a favorable range, suggesting momentum.",
+        "No strong signals for closing the position are present."
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 71150.2835,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 21,
+      "reason": "scheduled",
+      "atMs": 1775662292889,
+      "symbol": "ETH/USD",
+      "ok": true,
+      "decisionAction": "hold",
+      "decisionReasoning": [
+        "The current price of ETH/USD is slightly above the entry price, indicating a positive trend.",
+        "RSI values are within acceptable ranges, suggesting no overbought or oversold conditions.",
+        "Related symbols like BTC/USD and SOL/USD show mixed signals but overall stable trends, supporting holding position."
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 2205.88,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 21,
+      "reason": "scheduled",
+      "atMs": 1775662292889,
+      "symbol": "SOL/USD",
+      "ok": true,
+      "decisionAction": "hold",
+      "decisionReasoning": [
+        "The current price of SOL/USD is slightly above the entry price, indicating a positive trend.",
+        "RSI values are within acceptable ranges, suggesting momentum in the asset.",
+        "Related symbols like BTC/USD and ETH/USD show positive returns over various timeframes, supporting the overall market sentiment."
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 83.1155,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 22,
+      "reason": "scheduled",
+      "atMs": 1775662403906,
+      "symbol": "BTC/USD",
+      "ok": true,
+      "decisionAction": "skip",
+      "decisionReasoning": [
+        "decision_engine_fallback:Ollama request timed out"
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 71186.14,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 22,
+      "reason": "scheduled",
+      "atMs": 1775662403906,
+      "symbol": "ETH/USD",
+      "ok": true,
+      "decisionAction": "hold",
+      "decisionReasoning": [
+        "The current price of ETH/USD is slightly above the entry price, indicating a positive trend.",
+        "RSI values are within acceptable ranges, suggesting no overbought or oversold conditions.",
+        "Related symbols like BTC/USD and SOL/USD show mixed signals but overall stable trends."
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 2207.05,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 22,
+      "reason": "scheduled",
+      "atMs": 1775662403906,
+      "symbol": "SOL/USD",
+      "ok": true,
+      "decisionAction": "hold",
+      "decisionReasoning": [
+        "The current price of SOL/USD is slightly above the entry price, indicating a positive trend.",
+        "RSI values are within acceptable ranges, suggesting no overbought or oversold conditions.",
+        "Related symbols like BTC/USD and ETH/USD show positive returns, which could support the continuation of the upward trend in SOL/USD."
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 83.095,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 23,
+      "reason": "scheduled",
+      "atMs": 1775662542250,
+      "symbol": "BTC/USD",
+      "ok": true,
+      "decisionAction": "skip",
+      "decisionReasoning": [
+        "decision_engine_fallback:Ollama request timed out"
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 71187.825,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 23,
+      "reason": "scheduled",
+      "atMs": 1775662542250,
+      "symbol": "ETH/USD",
+      "ok": true,
+      "decisionAction": "skip",
+      "decisionReasoning": [
+        "decision_engine_fallback:Ollama request timed out"
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 2211.6165,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 23,
+      "reason": "scheduled",
+      "atMs": 1775662542250,
+      "symbol": "SOL/USD",
+      "ok": true,
+      "decisionAction": "hold",
+      "decisionReasoning": [
+        "The current price of SOL/USD is slightly above the entry price, indicating a positive trend.",
+        "RSI values are within acceptable ranges, suggesting no overbought or oversold conditions.",
+        "Related symbols BTC/USD and ETH/USD show positive returns in the short to medium term, which could support SOL/USD's upward momentum."
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 83.171,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 24,
+      "reason": "scheduled",
+      "atMs": 1775662690397,
+      "symbol": "BTC/USD",
+      "ok": true,
+      "decisionAction": "skip",
+      "decisionReasoning": [
+        "decision_engine_fallback:Ollama request timed out"
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 71293.565,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 24,
+      "reason": "scheduled",
+      "atMs": 1775662690397,
+      "symbol": "ETH/USD",
+      "ok": true,
+      "decisionAction": "skip",
+      "decisionReasoning": [
+        "decision_engine_fallback:Ollama request timed out"
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 2217.65,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 24,
+      "reason": "scheduled",
+      "atMs": 1775662690397,
+      "symbol": "SOL/USD",
+      "ok": true,
+      "decisionAction": "hold",
+      "decisionReasoning": [
+        "The current price of SOL/USD is slightly above the entry price, indicating a positive trend.",
+        "RSI values are within acceptable ranges, suggesting no overbought or oversold conditions.",
+        "Related symbols BTC/USD and ETH/USD show positive returns in higher timeframes, which could support SOL/USD's upward momentum."
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 83.18635,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 25,
+      "reason": "scheduled",
+      "atMs": 1775662839635,
+      "symbol": "BTC/USD",
+      "ok": true,
+      "decisionAction": "skip",
+      "decisionReasoning": [
+        "decision_engine_fallback:Ollama request timed out"
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 71249.645,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 25,
+      "reason": "scheduled",
+      "atMs": 1775662839635,
+      "symbol": "ETH/USD",
+      "ok": true,
+      "decisionAction": "hold",
+      "decisionReasoning": [
+        "The current price of ETH/USD is slightly below the recent high, but not significantly so.",
+        "RSI values are in a neutral to bullish range, with no strong overbought signals.",
+        "Related symbols like BTC/USD and SOL/USD show mixed returns, which suggests overall market stability rather than a clear trend."
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 2212.9735,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 25,
+      "reason": "scheduled",
+      "atMs": 1775662839635,
+      "symbol": "SOL/USD",
+      "ok": true,
+      "decisionAction": "hold",
+      "decisionReasoning": [
+        "The current price of SOL/USD is slightly above the entry price, indicating a positive trend.",
+        "RSI values are within acceptable ranges, suggesting no overbought or oversold conditions.",
+        "Related symbols like BTC/USD and ETH/USD show positive returns in the short to medium term, supporting the overall bullish sentiment."
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 83.2375,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 26,
+      "reason": "scheduled",
+      "atMs": 1775662978997,
+      "symbol": "BTC/USD",
+      "ok": true,
+      "decisionAction": "skip",
+      "decisionReasoning": [
+        "decision_engine_fallback:Ollama request timed out"
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 71308.5,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 26,
+      "reason": "scheduled",
+      "atMs": 1775662978997,
+      "symbol": "ETH/USD",
+      "ok": true,
+      "decisionAction": "hold",
+      "decisionReasoning": [
+        "The current price of ETH/USD is above the EMA gap, indicating potential upward momentum.",
+        "RSI values are in a favorable range for long positions, especially on higher timeframes like 1h and 4h.",
+        "ETH/USD has shown positive returns over both 20 and 50 bars, suggesting recent strength.",
+        "The related symbols BTC/USD and SOL/USD also show positive trends, supporting the overall market sentiment."
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 2214.47,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 26,
+      "reason": "scheduled",
+      "atMs": 1775662978997,
+      "symbol": "SOL/USD",
+      "ok": true,
+      "decisionAction": "hold",
+      "decisionReasoning": [
+        "The current price of SOL/USD is above the EMA gap, indicating potential upward momentum.",
+        "RSI values are within a healthy range, suggesting no overbought or oversold conditions.",
+        "Related symbols like BTC/USD and ETH/USD show positive returns, which could support SOL/USD's performance."
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 83.2841,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 27,
+      "reason": "scheduled",
+      "atMs": 1775663111373,
+      "symbol": "BTC/USD",
+      "ok": true,
+      "decisionAction": "hold",
+      "decisionReasoning": [
+        "The current RSI values for BTC/USD are within the acceptable range (minimumFastRsi: 40, maximumFastRsi: 68).",
+        "The price is above its SMA20 in multiple timeframes, indicating a bullish trend.",
+        "The related symbols ETH/USD and SOL/USD show positive returns over various timeframes, suggesting overall market momentum.",
+        "No strong signals for closing the position are present."
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 71210.8,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 27,
+      "reason": "scheduled",
+      "atMs": 1775663111373,
+      "symbol": "ETH/USD",
+      "ok": true,
+      "decisionAction": "hold",
+      "decisionReasoning": [
+        "The current price of ETH/USD is slightly above the entry price, indicating a positive trend.",
+        "RSI values are within acceptable ranges, suggesting momentum is still favorable.",
+        "No significant negative indicators from related symbols or timeframes."
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 2211.455,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 27,
+      "reason": "scheduled",
+      "atMs": 1775663111373,
+      "symbol": "SOL/USD",
+      "ok": true,
+      "decisionAction": "hold",
+      "decisionReasoning": [
+        "The current price of SOL/USD is slightly above the entry price, indicating a positive trend.",
+        "RSI values are within acceptable ranges, suggesting no overbought or oversold conditions.",
+        "Related symbols like BTC/USD and ETH/USD show positive returns, which could support the continuation of SOL/USD's upward momentum."
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 83.289,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 28,
+      "reason": "scheduled",
+      "atMs": 1775663226327,
+      "symbol": "BTC/USD",
+      "ok": true,
+      "decisionAction": "open_long",
+      "decisionReasoning": [
+        "The RSI values on multiple timeframes are above the minimum required (40), indicating bullish momentum.",
+        "The price is slightly above its 20-period SMA, suggesting a positive bias.",
+        "The related symbols ETH/USD and SOL/USD also show positive returns over 20 and 50 periods, reinforcing the overall market sentiment.",
+        "The current position size is within acceptable limits, allowing for additional exposure."
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "position_already_open",
+      "marketSession": "continuous_open",
+      "currentPrice": 71299.965,
+      "error": "position_already_open"
+    },
+    {
+      "cycle": 28,
+      "reason": "scheduled",
+      "atMs": 1775663226327,
+      "symbol": "ETH/USD",
+      "ok": true,
+      "decisionAction": "hold",
+      "decisionReasoning": [
+        "The current price of ETH/USD is above the EMA gap, indicating potential upward momentum.",
+        "RSI values are in a favorable range, suggesting no overbought or oversold conditions.",
+        "The position has already shown some unrealized profit and is within risk management limits."
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 2213.696,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 28,
+      "reason": "scheduled",
+      "atMs": 1775663226327,
+      "symbol": "SOL/USD",
+      "ok": true,
+      "decisionAction": "hold",
+      "decisionReasoning": [
+        "The current price of SOL/USD is above the EMA gap, indicating potential upward momentum.",
+        "RSI values are in a favorable range, suggesting the asset may continue to trend upwards.",
+        "Related symbols like BTC/USD and ETH/USD show positive returns over various timeframes, which could support further growth in SOL/USD."
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 83.41,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 29,
+      "reason": "scheduled",
+      "atMs": 1775663350567,
+      "symbol": "BTC/USD",
+      "ok": true,
+      "decisionAction": "hold",
+      "decisionReasoning": [
+        "The current price of BTC/USD is slightly above the entry price, indicating a positive trend.",
+        "RSI values are within acceptable ranges for both short and medium-term timeframes, suggesting no immediate overbought or oversold conditions.",
+        "Related symbols like ETH/USD and SOL/USD show mixed signals but do not indicate strong bearish pressure on BTC/USD."
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 71289.5,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 29,
+      "reason": "scheduled",
+      "atMs": 1775663350567,
+      "symbol": "ETH/USD",
+      "ok": true,
+      "decisionAction": "hold",
+      "decisionReasoning": [
+        "The current price of ETH/USD is slightly above the entry price, indicating a positive trend.",
+        "RSI values are within acceptable ranges, suggesting no overbought or oversold conditions.",
+        "Related symbols like BTC/USD and SOL/USD show mixed signals but overall neutral to positive trends."
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 2214.478,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 29,
+      "reason": "scheduled",
+      "atMs": 1775663350567,
+      "symbol": "SOL/USD",
+      "ok": true,
+      "decisionAction": "hold",
+      "decisionReasoning": [
+        "The current price of SOL/USD is slightly above the entry price, indicating a positive trend.",
+        "RSI values are within acceptable ranges, suggesting momentum.",
+        "Related symbols like BTC/USD and ETH/USD show positive returns over various timeframes, which could support holding SOL/USD."
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 83.42215,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 30,
+      "reason": "scheduled",
+      "atMs": 1775663476193,
+      "symbol": "BTC/USD",
+      "ok": true,
+      "decisionAction": "hold",
+      "decisionReasoning": [
+        "The current price of BTC/USD is slightly above the entry price, indicating a positive trend.",
+        "RSI values are in a favorable range, suggesting momentum.",
+        "No strong signals for closing or opening new positions based on the given data."
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 71279.848,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 30,
+      "reason": "scheduled",
+      "atMs": 1775663476193,
+      "symbol": "ETH/USD",
+      "ok": true,
+      "decisionAction": "open_long",
+      "decisionReasoning": [
+        "The RSI on the 4h timeframe is above 60, indicating bullish momentum.",
+        "ETH/USD has a positive return over both 20 and 50 bars, suggesting a trend upwards.",
+        "Related symbols like BTC/USD and SOL/USD are also showing positive returns, supporting a broader market uptrend."
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "position_already_open",
+      "marketSession": "continuous_open",
+      "currentPrice": 2214.713,
+      "error": "position_already_open"
+    },
+    {
+      "cycle": 30,
+      "reason": "scheduled",
+      "atMs": 1775663476193,
+      "symbol": "SOL/USD",
+      "ok": true,
+      "decisionAction": "hold",
+      "decisionReasoning": [
+        "The current price of SOL/USD is slightly above the entry price, indicating a positive trend.",
+        "RSI values are within acceptable ranges, suggesting no overbought or oversold conditions.",
+        "Related symbols like BTC/USD and ETH/USD show positive returns, which could support continued growth in SOL/USD."
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 83.37215,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 31,
+      "reason": "scheduled",
+      "atMs": 1775663606322,
+      "symbol": "BTC/USD",
+      "ok": true,
+      "decisionAction": "hold",
+      "decisionReasoning": [
+        "The current price of BTC/USD is slightly above the entry price, indicating a positive trend.",
+        "RSI values are within acceptable ranges, suggesting momentum.",
+        "No significant negative indicators from related symbols or timeframes."
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 71247.005,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 31,
+      "reason": "scheduled",
+      "atMs": 1775663606322,
+      "symbol": "ETH/USD",
+      "ok": true,
+      "decisionAction": "hold",
+      "decisionReasoning": [
+        "The current price of ETH/USD is slightly above the entry price, indicating a positive trend.",
+        "RSI values are within acceptable ranges, suggesting no overbought or oversold conditions.",
+        "Related symbols like BTC/USD and SOL/USD show mixed signals but overall stable trends."
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 2211.263,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 31,
+      "reason": "scheduled",
+      "atMs": 1775663606322,
+      "symbol": "SOL/USD",
+      "ok": true,
+      "decisionAction": "hold",
+      "decisionReasoning": [
+        "The current price of SOL/USD is slightly above the entry price, indicating a positive trend.",
+        "RSI values are within acceptable ranges, suggesting momentum in the asset.",
+        "Related symbols like BTC/USD and ETH/USD show positive returns over various timeframes, which could support holding SOL/USD."
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 83.37925,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 32,
+      "reason": "scheduled",
+      "atMs": 1775663738861,
+      "symbol": "BTC/USD",
+      "ok": true,
+      "decisionAction": "hold",
+      "decisionReasoning": [
+        "The current RSI values for BTC/USD across multiple timeframes are above the minimum required (40) and indicate a bullish trend.",
+        "The price vs SMA20 is positive, suggesting the asset is trading above its moving average, which is favorable.",
+        "The related symbols ETH/USD and SOL/USD also show positive momentum, indicating a broader market trend that supports holding BTC/USD."
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 71286.74,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 32,
+      "reason": "scheduled",
+      "atMs": 1775663738861,
+      "symbol": "ETH/USD",
+      "ok": true,
+      "decisionAction": "hold",
+      "decisionReasoning": [
+        "The current price of ETH/USD is slightly above the entry price, indicating a positive trend.",
+        "RSI values are within acceptable ranges, suggesting no overbought or oversold conditions.",
+        "Related symbols like BTC/USD and SOL/USD show mixed signals but overall neutral to positive trends."
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 2213.55,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 32,
+      "reason": "scheduled",
+      "atMs": 1775663738861,
+      "symbol": "SOL/USD",
+      "ok": true,
+      "decisionAction": "hold",
+      "decisionReasoning": [
+        "The current price of SOL/USD is slightly above the entry price, indicating a positive trend.",
+        "RSI values are within acceptable ranges, suggesting momentum.",
+        "Related symbols like BTC/USD and ETH/USD show positive returns over various timeframes, which could support holding SOL/USD."
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 83.37885,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 33,
+      "reason": "scheduled",
+      "atMs": 1775663864485,
+      "symbol": "BTC/USD",
+      "ok": true,
+      "decisionAction": "skip",
+      "decisionReasoning": [
+        "decision_engine_fallback:Ollama request timed out"
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 71315.975,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 33,
+      "reason": "scheduled",
+      "atMs": 1775663864485,
+      "symbol": "ETH/USD",
+      "ok": true,
+      "decisionAction": "hold",
+      "decisionReasoning": [
+        "The current price of ETH/USD is slightly above the entry price, indicating a positive trend.",
+        "RSI values are within acceptable ranges, suggesting no overbought or oversold conditions.",
+        "Related symbols like BTC/USD and SOL/USD show mixed signals but overall stable trends, reducing risk."
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 2216.045,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 33,
+      "reason": "scheduled",
+      "atMs": 1775663864485,
+      "symbol": "SOL/USD",
+      "ok": true,
+      "decisionAction": "hold",
+      "decisionReasoning": [
+        "The current price of SOL/USD is slightly above the entry price, indicating a positive trend.",
+        "RSI values are within acceptable ranges, suggesting no overbought or oversold conditions.",
+        "Related symbols like BTC/USD and ETH/USD show positive returns, which could support the continuation of SOL/USD's upward momentum."
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 83.419,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 34,
+      "reason": "scheduled",
+      "atMs": 1775664003504,
+      "symbol": "BTC/USD",
+      "ok": true,
+      "decisionAction": "hold",
+      "decisionReasoning": [
+        "The current price of BTC/USD is above the EMA gap, indicating potential upward momentum.",
+        "RSI values are within a neutral to slightly bullish range, suggesting no immediate overbought conditions.",
+        "The related symbols ETH/USD and SOL/USD show mixed signals but overall positive trends in longer timeframes."
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 71303.3,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 34,
+      "reason": "scheduled",
+      "atMs": 1775664003504,
+      "symbol": "ETH/USD",
+      "ok": true,
+      "decisionAction": "hold",
+      "decisionReasoning": [
+        "The current price of ETH/USD is above the EMA gap, indicating potential upward momentum.",
+        "RSI values are within a neutral to slightly bullish range, suggesting no immediate overbought conditions.",
+        "The position has already shown some unrealized profit and the market state indicates continuous trading mode."
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 2214.882,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 34,
+      "reason": "scheduled",
+      "atMs": 1775664003504,
+      "symbol": "SOL/USD",
+      "ok": true,
+      "decisionAction": "hold",
+      "decisionReasoning": [
+        "The current price of SOL/USD is slightly above the entry price, indicating a positive trend.",
+        "RSI values are within acceptable ranges, suggesting no overbought or oversold conditions.",
+        "Related symbols like BTC/USD and ETH/USD show positive returns in the short to medium term, supporting the overall market sentiment."
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 83.4165,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 35,
+      "reason": "scheduled",
+      "atMs": 1775664146704,
+      "symbol": "BTC/USD",
+      "ok": true,
+      "decisionAction": "hold",
+      "decisionReasoning": [
+        "The current RSI values for BTC/USD across multiple timeframes are within acceptable ranges, suggesting no immediate overbought or oversold conditions.",
+        "The related symbols (ETH/USD and SOL/USD) show mixed signals but generally positive momentum in the short to medium term, which supports holding BTC/USD.",
+        "The position is currently profitable with an unrealized PNL of 44.37 USD, indicating a positive trade so far."
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 71310.7,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 35,
+      "reason": "scheduled",
+      "atMs": 1775664146704,
+      "symbol": "ETH/USD",
+      "ok": true,
+      "decisionAction": "hold",
+      "decisionReasoning": [
+        "The current price of ETH/USD is slightly above the entry price, indicating a positive trend.",
+        "RSI values are within acceptable ranges, suggesting no overbought or oversold conditions.",
+        "Related symbols like BTC/USD and SOL/USD show mixed signals but overall stable trends."
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 2215.79,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 35,
+      "reason": "scheduled",
+      "atMs": 1775664146704,
+      "symbol": "SOL/USD",
+      "ok": true,
+      "decisionAction": "hold",
+      "decisionReasoning": [
+        "The current price of SOL/USD is above the EMA gap, indicating potential upward momentum.",
+        "RSI values are within a neutral to bullish range, suggesting no immediate overbought conditions.",
+        "Related symbols BTC/USD and ETH/USD show positive returns in the short term, which could support SOL/USD's performance."
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 83.428,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 36,
+      "reason": "scheduled",
+      "atMs": 1775664274105,
+      "symbol": "BTC/USD",
+      "ok": true,
+      "decisionAction": "open_long",
+      "decisionReasoning": [
+        "The RSI on the 4h timeframe is above 68, indicating overbought conditions for BTC/USD.",
+        "However, the price vs SMA20 and EMA gap indicators are positive, suggesting potential upward momentum.",
+        "The related symbols ETH/USD and SOL/USD show strong positive returns in the 1d timeframe, which could indicate a broader market trend favoring crypto assets."
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "position_already_open",
+      "marketSession": "continuous_open",
+      "currentPrice": 71373.748,
+      "error": "position_already_open"
+    },
+    {
+      "cycle": 36,
+      "reason": "scheduled",
+      "atMs": 1775664274105,
+      "symbol": "ETH/USD",
+      "ok": true,
+      "decisionAction": "hold",
+      "decisionReasoning": [
+        "The current price of ETH/USD is slightly above the entry price, indicating a positive trend.",
+        "RSI values are within acceptable ranges, suggesting no overbought or oversold conditions.",
+        "Related symbols like BTC/USD and SOL/USD show mixed signals but overall neutral to positive trends."
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 2217.281,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 36,
+      "reason": "scheduled",
+      "atMs": 1775664274105,
+      "symbol": "SOL/USD",
+      "ok": true,
+      "decisionAction": "hold",
+      "decisionReasoning": [
+        "The current price of SOL/USD is slightly above the entry price, indicating a positive trend.",
+        "RSI values are within acceptable ranges, suggesting no overbought or oversold conditions.",
+        "Related symbols like BTC/USD and ETH/USD show positive returns, which could support the continuation of the bullish trend in SOL/USD."
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 83.415,
+      "error": "noop_action"
+    },
+    {
+      "cycle": 37,
+      "reason": "scheduled",
+      "atMs": 1775664383410,
+      "symbol": "BTC/USD",
+      "ok": true,
+      "decisionAction": "open_long",
+      "decisionReasoning": [
+        "The RSI values for BTC/USD across multiple timeframes are above the minimum required (40-68), indicating a bullish momentum.",
+        "The price vs SMA20 and EMA gap indicators suggest that BTC/USD is performing well relative to its moving averages, which is positive.",
+        "The related symbols ETH/USD and SOL/USD also show strong RSI values and positive returns, suggesting a broader market trend in favor of crypto assets."
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "position_already_open",
+      "marketSession": "continuous_open",
+      "currentPrice": 71381.663,
+      "error": "position_already_open"
+    },
+    {
+      "cycle": 37,
+      "reason": "scheduled",
+      "atMs": 1775664383410,
+      "symbol": "ETH/USD",
+      "ok": true,
+      "decisionAction": "hold",
+      "decisionReasoning": [
+        "The current price of ETH/USD is slightly above the entry price, indicating a positive trend.",
+        "RSI values are within acceptable ranges, suggesting no overbought or oversold conditions.",
+        "Related symbols like BTC/USD and SOL/USD show mixed signals but overall stable trends."
+      ],
+      "executionStatus": "noop",
+      "executionErrorCategory": "noop",
+      "executionErrorMessage": "noop_action",
+      "marketSession": "continuous_open",
+      "currentPrice": 2217.6705,
+      "error": "noop_action"
     }
   ],
   "symbols": {
@@ -639,7 +2615,7 @@
       "symbol": "BTC/USD",
       "assetClass": "crypto",
       "strategyProfile": "crypto_momentum",
-      "updatedAtMs": 1775660032452,
+      "updatedAtMs": 1775664383410,
       "marketState": {
         "timezone": "America/New_York",
         "sessionMode": "continuous",
@@ -650,15 +2626,15 @@
         "minutesToClose": null,
         "sessionLabel": "continuous_open"
       },
-      "currentPrice": 70874.3225,
+      "currentPrice": 71381.663,
       "position": {
         "symbol": "BTC/USD",
         "qty": 0.020497376,
         "entryPrice": 69182.965071863,
-        "currentPrice": 70893.12,
-        "marketValue": 1453.122936,
-        "unrealizedPnl": 35.053688,
-        "openedAtMs": 1775660032870
+        "currentPrice": 71396.406,
+        "marketValue": 1463.438979,
+        "unrealizedPnl": 45.369731,
+        "openedAtMs": 1775664383822
       },
       "riskState": {
         "canOpen": true,
@@ -666,15 +2642,15 @@
         "flags": []
       },
       "decision": {
-        "action": "hold",
+        "action": "open_long",
         "confidence": 0.85,
         "reasoning": [
-          "The current RSI values for BTC/USD are above the minimum required (34), suggesting momentum is still positive.",
-          "The price vs SMA20 and EMA gap indicators on higher timeframes show a slight bullish bias, indicating potential for further gains.",
-          "The related symbols ETH/USD and SOL/USD also exhibit positive trends, supporting the overall market sentiment."
+          "The RSI values for BTC/USD across multiple timeframes are above the minimum required (40-68), indicating a bullish momentum.",
+          "The price vs SMA20 and EMA gap indicators suggest that BTC/USD is performing well relative to its moving averages, which is positive.",
+          "The related symbols ETH/USD and SOL/USD also show strong RSI values and positive returns, suggesting a broader market trend in favor of crypto assets."
         ],
         "requestedSizePct": null,
-        "stopLossPct": null,
+        "stopLossPct": 0.035,
         "takeProfitPct": 0.065
       },
       "executionIntent": null,
@@ -687,594 +2663,10 @@
         "error": {
           "category": "noop",
           "code": null,
-          "message": "noop_action"
+          "message": "position_already_open"
         }
       },
       "shortBars": [
-        {
-          "t": null,
-          "o": 71709.602,
-          "h": 71726.725,
-          "l": 71692.3745,
-          "c": 71726.725,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 71717.4875,
-          "h": 71721.9405,
-          "l": 71708.11,
-          "c": 71721.9405,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 71742.5095,
-          "h": 71742.5095,
-          "l": 71698.0125,
-          "c": 71711.7,
-          "v": 0.000894
-        },
-        {
-          "t": null,
-          "o": 71707.8995,
-          "h": 71720.5925,
-          "l": 71676.86,
-          "c": 71690.543,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 71709.614,
-          "h": 71709.614,
-          "l": 71683.06,
-          "c": 71683.06,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 71706.92,
-          "h": 71706.92,
-          "l": 71679.433,
-          "c": 71682.7745,
-          "v": 0.000068
-        },
-        {
-          "t": null,
-          "o": 71683.5875,
-          "h": 71767.64,
-          "l": 71683.5875,
-          "c": 71710.4,
-          "v": 0.00108204
-        },
-        {
-          "t": null,
-          "o": 71735.041,
-          "h": 71735.041,
-          "l": 71658.7,
-          "c": 71719.884,
-          "v": 0.000073
-        },
-        {
-          "t": null,
-          "o": 71729.07,
-          "h": 71758.4,
-          "l": 71709.58,
-          "c": 71711.3275,
-          "v": 0.00007
-        },
-        {
-          "t": null,
-          "o": 71723.7425,
-          "h": 71741.185,
-          "l": 71682.89,
-          "c": 71741.185,
-          "v": 0.000417412
-        },
-        {
-          "t": null,
-          "o": 71714.495,
-          "h": 71737.5235,
-          "l": 71714.495,
-          "c": 71730.93,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 71746.048,
-          "h": 71746.048,
-          "l": 71733.8835,
-          "c": 71733.8835,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 71735.26,
-          "h": 71735.26,
-          "l": 71735.26,
-          "c": 71735.26,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 71746.3915,
-          "h": 71772.8,
-          "l": 71682.89,
-          "c": 71709.18,
-          "v": 0.000246
-        },
-        {
-          "t": null,
-          "o": 71719.6885,
-          "h": 71734.7705,
-          "l": 71681.9975,
-          "c": 71719.8,
-          "v": 0.000088866
-        },
-        {
-          "t": null,
-          "o": 71724.387,
-          "h": 71734.195,
-          "l": 71689.984,
-          "c": 71689.984,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 71722.048,
-          "h": 71734.967,
-          "l": 71712.335,
-          "c": 71732.599,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 71727.125,
-          "h": 71743.05,
-          "l": 71707.185,
-          "c": 71724.095,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 71725.7625,
-          "h": 71824.159,
-          "l": 71707.77,
-          "c": 71824.159,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 71806.025,
-          "h": 71841.9355,
-          "l": 71770.6,
-          "c": 71796.15,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 71797.855,
-          "h": 71862.58,
-          "l": 71797.855,
-          "c": 71844.17,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 71837.533,
-          "h": 71869.589,
-          "l": 71822.2,
-          "c": 71841.4065,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 71854.9385,
-          "h": 71865.58,
-          "l": 71832.101,
-          "c": 71837.352,
-          "v": 0.000582241
-        },
-        {
-          "t": null,
-          "o": 71826.9605,
-          "h": 71906.93,
-          "l": 71807.033,
-          "c": 71840.4,
-          "v": 0.003884966
-        },
-        {
-          "t": null,
-          "o": 71805.5,
-          "h": 71864.2155,
-          "l": 71805.5,
-          "c": 71848.12,
-          "v": 0.003036438
-        },
-        {
-          "t": null,
-          "o": 71838.1165,
-          "h": 71862.15,
-          "l": 71756.8645,
-          "c": 71767.55,
-          "v": 0.00072644
-        },
-        {
-          "t": null,
-          "o": 71773.515,
-          "h": 71809.56,
-          "l": 71675.903,
-          "c": 71675.903,
-          "v": 0.003135
-        },
-        {
-          "t": null,
-          "o": 71697.795,
-          "h": 71759.008,
-          "l": 71572.9135,
-          "c": 71661.8725,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 71648.639,
-          "h": 71741.71,
-          "l": 71637.35,
-          "c": 71741.71,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 71721.2805,
-          "h": 71792.5235,
-          "l": 71697.424,
-          "c": 71697.424,
-          "v": 0.0001
-        },
-        {
-          "t": null,
-          "o": 71702.416,
-          "h": 71754.654,
-          "l": 71692.065,
-          "c": 71698.98,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 71689.21,
-          "h": 71731.1,
-          "l": 71638.549,
-          "c": 71716.0055,
-          "v": 0.000574
-        },
-        {
-          "t": null,
-          "o": 71697.0995,
-          "h": 71773.976,
-          "l": 71697.0995,
-          "c": 71728.73,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 71739.205,
-          "h": 71763.325,
-          "l": 71729.8525,
-          "c": 71757.194,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 71761.055,
-          "h": 71779.5505,
-          "l": 71728.2,
-          "c": 71757.53,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 71777.0335,
-          "h": 71790.34,
-          "l": 71719,
-          "c": 71783.052,
-          "v": 0.000069
-        },
-        {
-          "t": null,
-          "o": 71779.2755,
-          "h": 71779.2755,
-          "l": 71737.07,
-          "c": 71774.962,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 71764.54,
-          "h": 71804.75,
-          "l": 71731.6685,
-          "c": 71793.45,
-          "v": 0.000185
-        },
-        {
-          "t": null,
-          "o": 71770.2145,
-          "h": 71784.235,
-          "l": 71752.251,
-          "c": 71769.5485,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 71758.5,
-          "h": 71831.16,
-          "l": 71758.5,
-          "c": 71830.24,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 71822.53,
-          "h": 71894,
-          "l": 71816.524,
-          "c": 71847.1315,
-          "v": 0.000108
-        },
-        {
-          "t": null,
-          "o": 71849.595,
-          "h": 71908.2815,
-          "l": 71849.595,
-          "c": 71892.035,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 71904.6245,
-          "h": 71940.91,
-          "l": 71879.755,
-          "c": 71940.91,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 71943.121,
-          "h": 71959.0825,
-          "l": 71857.91,
-          "c": 71936.378,
-          "v": 0.000272
-        },
-        {
-          "t": null,
-          "o": 71936.195,
-          "h": 71954.311,
-          "l": 71879.645,
-          "c": 71937.335,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 71940.069,
-          "h": 71962.85,
-          "l": 71922.835,
-          "c": 71924.5105,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 71918.81,
-          "h": 71918.81,
-          "l": 71852.46,
-          "c": 71852.46,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 71867.3755,
-          "h": 71879.456,
-          "l": 71843.98,
-          "c": 71850.298,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 71850.84,
-          "h": 71904.1,
-          "l": 71845.4,
-          "c": 71875.422,
-          "v": 0.000154
-        },
-        {
-          "t": null,
-          "o": 71875.3795,
-          "h": 71906.693,
-          "l": 71825.746,
-          "c": 71877.2475,
-          "v": 0.000676
-        },
-        {
-          "t": null,
-          "o": 71893.622,
-          "h": 71942.245,
-          "l": 71893.622,
-          "c": 71941.9305,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 71945.65,
-          "h": 71952.35,
-          "l": 71919.186,
-          "c": 71928.2945,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 71914.84,
-          "h": 71970.6145,
-          "l": 71914.84,
-          "c": 71970.6145,
-          "v": 0.067094982
-        },
-        {
-          "t": null,
-          "o": 71963.635,
-          "h": 72013.84285,
-          "l": 71713.74285,
-          "c": 71950.9285,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 71952.5375,
-          "h": 71952.5375,
-          "l": 71904.65,
-          "c": 71913.984,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 71928.963,
-          "h": 71937.3805,
-          "l": 71904.194,
-          "c": 71926.9345,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 71887.5,
-          "h": 71978.1895,
-          "l": 71887.5,
-          "c": 71964.896,
-          "v": 0.000142
-        },
-        {
-          "t": null,
-          "o": 71972.854,
-          "h": 71990.4,
-          "l": 71955.596,
-          "c": 71972.8,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 71990.4025,
-          "h": 71997.57785,
-          "l": 71936.6,
-          "c": 71980.12,
-          "v": 0.000117
-        },
-        {
-          "t": null,
-          "o": 71987.45,
-          "h": 72010.57,
-          "l": 71966.7125,
-          "c": 71988.655,
-          "v": 0.00034
-        },
-        {
-          "t": null,
-          "o": 71957.9,
-          "h": 71989.219,
-          "l": 71957.9,
-          "c": 71972.6,
-          "v": 0.000114
-        },
-        {
-          "t": null,
-          "o": 71956.36,
-          "h": 72022.7,
-          "l": 71956.36,
-          "c": 72004.39285,
-          "v": 0.000916
-        },
-        {
-          "t": null,
-          "o": 72002.09785,
-          "h": 72074.92,
-          "l": 72002.09785,
-          "c": 72074.92,
-          "v": 0.0055812
-        },
-        {
-          "t": null,
-          "o": 72056.251,
-          "h": 72123.619,
-          "l": 72040.7375,
-          "c": 72113.66,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 72087.662,
-          "h": 72163.5635,
-          "l": 72087.662,
-          "c": 72102.855,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 72101.0595,
-          "h": 72120.6535,
-          "l": 72054.3,
-          "c": 72078.35,
-          "v": 0.0001
-        },
-        {
-          "t": null,
-          "o": 72084.95,
-          "h": 72148.0585,
-          "l": 72061.4905,
-          "c": 72110.37,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 72107.656,
-          "h": 72164.019,
-          "l": 72079.012,
-          "c": 72147.185,
-          "v": 0.00070577
-        },
-        {
-          "t": null,
-          "o": 72124.475,
-          "h": 72179.5185,
-          "l": 72123.495,
-          "c": 72159.376,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 72158.851,
-          "h": 72180.925,
-          "l": 72141.914,
-          "c": 72156.766,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 72141.076,
-          "h": 72165.626,
-          "l": 72131.252,
-          "c": 72165.626,
-          "v": 0.000321313
-        },
-        {
-          "t": null,
-          "o": 72164.54,
-          "h": 72175.87,
-          "l": 72136.1515,
-          "c": 72157.501,
-          "v": 0.00007
-        },
-        {
-          "t": null,
-          "o": 72152.746,
-          "h": 72329.38,
-          "l": 72152.746,
-          "c": 72329.38,
-          "v": 0.00098818
-        },
         {
           "t": null,
           "o": 72295.3,
@@ -2122,79 +3514,663 @@
           "l": 70839.225,
           "c": 70874.3225,
           "v": 0
+        },
+        {
+          "t": null,
+          "o": 70876.565,
+          "h": 70893.12,
+          "l": 70814.3,
+          "c": 70851.4,
+          "v": 0.002502086
+        },
+        {
+          "t": null,
+          "o": 70838.567,
+          "h": 70967.955,
+          "l": 70838.567,
+          "c": 70881.8375,
+          "v": 0.00090862
+        },
+        {
+          "t": null,
+          "o": 70885.0775,
+          "h": 70909.705,
+          "l": 70823.965,
+          "c": 70847.83,
+          "v": 0.009572389
+        },
+        {
+          "t": null,
+          "o": 70849.9375,
+          "h": 70863.7,
+          "l": 70712,
+          "c": 70802.984,
+          "v": 0.000371939
+        },
+        {
+          "t": null,
+          "o": 70831.968,
+          "h": 70855.77,
+          "l": 70733.4,
+          "c": 70800.269,
+          "v": 0.00523658
+        },
+        {
+          "t": null,
+          "o": 70815.8995,
+          "h": 70875.8135,
+          "l": 70804.595,
+          "c": 70849.3665,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 70849.385,
+          "h": 70906.63,
+          "l": 70845.1945,
+          "c": 70900.456,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 70886.4585,
+          "h": 70942.71,
+          "l": 70850.2685,
+          "c": 70870.413,
+          "v": 0.016025205
+        },
+        {
+          "t": null,
+          "o": 70863.0925,
+          "h": 70917.5535,
+          "l": 70830.12,
+          "c": 70882.95,
+          "v": 0.000089
+        },
+        {
+          "t": null,
+          "o": 70874.219,
+          "h": 70985.872,
+          "l": 70842.7,
+          "c": 70966.955,
+          "v": 0.000398037
+        },
+        {
+          "t": null,
+          "o": 70955.916,
+          "h": 71025.41,
+          "l": 70932.6135,
+          "c": 70972.284,
+          "v": 0.000138
+        },
+        {
+          "t": null,
+          "o": 70984.3,
+          "h": 71039.5,
+          "l": 70925.583,
+          "c": 70989.05,
+          "v": 0.004284435
+        },
+        {
+          "t": null,
+          "o": 70983.4725,
+          "h": 71055.5,
+          "l": 70965.008,
+          "c": 70968.868,
+          "v": 0.004007468
+        },
+        {
+          "t": null,
+          "o": 70970.2775,
+          "h": 70999.58,
+          "l": 70943.2245,
+          "c": 70950.75,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 70970.4745,
+          "h": 71092.444,
+          "l": 70957.12,
+          "c": 71092.444,
+          "v": 0.004077732
+        },
+        {
+          "t": null,
+          "o": 71071.995,
+          "h": 71079.418,
+          "l": 70931.5,
+          "c": 70983.4,
+          "v": 0.004072779
+        },
+        {
+          "t": null,
+          "o": 70977.05,
+          "h": 70977.05,
+          "l": 70861.49,
+          "c": 70881.35,
+          "v": 0.013896307
+        },
+        {
+          "t": null,
+          "o": 70881.614,
+          "h": 70923.8,
+          "l": 70815.63,
+          "c": 70889.004,
+          "v": 0.004005786
+        },
+        {
+          "t": null,
+          "o": 70907.414,
+          "h": 71003.306,
+          "l": 70898.925,
+          "c": 71003.306,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 70992.98,
+          "h": 71049.348,
+          "l": 70976.935,
+          "c": 71041.525,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 71054.115,
+          "h": 71083.6,
+          "l": 71022.1585,
+          "c": 71036.965,
+          "v": 0.000068
+        },
+        {
+          "t": null,
+          "o": 71026.0005,
+          "h": 71103.2305,
+          "l": 70980.595,
+          "c": 71094.415,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 71104.329,
+          "h": 71157.67,
+          "l": 71078.88,
+          "c": 71120.208,
+          "v": 0.001428
+        },
+        {
+          "t": null,
+          "o": 71117.145,
+          "h": 71142.25,
+          "l": 71043.554,
+          "c": 71114.05,
+          "v": 0.000068
+        },
+        {
+          "t": null,
+          "o": 71128.145,
+          "h": 71133.11,
+          "l": 71092.05,
+          "c": 71099.4,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 71119.1685,
+          "h": 71136.415,
+          "l": 71067.9615,
+          "c": 71112.638,
+          "v": 0.006409
+        },
+        {
+          "t": null,
+          "o": 71107.943,
+          "h": 71197.425,
+          "l": 71089.798,
+          "c": 71184.2205,
+          "v": 0.000115
+        },
+        {
+          "t": null,
+          "o": 71168.02,
+          "h": 71228.0135,
+          "l": 71168.02,
+          "c": 71196.605,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 71217.4635,
+          "h": 71261.2,
+          "l": 71103.3,
+          "c": 71135.19,
+          "v": 0.009001053
+        },
+        {
+          "t": null,
+          "o": 71140.93,
+          "h": 71229.97,
+          "l": 71140.93,
+          "c": 71153.222,
+          "v": 0.004712
+        },
+        {
+          "t": null,
+          "o": 71149.935,
+          "h": 71193.7495,
+          "l": 71136.4935,
+          "c": 71182.072,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 71192.685,
+          "h": 71206.92,
+          "l": 71154.945,
+          "c": 71166.95,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 71159.4515,
+          "h": 71161.1535,
+          "l": 71131.85,
+          "c": 71148.25,
+          "v": 0.000079
+        },
+        {
+          "t": null,
+          "o": 71152.972,
+          "h": 71191.8455,
+          "l": 71133.841,
+          "c": 71191.8455,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 71194.188,
+          "h": 71230.3,
+          "l": 71153.4815,
+          "c": 71154.1915,
+          "v": 0.000142
+        },
+        {
+          "t": null,
+          "o": 71144,
+          "h": 71178.6,
+          "l": 71136.036,
+          "c": 71149.2465,
+          "v": 0.000068
+        },
+        {
+          "t": null,
+          "o": 71149.73,
+          "h": 71176.7415,
+          "l": 71111.575,
+          "c": 71176.7415,
+          "v": 0.00430671
+        },
+        {
+          "t": null,
+          "o": 71174.8315,
+          "h": 71186.95,
+          "l": 71098.2,
+          "c": 71150.2835,
+          "v": 0.000821
+        },
+        {
+          "t": null,
+          "o": 71139.5495,
+          "h": 71155.6015,
+          "l": 71123.89,
+          "c": 71137.13,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 71113.985,
+          "h": 71205.994,
+          "l": 71094.7205,
+          "c": 71186.14,
+          "v": 0.000137
+        },
+        {
+          "t": null,
+          "o": 71187.5225,
+          "h": 71201.825,
+          "l": 71088.1755,
+          "c": 71130.024,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 71118.4895,
+          "h": 71187.825,
+          "l": 71115.823,
+          "c": 71187.825,
+          "v": 0.000068
+        },
+        {
+          "t": null,
+          "o": 71198.935,
+          "h": 71327.155,
+          "l": 71175.545,
+          "c": 71231.935,
+          "v": 0.000114
+        },
+        {
+          "t": null,
+          "o": 71233.9675,
+          "h": 71314.197,
+          "l": 71211.08,
+          "c": 71299.9495,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 71280.05,
+          "h": 71320.435,
+          "l": 71249.61,
+          "c": 71293.565,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 71282.594,
+          "h": 71288.7315,
+          "l": 71197.154,
+          "c": 71197.154,
+          "v": 0.00014035
+        },
+        {
+          "t": null,
+          "o": 71193.193,
+          "h": 71249.645,
+          "l": 71146.314,
+          "c": 71249.645,
+          "v": 0.000069
+        },
+        {
+          "t": null,
+          "o": 71250.669,
+          "h": 71266.3795,
+          "l": 71201.25,
+          "c": 71235.147,
+          "v": 1.5e-8
+        },
+        {
+          "t": null,
+          "o": 71242.8435,
+          "h": 71288.81,
+          "l": 71211.652,
+          "c": 71261.96,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 71257.0505,
+          "h": 71309.2345,
+          "l": 71250,
+          "c": 71308.5,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 71309.1285,
+          "h": 71309.1285,
+          "l": 71213.533,
+          "c": 71219.42,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 71210.35,
+          "h": 71229.858,
+          "l": 71161.402,
+          "c": 71210.8,
+          "v": 0.000068
+        },
+        {
+          "t": null,
+          "o": 71207.802,
+          "h": 71265.8,
+          "l": 71191.91,
+          "c": 71244.0125,
+          "v": 0.023007915
+        },
+        {
+          "t": null,
+          "o": 71243.305,
+          "h": 71299.965,
+          "l": 71203.28,
+          "c": 71299.965,
+          "v": 0.000154
+        },
+        {
+          "t": null,
+          "o": 71280.1,
+          "h": 71326.15,
+          "l": 71280.1,
+          "c": 71300.155,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 71293.882,
+          "h": 71339.595,
+          "l": 71257.8,
+          "c": 71289.5,
+          "v": 0.000137
+        },
+        {
+          "t": null,
+          "o": 71290.3125,
+          "h": 71351.09,
+          "l": 71267.9825,
+          "c": 71279.51,
+          "v": 0.000312897
+        },
+        {
+          "t": null,
+          "o": 71233.6,
+          "h": 71318.1,
+          "l": 71233.6,
+          "c": 71283.8515,
+          "v": 0.003279477
+        },
+        {
+          "t": null,
+          "o": 71268.275,
+          "h": 71293.4425,
+          "l": 71218.145,
+          "c": 71224.8815,
+          "v": 0.000104
+        },
+        {
+          "t": null,
+          "o": 71242.3365,
+          "h": 71252.1085,
+          "l": 71228.9035,
+          "c": 71247.005,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 71243.205,
+          "h": 71293.2425,
+          "l": 71240.357,
+          "c": 71283.975,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 71269.9,
+          "h": 71314.206,
+          "l": 71254.8035,
+          "c": 71286.74,
+          "v": 0.000039
+        },
+        {
+          "t": null,
+          "o": 71304.323,
+          "h": 71305.9,
+          "l": 71270.625,
+          "c": 71301.2165,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 71295.5235,
+          "h": 71332.3055,
+          "l": 71295.5235,
+          "c": 71315.975,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 71314.9085,
+          "h": 71342.7,
+          "l": 71288,
+          "c": 71288,
+          "v": 0.000119
+        },
+        {
+          "t": null,
+          "o": 71312.27,
+          "h": 71324.59,
+          "l": 71284.05,
+          "c": 71321.64,
+          "v": 0.000299
+        },
+        {
+          "t": null,
+          "o": 71304.09,
+          "h": 71351.09,
+          "l": 71280.725,
+          "c": 71303.3,
+          "v": 0.000068
+        },
+        {
+          "t": null,
+          "o": 71319.9,
+          "h": 71345.718,
+          "l": 71286.85,
+          "c": 71321.295,
+          "v": 0.014671565
+        },
+        {
+          "t": null,
+          "o": 71344.67,
+          "h": 71351.09,
+          "l": 71303.2,
+          "c": 71310.7,
+          "v": 0.00239725
+        },
+        {
+          "t": null,
+          "o": 71306.73,
+          "h": 71347.98,
+          "l": 71306.73,
+          "c": 71330.3925,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 71336.688,
+          "h": 71378.453,
+          "l": 71336.4505,
+          "c": 71373.748,
+          "v": 0.00256764
+        },
+        {
+          "t": null,
+          "o": 71374.103,
+          "h": 71396.406,
+          "l": 71313.79,
+          "c": 71354.953,
+          "v": 0.001779684
+        },
+        {
+          "t": null,
+          "o": 71360.553,
+          "h": 71391.471,
+          "l": 71341.2625,
+          "c": 71381.663,
+          "v": 0
         }
       ],
       "timeframes": {
         "1m": {
-          "lastClose": 70874.3225,
-          "rsi14": 33.91149186996914,
-          "atrPct14": 0.001566391894408775,
-          "priceVsSma20": -0.002778444804801241,
-          "emaGap12_26": -0.0014520100099310045,
+          "lastClose": 71381.663,
+          "rsi14": 75.43572746165648,
+          "atrPct14": 0.0007065339935911811,
+          "priceVsSma20": 0.001076218814192393,
+          "emaGap12_26": 0.0005223393762303652,
           "barCount": 249
         },
         "2m": {
-          "lastClose": 70874.3225,
-          "rsi14": 25.664807446570876,
-          "atrPct14": 0.002537189999619181,
-          "priceVsSma20": -0.005120468948765058,
-          "emaGap12_26": -0.0027029669780632933,
+          "lastClose": 71381.663,
+          "rsi14": 68.96215769579511,
+          "atrPct14": 0.0011940551575149263,
+          "priceVsSma20": 0.0015962547369123227,
+          "emaGap12_26": 0.00071128576878769,
           "barCount": 250
         },
         "5m": {
-          "lastClose": 70874.3225,
-          "rsi14": 29.44514715675909,
-          "atrPct14": 0.0038352465379827587,
-          "priceVsSma20": -0.010344797679591802,
-          "emaGap12_26": -0.003337105877228651,
+          "lastClose": 71381.663,
+          "rsi14": 79.74680962071524,
+          "atrPct14": 0.0021056698312802696,
+          "priceVsSma20": 0.003337983284702626,
+          "emaGap12_26": -0.0007657723565712244,
           "barCount": 250
         },
         "10m": {
-          "lastClose": 70874.3225,
-          "rsi14": 31.75843805070589,
-          "atrPct14": 0.00584872816849247,
-          "priceVsSma20": -0.011903971188023972,
-          "emaGap12_26": -0.002191180459534578,
+          "lastClose": 71381.663,
+          "rsi14": 34.7993650657603,
+          "atrPct14": 0.004231625484624997,
+          "priceVsSma20": -0.002298277574619665,
+          "emaGap12_26": -0.0020068994965905074,
           "barCount": 250
         },
         "15m": {
-          "lastClose": 70874.3225,
-          "rsi14": 37.30241691527346,
-          "atrPct14": 0.0061409619017623075,
-          "priceVsSma20": -0.011361727252704481,
-          "emaGap12_26": -0.00122851778531992,
+          "lastClose": 71381.663,
+          "rsi14": 40.35820079751231,
+          "atrPct14": 0.005952181604799127,
+          "priceVsSma20": -0.003074330589113286,
+          "emaGap12_26": -0.0017833055669783287,
           "barCount": 250
         },
         "30m": {
-          "lastClose": 70874.3225,
-          "rsi14": 37.93645989969013,
-          "atrPct14": 0.005835688134544675,
-          "priceVsSma20": -0.01161507378191428,
-          "emaGap12_26": 0.002321976423869396,
+          "lastClose": 71381.663,
+          "rsi14": 43.56731007252928,
+          "atrPct14": 0.0067338148674321195,
+          "priceVsSma20": -0.0036259973194157015,
+          "emaGap12_26": 0.0011716845936902344,
           "barCount": 250
         },
         "1h": {
-          "lastClose": 70874.3225,
-          "rsi14": 37.45808396135318,
-          "atrPct14": 0.006829334619540303,
-          "priceVsSma20": -0.005463028720097167,
-          "emaGap12_26": 0.008047911919605319,
+          "lastClose": 71381.663,
+          "rsi14": 50.43570139317718,
+          "atrPct14": 0.006662861120829544,
+          "priceVsSma20": -0.0014198980213549499,
+          "emaGap12_26": 0.006820363196654624,
           "barCount": 250
         },
         "4h": {
-          "lastClose": 70874.3225,
-          "rsi14": 61.51885980855445,
-          "atrPct14": 0.017294363248869116,
-          "priceVsSma20": 0.023749975942096904,
-          "emaGap12_26": 0.013396997980786486,
+          "lastClose": 71381.663,
+          "rsi14": 64.48768980369077,
+          "atrPct14": 0.016738382515934125,
+          "priceVsSma20": 0.02775939366038852,
+          "emaGap12_26": 0.014817496226679069,
           "barCount": 250
         },
         "1d": {
-          "lastClose": 70874.3225,
-          "rsi14": 48.65362165171193,
-          "atrPct14": 0.03527354381614826,
-          "priceVsSma20": 0.032956640711684485,
-          "emaGap12_26": -0.0005105395178794015,
+          "lastClose": 71381.663,
+          "rsi14": 50.324934716324314,
+          "atrPct14": 0.03515014801691539,
+          "priceVsSma20": 0.03996637912773724,
+          "emaGap12_26": 0.00007528287713905158,
           "barCount": 250
         }
       },
@@ -2203,75 +4179,75 @@
           "symbol": "ETH/USD",
           "timeframes": {
             "1m": {
-              "lastClose": 2194.405,
-              "rsi14": 27.3479203736662,
-              "atrPct14": 0.0017873051823029183,
-              "priceVsSma20": -0.005110832481724513,
-              "emaGap12_26": -0.002743089231783101,
-              "barCount": 206
-            },
-            "2m": {
-              "lastClose": 2194.405,
-              "rsi14": 11.145880746471732,
-              "atrPct14": 0.0026393259220608605,
-              "priceVsSma20": -0.009766842679637663,
-              "emaGap12_26": -0.004295077799971666,
+              "lastClose": 2217.6705,
+              "rsi14": 61.73940149625928,
+              "atrPct14": 0.0008002605823156859,
+              "priceVsSma20": 0.0014796825442847362,
+              "emaGap12_26": 0.0007959003546357005,
               "barCount": 229
             },
+            "2m": {
+              "lastClose": 2217.6705,
+              "rsi14": 54.70307308970169,
+              "atrPct14": 0.0012185244445853003,
+              "priceVsSma20": 0.0022954643131553594,
+              "emaGap12_26": 0.001023823807246695,
+              "barCount": 234
+            },
             "5m": {
-              "lastClose": 2194.405,
-              "rsi14": 26.772069039222245,
-              "atrPct14": 0.004251048252259671,
-              "priceVsSma20": -0.016202922515347586,
-              "emaGap12_26": -0.005664263654651943,
+              "lastClose": 2217.6705,
+              "rsi14": 81.95846101464065,
+              "atrPct14": 0.002204243468218441,
+              "priceVsSma20": 0.00473239011128483,
+              "emaGap12_26": -0.001639143878948777,
               "barCount": 248
             },
             "10m": {
-              "lastClose": 2194.405,
-              "rsi14": 14.189342368893676,
-              "atrPct14": 0.00531890890241315,
-              "priceVsSma20": -0.020524886814005924,
-              "emaGap12_26": -0.004800125332590061,
+              "lastClose": 2217.6705,
+              "rsi14": 33.44568600926321,
+              "atrPct14": 0.0049267206145238536,
+              "priceVsSma20": -0.003595393926457187,
+              "emaGap12_26": -0.004327836921965649,
               "barCount": 250
             },
             "15m": {
-              "lastClose": 2194.405,
-              "rsi14": 23.072717331875523,
-              "atrPct14": 0.006286220819376011,
-              "priceVsSma20": -0.021376109113282565,
-              "emaGap12_26": -0.0035456617326858875,
+              "lastClose": 2217.6705,
+              "rsi14": 30.952500200336658,
+              "atrPct14": 0.006162135369395147,
+              "priceVsSma20": -0.007001644970649301,
+              "emaGap12_26": -0.004422100738537226,
               "barCount": 250
             },
             "30m": {
-              "lastClose": 2194.405,
-              "rsi14": 23.8595702677451,
-              "atrPct14": 0.006564395801400094,
-              "priceVsSma20": -0.023034076205728435,
-              "emaGap12_26": 0.00255859488572272,
+              "lastClose": 2217.6705,
+              "rsi14": 32.461029960550235,
+              "atrPct14": 0.007309713374590918,
+              "priceVsSma20": -0.010594579690897716,
+              "emaGap12_26": 0.00040309210887093,
               "barCount": 250
             },
             "1h": {
-              "lastClose": 2194.405,
-              "rsi14": 32.85981891976269,
-              "atrPct14": 0.008056928596655048,
-              "priceVsSma20": -0.012412947261963451,
-              "emaGap12_26": 0.012010317431741208,
+              "lastClose": 2217.6705,
+              "rsi14": 43.14510008023769,
+              "atrPct14": 0.008127582574340299,
+              "priceVsSma20": -0.0064901445519620765,
+              "emaGap12_26": 0.009449200970575455,
               "barCount": 250
             },
             "4h": {
-              "lastClose": 2194.405,
-              "rsi14": 59.71386272485073,
-              "atrPct14": 0.02167816723504943,
-              "priceVsSma20": 0.02920424891447827,
-              "emaGap12_26": 0.01739110260813575,
+              "lastClose": 2217.6705,
+              "rsi14": 63.438278495487346,
+              "atrPct14": 0.020983682137243914,
+              "priceVsSma20": 0.036062710308502346,
+              "emaGap12_26": 0.019149036274178244,
               "barCount": 250
             },
             "1d": {
-              "lastClose": 2194.405,
-              "rsi14": 51.89539327681973,
-              "atrPct14": 0.045504233567283274,
-              "priceVsSma20": 0.04794614913857675,
-              "emaGap12_26": 0.007040540954722492,
+              "lastClose": 2217.6705,
+              "rsi14": 53.76537769937382,
+              "atrPct14": 0.04515515419242848,
+              "priceVsSma20": 0.05846866680227209,
+              "emaGap12_26": 0.007915578918034896,
               "barCount": 250
             }
           }
@@ -2280,75 +4256,75 @@
           "symbol": "SOL/USD",
           "timeframes": {
             "1m": {
-              "lastClose": 82.68,
-              "rsi14": 29.41078929913715,
-              "atrPct14": 0.001370723318387545,
-              "priceVsSma20": -0.0026366629554146056,
-              "emaGap12_26": -0.002165869336405608,
-              "barCount": 203
+              "lastClose": 83.4403,
+              "rsi14": 49.393391843056264,
+              "atrPct14": 0.0006554301184713413,
+              "priceVsSma20": 0.0005527962376281541,
+              "emaGap12_26": 0.0006699042680078076,
+              "barCount": 220
             },
             "2m": {
-              "lastClose": 82.68,
-              "rsi14": 25.13780578641132,
-              "atrPct14": 0.0024222639492189856,
-              "priceVsSma20": -0.006144104328207146,
-              "emaGap12_26": -0.0039267221714134135,
-              "barCount": 221
+              "lastClose": 83.4403,
+              "rsi14": 66.33628629067525,
+              "atrPct14": 0.0012048819849127122,
+              "priceVsSma20": 0.0016895346839304944,
+              "emaGap12_26": 0.0009205098948689822,
+              "barCount": 223
             },
             "5m": {
-              "lastClose": 82.68,
-              "rsi14": 27.832729638330065,
-              "atrPct14": 0.004770672745179306,
-              "priceVsSma20": -0.013048219063453766,
-              "emaGap12_26": -0.00522464963811345,
+              "lastClose": 83.4403,
+              "rsi14": 73.93296458350537,
+              "atrPct14": 0.0023427357215706243,
+              "priceVsSma20": 0.0037880588220994002,
+              "emaGap12_26": -0.0011204561109131425,
               "barCount": 249
             },
             "10m": {
-              "lastClose": 82.68,
-              "rsi14": 10.837059062613534,
-              "atrPct14": 0.005421642356503554,
-              "priceVsSma20": -0.016882669458192032,
-              "emaGap12_26": -0.004744223688462203,
+              "lastClose": 83.4403,
+              "rsi14": 32.77946753783159,
+              "atrPct14": 0.005177174283803557,
+              "priceVsSma20": -0.0026491141191699098,
+              "emaGap12_26": -0.0036854165144240866,
               "barCount": 250
             },
             "15m": {
-              "lastClose": 82.68,
-              "rsi14": 21.07254850799518,
-              "atrPct14": 0.005844015084404566,
-              "priceVsSma20": -0.018625454827333663,
-              "emaGap12_26": -0.00401130709016103,
+              "lastClose": 83.4403,
+              "rsi14": 28.325258187488444,
+              "atrPct14": 0.005929016092515045,
+              "priceVsSma20": -0.005620556849946264,
+              "emaGap12_26": -0.004138758743572728,
               "barCount": 250
             },
             "30m": {
-              "lastClose": 82.68,
-              "rsi14": 25.750577367205366,
-              "atrPct14": 0.006581095791001452,
-              "priceVsSma20": -0.0203926977668882,
-              "emaGap12_26": 0.00025831664300309844,
+              "lastClose": 83.4403,
+              "rsi14": 29.60750273517081,
+              "atrPct14": 0.007072177302214852,
+              "priceVsSma20": -0.009324583463223943,
+              "emaGap12_26": -0.0012887430217969002,
               "barCount": 250
             },
             "1h": {
-              "lastClose": 82.68,
-              "rsi14": 22.365551359114775,
-              "atrPct14": 0.008189512652049234,
-              "priceVsSma20": -0.017555346060574115,
-              "emaGap12_26": 0.008375201670508056,
+              "lastClose": 83.4403,
+              "rsi14": 35.62660648235196,
+              "atrPct14": 0.007909868051939967,
+              "priceVsSma20": -0.010591283416436023,
+              "emaGap12_26": 0.006318036817679486,
               "barCount": 250
             },
             "4h": {
-              "lastClose": 82.68,
-              "rsi14": 54.16870963674827,
-              "atrPct14": 0.02275433182148041,
-              "priceVsSma20": 0.015142044376735622,
-              "emaGap12_26": 0.008912056445777564,
+              "lastClose": 83.4403,
+              "rsi14": 55.641365336658296,
+              "atrPct14": 0.02082800275423612,
+              "priceVsSma20": 0.02209040684202793,
+              "emaGap12_26": 0.010025102053724312,
               "barCount": 250
             },
             "1d": {
-              "lastClose": 82.68,
-              "rsi14": 34.5815859686256,
-              "atrPct14": 0.05393026649345151,
-              "priceVsSma20": -0.019984295805436838,
-              "emaGap12_26": -0.019616304341873496,
+              "lastClose": 83.4403,
+              "rsi14": 35.509234186158494,
+              "atrPct14": 0.05343885908462184,
+              "priceVsSma20": -0.011417822447061533,
+              "emaGap12_26": -0.018885860986577126,
               "barCount": 250
             }
           }
@@ -2359,7 +4335,7 @@
       "symbol": "ETH/USD",
       "assetClass": "crypto",
       "strategyProfile": "crypto_momentum",
-      "updatedAtMs": 1775660032452,
+      "updatedAtMs": 1775664383410,
       "marketState": {
         "timezone": "America/New_York",
         "sessionMode": "continuous",
@@ -2370,15 +4346,15 @@
         "minutesToClose": null,
         "sessionLabel": "continuous_open"
       },
-      "currentPrice": 2192.6145,
+      "currentPrice": 2217.6705,
       "position": {
         "symbol": "ETH/USD",
         "qty": 0.66737467,
         "entryPrice": 2124.827151055,
-        "currentPrice": 2193.1,
-        "marketValue": 1463.619389,
-        "unrealizedPnl": 45.56357,
-        "openedAtMs": 1775660057861
+        "currentPrice": 2215.56,
+        "marketValue": 1478.608624,
+        "unrealizedPnl": 60.552805,
+        "openedAtMs": 1775664402568
       },
       "riskState": {
         "canOpen": true,
@@ -2391,7 +4367,7 @@
         "reasoning": [
           "The current price of ETH/USD is slightly above the entry price, indicating a positive trend.",
           "RSI values are within acceptable ranges, suggesting no overbought or oversold conditions.",
-          "Related symbols like BTC/USD and SOL/USD show mixed signals but overall neutral to positive trends."
+          "Related symbols like BTC/USD and SOL/USD show mixed signals but overall stable trends."
         ],
         "requestedSizePct": null,
         "stopLossPct": null,
@@ -2411,446 +4387,6 @@
         }
       },
       "shortBars": [
-        {
-          "t": null,
-          "o": 2248.8725,
-          "h": 2250.19,
-          "l": 2248.8725,
-          "c": 2250.19,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 2251.25,
-          "h": 2251.25,
-          "l": 2251.25,
-          "c": 2251.25,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 2252.3,
-          "h": 2252.3,
-          "l": 2251.25,
-          "c": 2251.58,
-          "v": 0.002493
-        },
-        {
-          "t": null,
-          "o": 2250.8,
-          "h": 2251.647,
-          "l": 2250.8,
-          "c": 2251.647,
-          "v": 0.003866
-        },
-        {
-          "t": null,
-          "o": 2250.6315,
-          "h": 2251.663,
-          "l": 2250.2605,
-          "c": 2251.373,
-          "v": 0.00279
-        },
-        {
-          "t": null,
-          "o": 2252.746,
-          "h": 2252.746,
-          "l": 2251.275,
-          "c": 2251.275,
-          "v": 0.002175
-        },
-        {
-          "t": null,
-          "o": 2252.035,
-          "h": 2252.035,
-          "l": 2252.035,
-          "c": 2252.035,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 2253.0585,
-          "h": 2253.0585,
-          "l": 2252.035,
-          "c": 2252.035,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 2253.19,
-          "h": 2253.19,
-          "l": 2253.19,
-          "c": 2253.19,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 2254.04,
-          "h": 2254.04,
-          "l": 2253.165,
-          "c": 2253.165,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 2251.8755,
-          "h": 2251.8755,
-          "l": 2251.8755,
-          "c": 2251.8755,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 2253.1215,
-          "h": 2253.278,
-          "l": 2251.9,
-          "c": 2253.278,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 2252.065,
-          "h": 2253.4,
-          "l": 2252.065,
-          "c": 2253.055,
-          "v": 0.01856889
-        },
-        {
-          "t": null,
-          "o": 2251.476,
-          "h": 2251.509,
-          "l": 2250.217,
-          "c": 2250.337,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 2249.161,
-          "h": 2249.161,
-          "l": 2247.815,
-          "c": 2248.06,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 2248.94,
-          "h": 2248.94,
-          "l": 2243.1755,
-          "c": 2245.137,
-          "v": 0.017814276
-        },
-        {
-          "t": null,
-          "o": 2245.7665,
-          "h": 2247.5715,
-          "l": 2245.16,
-          "c": 2247.5715,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 2248.728,
-          "h": 2248.728,
-          "l": 2246.2775,
-          "c": 2246.2775,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 2247.74,
-          "h": 2248.6275,
-          "l": 2246.194,
-          "c": 2246.194,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 2247.58,
-          "h": 2247.58,
-          "l": 2245.075,
-          "c": 2246.22,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 2247.47,
-          "h": 2248.66,
-          "l": 2247.47,
-          "c": 2247.65,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 2248.5665,
-          "h": 2248.5665,
-          "l": 2248.5665,
-          "c": 2248.5665,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 2247.357,
-          "h": 2247.357,
-          "l": 2247.357,
-          "c": 2247.357,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 2246.286,
-          "h": 2248.152,
-          "l": 2246.286,
-          "c": 2248.152,
-          "v": 0.001209
-        },
-        {
-          "t": null,
-          "o": 2249.504,
-          "h": 2249.504,
-          "l": 2248.152,
-          "c": 2248.165,
-          "v": 1
-        },
-        {
-          "t": null,
-          "o": 2249.2735,
-          "h": 2249.2735,
-          "l": 2249.2735,
-          "c": 2249.2735,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 2250.6,
-          "h": 2250.6,
-          "l": 2249.5,
-          "c": 2249.524,
-          "v": 0.002176
-        },
-        {
-          "t": null,
-          "o": 2251.1745,
-          "h": 2252.7165,
-          "l": 2249.9,
-          "c": 2251.4,
-          "v": 0.017787554
-        },
-        {
-          "t": null,
-          "o": 2252.495,
-          "h": 2254.09,
-          "l": 2252.495,
-          "c": 2252.8505,
-          "v": 0.00218
-        },
-        {
-          "t": null,
-          "o": 2253.8845,
-          "h": 2253.8845,
-          "l": 2253.8845,
-          "c": 2253.8845,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 2253.2,
-          "h": 2253.8845,
-          "l": 2253.042,
-          "c": 2253.042,
-          "v": 0.003615
-        },
-        {
-          "t": null,
-          "o": 2254.613,
-          "h": 2256.7615,
-          "l": 2253.081,
-          "c": 2256.7615,
-          "v": 0.002339
-        },
-        {
-          "t": null,
-          "o": 2255.709,
-          "h": 2255.709,
-          "l": 2254.916,
-          "c": 2255.62,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 2254.85,
-          "h": 2254.85,
-          "l": 2253.355,
-          "c": 2253.355,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 2254.4,
-          "h": 2254.4,
-          "l": 2253.355,
-          "c": 2253.873,
-          "v": 0.014532
-        },
-        {
-          "t": null,
-          "o": 2255.025,
-          "h": 2255.025,
-          "l": 2253.873,
-          "c": 2254.5205,
-          "v": 0.002173
-        },
-        {
-          "t": null,
-          "o": 2255.7015,
-          "h": 2255.7015,
-          "l": 2255.7015,
-          "c": 2255.7015,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 2255.1,
-          "h": 2256.3,
-          "l": 2254.832,
-          "c": 2254.832,
-          "v": 2.139977561
-        },
-        {
-          "t": null,
-          "o": 2255.954,
-          "h": 2255.954,
-          "l": 2254.832,
-          "c": 2255.035,
-          "v": 0.004415331
-        },
-        {
-          "t": null,
-          "o": 2255.895,
-          "h": 2257.06,
-          "l": 2254.976,
-          "c": 2254.976,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 2255.295,
-          "h": 2256.39,
-          "l": 2255.295,
-          "c": 2255.737,
-          "v": 0.019268
-        },
-        {
-          "t": null,
-          "o": 2257.1,
-          "h": 2257.1,
-          "l": 2255.216,
-          "c": 2255.216,
-          "v": 0.004413089
-        },
-        {
-          "t": null,
-          "o": 2254.222,
-          "h": 2256.92,
-          "l": 2254.222,
-          "c": 2255.515,
-          "v": 0.004523
-        },
-        {
-          "t": null,
-          "o": 2254.9775,
-          "h": 2256.124,
-          "l": 2252.949,
-          "c": 2254.001,
-          "v": 0.002222
-        },
-        {
-          "t": null,
-          "o": 2255.7195,
-          "h": 2256.195,
-          "l": 2255.6935,
-          "c": 2255.6935,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 2256.05,
-          "h": 2256.845,
-          "l": 2256.05,
-          "c": 2256.845,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 2257.19,
-          "h": 2259.021,
-          "l": 2255.555,
-          "c": 2257.265,
-          "v": 0.011823359
-        },
-        {
-          "t": null,
-          "o": 2256.21,
-          "h": 2256.21,
-          "l": 2256.21,
-          "c": 2256.21,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 2256.98,
-          "h": 2256.98,
-          "l": 2256.98,
-          "c": 2256.98,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 2256.194,
-          "h": 2258.17,
-          "l": 2256.194,
-          "c": 2257.106,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 2257.997,
-          "h": 2258.9425,
-          "l": 2257.997,
-          "c": 2258.9425,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 2258.675,
-          "h": 2258.675,
-          "l": 2258.675,
-          "c": 2258.675,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 2257.13,
-          "h": 2258.19,
-          "l": 2256.504,
-          "c": 2257.4055,
-          "v": 0.007095197
-        },
-        {
-          "t": null,
-          "o": 2258.3,
-          "h": 2259.8,
-          "l": 2257.08,
-          "c": 2257.08,
-          "v": 0.02199445
-        },
-        {
-          "t": null,
-          "o": 2258.485,
-          "h": 2262.1885,
-          "l": 2258.485,
-          "c": 2262.1885,
-          "v": 0
-        },
         {
           "t": null,
           "o": 2263.725,
@@ -3696,81 +5232,625 @@
           "o": 2193.1455,
           "h": 2194.43,
           "l": 2192.4,
-          "c": 2192.6145,
-          "v": 0.207454
+          "c": 2194.43,
+          "v": 0.622362
+        },
+        {
+          "t": null,
+          "o": 2193.285,
+          "h": 2197.16,
+          "l": 2193.1,
+          "c": 2195.855,
+          "v": 6.502963257
+        },
+        {
+          "t": null,
+          "o": 2194.7785,
+          "h": 2194.7785,
+          "l": 2192.177,
+          "c": 2192.177,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 2191.3185,
+          "h": 2191.3185,
+          "l": 2187.32,
+          "c": 2190.6915,
+          "v": 0.00045667
+        },
+        {
+          "t": null,
+          "o": 2189.595,
+          "h": 2190.2705,
+          "l": 2187.93,
+          "c": 2190.2705,
+          "v": 0.003796
+        },
+        {
+          "t": null,
+          "o": 2191.26,
+          "h": 2192.265,
+          "l": 2191.26,
+          "c": 2191.8915,
+          "v": 0.021523
+        },
+        {
+          "t": null,
+          "o": 2192.93,
+          "h": 2194.205,
+          "l": 2192.93,
+          "c": 2194.205,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 2195.645,
+          "h": 2196.25,
+          "l": 2193,
+          "c": 2194.945,
+          "v": 0.015709
+        },
+        {
+          "t": null,
+          "o": 2193.49,
+          "h": 2196.14,
+          "l": 2193.49,
+          "c": 2196.14,
+          "v": 0.002758
+        },
+        {
+          "t": null,
+          "o": 2197.2,
+          "h": 2197.775,
+          "l": 2195.34,
+          "c": 2197.775,
+          "v": 0.002904766
+        },
+        {
+          "t": null,
+          "o": 2196.48,
+          "h": 2199.075,
+          "l": 2196.48,
+          "c": 2198.0915,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 2197.083,
+          "h": 2198.4945,
+          "l": 2197.083,
+          "c": 2198.4945,
+          "v": 3.63e-7
+        },
+        {
+          "t": null,
+          "o": 2200.13,
+          "h": 2201.504,
+          "l": 2197.15,
+          "c": 2197.15,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 2196.401,
+          "h": 2198.85,
+          "l": 2195.4,
+          "c": 2198.534,
+          "v": 0.523
+        },
+        {
+          "t": null,
+          "o": 2200.12,
+          "h": 2203.9695,
+          "l": 2200.12,
+          "c": 2203.9695,
+          "v": 0.003736
+        },
+        {
+          "t": null,
+          "o": 2202.7,
+          "h": 2202.7,
+          "l": 2198.74,
+          "c": 2198.74,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 2198.1365,
+          "h": 2198.1365,
+          "l": 2197.2595,
+          "c": 2197.2595,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 2198.24,
+          "h": 2198.24,
+          "l": 2198.24,
+          "c": 2198.24,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 2198.988,
+          "h": 2201.2745,
+          "l": 2198.988,
+          "c": 2201.2745,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 2202.96,
+          "h": 2202.96,
+          "l": 2202.96,
+          "c": 2202.96,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 2203.73,
+          "h": 2203.73,
+          "l": 2203.73,
+          "c": 2203.73,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 2202.75,
+          "h": 2203.8665,
+          "l": 2202.75,
+          "c": 2203.8665,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 2205.07,
+          "h": 2206.235,
+          "l": 2205.07,
+          "c": 2206.235,
+          "v": 0.004123596
+        },
+        {
+          "t": null,
+          "o": 2206.07,
+          "h": 2206.07,
+          "l": 2202.734,
+          "c": 2203.885,
+          "v": 0.237603404
+        },
+        {
+          "t": null,
+          "o": 2205.07,
+          "h": 2205.07,
+          "l": 2202.625,
+          "c": 2203.02,
+          "v": 0.006734133
+        },
+        {
+          "t": null,
+          "o": 2202.2,
+          "h": 2202.2,
+          "l": 2200.8375,
+          "c": 2200.8375,
+          "v": 0.045409
+        },
+        {
+          "t": null,
+          "o": 2202.29,
+          "h": 2205.3795,
+          "l": 2202.29,
+          "c": 2205.3795,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 2204.68,
+          "h": 2206.7635,
+          "l": 2204.68,
+          "c": 2206.7635,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 2208.14,
+          "h": 2209.28,
+          "l": 2205.006,
+          "c": 2205.006,
+          "v": 0.346588328
+        },
+        {
+          "t": null,
+          "o": 2206.512,
+          "h": 2209,
+          "l": 2205.006,
+          "c": 2207.155,
+          "v": 0.038793368
+        },
+        {
+          "t": null,
+          "o": 2208.3,
+          "h": 2208.3,
+          "l": 2206.8,
+          "c": 2207.931,
+          "v": 0.005432322
+        },
+        {
+          "t": null,
+          "o": 2206.7885,
+          "h": 2208.255,
+          "l": 2206.7885,
+          "c": 2208.255,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 2207.167,
+          "h": 2208.703,
+          "l": 2206.89,
+          "c": 2206.89,
+          "v": 1.04
+        },
+        {
+          "t": null,
+          "o": 2206.258,
+          "h": 2207.36,
+          "l": 2206.258,
+          "c": 2207.36,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 2208.205,
+          "h": 2208.205,
+          "l": 2206.071,
+          "c": 2206.071,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 2204.9,
+          "h": 2206.06,
+          "l": 2204.9,
+          "c": 2206.06,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 2204.98,
+          "h": 2206.245,
+          "l": 2204.98,
+          "c": 2206.245,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 2205.115,
+          "h": 2205.88,
+          "l": 2205.115,
+          "c": 2205.88,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 2204.8145,
+          "h": 2207.05,
+          "l": 2204.715,
+          "c": 2207.05,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 2205.63,
+          "h": 2205.63,
+          "l": 2204.965,
+          "c": 2204.965,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 2205.765,
+          "h": 2208.2675,
+          "l": 2205.765,
+          "c": 2208.2675,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 2209.8,
+          "h": 2216.315,
+          "l": 2209.8,
+          "c": 2211.6165,
+          "v": 0.004376165
+        },
+        {
+          "t": null,
+          "o": 2212.7965,
+          "h": 2216.58,
+          "l": 2211.76,
+          "c": 2215.4055,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 2214.26,
+          "h": 2217.65,
+          "l": 2214.26,
+          "c": 2217.65,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 2216.205,
+          "h": 2216.205,
+          "l": 2214.25,
+          "c": 2214.25,
+          "v": 0.372294446
+        },
+        {
+          "t": null,
+          "o": 2213.1,
+          "h": 2214.369,
+          "l": 2213.1,
+          "c": 2214.369,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 2212.84,
+          "h": 2212.9735,
+          "l": 2211.57,
+          "c": 2212.9735,
+          "v": 1.7e-8
+        },
+        {
+          "t": null,
+          "o": 2214.47,
+          "h": 2214.47,
+          "l": 2214.47,
+          "c": 2214.47,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 2213.05,
+          "h": 2213.05,
+          "l": 2212.155,
+          "c": 2212.155,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 2211.455,
+          "h": 2211.455,
+          "l": 2211.455,
+          "c": 2211.455,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 2212,
+          "h": 2214.46,
+          "l": 2211.43,
+          "c": 2212.4445,
+          "v": 1.807137814
+        },
+        {
+          "t": null,
+          "o": 2213.696,
+          "h": 2213.696,
+          "l": 2213.696,
+          "c": 2213.696,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 2215.27,
+          "h": 2215.27,
+          "l": 2213.696,
+          "c": 2213.9745,
+          "v": 0.002495
+        },
+        {
+          "t": null,
+          "o": 2215.327,
+          "h": 2216.9545,
+          "l": 2214.478,
+          "c": 2214.478,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 2215.121,
+          "h": 2215.121,
+          "l": 2213.9045,
+          "c": 2213.9045,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 2212.4,
+          "h": 2214.713,
+          "l": 2212.4,
+          "c": 2214.713,
+          "v": 0.002495
+        },
+        {
+          "t": null,
+          "o": 2213.415,
+          "h": 2213.415,
+          "l": 2212.5265,
+          "c": 2212.5265,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 2211.263,
+          "h": 2211.263,
+          "l": 2211.263,
+          "c": 2211.263,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 2212.6625,
+          "h": 2214.193,
+          "l": 2212.115,
+          "c": 2213.41,
+          "v": 0.004429
+        },
+        {
+          "t": null,
+          "o": 2212.4615,
+          "h": 2214.58,
+          "l": 2211.665,
+          "c": 2213.44,
+          "v": 0.049899
+        },
+        {
+          "t": null,
+          "o": 2213.55,
+          "h": 2213.55,
+          "l": 2213.55,
+          "c": 2213.55,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 2215.28,
+          "h": 2216.045,
+          "l": 2215.28,
+          "c": 2216.045,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 2214.882,
+          "h": 2214.882,
+          "l": 2214.882,
+          "c": 2214.882,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 2215.564,
+          "h": 2215.564,
+          "l": 2214.882,
+          "c": 2214.9375,
+          "v": 0.013947672
+        },
+        {
+          "t": null,
+          "o": 2215.8175,
+          "h": 2216.38,
+          "l": 2215.79,
+          "c": 2215.79,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 2216.66,
+          "h": 2216.66,
+          "l": 2216.66,
+          "c": 2216.66,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 2216.985,
+          "h": 2217.281,
+          "l": 2216.68,
+          "c": 2217.281,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 2216.655,
+          "h": 2216.655,
+          "l": 2213.34,
+          "c": 2215.757,
+          "v": 0.018054126
+        },
+        {
+          "t": null,
+          "o": 2216.46,
+          "h": 2217.6705,
+          "l": 2216.46,
+          "c": 2217.6705,
+          "v": 0
         }
       ],
       "timeframes": {
         "1m": {
-          "lastClose": 2194.405,
-          "rsi14": 27.3479203736662,
-          "atrPct14": 0.0017873051823029183,
-          "priceVsSma20": -0.005110832481724513,
-          "emaGap12_26": -0.002743089231783101,
-          "barCount": 206
-        },
-        "2m": {
-          "lastClose": 2194.405,
-          "rsi14": 11.145880746471732,
-          "atrPct14": 0.0026393259220608605,
-          "priceVsSma20": -0.009766842679637663,
-          "emaGap12_26": -0.004295077799971666,
+          "lastClose": 2217.6705,
+          "rsi14": 61.73940149625928,
+          "atrPct14": 0.0008002605823156859,
+          "priceVsSma20": 0.0014796825442847362,
+          "emaGap12_26": 0.0007959003546357005,
           "barCount": 229
         },
+        "2m": {
+          "lastClose": 2217.6705,
+          "rsi14": 54.70307308970169,
+          "atrPct14": 0.0012185244445853003,
+          "priceVsSma20": 0.0022954643131553594,
+          "emaGap12_26": 0.001023823807246695,
+          "barCount": 234
+        },
         "5m": {
-          "lastClose": 2194.405,
-          "rsi14": 26.772069039222245,
-          "atrPct14": 0.004251048252259671,
-          "priceVsSma20": -0.016202922515347586,
-          "emaGap12_26": -0.005664263654651943,
+          "lastClose": 2217.6705,
+          "rsi14": 81.95846101464065,
+          "atrPct14": 0.002204243468218441,
+          "priceVsSma20": 0.00473239011128483,
+          "emaGap12_26": -0.001639143878948777,
           "barCount": 248
         },
         "10m": {
-          "lastClose": 2194.405,
-          "rsi14": 14.189342368893676,
-          "atrPct14": 0.00531890890241315,
-          "priceVsSma20": -0.020524886814005924,
-          "emaGap12_26": -0.004800125332590061,
+          "lastClose": 2217.6705,
+          "rsi14": 33.44568600926321,
+          "atrPct14": 0.0049267206145238536,
+          "priceVsSma20": -0.003595393926457187,
+          "emaGap12_26": -0.004327836921965649,
           "barCount": 250
         },
         "15m": {
-          "lastClose": 2194.405,
-          "rsi14": 23.072717331875523,
-          "atrPct14": 0.006286220819376011,
-          "priceVsSma20": -0.021376109113282565,
-          "emaGap12_26": -0.0035456617326858875,
+          "lastClose": 2217.6705,
+          "rsi14": 30.952500200336658,
+          "atrPct14": 0.006162135369395147,
+          "priceVsSma20": -0.007001644970649301,
+          "emaGap12_26": -0.004422100738537226,
           "barCount": 250
         },
         "30m": {
-          "lastClose": 2194.405,
-          "rsi14": 23.8595702677451,
-          "atrPct14": 0.006564395801400094,
-          "priceVsSma20": -0.023034076205728435,
-          "emaGap12_26": 0.00255859488572272,
+          "lastClose": 2217.6705,
+          "rsi14": 32.461029960550235,
+          "atrPct14": 0.007309713374590918,
+          "priceVsSma20": -0.010594579690897716,
+          "emaGap12_26": 0.00040309210887093,
           "barCount": 250
         },
         "1h": {
-          "lastClose": 2194.405,
-          "rsi14": 32.85981891976269,
-          "atrPct14": 0.008056928596655048,
-          "priceVsSma20": -0.012412947261963451,
-          "emaGap12_26": 0.012010317431741208,
+          "lastClose": 2217.6705,
+          "rsi14": 43.14510008023769,
+          "atrPct14": 0.008127582574340299,
+          "priceVsSma20": -0.0064901445519620765,
+          "emaGap12_26": 0.009449200970575455,
           "barCount": 250
         },
         "4h": {
-          "lastClose": 2194.405,
-          "rsi14": 59.71386272485073,
-          "atrPct14": 0.02167816723504943,
-          "priceVsSma20": 0.02920424891447827,
-          "emaGap12_26": 0.01739110260813575,
+          "lastClose": 2217.6705,
+          "rsi14": 63.438278495487346,
+          "atrPct14": 0.020983682137243914,
+          "priceVsSma20": 0.036062710308502346,
+          "emaGap12_26": 0.019149036274178244,
           "barCount": 250
         },
         "1d": {
-          "lastClose": 2194.405,
-          "rsi14": 51.89539327681973,
-          "atrPct14": 0.045504233567283274,
-          "priceVsSma20": 0.04794614913857675,
-          "emaGap12_26": 0.007040540954722492,
+          "lastClose": 2217.6705,
+          "rsi14": 53.76537769937382,
+          "atrPct14": 0.04515515419242848,
+          "priceVsSma20": 0.05846866680227209,
+          "emaGap12_26": 0.007915578918034896,
           "barCount": 250
         }
       },
@@ -3779,75 +5859,75 @@
           "symbol": "BTC/USD",
           "timeframes": {
             "1m": {
-              "lastClose": 70874.3225,
-              "rsi14": 33.91149186996914,
-              "atrPct14": 0.001566391894408775,
-              "priceVsSma20": -0.002778444804801241,
-              "emaGap12_26": -0.0014520100099310045,
+              "lastClose": 71381.663,
+              "rsi14": 75.43572746165648,
+              "atrPct14": 0.0007065339935911811,
+              "priceVsSma20": 0.001076218814192393,
+              "emaGap12_26": 0.0005223393762303652,
               "barCount": 249
             },
             "2m": {
-              "lastClose": 70874.3225,
-              "rsi14": 25.664807446570876,
-              "atrPct14": 0.002537189999619181,
-              "priceVsSma20": -0.005120468948765058,
-              "emaGap12_26": -0.0027029669780632933,
+              "lastClose": 71381.663,
+              "rsi14": 68.96215769579511,
+              "atrPct14": 0.0011940551575149263,
+              "priceVsSma20": 0.0015962547369123227,
+              "emaGap12_26": 0.00071128576878769,
               "barCount": 250
             },
             "5m": {
-              "lastClose": 70874.3225,
-              "rsi14": 29.44514715675909,
-              "atrPct14": 0.0038352465379827587,
-              "priceVsSma20": -0.010344797679591802,
-              "emaGap12_26": -0.003337105877228651,
+              "lastClose": 71381.663,
+              "rsi14": 79.74680962071524,
+              "atrPct14": 0.0021056698312802696,
+              "priceVsSma20": 0.003337983284702626,
+              "emaGap12_26": -0.0007657723565712244,
               "barCount": 250
             },
             "10m": {
-              "lastClose": 70874.3225,
-              "rsi14": 31.75843805070589,
-              "atrPct14": 0.00584872816849247,
-              "priceVsSma20": -0.011903971188023972,
-              "emaGap12_26": -0.002191180459534578,
+              "lastClose": 71381.663,
+              "rsi14": 34.7993650657603,
+              "atrPct14": 0.004231625484624997,
+              "priceVsSma20": -0.002298277574619665,
+              "emaGap12_26": -0.0020068994965905074,
               "barCount": 250
             },
             "15m": {
-              "lastClose": 70874.3225,
-              "rsi14": 37.30241691527346,
-              "atrPct14": 0.0061409619017623075,
-              "priceVsSma20": -0.011361727252704481,
-              "emaGap12_26": -0.00122851778531992,
+              "lastClose": 71381.663,
+              "rsi14": 40.35820079751231,
+              "atrPct14": 0.005952181604799127,
+              "priceVsSma20": -0.003074330589113286,
+              "emaGap12_26": -0.0017833055669783287,
               "barCount": 250
             },
             "30m": {
-              "lastClose": 70874.3225,
-              "rsi14": 37.93645989969013,
-              "atrPct14": 0.005835688134544675,
-              "priceVsSma20": -0.01161507378191428,
-              "emaGap12_26": 0.002321976423869396,
+              "lastClose": 71381.663,
+              "rsi14": 43.56731007252928,
+              "atrPct14": 0.0067338148674321195,
+              "priceVsSma20": -0.0036259973194157015,
+              "emaGap12_26": 0.0011716845936902344,
               "barCount": 250
             },
             "1h": {
-              "lastClose": 70874.3225,
-              "rsi14": 37.45808396135318,
-              "atrPct14": 0.006829334619540303,
-              "priceVsSma20": -0.005463028720097167,
-              "emaGap12_26": 0.008047911919605319,
+              "lastClose": 71381.663,
+              "rsi14": 50.43570139317718,
+              "atrPct14": 0.006662861120829544,
+              "priceVsSma20": -0.0014198980213549499,
+              "emaGap12_26": 0.006820363196654624,
               "barCount": 250
             },
             "4h": {
-              "lastClose": 70874.3225,
-              "rsi14": 61.51885980855445,
-              "atrPct14": 0.017294363248869116,
-              "priceVsSma20": 0.023749975942096904,
-              "emaGap12_26": 0.013396997980786486,
+              "lastClose": 71381.663,
+              "rsi14": 64.48768980369077,
+              "atrPct14": 0.016738382515934125,
+              "priceVsSma20": 0.02775939366038852,
+              "emaGap12_26": 0.014817496226679069,
               "barCount": 250
             },
             "1d": {
-              "lastClose": 70874.3225,
-              "rsi14": 48.65362165171193,
-              "atrPct14": 0.03527354381614826,
-              "priceVsSma20": 0.032956640711684485,
-              "emaGap12_26": -0.0005105395178794015,
+              "lastClose": 71381.663,
+              "rsi14": 50.324934716324314,
+              "atrPct14": 0.03515014801691539,
+              "priceVsSma20": 0.03996637912773724,
+              "emaGap12_26": 0.00007528287713905158,
               "barCount": 250
             }
           }
@@ -3856,75 +5936,75 @@
           "symbol": "SOL/USD",
           "timeframes": {
             "1m": {
-              "lastClose": 82.68,
-              "rsi14": 29.41078929913715,
-              "atrPct14": 0.001370723318387545,
-              "priceVsSma20": -0.0026366629554146056,
-              "emaGap12_26": -0.002165869336405608,
-              "barCount": 203
+              "lastClose": 83.4403,
+              "rsi14": 49.393391843056264,
+              "atrPct14": 0.0006554301184713413,
+              "priceVsSma20": 0.0005527962376281541,
+              "emaGap12_26": 0.0006699042680078076,
+              "barCount": 220
             },
             "2m": {
-              "lastClose": 82.68,
-              "rsi14": 25.13780578641132,
-              "atrPct14": 0.0024222639492189856,
-              "priceVsSma20": -0.006144104328207146,
-              "emaGap12_26": -0.0039267221714134135,
-              "barCount": 221
+              "lastClose": 83.4403,
+              "rsi14": 66.33628629067525,
+              "atrPct14": 0.0012048819849127122,
+              "priceVsSma20": 0.0016895346839304944,
+              "emaGap12_26": 0.0009205098948689822,
+              "barCount": 223
             },
             "5m": {
-              "lastClose": 82.68,
-              "rsi14": 27.832729638330065,
-              "atrPct14": 0.004770672745179306,
-              "priceVsSma20": -0.013048219063453766,
-              "emaGap12_26": -0.00522464963811345,
+              "lastClose": 83.4403,
+              "rsi14": 73.93296458350537,
+              "atrPct14": 0.0023427357215706243,
+              "priceVsSma20": 0.0037880588220994002,
+              "emaGap12_26": -0.0011204561109131425,
               "barCount": 249
             },
             "10m": {
-              "lastClose": 82.68,
-              "rsi14": 10.837059062613534,
-              "atrPct14": 0.005421642356503554,
-              "priceVsSma20": -0.016882669458192032,
-              "emaGap12_26": -0.004744223688462203,
+              "lastClose": 83.4403,
+              "rsi14": 32.77946753783159,
+              "atrPct14": 0.005177174283803557,
+              "priceVsSma20": -0.0026491141191699098,
+              "emaGap12_26": -0.0036854165144240866,
               "barCount": 250
             },
             "15m": {
-              "lastClose": 82.68,
-              "rsi14": 21.07254850799518,
-              "atrPct14": 0.005844015084404566,
-              "priceVsSma20": -0.018625454827333663,
-              "emaGap12_26": -0.00401130709016103,
+              "lastClose": 83.4403,
+              "rsi14": 28.325258187488444,
+              "atrPct14": 0.005929016092515045,
+              "priceVsSma20": -0.005620556849946264,
+              "emaGap12_26": -0.004138758743572728,
               "barCount": 250
             },
             "30m": {
-              "lastClose": 82.68,
-              "rsi14": 25.750577367205366,
-              "atrPct14": 0.006581095791001452,
-              "priceVsSma20": -0.0203926977668882,
-              "emaGap12_26": 0.00025831664300309844,
+              "lastClose": 83.4403,
+              "rsi14": 29.60750273517081,
+              "atrPct14": 0.007072177302214852,
+              "priceVsSma20": -0.009324583463223943,
+              "emaGap12_26": -0.0012887430217969002,
               "barCount": 250
             },
             "1h": {
-              "lastClose": 82.68,
-              "rsi14": 22.365551359114775,
-              "atrPct14": 0.008189512652049234,
-              "priceVsSma20": -0.017555346060574115,
-              "emaGap12_26": 0.008375201670508056,
+              "lastClose": 83.4403,
+              "rsi14": 35.62660648235196,
+              "atrPct14": 0.007909868051939967,
+              "priceVsSma20": -0.010591283416436023,
+              "emaGap12_26": 0.006318036817679486,
               "barCount": 250
             },
             "4h": {
-              "lastClose": 82.68,
-              "rsi14": 54.16870963674827,
-              "atrPct14": 0.02275433182148041,
-              "priceVsSma20": 0.015142044376735622,
-              "emaGap12_26": 0.008912056445777564,
+              "lastClose": 83.4403,
+              "rsi14": 55.641365336658296,
+              "atrPct14": 0.02082800275423612,
+              "priceVsSma20": 0.02209040684202793,
+              "emaGap12_26": 0.010025102053724312,
               "barCount": 250
             },
             "1d": {
-              "lastClose": 82.68,
-              "rsi14": 34.5815859686256,
-              "atrPct14": 0.05393026649345151,
-              "priceVsSma20": -0.019984295805436838,
-              "emaGap12_26": -0.019616304341873496,
+              "lastClose": 83.4403,
+              "rsi14": 35.509234186158494,
+              "atrPct14": 0.05343885908462184,
+              "priceVsSma20": -0.011417822447061533,
+              "emaGap12_26": -0.018885860986577126,
               "barCount": 250
             }
           }
@@ -3935,7 +6015,7 @@
       "symbol": "SOL/USD",
       "assetClass": "crypto",
       "strategyProfile": "crypto_momentum",
-      "updatedAtMs": 1775659892591,
+      "updatedAtMs": 1775664274105,
       "marketState": {
         "timezone": "America/New_York",
         "sessionMode": "continuous",
@@ -3946,15 +6026,15 @@
         "minutesToClose": null,
         "sessionLabel": "continuous_open"
       },
-      "currentPrice": 82.82,
+      "currentPrice": 83.415,
       "position": {
         "symbol": "SOL/USD",
         "qty": 5.870367238,
         "entryPrice": 80.38,
-        "currentPrice": 82.659,
-        "marketValue": 485.238686,
-        "unrealizedPnl": 13.378567,
-        "openedAtMs": 1775659943934
+        "currentPrice": 83.517,
+        "marketValue": 490.275461,
+        "unrealizedPnl": 18.415342,
+        "openedAtMs": 1775664309514
       },
       "riskState": {
         "canOpen": true,
@@ -3963,11 +6043,11 @@
       },
       "decision": {
         "action": "hold",
-        "confidence": 0.75,
+        "confidence": 0.85,
         "reasoning": [
           "The current price of SOL/USD is slightly above the entry price, indicating a positive trend.",
           "RSI values are within acceptable ranges, suggesting no overbought or oversold conditions.",
-          "Related symbols like BTC/USD and ETH/USD show positive returns in higher timeframes, which could support SOL/USD's upward momentum."
+          "Related symbols like BTC/USD and ETH/USD show positive returns, which could support the continuation of the bullish trend in SOL/USD."
         ],
         "requestedSizePct": null,
         "stopLossPct": null,
@@ -3987,406 +6067,6 @@
         }
       },
       "shortBars": [
-        {
-          "t": null,
-          "o": 84.5046,
-          "h": 84.5046,
-          "l": 84.5046,
-          "c": 84.5046,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 84.52575,
-          "h": 84.52575,
-          "l": 84.51455,
-          "c": 84.51455,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 84.4799,
-          "h": 84.4799,
-          "l": 84.4799,
-          "c": 84.4799,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 84.46,
-          "h": 84.46,
-          "l": 84.46,
-          "c": 84.46,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 84.4575,
-          "h": 84.4575,
-          "l": 84.4575,
-          "c": 84.4575,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 84.4172,
-          "h": 84.4172,
-          "l": 84.4172,
-          "c": 84.4172,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 84.4585,
-          "h": 84.4585,
-          "l": 84.4585,
-          "c": 84.4585,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 84.44255,
-          "h": 84.44255,
-          "l": 84.43205,
-          "c": 84.43205,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 84.4494,
-          "h": 84.46315,
-          "l": 84.4494,
-          "c": 84.46315,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 84.495,
-          "h": 84.5224,
-          "l": 84.495,
-          "c": 84.5224,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 84.4793,
-          "h": 84.4793,
-          "l": 84.4793,
-          "c": 84.4793,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 84.5435,
-          "h": 84.5435,
-          "l": 84.5435,
-          "c": 84.5435,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 84.4797,
-          "h": 84.4797,
-          "l": 84.4108,
-          "c": 84.4716,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 84.3971,
-          "h": 84.3971,
-          "l": 84.3123,
-          "c": 84.32485,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 84.3355,
-          "h": 84.3355,
-          "l": 84.2315,
-          "c": 84.275,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 84.295,
-          "h": 84.305,
-          "l": 84.281,
-          "c": 84.305,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 84.33,
-          "h": 84.33,
-          "l": 84.28,
-          "c": 84.28,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 84.2959,
-          "h": 84.33445,
-          "l": 84.2959,
-          "c": 84.31,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 84.27,
-          "h": 84.31,
-          "l": 84.27,
-          "c": 84.2915,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 84.3275,
-          "h": 84.495,
-          "l": 84.315,
-          "c": 84.315,
-          "v": 0.48001448
-        },
-        {
-          "t": null,
-          "o": 84.3455,
-          "h": 84.3455,
-          "l": 84.3455,
-          "c": 84.3455,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 84.40655,
-          "h": 84.40655,
-          "l": 84.34,
-          "c": 84.34,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 84.30195,
-          "h": 84.3385,
-          "l": 84.30195,
-          "c": 84.3385,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 84.4,
-          "h": 84.4,
-          "l": 84.4,
-          "c": 84.4,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 84.4245,
-          "h": 84.4775,
-          "l": 84.4245,
-          "c": 84.4775,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 84.51075,
-          "h": 84.51075,
-          "l": 84.51075,
-          "c": 84.51075,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 84.5602,
-          "h": 84.5602,
-          "l": 84.53,
-          "c": 84.53,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 84.5542,
-          "h": 84.60995,
-          "l": 84.5542,
-          "c": 84.60995,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 84.555,
-          "h": 84.61515,
-          "l": 84.555,
-          "c": 84.61515,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 84.6445,
-          "h": 84.6445,
-          "l": 84.6445,
-          "c": 84.6445,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 84.605,
-          "h": 84.605,
-          "l": 84.605,
-          "c": 84.605,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 84.5525,
-          "h": 84.5525,
-          "l": 84.5525,
-          "c": 84.5525,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 84.62205,
-          "h": 84.62205,
-          "l": 84.62205,
-          "c": 84.62205,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 84.57465,
-          "h": 84.57465,
-          "l": 84.57465,
-          "c": 84.57465,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 84.53,
-          "h": 84.57,
-          "l": 84.53,
-          "c": 84.57,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 84.6167,
-          "h": 84.64,
-          "l": 84.5796,
-          "c": 84.5796,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 84.55325,
-          "h": 84.5764,
-          "l": 84.55325,
-          "c": 84.5764,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 84.6095,
-          "h": 84.668,
-          "l": 84.6095,
-          "c": 84.668,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 84.625,
-          "h": 84.625,
-          "l": 84.625,
-          "c": 84.625,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 84.5935,
-          "h": 84.5935,
-          "l": 84.5935,
-          "c": 84.5935,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 84.5463,
-          "h": 84.608,
-          "l": 84.5463,
-          "c": 84.5487,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 84.5701,
-          "h": 84.5701,
-          "l": 84.5701,
-          "c": 84.5701,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 84.64765,
-          "h": 84.64765,
-          "l": 84.53,
-          "c": 84.58895,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 84.63,
-          "h": 84.674,
-          "l": 84.541,
-          "c": 84.541,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 84.4993,
-          "h": 84.54365,
-          "l": 84.4993,
-          "c": 84.54365,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 84.586,
-          "h": 84.586,
-          "l": 84.55125,
-          "c": 84.55125,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 84.523,
-          "h": 84.58485,
-          "l": 84.523,
-          "c": 84.58485,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 84.5504,
-          "h": 84.5504,
-          "l": 84.5504,
-          "c": 84.5504,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 84.4859,
-          "h": 84.4859,
-          "l": 84.4859,
-          "c": 84.4859,
-          "v": 0
-        },
-        {
-          "t": null,
-          "o": 84.5415,
-          "h": 84.5415,
-          "l": 84.5415,
-          "c": 84.5415,
-          "v": 0
-        },
         {
           "t": null,
           "o": 84.4976,
@@ -5210,79 +6890,631 @@
           "l": 82.659,
           "c": 82.82,
           "v": 5e-7
+        },
+        {
+          "t": null,
+          "o": 82.80785,
+          "h": 82.80785,
+          "l": 82.722,
+          "c": 82.722,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 82.66645,
+          "h": 82.68,
+          "l": 82.61175,
+          "c": 82.68,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 82.652,
+          "h": 82.7495,
+          "l": 82.652,
+          "c": 82.7495,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 82.7525,
+          "h": 82.8105,
+          "l": 82.7525,
+          "c": 82.79,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 82.77595,
+          "h": 82.78,
+          "l": 82.74,
+          "c": 82.745,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 82.77045,
+          "h": 82.77045,
+          "l": 82.683,
+          "c": 82.7405,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 82.72,
+          "h": 82.74305,
+          "l": 82.7005,
+          "c": 82.74305,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 82.77,
+          "h": 82.775,
+          "l": 82.77,
+          "c": 82.775,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 82.815,
+          "h": 83.012,
+          "l": 82.815,
+          "c": 82.8605,
+          "v": 3.466047254
+        },
+        {
+          "t": null,
+          "o": 82.9122,
+          "h": 82.941,
+          "l": 82.851,
+          "c": 82.851,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 82.90915,
+          "h": 82.90915,
+          "l": 82.87035,
+          "c": 82.87035,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 82.90135,
+          "h": 82.98955,
+          "l": 82.90135,
+          "c": 82.98955,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 82.941,
+          "h": 83.049,
+          "l": 82.941,
+          "c": 83.0009,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 83.0545,
+          "h": 83.0545,
+          "l": 83.0545,
+          "c": 83.0545,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 83.0965,
+          "h": 83.253,
+          "l": 83.01395,
+          "c": 83.01395,
+          "v": 3.429504168
+        },
+        {
+          "t": null,
+          "o": 82.96,
+          "h": 83.11,
+          "l": 82.9425,
+          "c": 82.995,
+          "v": 0.19166
+        },
+        {
+          "t": null,
+          "o": 83.0375,
+          "h": 83.25,
+          "l": 83.0375,
+          "c": 83.11065,
+          "v": 3.424257008
+        },
+        {
+          "t": null,
+          "o": 83.0389,
+          "h": 83.0389,
+          "l": 82.925,
+          "c": 82.925,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 82.875,
+          "h": 82.8855,
+          "l": 82.84235,
+          "c": 82.84235,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 82.82275,
+          "h": 82.8595,
+          "l": 82.82275,
+          "c": 82.8595,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 82.904,
+          "h": 82.9703,
+          "l": 82.904,
+          "c": 82.9703,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 83.0015,
+          "h": 83.0015,
+          "l": 83.0015,
+          "c": 83.0015,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 83.05855,
+          "h": 83.19,
+          "l": 83.006,
+          "c": 83.006,
+          "v": 0.059004
+        },
+        {
+          "t": null,
+          "o": 82.98295,
+          "h": 83.0175,
+          "l": 82.944,
+          "c": 83.0175,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 83.045,
+          "h": 83.09,
+          "l": 83.045,
+          "c": 83.09,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 83.085,
+          "h": 83.105,
+          "l": 83.0319,
+          "c": 83.105,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 83.25,
+          "h": 83.25,
+          "l": 82.9267,
+          "c": 83.10885,
+          "v": 10.762824949
+        },
+        {
+          "t": null,
+          "o": 82.97,
+          "h": 83.10885,
+          "l": 82.97,
+          "c": 83.096,
+          "v": 0.185957581
+        },
+        {
+          "t": null,
+          "o": 83.0836,
+          "h": 83.19,
+          "l": 83.0836,
+          "c": 83.19,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 83.2337,
+          "h": 83.3744,
+          "l": 83.14,
+          "c": 83.14,
+          "v": 3.415210316
+        },
+        {
+          "t": null,
+          "o": 83.2,
+          "h": 83.2344,
+          "l": 83.1877,
+          "c": 83.1877,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 83.135,
+          "h": 83.185,
+          "l": 83.135,
+          "c": 83.185,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 83.225,
+          "h": 83.225,
+          "l": 83.1807,
+          "c": 83.1807,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 83.133,
+          "h": 83.185,
+          "l": 83.133,
+          "c": 83.185,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 83.14605,
+          "h": 83.14605,
+          "l": 83.14605,
+          "c": 83.14605,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 83.16185,
+          "h": 83.16185,
+          "l": 83.16185,
+          "c": 83.16185,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 83.125,
+          "h": 83.125,
+          "l": 83.125,
+          "c": 83.125,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 83.165,
+          "h": 83.165,
+          "l": 83.129,
+          "c": 83.129,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 83.1155,
+          "h": 83.1155,
+          "l": 83.1155,
+          "c": 83.1155,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 83.1002,
+          "h": 83.1298,
+          "l": 83.1002,
+          "c": 83.1225,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 83.105,
+          "h": 83.105,
+          "l": 83.095,
+          "c": 83.095,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 83.1145,
+          "h": 83.14,
+          "l": 83.1145,
+          "c": 83.14,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 83.1765,
+          "h": 83.356,
+          "l": 83.171,
+          "c": 83.171,
+          "v": 0.016818954
+        },
+        {
+          "t": null,
+          "o": 83.21245,
+          "h": 83.2925,
+          "l": 83.21245,
+          "c": 83.2655,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 83.312,
+          "h": 83.312,
+          "l": 83.25405,
+          "c": 83.25405,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 83.3285,
+          "h": 83.3285,
+          "l": 83.18635,
+          "c": 83.18635,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 83.2375,
+          "h": 83.2375,
+          "l": 83.2375,
+          "c": 83.2375,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 83.065,
+          "h": 83.2375,
+          "l": 83.065,
+          "c": 83.2375,
+          "v": 1.2e-8
+        },
+        {
+          "t": null,
+          "o": 83.19855,
+          "h": 83.2306,
+          "l": 83.19855,
+          "c": 83.2306,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 83.2841,
+          "h": 83.2841,
+          "l": 83.2841,
+          "c": 83.2841,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 83.22515,
+          "h": 83.22515,
+          "l": 83.1635,
+          "c": 83.1635,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 83.21855,
+          "h": 83.289,
+          "l": 83.21855,
+          "c": 83.289,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 83.321,
+          "h": 83.3635,
+          "l": 83.321,
+          "c": 83.3635,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 83.31265,
+          "h": 83.41,
+          "l": 83.31265,
+          "c": 83.41,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 83.4215,
+          "h": 83.4425,
+          "l": 83.4215,
+          "c": 83.42215,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 83.445,
+          "h": 83.445,
+          "l": 83.445,
+          "c": 83.445,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 83.42,
+          "h": 83.43925,
+          "l": 83.42,
+          "c": 83.43925,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 83.41,
+          "h": 83.41,
+          "l": 83.37215,
+          "c": 83.37215,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 83.37925,
+          "h": 83.37925,
+          "l": 83.3,
+          "c": 83.37925,
+          "v": 0.016776906
+        },
+        {
+          "t": null,
+          "o": 83.42035,
+          "h": 83.42035,
+          "l": 83.42035,
+          "c": 83.42035,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 83.37885,
+          "h": 83.37885,
+          "l": 83.37885,
+          "c": 83.37885,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 83.40895,
+          "h": 83.455,
+          "l": 83.40895,
+          "c": 83.4372,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 83.419,
+          "h": 83.419,
+          "l": 83.419,
+          "c": 83.419,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 83.538,
+          "h": 83.538,
+          "l": 83.4064,
+          "c": 83.4064,
+          "v": 0.099284
+        },
+        {
+          "t": null,
+          "o": 83.5128,
+          "h": 83.517,
+          "l": 83.392,
+          "c": 83.4165,
+          "v": 0.242827654
+        },
+        {
+          "t": null,
+          "o": 83.3946,
+          "h": 83.3946,
+          "l": 83.3946,
+          "c": 83.3946,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 83.428,
+          "h": 83.428,
+          "l": 83.428,
+          "c": 83.428,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 83.444,
+          "h": 83.444,
+          "l": 83.444,
+          "c": 83.444,
+          "v": 0
+        },
+        {
+          "t": null,
+          "o": 83.41,
+          "h": 83.415,
+          "l": 83.37985,
+          "c": 83.415,
+          "v": 0
         }
       ],
       "timeframes": {
         "1m": {
-          "lastClose": 82.82,
-          "rsi14": 47.24280873358139,
-          "atrPct14": 0.0014301922508365586,
-          "priceVsSma20": -0.001496213455634365,
-          "emaGap12_26": -0.0021180607864344178,
-          "barCount": 202
+          "lastClose": 83.444,
+          "rsi14": 54.61831024178314,
+          "atrPct14": 0.0006262112486046966,
+          "priceVsSma20": 0.0008015383587617084,
+          "emaGap12_26": 0.000729089294130853,
+          "barCount": 220
         },
         "2m": {
-          "lastClose": 82.82,
-          "rsi14": 28.130136492072936,
-          "atrPct14": 0.0024700636505157175,
-          "priceVsSma20": -0.00522942211911281,
-          "emaGap12_26": -0.003818674544468503,
-          "barCount": 221
+          "lastClose": 83.444,
+          "rsi14": 71.01940252540824,
+          "atrPct14": 0.001270612626432067,
+          "priceVsSma20": 0.0018900703483662356,
+          "emaGap12_26": 0.0009115455675735662,
+          "barCount": 223
         },
         "5m": {
-          "lastClose": 82.82,
-          "rsi14": 29.35418719210611,
-          "atrPct14": 0.004721857311898392,
-          "priceVsSma20": -0.01145963950798822,
-          "emaGap12_26": -0.005090632451051285,
+          "lastClose": 83.444,
+          "rsi14": 75.43757292882162,
+          "atrPct14": 0.0025922004149917357,
+          "priceVsSma20": 0.003805067265807331,
+          "emaGap12_26": -0.0013316556780774928,
           "barCount": 249
         },
         "10m": {
-          "lastClose": 82.82,
-          "rsi14": 11.527521787607611,
-          "atrPct14": 0.005398031411063575,
-          "priceVsSma20": -0.01529994211869242,
-          "emaGap12_26": -0.004610738691125222,
+          "lastClose": 83.444,
+          "rsi14": 35.21631104442828,
+          "atrPct14": 0.004853798249210745,
+          "priceVsSma20": -0.002746553698786548,
+          "emaGap12_26": -0.0037975086035871705,
           "barCount": 250
         },
         "15m": {
-          "lastClose": 82.82,
-          "rsi14": 21.969852892818096,
-          "atrPct14": 0.005819690154638262,
-          "priceVsSma20": -0.017045388186326036,
-          "emaGap12_26": -0.003878101074532606,
+          "lastClose": 83.444,
+          "rsi14": 28.422406918498282,
+          "atrPct14": 0.005918352719445694,
+          "priceVsSma20": -0.005578655394735304,
+          "emaGap12_26": -0.004135226178825794,
           "barCount": 250
         },
         "30m": {
-          "lastClose": 82.82,
-          "rsi14": 26.768817963564203,
-          "atrPct14": 0.00655552489046814,
-          "priceVsSma20": -0.01881532968951152,
-          "emaGap12_26": 0.0003911282087095064,
+          "lastClose": 83.444,
+          "rsi14": 29.679754658911534,
+          "atrPct14": 0.007071863713987798,
+          "priceVsSma20": -0.009282829953237178,
+          "emaGap12_26": -0.0012852215943609086,
           "barCount": 250
         },
         "1h": {
-          "lastClose": 82.82,
-          "rsi14": 23.230565224597896,
-          "atrPct14": 0.008161222862835087,
-          "priceVsSma20": -0.0159736456308063,
-          "emaGap12_26": 0.008508222336264422,
+          "lastClose": 83.444,
+          "rsi14": 35.686279422265,
+          "atrPct14": 0.007899116845686087,
+          "priceVsSma20": -0.010549580514595088,
+          "emaGap12_26": 0.00632155829176248,
           "barCount": 250
         },
         "4h": {
-          "lastClose": 82.82,
-          "rsi14": 54.705162486029145,
-          "atrPct14": 0.022701421473419126,
-          "priceVsSma20": 0.016773571940781596,
-          "emaGap12_26": 0.009047661468503236,
+          "lastClose": 83.444,
+          "rsi14": 55.657413686926546,
+          "atrPct14": 0.020827079217370786,
+          "priceVsSma20": 0.02213341319082387,
+          "emaGap12_26": 0.010028674252750999,
           "barCount": 250
         },
         "1d": {
-          "lastClose": 82.82,
-          "rsi14": 34.748742807720774,
-          "atrPct14": 0.053824655941887754,
-          "priceVsSma20": -0.018406304054988328,
-          "emaGap12_26": -0.019481728941662422,
+          "lastClose": 83.444,
+          "rsi14": 35.513870289897255,
+          "atrPct14": 0.053436489546025735,
+          "priceVsSma20": -0.01137615257156352,
+          "emaGap12_26": -0.01888230866336855,
           "barCount": 250
         }
       },
@@ -5291,75 +7523,75 @@
           "symbol": "BTC/USD",
           "timeframes": {
             "1m": {
-              "lastClose": 70998.469,
-              "rsi14": 48.87362275523235,
-              "atrPct14": 0.001609623743134121,
-              "priceVsSma20": -0.0014574640310103016,
-              "emaGap12_26": -0.001225832943378381,
+              "lastClose": 71373.748,
+              "rsi14": 64.45376965502946,
+              "atrPct14": 0.0007336060631944329,
+              "priceVsSma20": 0.0011630510034107105,
+              "emaGap12_26": 0.0004761051747098526,
               "barCount": 249
             },
             "2m": {
-              "lastClose": 70998.469,
-              "rsi14": 34.21605392720812,
-              "atrPct14": 0.00258393621324326,
-              "priceVsSma20": -0.0038951485841678835,
-              "emaGap12_26": -0.002523409749891248,
+              "lastClose": 71373.748,
+              "rsi14": 56.34662568509299,
+              "atrPct14": 0.0012327341579827793,
+              "priceVsSma20": 0.0016053731862443665,
+              "emaGap12_26": 0.0006833746105036436,
               "barCount": 250
             },
             "5m": {
-              "lastClose": 70998.469,
-              "rsi14": 31.467388117416704,
-              "atrPct14": 0.0037184800823964526,
-              "priceVsSma20": -0.008697197507470583,
-              "emaGap12_26": -0.003198253346465376,
+              "lastClose": 71373.748,
+              "rsi14": 80.01132340461152,
+              "atrPct14": 0.002235546344414632,
+              "priceVsSma20": 0.0031578127717985234,
+              "emaGap12_26": -0.0009727588699735436,
               "barCount": 250
             },
             "10m": {
-              "lastClose": 70998.469,
-              "rsi14": 33.3092673551855,
-              "atrPct14": 0.005745697387603405,
-              "priceVsSma20": -0.010258831619781424,
-              "emaGap12_26": -0.002052643259882492,
+              "lastClose": 71373.748,
+              "rsi14": 39.472962344656786,
+              "atrPct14": 0.004057602823780108,
+              "priceVsSma20": -0.0021543519426760614,
+              "emaGap12_26": -0.002087754537444686,
               "barCount": 250
             },
             "15m": {
-              "lastClose": 70998.469,
-              "rsi14": 38.85260268176504,
-              "atrPct14": 0.006037420126823958,
-              "priceVsSma20": -0.009715731895843394,
-              "emaGap12_26": -0.0010901325012000018,
+              "lastClose": 71373.748,
+              "rsi14": 40.195279059201056,
+              "atrPct14": 0.005934874882648907,
+              "priceVsSma20": -0.0031793629936452696,
+              "emaGap12_26": -0.001792149422150769,
               "barCount": 250
             },
             "30m": {
-              "lastClose": 70998.469,
-              "rsi14": 39.48161816993869,
-              "atrPct14": 0.005776685128238477,
-              "priceVsSma20": -0.009969478259114995,
-              "emaGap12_26": 0.0024602696546297017,
+              "lastClose": 71373.748,
+              "rsi14": 43.435530114702324,
+              "atrPct14": 0.006716594824592529,
+              "priceVsSma20": -0.0037309746495034803,
+              "emaGap12_26": 0.0011628527181418154,
               "barCount": 250
             },
             "1h": {
-              "lastClose": 70998.469,
-              "rsi14": 38.92452898910058,
-              "atrPct14": 0.006768594142904294,
-              "priceVsSma20": -0.0038077271604006415,
-              "emaGap12_26": 0.008186683753727378,
+              "lastClose": 71373.748,
+              "rsi14": 50.32009947092349,
+              "atrPct14": 0.006645633209566058,
+              "priceVsSma20": -0.0015250955723194032,
+              "emaGap12_26": 0.006811513876500649,
               "barCount": 250
             },
             "4h": {
-              "lastClose": 70998.469,
-              "rsi14": 62.45839588571746,
-              "atrPct14": 0.01721532383290343,
-              "priceVsSma20": 0.02545127603004601,
-              "emaGap12_26": 0.013538401175603353,
+              "lastClose": 71373.748,
+              "rsi14": 64.41944861576377,
+              "atrPct14": 0.016740238720789915,
+              "priceVsSma20": 0.02765128840298641,
+              "emaGap12_26": 0.014808520251206448,
               "barCount": 250
             },
             "1d": {
-              "lastClose": 70997.6515,
-              "rsi14": 49.04960394857621,
-              "atrPct14": 0.035163471249276886,
-              "priceVsSma20": 0.03466110926653428,
-              "emaGap12_26": -0.00036807378478781574,
+              "lastClose": 71373.748,
+              "rsi14": 50.29797939211741,
+              "atrPct14": 0.035154045996625714,
+              "priceVsSma20": 0.03985706024905389,
+              "emaGap12_26": 0.0000661483758443081,
               "barCount": 250
             }
           }
@@ -5368,75 +7600,75 @@
           "symbol": "ETH/USD",
           "timeframes": {
             "1m": {
-              "lastClose": 2200.648,
-              "rsi14": 40.736539842067884,
-              "atrPct14": 0.0017099508871932197,
-              "priceVsSma20": -0.0029767783740841033,
-              "emaGap12_26": -0.002479264583041273,
-              "barCount": 204
+              "lastClose": 2217.281,
+              "rsi14": 62.08560254395258,
+              "atrPct14": 0.0007469895400203015,
+              "priceVsSma20": 0.0014576091314677058,
+              "emaGap12_26": 0.0007921026099878332,
+              "barCount": 227
             },
             "2m": {
-              "lastClose": 2200.648,
-              "rsi14": 26.843012113859473,
-              "atrPct14": 0.002695553439584263,
-              "priceVsSma20": -0.007197458415965639,
-              "emaGap12_26": -0.004219028771928322,
-              "barCount": 232
+              "lastClose": 2217.281,
+              "rsi14": 65.5284692910673,
+              "atrPct14": 0.0013179269049409118,
+              "priceVsSma20": 0.0022981678394825744,
+              "emaGap12_26": 0.00101202289056986,
+              "barCount": 234
             },
             "5m": {
-              "lastClose": 2200.648,
-              "rsi14": 28.771705657289544,
-              "atrPct14": 0.003970074189835984,
-              "priceVsSma20": -0.013542104857460923,
-              "emaGap12_26": -0.005439740487945311,
+              "lastClose": 2217.281,
+              "rsi14": 78.21215073868235,
+              "atrPct14": 0.0023682641680766404,
+              "priceVsSma20": 0.004356085898887074,
+              "emaGap12_26": -0.0019426046497007913,
               "barCount": 248
             },
             "10m": {
-              "lastClose": 2200.648,
-              "rsi14": 15.364813131547876,
-              "atrPct14": 0.005128660287463354,
-              "priceVsSma20": -0.017875154799500092,
-              "emaGap12_26": -0.004576538248709124,
+              "lastClose": 2217.281,
+              "rsi14": 35.699115581243404,
+              "atrPct14": 0.004542136503479411,
+              "priceVsSma20": -0.003931780849053451,
+              "emaGap12_26": -0.0045443745879653425,
               "barCount": 250
             },
             "15m": {
-              "lastClose": 2200.648,
-              "rsi14": 24.440309135446313,
-              "atrPct14": 0.006093228045297812,
-              "priceVsSma20": -0.018728561073473114,
-              "emaGap12_26": -0.003322530409860565,
+              "lastClose": 2217.281,
+              "rsi14": 30.68205244236613,
+              "atrPct14": 0.006100995561681143,
+              "priceVsSma20": -0.007167392237414051,
+              "emaGap12_26": -0.004436091083468133,
               "barCount": 250
             },
             "30m": {
-              "lastClose": 2200.648,
-              "rsi14": 25.248780578793415,
-              "atrPct14": 0.006370613875030036,
-              "priceVsSma20": -0.020390782592916382,
-              "emaGap12_26": 0.0027811874728663278,
+              "lastClose": 2217.281,
+              "rsi14": 32.23589620703814,
+              "atrPct14": 0.0072984498968395465,
+              "priceVsSma20": -0.01075975845252683,
+              "emaGap12_26": 0.0003891503707351411,
               "barCount": 250
             },
             "1h": {
-              "lastClose": 2200.648,
-              "rsi14": 34.68708803933441,
-              "atrPct14": 0.007858912516417231,
-              "priceVsSma20": -0.009742412872473993,
-              "emaGap12_26": 0.012233810937502771,
+              "lastClose": 2217.281,
+              "rsi14": 42.984570440632176,
+              "atrPct14": 0.00806678802809127,
+              "priceVsSma20": -0.006655972734303115,
+              "emaGap12_26": 0.009435232549809875,
               "barCount": 250
             },
             "4h": {
-              "lastClose": 2200.648,
-              "rsi14": 60.796548589551136,
-              "atrPct14": 0.021441509176258252,
-              "priceVsSma20": 0.031981211936454895,
-              "emaGap12_26": 0.01762079581071665,
+              "lastClose": 2217.281,
+              "rsi14": 63.35429797893114,
+              "atrPct14": 0.020987368248382945,
+              "priceVsSma20": 0.03589016667004986,
+              "emaGap12_26": 0.01913478041953375,
               "barCount": 250
             },
             "1d": {
-              "lastClose": 2200.648,
-              "rsi14": 52.38429019068738,
-              "atrPct14": 0.045199983539166634,
-              "priceVsSma20": 0.050770879957011156,
-              "emaGap12_26": 0.007275486819436726,
+              "lastClose": 2217.281,
+              "rsi14": 53.73296277291874,
+              "atrPct14": 0.04516308639973912,
+              "priceVsSma20": 0.05829259995934391,
+              "emaGap12_26": 0.007900941227326735,
               "barCount": 250
             }
           }
@@ -5446,9 +7678,9 @@
   },
   "lastCycleReason": "scheduled",
   "lastCompletedCycle": {
-    "cycle": 1,
-    "reason": "startup",
-    "completedAtMs": 1775659972448,
+    "cycle": 36,
+    "reason": "scheduled",
+    "completedAtMs": 1775664323401,
     "okCount": 3,
     "totalCount": 3
   },
