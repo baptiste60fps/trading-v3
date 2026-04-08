@@ -246,6 +246,7 @@ export class ConfigStore {
         console: {
           enabled: normalizeBoolean(this.env.BAPTISTO_CONSOLE_LOGS_ENABLED, undefined),
           colors: normalizeBoolean(this.env.BAPTISTO_CONSOLE_LOGS_COLORS, undefined),
+          preview: normalizeBoolean(this.env.BAPTISTO_CONSOLE_PREVIEW_ENABLED, undefined),
         },
       },
       market: {

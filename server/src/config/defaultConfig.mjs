@@ -83,6 +83,7 @@ export const defaultConfig = Object.freeze({
     console: {
       enabled: false,
       colors: true,
+      preview: false,
     },
   },
   symbols: {

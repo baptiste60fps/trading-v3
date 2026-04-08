@@ -7,6 +7,7 @@ export class StrategyInstance {
     decisionEngine,
     executionEngine,
     entryPolicy = null,
+    runtimeSessionStateStore = null,
     consoleLogger = null,
   } = {}) {
     this.symbol = String(symbol ?? '').toUpperCase();
@@ -16,6 +17,7 @@ export class StrategyInstance {
     this.decisionEngine = decisionEngine;
     this.executionEngine = executionEngine;
     this.entryPolicy = entryPolicy;
+    this.runtimeSessionStateStore = runtimeSessionStateStore;
     this.consoleLogger = consoleLogger;
     this.warmedUp = false;
     this.lastWarmupMs = null;
@@ -48,18 +50,21 @@ export class StrategyInstance {
     }
 
     const strategyConfig = this.configStore?.getSymbolConfig?.(this.symbol) ?? {};
+    this.#restoreSessionState(atMs);
     const features = await this.featureSnapshotService.build({
       symbol: this.symbol,
       atMs,
       runtimeMode: this.runtimeMode,
     });
-    let decision = !features?.position && this.#shouldBypassOpeningDecision(features)
-      ? this.#buildMarketGateDecision(features)
-      : await this.decisionEngine.decide({
-          symbol: this.symbol,
-          features,
-          strategyConfig,
-        });
+    let decision = this.#shouldForcePreCloseExit(features)
+      ? this.#buildPreCloseExitDecision(features)
+      : (!features?.position && this.#shouldBypassOpeningDecision(features)
+          ? this.#buildMarketGateDecision(features)
+          : await this.decisionEngine.decide({
+              symbol: this.symbol,
+              features,
+              strategyConfig,
+            }));
     if (!features?.position && this.entryPolicy?.review) {
       decision = await this.entryPolicy.review({
         symbol: this.symbol,
@@ -75,6 +80,7 @@ export class StrategyInstance {
       features,
     });
     this.#recordOpenRejection(decision, execution.executionResult, atMs);
+    this.#persistSessionState(atMs);
 
     this.lastEvaluationMs = atMs;
     this.lastSnapshot = features;
@@ -147,6 +153,30 @@ export class StrategyInstance {
     };
   }
 
+  #shouldForcePreCloseExit(features) {
+    const marketState = features?.marketState ?? {};
+    const position = features?.position ?? null;
+    const assetClass = String(features?.assetClass ?? '').trim().toLowerCase();
+    return Boolean(position) && assetClass !== 'crypto' && marketState.isPreClose === true;
+  }
+
+  #buildPreCloseExitDecision(features) {
+    return {
+      action: 'close_long',
+      confidence: 0.92,
+      reasoning: ['forced_preclose_exit', features?.marketState?.sessionLabel ?? 'preclose_window'],
+      requestedSizePct: null,
+      stopLossPct: null,
+      takeProfitPct: null,
+      signalContext: {
+        symbol: this.symbol,
+        assetClass: features?.assetClass ?? null,
+        marketSession: features?.marketState?.sessionLabel ?? null,
+        forcedPreCloseExit: true,
+      },
+    };
+  }
+
   #applyOpenRejectionCooldown(decision, features, atMs) {
     if (decision?.action !== 'open_long') return decision;
     if (features?.position) return decision;
@@ -197,5 +227,22 @@ export class StrategyInstance {
     const executionConfig = this.configStore?.getExecutionConfig?.() ?? {};
     const value = Number(executionConfig?.openRejectionCooldownMs);
     return Number.isFinite(value) && value > 0 ? value : 0;
+  }
+
+  #restoreSessionState(atMs) {
+    if (!this.runtimeSessionStateStore?.getSymbolState) return;
+    const stored = this.runtimeSessionStateStore.getSymbolState(this.symbol, atMs);
+    this.lastOpenRejectionMs = Number.isFinite(Number(stored?.lastOpenRejectionMs)) ? Number(stored.lastOpenRejectionMs) : null;
+    this.lastOpenRejectionCategory = stored?.lastOpenRejectionCategory ?? null;
+    this.lastOpenRejectionMessage = stored?.lastOpenRejectionMessage ?? null;
+  }
+
+  #persistSessionState(atMs) {
+    if (!this.runtimeSessionStateStore?.updateSymbolState) return;
+    this.runtimeSessionStateStore.updateSymbolState(this.symbol, atMs, {
+      lastOpenRejectionMs: this.lastOpenRejectionMs,
+      lastOpenRejectionCategory: this.lastOpenRejectionCategory,
+      lastOpenRejectionMessage: this.lastOpenRejectionMessage,
+    });
   }
 }

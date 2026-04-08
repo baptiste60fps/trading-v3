@@ -1,5 +1,7 @@
 import assert from 'assert/strict';
 import { StrategyInstance } from '../../src/core/strategy/StrategyInstance.mjs';
+import { RuntimeSessionStateStore } from '../../src/core/runtime/RuntimeSessionStateStore.mjs';
+import { makeTempDir } from '../helpers/fixtures.mjs';
 
 class FakeConfigStore {
   getSymbolConfig() {
@@ -238,6 +240,106 @@ export const register = async ({ test }) => {
     assert.equal(executionEngine.calls[0].decision.action, 'skip');
   });
 
+  test('StrategyInstance forces a preclose exit for stock positions without calling the LLM', async () => {
+    class OpenPositionFeatureSnapshotService extends FakeFeatureSnapshotService {
+      async build(payload) {
+        const snapshot = await super.build(payload);
+        return {
+          ...snapshot,
+          assetClass: 'stock',
+          marketState: {
+            isOpen: true,
+            isPreClose: true,
+            isNoTradeOpen: false,
+            sessionLabel: 'pre_close',
+          },
+          position: {
+            symbol: 'AAPL',
+            qty: 5,
+            entryPrice: 150,
+          },
+        };
+      }
+    }
+
+    const decisionEngine = new FakeDecisionEngine();
+    const executionEngine = new FakeExecutionEngine();
+    const strategy = new StrategyInstance({
+      symbol: 'AAPL',
+      runtimeMode: 'paper',
+      configStore: new FakeConfigStore(),
+      featureSnapshotService: new OpenPositionFeatureSnapshotService(),
+      decisionEngine,
+      executionEngine,
+    });
+
+    const result = await strategy.runOnce(Date.now());
+
+    assert.equal(decisionEngine.calls, 0);
+    assert.equal(result.decision.action, 'close_long');
+    assert.deepEqual(result.decision.reasoning, ['forced_preclose_exit', 'pre_close']);
+    assert.equal(executionEngine.calls[0].decision.action, 'close_long');
+  });
+
+  test('StrategyInstance keeps crypto positions out of the forced preclose exit path', async () => {
+    class CryptoPositionFeatureSnapshotService extends FakeFeatureSnapshotService {
+      async build(payload) {
+        const snapshot = await super.build(payload);
+        return {
+          ...snapshot,
+          symbol: 'BTC/USD',
+          assetClass: 'crypto',
+          marketState: {
+            isOpen: true,
+            isPreClose: true,
+            isNoTradeOpen: false,
+            sessionLabel: 'continuous_open',
+          },
+          position: {
+            symbol: 'BTC/USD',
+            qty: 0.1,
+            entryPrice: 80000,
+          },
+        };
+      }
+    }
+
+    class HoldDecisionEngine {
+      constructor() {
+        this.calls = 0;
+      }
+
+      async decide() {
+        this.calls += 1;
+        return {
+          action: 'hold',
+          confidence: 0.6,
+          reasoning: ['crypto_hold'],
+          requestedSizePct: null,
+          stopLossPct: null,
+          takeProfitPct: null,
+        };
+      }
+    }
+
+    const decisionEngine = new HoldDecisionEngine();
+    const executionEngine = new FakeExecutionEngine();
+    const strategy = new StrategyInstance({
+      symbol: 'BTC/USD',
+      runtimeMode: 'paper',
+      configStore: new FakeConfigStore(),
+      featureSnapshotService: new CryptoPositionFeatureSnapshotService(),
+      decisionEngine,
+      executionEngine,
+    });
+
+    const result = await strategy.runOnce(Date.now());
+
+    assert.equal(decisionEngine.calls, 1);
+    assert.equal(result.decision.action, 'hold');
+    assert.equal(executionEngine.calls[0].decision.action, 'hold');
+  });
+
   test('StrategyInstance lets an entry policy downgrade an LLM open into a skip', async () => {
     class OpenDecisionEngine {
       async decide() {
@@ -310,5 +412,59 @@ export const register = async ({ test }) => {
     assert.equal(secondResult.decision.action, 'skip');
     assert.equal(secondResult.decision.reasoning[0], 'open_rejection_cooldown:validation');
     assert.equal(executionEngine.calls[1].decision.action, 'skip');
+  });
+
+  test('StrategyInstance restores the open rejection cooldown after a restart from the runtime session store', async () => {
+    class OpenDecisionEngine {
+      async decide() {
+        return {
+          action: 'open_long',
+          confidence: 0.8,
+          reasoning: ['llm_open'],
+          requestedSizePct: 0.05,
+          stopLossPct: null,
+          takeProfitPct: null,
+        };
+      }
+    }
+
+    const rootDir = makeTempDir();
+    const runtimeSessionStateStore = new RuntimeSessionStateStore({
+      runsDir: `${rootDir}/runs`,
+      timezone: 'America/New_York',
+    });
+
+    const firstExecutionEngine = new RejectingOpenExecutionEngine();
+    const firstStrategy = new StrategyInstance({
+      symbol: 'AAPL',
+      runtimeMode: 'paper',
+      configStore: new FakeConfigStore(),
+      featureSnapshotService: new FakeFeatureSnapshotService(),
+      decisionEngine: new OpenDecisionEngine(),
+      executionEngine: firstExecutionEngine,
+      runtimeSessionStateStore,
+    });
+
+    await firstStrategy.runOnce(1_000_000);
+
+    const secondExecutionEngine = new RejectingOpenExecutionEngine();
+    const restartedStrategy = new StrategyInstance({
+      symbol: 'AAPL',
+      runtimeMode: 'paper',
+      configStore: new FakeConfigStore(),
+      featureSnapshotService: new FakeFeatureSnapshotService(),
+      decisionEngine: new OpenDecisionEngine(),
+      executionEngine: secondExecutionEngine,
+      runtimeSessionStateStore: new RuntimeSessionStateStore({
+        runsDir: `${rootDir}/runs`,
+        timezone: 'America/New_York',
+      }),
+    });
+
+    const secondResult = await restartedStrategy.runOnce(1_060_000);
+
+    assert.equal(secondResult.decision.action, 'skip');
+    assert.equal(secondResult.decision.reasoning[0], 'open_rejection_cooldown:validation');
+    assert.equal(secondExecutionEngine.calls[0].decision.action, 'skip');
   });
 };

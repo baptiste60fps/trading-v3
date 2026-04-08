@@ -450,3 +450,247 @@ En bref:
 la V1 a valide l'envie d'autonomie.
 La V2 a valide les bonnes briques et expose les dettes.
 La V3 doit transformer ces apprentissages en fondation propre.
+
+## 18. Etat courant reel de la V3
+
+La V3 n'est plus seulement un cadrage.
+Elle dispose deja d'un socle serveur utilisable avec:
+
+- config centralisee
+- cache disque
+- provider market data Alpaca
+- broker Alpaca
+- portfolio service
+- feature snapshots multi-timeframes
+- indicateurs techniques
+- decision engine LLM
+- execution engine
+- runtime persistant
+- reports journaliers runtime
+- reports wake-up journaliers
+- backtests et batches
+- reporter HTML/CSS/JS vanilla
+
+Deux modes de lancement sont maintenant dissocies:
+
+- `npm start` / `npm run start:classic`
+  - panier classic actions
+  - `AAPL`, `TGT`, `CVX`
+- `npm run start:crypto`
+  - panier crypto
+  - `BTC/USD`, `ETH/USD`, `SOL/USD`
+
+Important:
+le fichier `server/storage/configs/runtime.json` peut porter un panier par defaut different, mais les scripts npm de lancement restent la source operative la plus simple pour distinguer classic et crypto.
+
+## 19. Lecons live recentes sur les reports
+
+Les reports les plus instructifs a ce stade sont:
+
+- `runtime-report-2026-04-02.json`
+- `runtime-report-2026-04-03.json`
+- `runtime-report-2026-04-07.json`
+- `daily-report-2026-04-07.json`
+- `daily-report-2026-04-08.json`
+
+Lecture utile:
+
+### `2026-04-02`
+
+Zero trade, mais pour une raison d'infrastructure LLM:
+
+- le runtime tournait,
+- le moteur n'etait pas muet,
+- le modele local n'etait pas disponible,
+- les decisions tombaient donc en `skip/noop`.
+
+Lecon:
+ce type de jour ne doit pas etre interprete comme un echec de strategie.
+C'est un echec de disponibilite du composant decisionnel.
+
+### `2026-04-03`
+
+Ce report a surtout servi a detecter un probleme de calendrier/session:
+
+- le marche actions US etait ferme,
+- notre calendrier interne ne l'avait pas encore correctement gate,
+- le systeme pouvait donc raisonner a tort comme si une session reguliere existait.
+
+Ce point a depuis ete corrige.
+
+Lecon:
+un report live peut parfois exposer un bug d'architecture plus qu'un signal trading.
+
+### `2026-04-07`
+
+C'est le premier report vraiment utile pour juger la boucle live classic.
+On y a vu:
+
+- `AAPL`: `2` tentatives d'ouverture
+- `TGT`: `8` tentatives d'ouverture
+- `CVX`: `9` tentatives d'ouverture
+
+Toutes ont ete rejetees, d'abord a cause d'un probleme broker:
+
+- `fractional orders must be DAY orders`
+
+Mais ce report a surtout montre autre chose:
+
+- le LLM etait bien actif
+- il etait parfois trop permissif
+- il pouvait reproposer plusieurs fois une ouverture tres proche d'un tick a l'autre
+- certaines ouvertures etaient proposees dans des contextes deja trop "chauds"
+
+Lecon centrale:
+la V3 avait besoin d'un garde-fou deterministe entre le LLM et l'execution.
+
+## 20. Corrections et upgrades recentes a memoriser
+
+### Correction broker actions fractionnaires + stop simple
+
+Le chemin d'ouverture actions avec `brokerProtection.simpleStopLossPct` a ete corrige:
+
+- un ordre protege cote broker ne peut pas rester fractionnaire dans notre mode actuel
+- l'execution convertit donc les entrees protegees en quantites entieres
+- si le notionnel ne permet pas au moins `1` action entiere, l'ouverture est refusee proprement
+
+Lecon trading/API:
+les contraintes broker sur `time_in_force`, fractions et wrappers d'ordres doivent etre traitees comme des contraintes de premier niveau, pas comme un detail d'implementation.
+
+### Garde-fou heuristique live
+
+Une nouvelle brique existe maintenant:
+
+- `server/src/core/strategy/HeuristicEntryPolicy.mjs`
+
+Son role:
+
+- laisser le LLM proposer une ouverture,
+- mais repasser chaque `open_long` dans le moteur heuristique profile,
+- bloquer les ouvertures que le moteur heuristique juge trop faibles ou trop chaudes,
+- reduire la taille si le LLM est plus agressif que l'heuristique.
+
+Lecon:
+le LLM reste une couche de synthese et de contexte.
+La discipline d'entree live doit rester ancree dans une logique deterministe backtestable.
+
+### Cooldown apres rejet d'ouverture
+
+Une protection a ete ajoutee dans `StrategyInstance`:
+
+- apres un rejet broker sur `open_long`,
+- le systeme attend un delai de cooldown avant de reproposer une nouvelle ouverture.
+
+Objectif:
+
+- eviter le spam d'ouvertures quasi identiques tick apres tick,
+- eviter de reconsommer inutilement du capital mental et du bruit dans les reports,
+- rendre les blockers broker plus lisibles.
+
+### Retuning `AAPL`
+
+Le profil `single_stock_quality` de `AAPL` a ete resserre:
+
+- related trend un peu plus exigeant
+- tolerance moindre sur medium RSI trop chaud
+- protection anti-chase un peu plus forte
+- taille maximale legerement reduite
+
+But:
+
+- garder `AAPL` tradable,
+- mais eviter les ouvertures quality trop tardives ou trop molles.
+
+## 21. Etat trading/backtest memoriser
+
+Batch classic de reference observe sur la fenetre:
+
+- `2026-03-07` -> `2026-04-07`
+- step `30m`
+- panier `AAPL`, `TGT`, `CVX`
+
+Avant retuning recent:
+
+- batch `batch-1775631560135.json`
+- aggregate net PnL: `+2.86`
+- `AAPL`: `-58.86`
+- `TGT`: `+28.93`
+- `CVX`: `+32.79`
+
+Apres retuning recent:
+
+- batch `batch-1775632047554.json`
+- aggregate net PnL: `+82.18`
+- `AAPL`: `+20.46`
+- `TGT`: `+28.93`
+- `CVX`: `+32.79`
+- trades: `22 -> 16`
+- cost drag: `70.00 -> 49.05`
+
+Lecture utile:
+
+- `TGT` reste un consumer quality exploitable
+- `CVX` reste correct mais demande vigilance sur les setups momentum trop tardifs
+- `AAPL` etait la jambe faible du panier classic
+- le retuning recent l'a ramenee dans une zone plus saine sans casser le reste
+
+## 22. Etat crypto a memoriser
+
+La V3 supporte maintenant aussi la crypto via Alpaca:
+
+- `BTC/USD`
+- `ETH/USD`
+- `SOL/USD`
+
+Differences importantes par rapport aux actions:
+
+- marche `24/7`
+- session `continuous_open`
+- data Alpaca crypto sur endpoints dedies
+- pas de stop loss simple broker cote crypto dans la version actuelle
+- execution en `market + gtc`
+
+Le panier crypto a deja une premiere baseline backtestable.
+Il doit cependant etre pense avec:
+
+- profils de risque distincts des actions
+- sizing plus petit
+- vigilance particuliere sur la latence LLM et les timings de boucle
+
+## 23. Positionnement architectural a conserver pour la suite
+
+La meilleure lecture des derniers echanges est la suivante:
+
+- la V3 n'a pas besoin de plus de "magie"
+- elle a besoin de plus de coherence entre backtest et live
+
+Donc, pour les prochaines iterations:
+
+- toute nouvelle ouverture live importante devrait pouvoir etre expliquee par un contexte deterministe minimal
+- tout assouplissement d'entree doit etre compare a une baseline batch
+- tout nouveau symbole doit d'abord passer par:
+  - profile de base
+  - regles eventuelles par symbole
+  - validation batch/replay
+  - seulement ensuite paper trading
+
+## 24. Resume operatoire
+
+Aujourd'hui, la V3 doit etre vue comme:
+
+- un runtime paper/backtest deja fonctionnel
+- un systeme encore experimental cote strategie
+- un systeme deja assez propre cote architecture
+- un systeme ou les blockers les plus dangereux sont:
+  - disponibilite LLM
+  - contraintes broker reelles
+  - calendrier/session
+  - ecart entre logique live et logique backtest
+
+La direction saine n'est pas d'augmenter la complexite.
+La direction saine est:
+
+- renforcer les garde-fous
+- conserver des reports riches
+- retuner symbole par symbole quand c'est justifie
+- ne jamais laisser le LLM devenir la seule source de discipline

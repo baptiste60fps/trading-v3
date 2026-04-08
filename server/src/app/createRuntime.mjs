@@ -19,6 +19,7 @@ import { UnavailableDecisionModelClient } from '../core/llm/UnavailableDecisionM
 import { OllamaDecisionModelClient } from '../core/llm/OllamaDecisionModelClient.mjs';
 import { ExecutionEngine } from '../core/runtime/ExecutionEngine.mjs';
 import { PersistentRuntimeOrchestrator } from '../core/runtime/PersistentRuntimeOrchestrator.mjs';
+import { RuntimeSessionStateStore } from '../core/runtime/RuntimeSessionStateStore.mjs';
 import { StrategyInstance } from '../core/strategy/StrategyInstance.mjs';
 import { HeuristicEntryPolicy } from '../core/strategy/HeuristicEntryPolicy.mjs';
 import { RssFeedService } from '../services/news/RssFeedService.mjs';
@@ -47,6 +48,10 @@ export const createRuntime = async ({ serverRootDir = DEFAULT_SERVER_ROOT, env =
 
   const marketCalendar = new MarketCalendar(configStore.getMarketConfig());
   const cacheStore = new FileCacheStore({ rootDir: storage.cacheDir });
+  const runtimeSessionStateStore = new RuntimeSessionStateStore({
+    runsDir: storage.runsDir,
+    timezone: configStore.getMarketConfig().timezone,
+  });
   const alpacaConfig = configStore.getAlpacaConfig();
   const llmConfig = configStore.getLlmConfig();
   const newsConfig = configStore.getNewsConfig();
@@ -127,12 +132,15 @@ export const createRuntime = async ({ serverRootDir = DEFAULT_SERVER_ROOT, env =
     timezone: configStore.getMarketConfig().timezone,
     enabled: telemetryConfig?.console?.enabled !== false,
     colors: telemetryConfig?.console?.colors !== false,
+    preview: telemetryConfig?.console?.preview === true,
+    runtimeSessionStateStore,
   });
 
   return {
     configStore,
     marketCalendar,
     cacheStore,
+    runtimeSessionStateStore,
     marketDataProvider,
     brokerGateway,
     barsRepository,
@@ -170,6 +178,7 @@ export const createRuntime = async ({ serverRootDir = DEFAULT_SERVER_ROOT, env =
           decisionEngine,
           executionEngine,
           entryPolicy,
+          runtimeSessionStateStore,
           consoleLogger: consoleTradingLogger,
         })),
       });
@@ -183,6 +192,7 @@ export const createRuntime = async ({ serverRootDir = DEFAULT_SERVER_ROOT, env =
         decisionEngine,
         executionEngine,
         entryPolicy,
+        runtimeSessionStateStore,
         consoleLogger: consoleTradingLogger,
       });
     },
@@ -202,6 +212,7 @@ export const createRuntime = async ({ serverRootDir = DEFAULT_SERVER_ROOT, env =
         runtimeSymbols: Array.isArray(config.runtime.symbols) ? config.runtime.symbols : null,
         enabledSymbols: configStore.getEnabledSymbols(),
         consoleTelemetryEnabled: config.telemetry?.console?.enabled !== false,
+        consoleTelemetryPreview: config.telemetry?.console?.preview === true,
         envFilePath: localEnv.path,
         storage,
       };

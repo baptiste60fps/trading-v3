@@ -6,9 +6,12 @@ const ANSI = {
   green: '\x1b[32m',
   yellow: '\x1b[33m',
   cyan: '\x1b[36m',
+  clear: '\x1b[2J',
+  home: '\x1b[H',
 };
 
 const toFiniteOrNull = (value) => {
+  if (value === null || value === undefined || value === '') return null;
   const numeric = Number(value);
   return Number.isFinite(numeric) ? numeric : null;
 };
@@ -57,6 +60,18 @@ const formatPct = (value) => {
 const formatQty = (value) => {
   const numeric = toPositiveFiniteOrNull(value);
   return numeric === null ? 'n/a' : numeric.toFixed(6);
+};
+
+const stripAnsi = (value) => String(value ?? '').replace(/\x1b\[[0-9;?]*[A-Za-z]/g, '');
+const truncate = (value, maxLength) => {
+  const text = String(value ?? '');
+  return text.length <= maxLength ? text : `${text.slice(0, Math.max(0, maxLength - 1))}\u2026`;
+};
+const padCell = (value, width) => {
+  const text = String(value ?? '');
+  const visibleLength = stripAnsi(text).length;
+  if (visibleLength >= width) return truncate(text, width);
+  return `${text}${' '.repeat(width - visibleLength)}`;
 };
 
 const formatTimestamp = (atMs, timezone) =>
@@ -111,17 +126,35 @@ export class ConsoleTradingLogger {
     enabled = true,
     colors = true,
     writer = console.log,
+    preview = false,
+    previewWriter = null,
+    previewTitle = 'Baptisto Trading V3',
+    isTty = process.stdout?.isTTY === true,
+    runtimeSessionStateStore = null,
   } = {}) {
     this.timezone = timezone;
     this.enabled = enabled !== false;
     this.colors = colors !== false;
     this.writer = typeof writer === 'function' ? writer : console.log;
+    this.previewEnabled = this.enabled && preview === true;
+    this.previewTitle = String(previewTitle ?? 'Baptisto Trading V3');
+    this.isTty = isTty === true;
+    this.runtimeSessionStateStore = runtimeSessionStateStore;
+    this.previewWriter = typeof previewWriter === 'function'
+      ? previewWriter
+      : ((frame) => process.stdout.write(frame));
     this.sessionState = {
       sessionDate: null,
       baselineEquity: null,
       previousEquity: null,
     };
     this.activeBlockingAlerts = new Map();
+    this.previewState = {
+      latestEvaluations: new Map(),
+      latestPortfolioState: null,
+      latestAtMs: null,
+      recentEvents: [],
+    };
   }
 
   logEvaluation({
@@ -137,16 +170,16 @@ export class ConsoleTradingLogger {
     const safeSymbol = String(symbol ?? features?.symbol ?? '').toUpperCase() || 'UNKNOWN';
     const timeMs = Number.isFinite(Number(atMs)) ? Number(atMs) : Date.now();
     const prefix = colorize(`[TRADE][${safeSymbol}][${formatTimestamp(timeMs, this.timezone)}]`, 'cyan', this.colors);
-    const blockingLines = this.#buildBlockingAlertLines({
-      prefix,
+    const blockers = this.#collectBlockingAlerts({
       symbol: safeSymbol,
       features,
       decision,
       executionResult,
     });
-    for (const line of blockingLines) {
-      this.writer(line);
-    }
+    const blockingLines = this.#buildBlockingAlertLines({
+      prefix,
+      blockers,
+    });
 
     const portfolioLine = this.#buildPortfolioLine({
       prefix,
@@ -155,7 +188,6 @@ export class ConsoleTradingLogger {
       decision,
       executionResult,
     });
-    if (portfolioLine) this.writer(portfolioLine);
 
     const deskLine = this.#buildDeskLine({
       prefix,
@@ -163,7 +195,6 @@ export class ConsoleTradingLogger {
       executionIntent,
       executionResult,
     });
-    if (deskLine) this.writer(deskLine);
 
     const executionLine = this.#buildExecutionLine({
       prefix,
@@ -171,18 +202,34 @@ export class ConsoleTradingLogger {
       executionIntent,
       executionResult,
     });
+    this.#rememberPreviewState({
+      symbol: safeSymbol,
+      atMs: timeMs,
+      features,
+      decision,
+      executionIntent,
+      executionResult,
+      blockers,
+      blockingLines,
+      executionLine,
+    });
+
+    if (this.previewEnabled) {
+      this.#renderPreviewFrame();
+      return;
+    }
+
+    for (const line of blockingLines) {
+      this.writer(line);
+    }
+    if (portfolioLine) this.writer(portfolioLine);
+    if (deskLine) this.writer(deskLine);
     if (executionLine) this.writer(executionLine);
   }
 
-  #buildBlockingAlertLines({ prefix, symbol, features, decision, executionResult }) {
+  #buildBlockingAlertLines({ prefix, blockers }) {
     const lines = [];
     const nextAlerts = new Map();
-    const blockers = this.#collectBlockingAlerts({
-      symbol,
-      features,
-      decision,
-      executionResult,
-    });
 
     for (const blocker of blockers) {
       nextAlerts.set(blocker.key, blocker);
@@ -268,6 +315,171 @@ export class ConsoleTradingLogger {
     return `${prefix} Desk Equity ${formatMoney(equity)} | Cash ${formatMoney(cash)} | Exposure ${formatPct(exposurePct)} | Position ${positionSummary}`;
   }
 
+  #rememberPreviewState({
+    symbol,
+    atMs,
+    features,
+    decision,
+    executionIntent,
+    executionResult,
+    blockers,
+    blockingLines,
+    executionLine,
+  }) {
+    this.previewState.latestAtMs = atMs;
+    this.previewState.latestPortfolioState = features?.portfolioState ?? this.previewState.latestPortfolioState;
+    this.previewState.latestEvaluations.set(symbol, {
+      symbol,
+      atMs,
+      assetClass: features?.assetClass ?? null,
+      currentPrice: features?.currentPrice ?? null,
+      marketSession: features?.marketState?.sessionLabel ?? 'unknown',
+      decisionAction: decision?.action ?? 'skip',
+      decisionConfidence: decision?.confidence ?? null,
+      executionStatus: executionResult?.status ?? 'noop',
+      executionAccepted: executionResult?.accepted === true,
+      position: features?.position ?? null,
+      portfolioState: features?.portfolioState ?? null,
+      blockers,
+      signalContext: decision?.signalContext ?? null,
+    });
+
+    for (const line of blockingLines) {
+      this.#pushRecentEvent(line);
+    }
+    if (executionLine) {
+      this.#pushRecentEvent(executionLine);
+    } else if (executionIntent && executionResult?.status === 'rejected') {
+      this.#pushRecentEvent(
+        `[TRADE][${symbol}][${formatTimestamp(atMs, this.timezone)}] ${String(executionIntent?.action ?? '').toUpperCase()} rejected | ${executionResult?.error?.message ?? executionResult?.status ?? 'rejected'}`,
+      );
+    }
+  }
+
+  #pushRecentEvent(line) {
+    const rendered = String(line ?? '').trim();
+    if (!rendered) return;
+    const list = this.previewState.recentEvents;
+    if (list[list.length - 1] === rendered) return;
+    list.push(rendered);
+    if (list.length > 8) list.shift();
+  }
+
+  #renderPreviewFrame() {
+    if (!this.isTty) return;
+
+    const frame = [
+      `${ANSI.clear}${ANSI.home}${ANSI.bold}${this.previewTitle}${ANSI.reset}`,
+      this.#buildPreviewSummaryLine(),
+      this.#buildPreviewBlockersLine(),
+      '',
+      this.#buildPreviewSymbolTable(),
+      '',
+      this.#buildPreviewPositionsSection(),
+      '',
+      this.#buildPreviewRecentEventsSection(),
+      '',
+    ].join('\n');
+
+    this.previewWriter(frame);
+  }
+
+  #buildPreviewSummaryLine() {
+    const portfolioState = this.previewState.latestPortfolioState ?? {};
+    const latestAtMs = this.previewState.latestAtMs ?? Date.now();
+    const equity = toFiniteOrNull(portfolioState?.equity);
+    const cash = toFiniteOrNull(portfolioState?.cash);
+    const exposurePct = toFiniteOrNull(portfolioState?.exposurePct);
+    const deltas = this.#resolvePortfolioDeltas(equity, latestAtMs);
+    const positions = Array.isArray(portfolioState?.positions) ? portfolioState.positions : [];
+
+    return [
+      `Updated ${formatTimestamp(latestAtMs, this.timezone)}`,
+      `Equity ${formatMoney(equity)}`,
+      `Cash ${formatMoney(cash)}`,
+      `Exposure ${formatPct(exposurePct)}`,
+      `Portfolio ${formatSignedMoney(deltas.portfolioDelta, this.colors)}`,
+      `Session ${formatSignedMoney(deltas.sessionDelta, this.colors)}`,
+      `Open Positions ${positions.length}`,
+      `Symbols ${this.previewState.latestEvaluations.size}`,
+    ].join(' | ');
+  }
+
+  #buildPreviewBlockersLine() {
+    const blockers = Array.from(this.activeBlockingAlerts.values());
+    if (!blockers.length) {
+      return `${colorize('Blockers', 'dim', this.colors)} | none`;
+    }
+
+    return `Blockers | ${blockers.map((entry) => `${colorize(entry.label, 'red', this.colors)} ${colorize(entry.message, 'red', this.colors)}`).join(' | ')}`;
+  }
+
+  #buildPreviewSymbolTable() {
+    const header = [
+      padCell('Symbol', 10),
+      padCell('Session', 16),
+      padCell('Price', 11),
+      padCell('Decision', 11),
+      padCell('Exec', 11),
+      padCell('Position', 20),
+      padCell('UPNL', 12),
+      padCell('Conf', 8),
+    ].join(' ');
+    const separator = '-'.repeat(stripAnsi(header).length);
+    const rows = Array.from(this.previewState.latestEvaluations.values())
+      .sort((left, right) => left.symbol.localeCompare(right.symbol))
+      .map((entry) => {
+        const position = entry.position;
+        const positionText = position
+          ? `${colorize('LONG', 'green', this.colors)} ${formatQty(position?.qty)}`
+          : colorize('FLAT', 'dim', this.colors);
+        const upnl = position?.unrealizedPnl ?? null;
+        return [
+          padCell(entry.symbol, 10),
+          padCell(entry.marketSession, 16),
+          padCell(formatMoney(entry.currentPrice), 11),
+          padCell(entry.decisionAction, 11),
+          padCell(entry.executionStatus, 11),
+          padCell(positionText, 20),
+          padCell(formatSignedMoney(upnl, this.colors), 12),
+          padCell(entry.decisionConfidence === null || entry.decisionConfidence === undefined ? 'n/a' : entry.decisionConfidence.toFixed(2), 8),
+        ].join(' ');
+      });
+
+    return ['Symbols', header, separator, ...(rows.length ? rows : ['No symbol evaluations yet'])].join('\n');
+  }
+
+  #buildPreviewPositionsSection() {
+    const positions = Array.isArray(this.previewState.latestPortfolioState?.positions)
+      ? this.previewState.latestPortfolioState.positions
+      : [];
+    if (!positions.length) {
+      return 'Positions\nFLAT';
+    }
+
+    const rows = positions.map((position) => {
+      const pnl = toFiniteOrNull(position?.unrealizedPnl);
+      return [
+        padCell(String(position?.symbol ?? 'UNKNOWN').toUpperCase(), 10),
+        padCell(formatQty(position?.qty), 12),
+        padCell(formatMoney(position?.entryPrice), 11),
+        padCell(formatMoney(position?.currentPrice), 11),
+        padCell(formatSignedMoney(pnl, this.colors), 12),
+      ].join(' ');
+    });
+
+    return [
+      'Positions',
+      `${padCell('Symbol', 10)} ${padCell('Qty', 12)} ${padCell('Entry', 11)} ${padCell('Current', 11)} ${padCell('UPNL', 12)}`,
+      ...rows,
+    ].join('\n');
+  }
+
+  #buildPreviewRecentEventsSection() {
+    const events = this.previewState.recentEvents.slice(-6);
+    return ['Recent Events', ...(events.length ? events : ['No recent execution events'])].join('\n');
+  }
+
   #buildExecutionLine({ prefix, features, executionIntent, executionResult }) {
     if (!executionIntent) return null;
 
@@ -319,22 +531,35 @@ export class ConsoleTradingLogger {
       this.sessionState.baselineEquity === null ||
       this.sessionState.previousEquity === null
     ) {
+      const stored = this.runtimeSessionStateStore?.getConsoleState?.(atMs) ?? null;
       this.sessionState.sessionDate = sessionDate;
-      this.sessionState.baselineEquity = equity;
-      this.sessionState.previousEquity = equity;
-      return {
-        portfolioDelta: 0,
-        sessionDelta: 0,
+      this.sessionState.baselineEquity = toFiniteOrNull(stored?.baselineEquity) ?? equity;
+      this.sessionState.previousEquity = toFiniteOrNull(stored?.previousEquity) ?? this.sessionState.baselineEquity;
+      const deltas = {
+        portfolioDelta: equity - this.sessionState.previousEquity,
+        sessionDelta: equity - this.sessionState.baselineEquity,
       };
+      this.sessionState.previousEquity = equity;
+      this.#persistConsoleState(atMs);
+      return deltas;
     }
 
     const portfolioDelta = equity - this.sessionState.previousEquity;
     const sessionDelta = equity - this.sessionState.baselineEquity;
     this.sessionState.previousEquity = equity;
+    this.#persistConsoleState(atMs);
     return {
       portfolioDelta,
       sessionDelta,
     };
+  }
+
+  #persistConsoleState(atMs) {
+    if (!this.runtimeSessionStateStore?.updateConsoleState) return;
+    this.runtimeSessionStateStore.updateConsoleState(atMs, {
+      baselineEquity: this.sessionState.baselineEquity,
+      previousEquity: this.sessionState.previousEquity,
+    });
   }
 
   #formatDeskPosition({ features, executionIntent, executionResult }) {

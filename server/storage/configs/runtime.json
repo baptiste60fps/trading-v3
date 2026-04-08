@@ -104,7 +104,8 @@
   "telemetry": {
     "console": {
       "enabled": true,
-      "colors": true
+      "colors": true,
+      "preview": true
     }
   },
   "symbols": {

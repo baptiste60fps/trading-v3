@@ -21,6 +21,7 @@ const unitFiles = [
   './unit/console-trading-logger.test.mjs',
   './unit/execution-engine.test.mjs',
   './unit/persistent-runtime-orchestrator.test.mjs',
+  './unit/runtime-session-state-store.test.mjs',
   './unit/decision-engine.test.mjs',
   './unit/heuristic-entry-policy.test.mjs',
   './unit/strategy-instance.test.mjs',
