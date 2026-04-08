@@ -110,6 +110,11 @@ const extractDecisionFallbackReason = (decision) => {
   const match = entries.find((entry) => String(entry ?? '').startsWith('decision_engine_fallback:'));
   return match ? String(match).slice('decision_engine_fallback:'.length) : null;
 };
+const classifyLlmFallbackSeverity = (reason) => {
+  const text = String(reason ?? '').toLowerCase();
+  if (text.includes('timed out') || text.includes('timeout')) return 'degraded';
+  return 'blocker';
+};
 const hasNoMarketData = (features) => {
   if (toPositiveFiniteOrNull(features?.currentPrice) !== null) return false;
   const snapshots = Object.values(features?.timeframes ?? {});
@@ -148,7 +153,7 @@ export class ConsoleTradingLogger {
       baselineEquity: null,
       previousEquity: null,
     };
-    this.activeBlockingAlerts = new Map();
+    this.activeAlerts = new Map();
     this.previewState = {
       latestEvaluations: new Map(),
       latestPortfolioState: null,
@@ -175,15 +180,15 @@ export class ConsoleTradingLogger {
     const timeMs = Number.isFinite(Number(atMs)) ? Number(atMs) : Date.now();
     const prefix = colorize(`[TRADE][${safeSymbol}][${formatTimestamp(timeMs, this.timezone)}]`, 'cyan', this.colors);
     const deltas = this.#resolvePortfolioDeltas(toFiniteOrNull(features?.portfolioState?.equity), timeMs);
-    const blockers = this.#collectBlockingAlerts({
+    const alerts = this.#collectAlerts({
       symbol: safeSymbol,
       features,
       decision,
       executionResult,
     });
-    const blockingLines = this.#buildBlockingAlertLines({
+    const alertLines = this.#buildAlertLines({
       prefix,
-      blockers,
+      alerts,
     });
 
     const portfolioLine = this.#buildPortfolioLine({
@@ -216,8 +221,8 @@ export class ConsoleTradingLogger {
       executionIntent,
       executionResult,
       deltas,
-      blockers,
-      blockingLines,
+      alerts,
+      alertLines,
       executionLine,
     });
 
@@ -226,7 +231,7 @@ export class ConsoleTradingLogger {
       return;
     }
 
-    for (const line of blockingLines) {
+    for (const line of alertLines) {
       this.writer(line);
     }
     if (portfolioLine) this.writer(portfolioLine);
@@ -234,29 +239,32 @@ export class ConsoleTradingLogger {
     if (executionLine) this.writer(executionLine);
   }
 
-  #buildBlockingAlertLines({ prefix, blockers }) {
+  #buildAlertLines({ prefix, alerts }) {
     const lines = [];
     const nextAlerts = new Map();
 
-    for (const blocker of blockers) {
-      nextAlerts.set(blocker.key, blocker);
-      if (!this.activeBlockingAlerts.has(blocker.key)) {
+    for (const alert of alerts) {
+      nextAlerts.set(alert.key, alert);
+      if (!this.activeAlerts.has(alert.key)) {
+        const statusLabel = alert.severity === 'degraded' ? 'TRADING DEGRADED' : 'TRADING BLOCKER';
+        const color = alert.severity === 'degraded' ? 'yellow' : 'red';
         lines.push(
-          `${prefix} ${colorize('TRADING BLOCKER', 'red', this.colors)} ${colorize(blocker.label, 'red', this.colors)} | ${colorize(blocker.message, 'red', this.colors)}`,
+          `${prefix} ${colorize(statusLabel, color, this.colors)} ${colorize(alert.label, color, this.colors)} | ${colorize(alert.message, color, this.colors)}`,
         );
       }
     }
 
-    for (const [key, blocker] of this.activeBlockingAlerts.entries()) {
+    for (const [key, alert] of this.activeAlerts.entries()) {
       if (nextAlerts.has(key)) continue;
-      lines.push(`${prefix} ${colorize('TRADING BLOCKER RESOLVED', 'green', this.colors)} ${colorize(blocker.label, 'green', this.colors)}`);
+      const statusLabel = alert.severity === 'degraded' ? 'TRADING DEGRADED RESOLVED' : 'TRADING BLOCKER RESOLVED';
+      lines.push(`${prefix} ${colorize(statusLabel, 'green', this.colors)} ${colorize(alert.label, 'green', this.colors)}`);
     }
 
-    this.activeBlockingAlerts = nextAlerts;
+    this.activeAlerts = nextAlerts;
     return lines;
   }
 
-  #collectBlockingAlerts({ symbol, features, decision, executionResult }) {
+  #collectAlerts({ symbol, features, decision, executionResult }) {
     const alerts = [];
     const brokerReady = features?.portfolioState?.brokerReady;
     const brokerErrorCategory = String(features?.portfolioState?.errorCategory ?? '').toLowerCase();
@@ -266,15 +274,18 @@ export class ConsoleTradingLogger {
       alerts.push({
         key: `broker:${brokerErrorCategory || 'unavailable'}`,
         label,
+        severity: 'blocker',
         message: brokerError || 'Broker gateway unavailable',
       });
     }
 
     const fallbackReason = extractDecisionFallbackReason(decision);
     if (fallbackReason) {
+      const severity = classifyLlmFallbackSeverity(fallbackReason);
       alerts.push({
-        key: `llm:${fallbackReason}`,
+        key: `llm:${severity}:${fallbackReason}`,
         label: 'LLM',
+        severity,
         message: fallbackReason,
       });
     }
@@ -284,6 +295,7 @@ export class ConsoleTradingLogger {
       alerts.push({
         key: `execution:${executionErrorMessage}`,
         label: 'EXECUTION',
+        severity: 'blocker',
         message: executionErrorMessage,
       });
     }
@@ -292,6 +304,7 @@ export class ConsoleTradingLogger {
       alerts.push({
         key: `market-data:${symbol}`,
         label: 'MARKET DATA',
+        severity: 'blocker',
         message: `No live price or timeframe bars available for ${symbol}`,
       });
     }
@@ -329,8 +342,8 @@ export class ConsoleTradingLogger {
       executionIntent,
       executionResult,
       deltas,
-      blockers,
-      blockingLines,
+      alerts,
+      alertLines,
       executionLine,
   }) {
     this.previewState.latestAtMs = atMs;
@@ -348,11 +361,11 @@ export class ConsoleTradingLogger {
       executionAccepted: executionResult?.accepted === true,
       position: features?.position ?? null,
       portfolioState: features?.portfolioState ?? null,
-      blockers,
+      alerts,
       signalContext: decision?.signalContext ?? null,
     });
 
-    for (const line of blockingLines) {
+    for (const line of alertLines) {
       this.#pushRecentEvent(line);
     }
     if (executionLine) {
@@ -417,12 +430,15 @@ export class ConsoleTradingLogger {
   }
 
   #buildPreviewBlockersLine() {
-    const blockers = Array.from(this.activeBlockingAlerts.values());
-    if (!blockers.length) {
-      return `${colorize('Blockers', 'dim', this.colors)} | none`;
+    const alerts = Array.from(this.activeAlerts.values());
+    if (!alerts.length) {
+      return `${colorize('Alerts', 'dim', this.colors)} | none`;
     }
 
-    return `Blockers | ${blockers.map((entry) => `${colorize(entry.label, 'red', this.colors)} ${colorize(entry.message, 'red', this.colors)}`).join(' | ')}`;
+    return `Alerts | ${alerts.map((entry) => {
+      const color = entry.severity === 'degraded' ? 'yellow' : 'red';
+      return `${colorize(entry.label, color, this.colors)} ${colorize(entry.message, color, this.colors)}`;
+    }).join(' | ')}`;
   }
 
   #buildPreviewSymbolTable() {

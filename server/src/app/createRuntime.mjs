@@ -31,7 +31,11 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const DEFAULT_SERVER_ROOT = path.resolve(__dirname, '../..');
 
-export const createRuntime = async ({ serverRootDir = DEFAULT_SERVER_ROOT, env = process.env } = {}) => {
+export const createRuntime = async ({
+  serverRootDir = DEFAULT_SERVER_ROOT,
+  env = process.env,
+  ollamaClientFactory = (config) => new OllamaDecisionModelClient(config),
+} = {}) => {
   const localEnv = loadLocalEnv(serverRootDir);
   const mergedEnv = {
     ...localEnv.values,
@@ -57,6 +61,12 @@ export const createRuntime = async ({ serverRootDir = DEFAULT_SERVER_ROOT, env =
   const newsConfig = configStore.getNewsConfig();
   const executionConfig = configStore.getExecutionConfig();
   const telemetryConfig = configStore.getTelemetryConfig();
+  const llmHealth = {
+    enabled: llmConfig.enabled === true,
+    ready: false,
+    provider: llmConfig.provider ?? null,
+    message: llmConfig.enabled === true ? 'Decision model is not configured' : 'LLM disabled by configuration',
+  };
 
   let marketDataProvider = new UnavailableMarketDataProvider('Alpaca market data is not ready: missing credentials or disabled provider');
   let brokerGateway = new UnavailableBrokerGateway('Alpaca broker is not ready: missing credentials or disabled provider');
@@ -77,7 +87,21 @@ export const createRuntime = async ({ serverRootDir = DEFAULT_SERVER_ROOT, env =
   }
 
   if (llmConfig.enabled && llmConfig.provider === 'ollama') {
-    decisionModelClient = new OllamaDecisionModelClient(llmConfig);
+    const candidate = ollamaClientFactory(llmConfig);
+    const availability = typeof candidate?.checkAvailability === 'function'
+      ? await candidate.checkAvailability()
+      : { available: true, reason: null };
+
+    if (availability?.available === false) {
+      llmHealth.message = `Ollama healthcheck failed: ${availability.reason ?? 'ollama_unreachable'}`;
+      decisionModelClient = new UnavailableDecisionModelClient(llmHealth.message);
+    } else {
+      decisionModelClient = candidate;
+      llmHealth.ready = true;
+      llmHealth.message = null;
+    }
+  } else if (llmConfig.enabled && llmConfig.provider) {
+    llmHealth.message = `Unsupported LLM provider: ${llmConfig.provider}`;
   }
 
   const barsRepository = new BarsRepository({
@@ -204,7 +228,9 @@ export const createRuntime = async ({ serverRootDir = DEFAULT_SERVER_ROOT, env =
         alpacaEnabled: config.alpaca.enabled,
         alpacaReady: Boolean(config.alpaca.keyId && config.alpaca.secretKey),
         llmEnabled: config.llm.enabled,
+        llmReady: llmHealth.ready,
         llmProvider: config.llm.provider,
+        llmHealthMessage: llmHealth.message,
         executionDryRun: config.execution.dryRun,
         runtimeLoopIntervalMs: config.runtime.loopIntervalMs,
         runtimeIdleIntervalMs: config.runtime.idleIntervalMs,

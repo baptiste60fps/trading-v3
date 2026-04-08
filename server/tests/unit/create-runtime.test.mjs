@@ -27,4 +27,77 @@ ALPACA_SECRET_KEY=test-secret
     assert.equal(summary.executionDryRun, true);
     assert.ok(summary.envFilePath.endsWith('.env.local'));
   });
+
+  test('createRuntime disables Ollama cleanly when the startup healthcheck fails', async () => {
+    const rootDir = makeServerRootFixture({
+      runtimeConfig: {
+        runtime: { mode: 'paper' },
+      },
+      envLocal: `BAPTISTO_LLM_ENABLED=true
+BAPTISTO_LLM_PROVIDER=ollama
+BAPTISTO_LLM_MODEL=qwen2.5:7b
+BAPTISTO_LLM_BASE_URL=http://127.0.0.1:11434
+`,
+    });
+
+    const runtime = await createRuntime({
+      serverRootDir: rootDir,
+      env: {},
+      ollamaClientFactory() {
+        return {
+          async checkAvailability() {
+            return {
+              available: false,
+              reason: 'connect ECONNREFUSED 127.0.0.1:11434',
+            };
+          },
+        };
+      },
+    });
+
+    const summary = runtime.describe();
+    assert.equal(summary.llmEnabled, true);
+    assert.equal(summary.llmReady, false);
+    assert.match(summary.llmHealthMessage, /ECONNREFUSED/);
+  });
+
+  test('createRuntime keeps Ollama enabled when the startup healthcheck succeeds', async () => {
+    const rootDir = makeServerRootFixture({
+      runtimeConfig: {
+        runtime: { mode: 'paper' },
+      },
+      envLocal: `BAPTISTO_LLM_ENABLED=true
+BAPTISTO_LLM_PROVIDER=ollama
+BAPTISTO_LLM_MODEL=qwen2.5:7b
+BAPTISTO_LLM_BASE_URL=http://127.0.0.1:11434
+`,
+    });
+
+    const runtime = await createRuntime({
+      serverRootDir: rootDir,
+      env: {},
+      ollamaClientFactory() {
+        return {
+          async checkAvailability() {
+            return {
+              available: true,
+              reason: null,
+            };
+          },
+          async generateDecision() {
+            return JSON.stringify({
+              action: 'hold',
+              confidence: 0.5,
+              reasoning: ['ok'],
+            });
+          },
+        };
+      },
+    });
+
+    const summary = runtime.describe();
+    assert.equal(summary.llmEnabled, true);
+    assert.equal(summary.llmReady, true);
+    assert.equal(summary.llmHealthMessage, null);
+  });
 };

@@ -47,6 +47,8 @@ const normalizeExecutionError = (error) => ({
   message: error?.message ?? 'Unknown broker error',
 });
 
+const OPEN_ORDER_STATUSES = new Set(['new', 'accepted', 'pending_new', 'accepted_for_bidding', 'partially_filled', 'held', 'stopped']);
+
 const normalizePosition = (position) => ({
   symbol: normalizeSymbolId(position?.symbol ?? ''),
   side: 'long',
@@ -58,6 +60,22 @@ const normalizePosition = (position) => ({
   currentPrice: Number.isFinite(Number(position?.current_price)) ? Number(position.current_price) : null,
   marketValue: Number.isFinite(Number(position?.market_value)) ? Number(position.market_value) : null,
 });
+
+const isProtectiveStopOrder = (order, symbol) => {
+  const orderSymbol = normalizeSymbolId(order?.symbol ?? '');
+  const status = String(order?.status ?? '').toLowerCase();
+  const side = String(order?.side ?? '').toLowerCase();
+  const positionIntent = String(order?.position_intent ?? '').toLowerCase();
+  const type = String(order?.type ?? order?.order_type ?? '').toLowerCase();
+  return orderSymbol === symbol
+    && OPEN_ORDER_STATUSES.has(status)
+    && side === 'sell'
+    && (
+      positionIntent === 'sell_to_close'
+      || type === 'stop'
+      || order?.stop_price != null
+    );
+};
 
 export class AlpacaBrokerGateway extends BrokerGateway {
   constructor({ client, paper = true } = {}) {
@@ -160,6 +178,7 @@ export class AlpacaBrokerGateway extends BrokerGateway {
   async close(symbol) {
     const safeSymbol = assertSymbolId(String(symbol ?? '').toUpperCase());
     try {
+      await this.#cancelProtectiveOrdersForSymbol(safeSymbol);
       const response = await this.client.requestBroker(`/positions/${encodeURIComponent(safeSymbol)}`, {
         method: 'DELETE',
       });
@@ -180,6 +199,33 @@ export class AlpacaBrokerGateway extends BrokerGateway {
         status: 'rejected',
         error: normalizeExecutionError(error),
       };
+    }
+  }
+
+  async #cancelProtectiveOrdersForSymbol(symbol) {
+    const orders = await this.client.requestBroker('/orders', {
+      query: {
+        status: 'open',
+        nested: true,
+        symbols: symbol,
+      },
+    });
+
+    const openOrders = Array.isArray(orders) ? orders : [];
+    const protectiveOrders = openOrders.filter((order) => {
+      try {
+        return isProtectiveStopOrder(order, symbol);
+      } catch {
+        return false;
+      }
+    });
+
+    for (const order of protectiveOrders) {
+      const orderId = String(order?.id ?? '').trim();
+      if (!orderId) continue;
+      await this.client.requestBroker(`/orders/${encodeURIComponent(orderId)}`, {
+        method: 'DELETE',
+      });
     }
   }
 }

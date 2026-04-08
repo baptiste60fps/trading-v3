@@ -2,12 +2,14 @@ import assert from 'assert/strict';
 import { AlpacaBrokerGateway } from '../../src/core/api/AlpacaBrokerGateway.mjs';
 
 class FakeClient {
-  constructor() {
+  constructor({ responder = null } = {}) {
     this.calls = [];
+    this.responder = responder;
   }
 
   async requestBroker(path, options = {}) {
     this.calls.push({ path, options });
+    if (this.responder) return await this.responder(path, options);
     return {
       id: 'order-1',
       status: 'accepted',
@@ -141,5 +143,105 @@ export const register = async ({ test }) => {
       /do not support broker-side simple stop loss/i,
     );
     assert.equal(client.calls.length, 0);
+  });
+
+  test('AlpacaBrokerGateway cancels open protective stop orders before closing a position', async () => {
+    const client = new FakeClient({
+      responder(path, options) {
+        if (path === '/orders' && (!options.method || options.method === 'GET')) {
+          return [
+            {
+              id: 'stop-aapl',
+              symbol: 'AAPL',
+              status: 'new',
+              side: 'sell',
+              type: 'stop',
+              position_intent: 'sell_to_close',
+              stop_price: '243.43',
+            },
+            {
+              id: 'limit-aapl',
+              symbol: 'AAPL',
+              status: 'new',
+              side: 'buy',
+              type: 'limit',
+            },
+            {
+              id: 'stop-msft',
+              symbol: 'MSFT',
+              status: 'new',
+              side: 'sell',
+              type: 'stop',
+              position_intent: 'sell_to_close',
+              stop_price: '390.00',
+            },
+          ];
+        }
+
+        if (path === '/orders/stop-aapl' && options.method === 'DELETE') {
+          return {};
+        }
+
+        if (path === '/positions/AAPL' && options.method === 'DELETE') {
+          return {
+            id: 'close-1',
+            status: 'closed',
+            filled_qty: '7',
+            filled_avg_price: '258.50',
+          };
+        }
+
+        throw new Error(`Unexpected broker call ${path}`);
+      },
+    });
+    const gateway = new AlpacaBrokerGateway({ client, paper: true });
+
+    const result = await gateway.close('AAPL');
+
+    assert.equal(result.accepted, true);
+    assert.deepEqual(
+      client.calls.map((entry) => [entry.path, entry.options.method ?? 'GET']),
+      [
+        ['/orders', 'GET'],
+        ['/orders/stop-aapl', 'DELETE'],
+        ['/positions/AAPL', 'DELETE'],
+      ],
+    );
+  });
+
+  test('AlpacaBrokerGateway aborts position close when protective stop cancellation fails', async () => {
+    const client = new FakeClient({
+      responder(path, options) {
+        if (path === '/orders' && (!options.method || options.method === 'GET')) {
+          return [
+            {
+              id: 'stop-aapl',
+              symbol: 'AAPL',
+              status: 'new',
+              side: 'sell',
+              type: 'stop',
+              position_intent: 'sell_to_close',
+              stop_price: '243.43',
+            },
+          ];
+        }
+
+        if (path === '/orders/stop-aapl' && options.method === 'DELETE') {
+          const error = new Error('cannot cancel order while it is pending');
+          error.statusCode = 403;
+          throw error;
+        }
+
+        throw new Error(`Unexpected broker call ${path}`);
+      },
+    });
+    const gateway = new AlpacaBrokerGateway({ client, paper: true });
+
+    const result = await gateway.close('AAPL');
+
+    assert.equal(result.accepted, false);
+    assert.equal(result.status, 'rejected');
+    assert.equal(result.error.message, 'cannot cancel order while it is pending');
+    assert.equal(client.calls.some((entry) => entry.path === '/positions/AAPL'), false);
   });
 };

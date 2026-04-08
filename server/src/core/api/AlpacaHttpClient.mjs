@@ -16,14 +16,16 @@ const sleep = (delayMs) => new Promise((resolve) => {
   setTimeout(resolve, delayMs);
 });
 
-const buildHttpErrorMessage = ({ message, statusCode, url }) => {
+export const formatAlpacaHttpErrorMessage = ({ message, statusCode, url }) => {
   const text = String(message ?? '').trim();
   const host = url?.host ?? 'alpaca';
   if (statusCode === 401) {
     return `Alpaca auth failed on ${host} (401). Verify API key/secret and that ALPACA_PAPER matches the account environment.`;
   }
   if (statusCode === 403) {
-    return `Alpaca access forbidden on ${host} (403). Verify account permissions and endpoint configuration.`;
+    return text
+      ? `Alpaca access forbidden on ${host} (403): ${text}`
+      : `Alpaca access forbidden on ${host} (403). Verify account permissions and endpoint configuration.`;
   }
   return text || `Alpaca request failed (${statusCode})`;
 };
@@ -104,7 +106,7 @@ export class AlpacaHttpClient {
 
           const rawMessage = parsed?.message ?? parsed?.error ?? '';
 
-          throw makeError(buildHttpErrorMessage({
+          throw makeError(formatAlpacaHttpErrorMessage({
             message: rawMessage,
             statusCode: response.statusCode,
             url,

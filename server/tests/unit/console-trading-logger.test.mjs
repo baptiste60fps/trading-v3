@@ -233,6 +233,77 @@ export const register = async ({ test }) => {
     assert.ok(lines.some((line) => /TRADING BLOCKER RESOLVED/.test(line)));
   });
 
+  test('ConsoleTradingLogger downgrades Ollama timeouts to degraded alerts and resolves them when cleared', async () => {
+    const lines = [];
+    const logger = new ConsoleTradingLogger({
+      timezone: 'America/New_York',
+      colors: true,
+      writer: (line) => lines.push(line),
+    });
+
+    logger.logEvaluation({
+      symbol: 'AAPL',
+      atMs: Date.UTC(2026, 3, 8, 14, 0, 0),
+      features: {
+        currentPrice: 201,
+        portfolioState: {
+          equity: 100000,
+          cash: 100000,
+          brokerReady: true,
+        },
+        marketState: {
+          isOpen: true,
+          sessionLabel: 'regular',
+        },
+      },
+      decision: {
+        action: 'skip',
+        reasoning: ['decision_engine_fallback:Ollama request timed out'],
+      },
+      executionResult: {
+        status: 'noop',
+        accepted: false,
+        error: {
+          message: 'noop_action',
+        },
+      },
+    });
+
+    logger.logEvaluation({
+      symbol: 'AAPL',
+      atMs: Date.UTC(2026, 3, 8, 14, 1, 0),
+      features: {
+        currentPrice: 202,
+        portfolioState: {
+          equity: 100010,
+          cash: 100010,
+          brokerReady: true,
+        },
+        marketState: {
+          isOpen: true,
+          sessionLabel: 'regular',
+        },
+      },
+      decision: {
+        action: 'hold',
+        reasoning: ['llm_ok'],
+      },
+      executionResult: {
+        status: 'noop',
+        accepted: false,
+        error: {
+          message: 'noop_action',
+        },
+      },
+    });
+
+    assert.ok(lines.some((line) => /TRADING DEGRADED/.test(line)));
+    assert.ok(lines.some((line) => /\x1b\[33mLLM/.test(line)));
+    assert.ok(lines.some((line) => /Ollama request timed out/.test(line)));
+    assert.ok(lines.some((line) => /TRADING DEGRADED RESOLVED/.test(line)));
+    assert.equal(lines.some((line) => /TRADING BLOCKER LLM \| .*Ollama request timed out/.test(line)), false);
+  });
+
   test('ConsoleTradingLogger logs blocking broker auth errors in red', async () => {
     const lines = [];
     const logger = new ConsoleTradingLogger({
