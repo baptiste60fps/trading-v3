@@ -153,6 +153,10 @@ export class ConsoleTradingLogger {
       latestEvaluations: new Map(),
       latestPortfolioState: null,
       latestAtMs: null,
+      latestDeltas: {
+        portfolioDelta: null,
+        sessionDelta: null,
+      },
       recentEvents: [],
     };
   }
@@ -170,6 +174,7 @@ export class ConsoleTradingLogger {
     const safeSymbol = String(symbol ?? features?.symbol ?? '').toUpperCase() || 'UNKNOWN';
     const timeMs = Number.isFinite(Number(atMs)) ? Number(atMs) : Date.now();
     const prefix = colorize(`[TRADE][${safeSymbol}][${formatTimestamp(timeMs, this.timezone)}]`, 'cyan', this.colors);
+    const deltas = this.#resolvePortfolioDeltas(toFiniteOrNull(features?.portfolioState?.equity), timeMs);
     const blockers = this.#collectBlockingAlerts({
       symbol: safeSymbol,
       features,
@@ -185,6 +190,7 @@ export class ConsoleTradingLogger {
       prefix,
       timeMs,
       features,
+      deltas,
       decision,
       executionResult,
     });
@@ -209,6 +215,7 @@ export class ConsoleTradingLogger {
       decision,
       executionIntent,
       executionResult,
+      deltas,
       blockers,
       blockingLines,
       executionLine,
@@ -292,9 +299,8 @@ export class ConsoleTradingLogger {
     return alerts.filter((alert, index, list) => list.findIndex((entry) => entry.key === alert.key) === index);
   }
 
-  #buildPortfolioLine({ prefix, timeMs, features, decision, executionResult }) {
+  #buildPortfolioLine({ prefix, features, deltas, decision, executionResult }) {
     const equity = toFiniteOrNull(features?.portfolioState?.equity);
-    const deltas = this.#resolvePortfolioDeltas(equity, timeMs);
     const marketLabel = String(features?.marketState?.sessionLabel ?? 'unknown');
     const decisionAction = String(decision?.action ?? 'skip');
     const executionStatus = String(executionResult?.status ?? 'noop');
@@ -317,17 +323,19 @@ export class ConsoleTradingLogger {
 
   #rememberPreviewState({
     symbol,
-    atMs,
-    features,
-    decision,
-    executionIntent,
-    executionResult,
-    blockers,
-    blockingLines,
-    executionLine,
+      atMs,
+      features,
+      decision,
+      executionIntent,
+      executionResult,
+      deltas,
+      blockers,
+      blockingLines,
+      executionLine,
   }) {
     this.previewState.latestAtMs = atMs;
     this.previewState.latestPortfolioState = features?.portfolioState ?? this.previewState.latestPortfolioState;
+    this.previewState.latestDeltas = deltas ?? this.previewState.latestDeltas;
     this.previewState.latestEvaluations.set(symbol, {
       symbol,
       atMs,
@@ -390,7 +398,10 @@ export class ConsoleTradingLogger {
     const equity = toFiniteOrNull(portfolioState?.equity);
     const cash = toFiniteOrNull(portfolioState?.cash);
     const exposurePct = toFiniteOrNull(portfolioState?.exposurePct);
-    const deltas = this.#resolvePortfolioDeltas(equity, latestAtMs);
+    const deltas = this.previewState.latestDeltas ?? {
+      portfolioDelta: null,
+      sessionDelta: null,
+    };
     const positions = Array.isArray(portfolioState?.positions) ? portfolioState.positions : [];
 
     return [
