@@ -58,6 +58,8 @@ export class StrategyInstance {
     });
     let decision = this.#shouldForcePreCloseExit(features)
       ? this.#buildPreCloseExitDecision(features)
+      : this.#shouldForceCryptoProfitLockExit(features)
+        ? this.#buildCryptoProfitLockExitDecision(features)
       : (!features?.position && this.#shouldBypassOpeningDecision(features)
           ? this.#buildMarketGateDecision(features)
           : await this.decisionEngine.decide({
@@ -173,6 +175,65 @@ export class StrategyInstance {
         assetClass: features?.assetClass ?? null,
         marketSession: features?.marketState?.sessionLabel ?? null,
         forcedPreCloseExit: true,
+      },
+    };
+  }
+
+  #shouldForceCryptoProfitLockExit(features) {
+    const position = features?.position ?? null;
+    const assetClass = String(features?.assetClass ?? '').trim().toLowerCase();
+    if (!position || assetClass !== 'crypto') return false;
+
+    const executionConfig = this.configStore?.getExecutionConfig?.() ?? {};
+    const profitLock = executionConfig?.cryptoProfitLock ?? {};
+    if (profitLock?.enabled === false) return false;
+
+    const entryPrice = Number(position?.entryPrice);
+    const currentPrice = Number(features?.currentPrice ?? position?.currentPrice);
+    if (!Number.isFinite(entryPrice) || !Number.isFinite(currentPrice) || entryPrice <= 0) return false;
+
+    const unrealizedPnlPct = (currentPrice - entryPrice) / entryPrice;
+    const minUnrealizedPnlPct = Number(profitLock?.minUnrealizedPnlPct);
+    if (!Number.isFinite(minUnrealizedPnlPct) || unrealizedPnlPct < minUnrealizedPnlPct) return false;
+
+    const fast = features?.timeframes?.['5m']?.values ?? {};
+    const fastRsiFloor = Number(profitLock?.fastRsiFloor);
+    const fastEmaGapCeiling = Number(profitLock?.fastEmaGapCeiling);
+    const fastPriceVsSmaFloor = Number(profitLock?.fastPriceVsSmaFloor);
+
+    return Number.isFinite(Number(fast?.rsi14))
+      && Number.isFinite(Number(fast?.emaGap12_26))
+      && Number.isFinite(Number(fast?.priceVsSma20))
+      && fast.rsi14 >= fastRsiFloor
+      && fast.emaGap12_26 <= fastEmaGapCeiling
+      && fast.priceVsSma20 >= fastPriceVsSmaFloor;
+  }
+
+  #buildCryptoProfitLockExitDecision(features) {
+    const position = features?.position ?? null;
+    const entryPrice = Number(position?.entryPrice);
+    const currentPrice = Number(features?.currentPrice ?? position?.currentPrice);
+    const unrealizedPnlPct = Number.isFinite(entryPrice) && Number.isFinite(currentPrice) && entryPrice > 0
+      ? (currentPrice - entryPrice) / entryPrice
+      : null;
+    const fast = features?.timeframes?.['5m']?.values ?? {};
+
+    return {
+      action: 'close_long',
+      confidence: 0.9,
+      reasoning: ['crypto_profit_lock', 'fast_overbought_rollover'],
+      requestedSizePct: null,
+      stopLossPct: null,
+      takeProfitPct: null,
+      signalContext: {
+        symbol: this.symbol,
+        assetClass: features?.assetClass ?? null,
+        marketSession: features?.marketState?.sessionLabel ?? null,
+        forcedCryptoProfitLockExit: true,
+        unrealizedPnlPct,
+        fastRsi14: Number.isFinite(Number(fast?.rsi14)) ? Number(fast.rsi14) : null,
+        fastEmaGap12_26: Number.isFinite(Number(fast?.emaGap12_26)) ? Number(fast.emaGap12_26) : null,
+        fastPriceVsSma20: Number.isFinite(Number(fast?.priceVsSma20)) ? Number(fast.priceVsSma20) : null,
       },
     };
   }

@@ -78,6 +78,13 @@ export const defaultConfig = Object.freeze({
     entryPolicyGuardEnabled: true,
     clampEntrySizeToHeuristic: true,
     openRejectionCooldownMs: 5 * 60 * 1000,
+    cryptoProfitLock: {
+      enabled: true,
+      minUnrealizedPnlPct: 0.018,
+      fastRsiFloor: 74,
+      fastEmaGapCeiling: 0,
+      fastPriceVsSmaFloor: 0.001,
+    },
   },
   telemetry: {
     console: {

@@ -13,6 +13,13 @@ class FakeConfigStore {
   getExecutionConfig() {
     return {
       openRejectionCooldownMs: 300_000,
+      cryptoProfitLock: {
+        enabled: true,
+        minUnrealizedPnlPct: 0.018,
+        fastRsiFloor: 74,
+        fastEmaGapCeiling: 0,
+        fastPriceVsSmaFloor: 0.001,
+      },
     };
   }
 }
@@ -329,6 +336,129 @@ export const register = async ({ test }) => {
       runtimeMode: 'paper',
       configStore: new FakeConfigStore(),
       featureSnapshotService: new CryptoPositionFeatureSnapshotService(),
+      decisionEngine,
+      executionEngine,
+    });
+
+    const result = await strategy.runOnce(Date.now());
+
+    assert.equal(decisionEngine.calls, 1);
+    assert.equal(result.decision.action, 'hold');
+    assert.equal(executionEngine.calls[0].decision.action, 'hold');
+  });
+
+  test('StrategyInstance forces a crypto profit-lock exit when gains are positive and fast momentum rolls over from overbought', async () => {
+    class CryptoProfitLockFeatureSnapshotService extends FakeFeatureSnapshotService {
+      async build(payload) {
+        const snapshot = await super.build(payload);
+        return {
+          ...snapshot,
+          symbol: 'BTC/USD',
+          assetClass: 'crypto',
+          currentPrice: 103,
+          marketState: {
+            isOpen: true,
+            isPreClose: false,
+            isNoTradeOpen: false,
+            sessionLabel: 'continuous_open',
+          },
+          position: {
+            symbol: 'BTC/USD',
+            qty: 0.1,
+            entryPrice: 100,
+            currentPrice: 103,
+          },
+          timeframes: {
+            '5m': {
+              values: {
+                rsi14: 79,
+                emaGap12_26: -0.001,
+                priceVsSma20: 0.003,
+              },
+            },
+          },
+        };
+      }
+    }
+
+    const decisionEngine = new FakeDecisionEngine();
+    const executionEngine = new FakeExecutionEngine();
+    const strategy = new StrategyInstance({
+      symbol: 'BTC/USD',
+      runtimeMode: 'paper',
+      configStore: new FakeConfigStore(),
+      featureSnapshotService: new CryptoProfitLockFeatureSnapshotService(),
+      decisionEngine,
+      executionEngine,
+    });
+
+    const result = await strategy.runOnce(Date.now());
+
+    assert.equal(decisionEngine.calls, 0);
+    assert.equal(result.decision.action, 'close_long');
+    assert.deepEqual(result.decision.reasoning, ['crypto_profit_lock', 'fast_overbought_rollover']);
+    assert.equal(executionEngine.calls[0].decision.action, 'close_long');
+  });
+
+  test('StrategyInstance does not force a crypto profit-lock exit when unrealized gain is too small', async () => {
+    class SmallCryptoGainFeatureSnapshotService extends FakeFeatureSnapshotService {
+      async build(payload) {
+        const snapshot = await super.build(payload);
+        return {
+          ...snapshot,
+          symbol: 'BTC/USD',
+          assetClass: 'crypto',
+          currentPrice: 101,
+          marketState: {
+            isOpen: true,
+            isPreClose: false,
+            isNoTradeOpen: false,
+            sessionLabel: 'continuous_open',
+          },
+          position: {
+            symbol: 'BTC/USD',
+            qty: 0.1,
+            entryPrice: 100,
+            currentPrice: 101,
+          },
+          timeframes: {
+            '5m': {
+              values: {
+                rsi14: 79,
+                emaGap12_26: -0.001,
+                priceVsSma20: 0.003,
+              },
+            },
+          },
+        };
+      }
+    }
+
+    class HoldDecisionEngine {
+      constructor() {
+        this.calls = 0;
+      }
+
+      async decide() {
+        this.calls += 1;
+        return {
+          action: 'hold',
+          confidence: 0.6,
+          reasoning: ['crypto_hold'],
+          requestedSizePct: null,
+          stopLossPct: null,
+          takeProfitPct: null,
+        };
+      }
+    }
+
+    const decisionEngine = new HoldDecisionEngine();
+    const executionEngine = new FakeExecutionEngine();
+    const strategy = new StrategyInstance({
+      symbol: 'BTC/USD',
+      runtimeMode: 'paper',
+      configStore: new FakeConfigStore(),
+      featureSnapshotService: new SmallCryptoGainFeatureSnapshotService(),
       decisionEngine,
       executionEngine,
     });
