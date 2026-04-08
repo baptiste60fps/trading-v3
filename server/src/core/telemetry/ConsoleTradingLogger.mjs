@@ -318,7 +318,7 @@ export class ConsoleTradingLogger {
     const decisionAction = String(decision?.action ?? 'skip');
     const executionStatus = String(executionResult?.status ?? 'noop');
 
-    return `${prefix} Equity ${formatMoney(equity)} | Portfolio Delta ${formatSignedMoney(deltas.portfolioDelta, this.colors)} | Session Delta ${formatSignedMoney(deltas.sessionDelta, this.colors)} | Market ${marketLabel} | Decision ${decisionAction} | Exec ${executionStatus}`;
+    return `${prefix} Equity ${formatMoney(equity)} | Equity Delta ${formatSignedPct(deltas.equityDeltaPct, this.colors)} | Portfolio Delta ${formatSignedMoney(deltas.portfolioDelta, this.colors)} | Session Delta ${formatSignedMoney(deltas.sessionDelta, this.colors)} | Market ${marketLabel} | Decision ${decisionAction} | Exec ${executionStatus}`;
   }
 
   #buildDeskLine({ prefix, features, executionIntent, executionResult }) {
@@ -420,6 +420,7 @@ export class ConsoleTradingLogger {
     return [
       `Updated ${formatTimestamp(latestAtMs, this.timezone)}`,
       `Equity ${formatMoney(equity)}`,
+      `Equity Delta ${formatSignedPct(deltas.equityDeltaPct, this.colors)}`,
       `Cash ${formatMoney(cash)}`,
       `Exposure ${formatPct(exposurePct)}`,
       `Portfolio ${formatSignedMoney(deltas.portfolioDelta, this.colors)}`,
@@ -565,6 +566,9 @@ export class ConsoleTradingLogger {
       const deltas = {
         portfolioDelta: equity - this.sessionState.previousEquity,
         sessionDelta: equity - this.sessionState.baselineEquity,
+        equityDeltaPct: this.sessionState.baselineEquity > 0
+          ? (equity - this.sessionState.baselineEquity) / this.sessionState.baselineEquity
+          : null,
       };
       this.sessionState.previousEquity = equity;
       this.#persistConsoleState(atMs);
@@ -578,6 +582,7 @@ export class ConsoleTradingLogger {
     return {
       portfolioDelta,
       sessionDelta,
+      equityDeltaPct: this.sessionState.baselineEquity > 0 ? sessionDelta / this.sessionState.baselineEquity : null,
     };
   }
 

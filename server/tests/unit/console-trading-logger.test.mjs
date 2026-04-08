@@ -51,6 +51,7 @@ export const register = async ({ test }) => {
     });
 
     assert.equal(lines.length, 4);
+    assert.match(lines[2], /Equity Delta/);
     assert.match(lines[2], /Portfolio Delta/);
     assert.match(lines[2], /Session Delta/);
     assert.match(lines[2], /\x1b\[32m\+125\.50\$/);
@@ -412,6 +413,7 @@ export const register = async ({ test }) => {
     assert.equal(frames.length, 1);
     assert.match(frames[0], /Baptisto Trading V3/);
     assert.match(frames[0], /Equity 100250\.00\$/);
+    assert.match(frames[0], /Equity Delta 0\.00%/);
     assert.match(frames[0], /Open Positions 1/);
     assert.match(frames[0], /Symbols/);
     assert.match(frames[0], /AAPL/);
