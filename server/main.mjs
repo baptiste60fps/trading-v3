@@ -86,6 +86,17 @@ const run = async () => {
     shutdownRequested = true;
     console.log(`[SERVER] Received ${signal}, shutting down persistent orchestrator...`);
     await orchestrator.stop(signal);
+    if (runtime.dailyRuntimeReportService?.flushCurrentSessionGitCommit) {
+      try {
+        const commitResult = await runtime.dailyRuntimeReportService.flushCurrentSessionGitCommit();
+        if (commitResult?.committed) {
+          console.log(`[SERVER] Daily git commit created: ${commitResult.message}`);
+        }
+      } catch (error) {
+        console.error('[SERVER] Daily git commit failed');
+        console.error(error?.stack ?? error);
+      }
+    }
   };
 
   process.on('SIGINT', () => {

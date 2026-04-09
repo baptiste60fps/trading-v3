@@ -73,6 +73,11 @@ export const defaultConfig = Object.freeze({
       outputSubdir: 'runtime-daily',
     },
   },
+  git: {
+    dailyAutoCommitEnabled: false,
+    includeRuntimeSessionState: true,
+    commitMessagePrefix: 'chore(runtime)',
+  },
   execution: {
     dryRun: true,
     entryPolicyGuardEnabled: true,

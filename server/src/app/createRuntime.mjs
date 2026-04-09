@@ -24,6 +24,7 @@ import { StrategyInstance } from '../core/strategy/StrategyInstance.mjs';
 import { HeuristicEntryPolicy } from '../core/strategy/HeuristicEntryPolicy.mjs';
 import { RssFeedService } from '../services/news/RssFeedService.mjs';
 import { DailyMarketReportService } from '../services/reports/DailyMarketReportService.mjs';
+import { DailyGitCommitService } from '../services/reports/DailyGitCommitService.mjs';
 import { DailyRuntimeReportService } from '../services/reports/DailyRuntimeReportService.mjs';
 import { ConsoleTradingLogger } from '../core/telemetry/ConsoleTradingLogger.mjs';
 
@@ -137,9 +138,14 @@ export const createRuntime = async ({
     modelClient: decisionModelClient,
     llmConfig,
   });
+  const dailyGitCommitService = new DailyGitCommitService({
+    repoRootDir: path.resolve(serverRootDir, '..'),
+    configStore,
+  });
   const dailyRuntimeReportService = new DailyRuntimeReportService({
     configStore,
     dailyMarketReportService,
+    dailyGitCommitService,
   });
   const entryPolicy = new HeuristicEntryPolicy({
     configStore,
@@ -175,6 +181,7 @@ export const createRuntime = async ({
     decisionEngine,
     rssFeedService,
     dailyMarketReportService,
+    dailyGitCommitService,
     dailyRuntimeReportService,
     executionEngine,
     consoleTradingLogger,

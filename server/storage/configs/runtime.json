@@ -98,6 +98,11 @@
       "outputSubdir": "runtime-daily"
     }
   },
+  "git": {
+    "dailyAutoCommitEnabled": true,
+    "includeRuntimeSessionState": true,
+    "commitMessagePrefix": "chore(runtime)"
+  },
   "execution": {
     "dryRun": true,
     "cryptoProfitLock": {

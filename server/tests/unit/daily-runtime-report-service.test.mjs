@@ -233,6 +233,7 @@ export const register = async ({ test }) => {
   test('DailyRuntimeReportService rolls over to a new file on a new session date', async () => {
     const { configStore } = await makeConfigStore();
     const wakeupCalls = [];
+    const gitCommitCalls = [];
     const service = new DailyRuntimeReportService({
       configStore,
       dailyMarketReportService: {
@@ -243,6 +244,15 @@ export const register = async ({ test }) => {
             reportDate: targetSessionDate,
             generatedAtMs: Date.UTC(2026, 3, 1, 12, 0, 0),
             reportPath: `/tmp/daily-report-${targetSessionDate}.json`,
+          };
+        },
+      },
+      dailyGitCommitService: {
+        async commitArtifacts(payload) {
+          gitCommitCalls.push(payload);
+          return {
+            committed: true,
+            message: `committed ${payload.sessionDate}`,
           };
         },
       },
@@ -263,11 +273,45 @@ export const register = async ({ test }) => {
     const secondReport = service.getCurrentReport();
 
     assert.equal(wakeupCalls.length, 2);
+    assert.equal(gitCommitCalls.length, 1);
+    assert.equal(gitCommitCalls[0].sessionDate, '2026-04-01');
+    assert.ok(gitCommitCalls[0].paths.includes(firstReportPath));
     assert.equal(secondReport.sessionDate, '2026-04-02');
     assert.notEqual(secondReport.reportPath, firstReportPath);
     assert.deepEqual(secondReport.entries, []);
     assert.ok(fs.existsSync(secondReport.reportPath));
     assert.equal(path.basename(secondReport.reportPath), 'runtime-report-2026-04-02.json');
+  });
+
+  test('DailyRuntimeReportService can flush the current session git commit on demand', async () => {
+    const { configStore } = await makeConfigStore();
+    const gitCommitCalls = [];
+    const service = new DailyRuntimeReportService({
+      configStore,
+      dailyGitCommitService: {
+        async commitArtifacts(payload) {
+          gitCommitCalls.push(payload);
+          return {
+            committed: true,
+            message: `committed ${payload.sessionDate}`,
+          };
+        },
+      },
+    });
+
+    await service.onCycleStarted({
+      atMs: Date.UTC(2026, 3, 1, 13, 30, 0),
+      symbols: ['AAPL'],
+      runtimeMode: 'paper',
+    });
+
+    const report = service.getCurrentReport();
+    const result = await service.flushCurrentSessionGitCommit();
+
+    assert.equal(result.committed, true);
+    assert.equal(gitCommitCalls.length, 1);
+    assert.equal(gitCommitCalls[0].sessionDate, '2026-04-01');
+    assert.ok(gitCommitCalls[0].paths.includes(report.reportPath));
   });
 
   test('DailyRuntimeReportService records execution rejection details in cycle summaries', async () => {

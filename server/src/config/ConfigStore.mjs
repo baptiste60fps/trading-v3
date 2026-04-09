@@ -122,6 +122,11 @@ export class ConfigStore {
     return this.config.reports;
   }
 
+  getGitConfig() {
+    this.#ensureLoaded();
+    return this.config.git ?? {};
+  }
+
   getExecutionConfig() {
     this.#ensureLoaded();
     return this.config.execution;
@@ -238,6 +243,11 @@ export class ConfigStore {
         daily: {
           enabled: normalizeBoolean(this.env.BAPTISTO_DAILY_REPORT_ENABLED, undefined),
         },
+      },
+      git: {
+        dailyAutoCommitEnabled: normalizeBoolean(this.env.BAPTISTO_GIT_DAILY_AUTO_COMMIT, undefined),
+        includeRuntimeSessionState: normalizeBoolean(this.env.BAPTISTO_GIT_INCLUDE_RUNTIME_SESSION_STATE, undefined),
+        commitMessagePrefix: this.env.BAPTISTO_GIT_COMMIT_MESSAGE_PREFIX ?? undefined,
       },
       execution: {
         dryRun: normalizeBoolean(this.env.BAPTISTO_EXECUTION_DRY_RUN, undefined),

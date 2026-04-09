@@ -30,6 +30,7 @@ const unitFiles = [
   './unit/backtest-engine.test.mjs',
   './unit/rss-feed-service.test.mjs',
   './unit/daily-market-report-service.test.mjs',
+  './unit/daily-git-commit-service.test.mjs',
   './unit/daily-runtime-report-service.test.mjs',
 ];
 

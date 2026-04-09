@@ -75,10 +75,12 @@ export class DailyRuntimeReportService {
   constructor({
     configStore,
     dailyMarketReportService = null,
+    dailyGitCommitService = null,
     now = () => Date.now(),
   } = {}) {
     this.configStore = configStore;
     this.dailyMarketReportService = dailyMarketReportService;
+    this.dailyGitCommitService = dailyGitCommitService;
     this.now = typeof now === 'function' ? now : () => Date.now();
     this.currentSession = null;
     this.recordedEvents = new Set();
@@ -209,6 +211,13 @@ export class DailyRuntimeReportService {
     return this.currentSession?.report ? clone(this.currentSession.report) : null;
   }
 
+  async flushCurrentSessionGitCommit() {
+    if (!this.currentSession?.report) {
+      return { committed: false, skipped: true, reason: 'no_current_session' };
+    }
+    return await this.#commitSessionArtifacts(this.currentSession.report);
+  }
+
   async #ensureSession({ atMs = this.now(), symbols = [], runtimeMode = null } = {}) {
     const timezone = this.configStore.getMarketConfig().timezone;
     const sessionDate = formatSessionDate(atMs, timezone);
@@ -216,6 +225,10 @@ export class DailyRuntimeReportService {
     if (this.currentSession?.sessionDate === sessionDate) {
       this.#mergeSymbols(symbols);
       return this.currentSession;
+    }
+
+    if (this.currentSession?.report) {
+      await this.#commitSessionArtifacts(this.currentSession.report);
     }
 
     this.recordedEvents.clear();
@@ -345,5 +358,28 @@ export class DailyRuntimeReportService {
     this.currentSession.report.reportPath = filePath;
     fs.writeFileSync(filePath, `${JSON.stringify(this.currentSession.report, null, 2)}\n`, 'utf8');
     return filePath;
+  }
+
+  async #commitSessionArtifacts(report) {
+    if (!this.dailyGitCommitService?.commitArtifacts || !report) {
+      return { committed: false, skipped: true, reason: 'service_unavailable' };
+    }
+
+    const gitConfig = this.configStore.getGitConfig?.() ?? {};
+    const storage = this.configStore.getStorageConfig?.() ?? {};
+    const paths = [
+      report.reportPath,
+      report.wakeupReportPath,
+      gitConfig.includeRuntimeSessionState !== false
+        ? path.resolve(storage.runsDir ?? path.resolve(process.cwd(), 'storage/runs'), `runtime-session-${report.sessionDate}.json`)
+        : null,
+    ].filter(Boolean);
+
+    return await this.dailyGitCommitService.commitArtifacts({
+      sessionDate: report.sessionDate,
+      runtimeMode: report.runtime?.mode ?? null,
+      symbols: report.symbolsTracked ?? [],
+      paths,
+    });
   }
 }
