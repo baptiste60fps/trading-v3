@@ -25,6 +25,12 @@ class FakeConfigStore {
         mediumEmaGapCeiling: -0.0015,
         fastRsiCeiling: 68,
         fastEmaGapForMediumWeakExitCeiling: 0.001,
+        peakActivationUnrealizedPnlPct: 0.028,
+        peakGivebackAbsPct: 0.009,
+        peakRetainRatioMax: 0.76,
+        fastWeakRsiCeiling: 42,
+        fastWeakPriceVsSmaCeiling: -0.001,
+        fastWeakEmaGapCeiling: -0.0004,
       },
     };
   }
@@ -607,6 +613,165 @@ export const register = async ({ test }) => {
     });
 
     const result = await strategy.runOnce(Date.now());
+
+    assert.equal(decisionEngine.calls, 1);
+    assert.equal(result.decision.action, 'hold');
+    assert.equal(executionEngine.calls[0].decision.action, 'hold');
+  });
+
+  test('StrategyInstance forces a crypto profit-lock exit after a meaningful giveback from the session peak', async () => {
+    class PeakGivebackCryptoFeatureSnapshotService extends FakeFeatureSnapshotService {
+      async build(payload) {
+        const snapshot = await super.build(payload);
+        return {
+          ...snapshot,
+          symbol: 'ETH/USD',
+          assetClass: 'crypto',
+          currentPrice: 102.9,
+          marketState: {
+            isOpen: true,
+            isPreClose: false,
+            isNoTradeOpen: false,
+            sessionLabel: 'continuous_open',
+          },
+          position: {
+            symbol: 'ETH/USD',
+            qty: 0.5,
+            entryPrice: 100,
+            currentPrice: 102.9,
+          },
+          timeframes: {
+            '5m': {
+              values: {
+                rsi14: 34,
+                emaGap12_26: -0.0008,
+                priceVsSma20: -0.0018,
+              },
+            },
+            '1h': {
+              values: {
+                rsi14: 45,
+                emaGap12_26: 0.0003,
+                priceVsSma20: -0.0006,
+              },
+            },
+          },
+        };
+      }
+    }
+
+    const rootDir = makeTempDir();
+    const runtimeSessionStateStore = new RuntimeSessionStateStore({
+      runsDir: `${rootDir}/runs`,
+      timezone: 'America/New_York',
+    });
+    runtimeSessionStateStore.updateSymbolState('ETH/USD', 1_000_000, {
+      cryptoPeakUnrealizedPnlPct: 0.043,
+      cryptoPeakObservedAtMs: 990_000,
+    });
+
+    const decisionEngine = new FakeDecisionEngine();
+    const executionEngine = new FakeExecutionEngine();
+    const strategy = new StrategyInstance({
+      symbol: 'ETH/USD',
+      runtimeMode: 'paper',
+      configStore: new FakeConfigStore(),
+      featureSnapshotService: new PeakGivebackCryptoFeatureSnapshotService(),
+      decisionEngine,
+      executionEngine,
+      runtimeSessionStateStore,
+    });
+
+    const result = await strategy.runOnce(1_000_000);
+
+    assert.equal(decisionEngine.calls, 0);
+    assert.equal(result.decision.action, 'close_long');
+    assert.deepEqual(result.decision.reasoning, ['crypto_profit_lock', 'peak_giveback_lock']);
+    assert.equal(executionEngine.calls[0].decision.action, 'close_long');
+  });
+
+  test('StrategyInstance keeps a crypto position open when the giveback from peak stays modest', async () => {
+    class SmallGivebackCryptoFeatureSnapshotService extends FakeFeatureSnapshotService {
+      async build(payload) {
+        const snapshot = await super.build(payload);
+        return {
+          ...snapshot,
+          symbol: 'ETH/USD',
+          assetClass: 'crypto',
+          currentPrice: 103.8,
+          marketState: {
+            isOpen: true,
+            isPreClose: false,
+            isNoTradeOpen: false,
+            sessionLabel: 'continuous_open',
+          },
+          position: {
+            symbol: 'ETH/USD',
+            qty: 0.5,
+            entryPrice: 100,
+            currentPrice: 103.8,
+          },
+          timeframes: {
+            '5m': {
+              values: {
+                rsi14: 37,
+                emaGap12_26: -0.0009,
+                priceVsSma20: -0.0015,
+              },
+            },
+            '1h': {
+              values: {
+                rsi14: 47,
+                emaGap12_26: 0.0008,
+                priceVsSma20: -0.0002,
+              },
+            },
+          },
+        };
+      }
+    }
+
+    class HoldDecisionEngine {
+      constructor() {
+        this.calls = 0;
+      }
+
+      async decide() {
+        this.calls += 1;
+        return {
+          action: 'hold',
+          confidence: 0.65,
+          reasoning: ['crypto_hold'],
+          requestedSizePct: null,
+          stopLossPct: null,
+          takeProfitPct: null,
+        };
+      }
+    }
+
+    const rootDir = makeTempDir();
+    const runtimeSessionStateStore = new RuntimeSessionStateStore({
+      runsDir: `${rootDir}/runs`,
+      timezone: 'America/New_York',
+    });
+    runtimeSessionStateStore.updateSymbolState('ETH/USD', 1_000_000, {
+      cryptoPeakUnrealizedPnlPct: 0.043,
+      cryptoPeakObservedAtMs: 990_000,
+    });
+
+    const decisionEngine = new HoldDecisionEngine();
+    const executionEngine = new FakeExecutionEngine();
+    const strategy = new StrategyInstance({
+      symbol: 'ETH/USD',
+      runtimeMode: 'paper',
+      configStore: new FakeConfigStore(),
+      featureSnapshotService: new SmallGivebackCryptoFeatureSnapshotService(),
+      decisionEngine,
+      executionEngine,
+      runtimeSessionStateStore,
+    });
+
+    const result = await strategy.runOnce(1_000_000);
 
     assert.equal(decisionEngine.calls, 1);
     assert.equal(result.decision.action, 'hold');

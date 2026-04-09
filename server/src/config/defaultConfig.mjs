@@ -95,6 +95,12 @@ export const defaultConfig = Object.freeze({
       mediumEmaGapCeiling: -0.0015,
       fastRsiCeiling: 68,
       fastEmaGapForMediumWeakExitCeiling: 0.001,
+      peakActivationUnrealizedPnlPct: 0.028,
+      peakGivebackAbsPct: 0.009,
+      peakRetainRatioMax: 0.76,
+      fastWeakRsiCeiling: 42,
+      fastWeakPriceVsSmaCeiling: -0.001,
+      fastWeakEmaGapCeiling: -0.0004,
     },
   },
   telemetry: {

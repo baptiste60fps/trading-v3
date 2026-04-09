@@ -29,6 +29,8 @@ export class StrategyInstance {
     this.lastOpenRejectionMs = null;
     this.lastOpenRejectionCategory = null;
     this.lastOpenRejectionMessage = null;
+    this.cryptoPeakUnrealizedPnlPct = null;
+    this.cryptoPeakObservedAtMs = null;
   }
 
   async warmup(atMs = Date.now()) {
@@ -56,6 +58,7 @@ export class StrategyInstance {
       atMs,
       runtimeMode: this.runtimeMode,
     });
+    this.#updateCryptoProfitTracking(features, atMs);
     const forcedCryptoExitDecision = this.#resolveForcedCryptoProfitExitDecision(features);
     let decision = this.#shouldForcePreCloseExit(features)
       ? this.#buildPreCloseExitDecision(features)
@@ -132,6 +135,8 @@ export class StrategyInstance {
       lastOpenRejectionMs: this.lastOpenRejectionMs,
       lastOpenRejectionCategory: this.lastOpenRejectionCategory,
       lastOpenRejectionMessage: this.lastOpenRejectionMessage,
+      cryptoPeakUnrealizedPnlPct: this.cryptoPeakUnrealizedPnlPct,
+      cryptoPeakObservedAtMs: this.cryptoPeakObservedAtMs,
     };
   }
 
@@ -224,6 +229,19 @@ export class StrategyInstance {
       });
     }
 
+    const isPeakGivebackExit = this.#matchesCryptoPeakGivebackExit({
+      profitLock,
+      unrealizedPnlPct,
+      fast,
+      medium,
+    });
+    if (isPeakGivebackExit) {
+      return this.#buildCryptoProfitLockExitDecision(features, {
+        unrealizedPnlPct,
+        mode: 'peak_giveback_lock',
+      });
+    }
+
     return null;
   }
 
@@ -264,6 +282,51 @@ export class StrategyInstance {
       && fast.emaGap12_26 <= fastEmaGapCeiling;
   }
 
+  #matchesCryptoPeakGivebackExit({ profitLock, unrealizedPnlPct, fast, medium }) {
+    const peakUnrealizedPnlPct = Number(this.cryptoPeakUnrealizedPnlPct);
+    const peakActivationUnrealizedPnlPct = Number(profitLock?.peakActivationUnrealizedPnlPct);
+    const peakGivebackAbsPct = Number(profitLock?.peakGivebackAbsPct);
+    const peakRetainRatioMax = Number(profitLock?.peakRetainRatioMax);
+
+    if (!Number.isFinite(peakUnrealizedPnlPct) || !Number.isFinite(peakActivationUnrealizedPnlPct) || peakUnrealizedPnlPct < peakActivationUnrealizedPnlPct) {
+      return false;
+    }
+
+    const givebackPct = peakUnrealizedPnlPct - unrealizedPnlPct;
+    const retainRatio = peakUnrealizedPnlPct > 0 ? (unrealizedPnlPct / peakUnrealizedPnlPct) : 1;
+    if (!Number.isFinite(givebackPct) || !Number.isFinite(retainRatio)) return false;
+    if (givebackPct < peakGivebackAbsPct || retainRatio > peakRetainRatioMax) return false;
+
+    return this.#matchesCryptoFastWeakness({ profitLock, fast })
+      || this.#matchesCryptoMediumWeakness({ profitLock, medium });
+  }
+
+  #matchesCryptoFastWeakness({ profitLock, fast }) {
+    const fastWeakRsiCeiling = Number(profitLock?.fastWeakRsiCeiling);
+    const fastWeakPriceVsSmaCeiling = Number(profitLock?.fastWeakPriceVsSmaCeiling);
+    const fastWeakEmaGapCeiling = Number(profitLock?.fastWeakEmaGapCeiling);
+
+    return Number.isFinite(Number(fast?.rsi14))
+      && Number.isFinite(Number(fast?.priceVsSma20))
+      && Number.isFinite(Number(fast?.emaGap12_26))
+      && fast.rsi14 <= fastWeakRsiCeiling
+      && fast.priceVsSma20 <= fastWeakPriceVsSmaCeiling
+      && fast.emaGap12_26 <= fastWeakEmaGapCeiling;
+  }
+
+  #matchesCryptoMediumWeakness({ profitLock, medium }) {
+    const mediumRsiCeiling = Number(profitLock?.mediumRsiCeiling);
+    const mediumPriceVsSmaCeiling = Number(profitLock?.mediumPriceVsSmaCeiling);
+    const mediumEmaGapCeiling = Number(profitLock?.mediumEmaGapCeiling);
+
+    return Number.isFinite(Number(medium?.rsi14))
+      && Number.isFinite(Number(medium?.priceVsSma20))
+      && Number.isFinite(Number(medium?.emaGap12_26))
+      && medium.rsi14 <= mediumRsiCeiling
+      && medium.priceVsSma20 <= mediumPriceVsSmaCeiling
+      && medium.emaGap12_26 <= mediumEmaGapCeiling;
+  }
+
   #buildCryptoProfitLockExitDecision(features, { unrealizedPnlPct = null, mode = 'fast_overbought_rollover' } = {}) {
     const position = features?.position ?? null;
     const entryPrice = Number(position?.entryPrice);
@@ -289,6 +352,7 @@ export class StrategyInstance {
         marketSession: features?.marketState?.sessionLabel ?? null,
         forcedCryptoProfitLockExit: true,
         unrealizedPnlPct: resolvedUnrealizedPnlPct,
+        peakUnrealizedPnlPct: Number.isFinite(Number(this.cryptoPeakUnrealizedPnlPct)) ? Number(this.cryptoPeakUnrealizedPnlPct) : null,
         fastRsi14: Number.isFinite(Number(fast?.rsi14)) ? Number(fast.rsi14) : null,
         fastEmaGap12_26: Number.isFinite(Number(fast?.emaGap12_26)) ? Number(fast.emaGap12_26) : null,
         fastPriceVsSma20: Number.isFinite(Number(fast?.priceVsSma20)) ? Number(fast.priceVsSma20) : null,
@@ -357,6 +421,8 @@ export class StrategyInstance {
     this.lastOpenRejectionMs = Number.isFinite(Number(stored?.lastOpenRejectionMs)) ? Number(stored.lastOpenRejectionMs) : null;
     this.lastOpenRejectionCategory = stored?.lastOpenRejectionCategory ?? null;
     this.lastOpenRejectionMessage = stored?.lastOpenRejectionMessage ?? null;
+    this.cryptoPeakUnrealizedPnlPct = Number.isFinite(Number(stored?.cryptoPeakUnrealizedPnlPct)) ? Number(stored.cryptoPeakUnrealizedPnlPct) : null;
+    this.cryptoPeakObservedAtMs = Number.isFinite(Number(stored?.cryptoPeakObservedAtMs)) ? Number(stored.cryptoPeakObservedAtMs) : null;
   }
 
   #persistSessionState(atMs) {
@@ -365,6 +431,30 @@ export class StrategyInstance {
       lastOpenRejectionMs: this.lastOpenRejectionMs,
       lastOpenRejectionCategory: this.lastOpenRejectionCategory,
       lastOpenRejectionMessage: this.lastOpenRejectionMessage,
+      cryptoPeakUnrealizedPnlPct: this.cryptoPeakUnrealizedPnlPct,
+      cryptoPeakObservedAtMs: this.cryptoPeakObservedAtMs,
     });
+  }
+
+  #updateCryptoProfitTracking(features, atMs) {
+    const position = features?.position ?? null;
+    const assetClass = String(features?.assetClass ?? '').trim().toLowerCase();
+    if (!position || assetClass !== 'crypto') {
+      this.cryptoPeakUnrealizedPnlPct = null;
+      this.cryptoPeakObservedAtMs = null;
+      return;
+    }
+
+    const entryPrice = Number(position?.entryPrice);
+    const currentPrice = Number(features?.currentPrice ?? position?.currentPrice);
+    if (!Number.isFinite(entryPrice) || !Number.isFinite(currentPrice) || entryPrice <= 0) return;
+
+    const unrealizedPnlPct = (currentPrice - entryPrice) / entryPrice;
+    if (!Number.isFinite(unrealizedPnlPct)) return;
+
+    if (!Number.isFinite(this.cryptoPeakUnrealizedPnlPct) || unrealizedPnlPct > this.cryptoPeakUnrealizedPnlPct) {
+      this.cryptoPeakUnrealizedPnlPct = unrealizedPnlPct;
+      this.cryptoPeakObservedAtMs = Number(atMs);
+    }
   }
 }
