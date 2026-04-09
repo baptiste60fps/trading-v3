@@ -19,6 +19,12 @@ class FakeConfigStore {
         fastRsiFloor: 74,
         fastEmaGapCeiling: 0,
         fastPriceVsSmaFloor: 0.001,
+        mediumWeakMinUnrealizedPnlPct: 0.024,
+        mediumRsiCeiling: 42,
+        mediumPriceVsSmaCeiling: -0.004,
+        mediumEmaGapCeiling: -0.0015,
+        fastRsiCeiling: 68,
+        fastEmaGapForMediumWeakExitCeiling: 0.001,
       },
     };
   }
@@ -459,6 +465,143 @@ export const register = async ({ test }) => {
       runtimeMode: 'paper',
       configStore: new FakeConfigStore(),
       featureSnapshotService: new SmallCryptoGainFeatureSnapshotService(),
+      decisionEngine,
+      executionEngine,
+    });
+
+    const result = await strategy.runOnce(Date.now());
+
+    assert.equal(decisionEngine.calls, 1);
+    assert.equal(result.decision.action, 'hold');
+    assert.equal(executionEngine.calls[0].decision.action, 'hold');
+  });
+
+  test('StrategyInstance forces a crypto profit-lock exit when medium trend fades while the position is still nicely profitable', async () => {
+    class MediumFadeCryptoFeatureSnapshotService extends FakeFeatureSnapshotService {
+      async build(payload) {
+        const snapshot = await super.build(payload);
+        return {
+          ...snapshot,
+          symbol: 'ETH/USD',
+          assetClass: 'crypto',
+          currentPrice: 103,
+          marketState: {
+            isOpen: true,
+            isPreClose: false,
+            isNoTradeOpen: false,
+            sessionLabel: 'continuous_open',
+          },
+          position: {
+            symbol: 'ETH/USD',
+            qty: 0.5,
+            entryPrice: 100,
+            currentPrice: 103,
+          },
+          timeframes: {
+            '5m': {
+              values: {
+                rsi14: 58,
+                emaGap12_26: 0.0002,
+                priceVsSma20: 0.0004,
+              },
+            },
+            '1h': {
+              values: {
+                rsi14: 38,
+                emaGap12_26: -0.002,
+                priceVsSma20: -0.006,
+              },
+            },
+          },
+        };
+      }
+    }
+
+    const decisionEngine = new FakeDecisionEngine();
+    const executionEngine = new FakeExecutionEngine();
+    const strategy = new StrategyInstance({
+      symbol: 'ETH/USD',
+      runtimeMode: 'paper',
+      configStore: new FakeConfigStore(),
+      featureSnapshotService: new MediumFadeCryptoFeatureSnapshotService(),
+      decisionEngine,
+      executionEngine,
+    });
+
+    const result = await strategy.runOnce(Date.now());
+
+    assert.equal(decisionEngine.calls, 0);
+    assert.equal(result.decision.action, 'close_long');
+    assert.deepEqual(result.decision.reasoning, ['crypto_profit_lock', 'medium_trend_fade']);
+    assert.equal(executionEngine.calls[0].decision.action, 'close_long');
+  });
+
+  test('StrategyInstance keeps a profitable crypto position open when the medium trend remains healthy', async () => {
+    class HealthyMediumCryptoFeatureSnapshotService extends FakeFeatureSnapshotService {
+      async build(payload) {
+        const snapshot = await super.build(payload);
+        return {
+          ...snapshot,
+          symbol: 'ETH/USD',
+          assetClass: 'crypto',
+          currentPrice: 103,
+          marketState: {
+            isOpen: true,
+            isPreClose: false,
+            isNoTradeOpen: false,
+            sessionLabel: 'continuous_open',
+          },
+          position: {
+            symbol: 'ETH/USD',
+            qty: 0.5,
+            entryPrice: 100,
+            currentPrice: 103,
+          },
+          timeframes: {
+            '5m': {
+              values: {
+                rsi14: 58,
+                emaGap12_26: 0.0002,
+                priceVsSma20: 0.0004,
+              },
+            },
+            '1h': {
+              values: {
+                rsi14: 49,
+                emaGap12_26: 0.0012,
+                priceVsSma20: 0.002,
+              },
+            },
+          },
+        };
+      }
+    }
+
+    class HoldDecisionEngine {
+      constructor() {
+        this.calls = 0;
+      }
+
+      async decide() {
+        this.calls += 1;
+        return {
+          action: 'hold',
+          confidence: 0.65,
+          reasoning: ['crypto_hold'],
+          requestedSizePct: null,
+          stopLossPct: null,
+          takeProfitPct: null,
+        };
+      }
+    }
+
+    const decisionEngine = new HoldDecisionEngine();
+    const executionEngine = new FakeExecutionEngine();
+    const strategy = new StrategyInstance({
+      symbol: 'ETH/USD',
+      runtimeMode: 'paper',
+      configStore: new FakeConfigStore(),
+      featureSnapshotService: new HealthyMediumCryptoFeatureSnapshotService(),
       decisionEngine,
       executionEngine,
     });

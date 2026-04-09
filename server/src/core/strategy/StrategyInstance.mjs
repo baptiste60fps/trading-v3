@@ -56,10 +56,11 @@ export class StrategyInstance {
       atMs,
       runtimeMode: this.runtimeMode,
     });
+    const forcedCryptoExitDecision = this.#resolveForcedCryptoProfitExitDecision(features);
     let decision = this.#shouldForcePreCloseExit(features)
       ? this.#buildPreCloseExitDecision(features)
-      : this.#shouldForceCryptoProfitLockExit(features)
-        ? this.#buildCryptoProfitLockExitDecision(features)
+      : forcedCryptoExitDecision
+        ? forcedCryptoExitDecision
       : (!features?.position && this.#shouldBypassOpeningDecision(features)
           ? this.#buildMarketGateDecision(features)
           : await this.decisionEngine.decide({
@@ -179,24 +180,54 @@ export class StrategyInstance {
     };
   }
 
-  #shouldForceCryptoProfitLockExit(features) {
+  #resolveForcedCryptoProfitExitDecision(features) {
     const position = features?.position ?? null;
     const assetClass = String(features?.assetClass ?? '').trim().toLowerCase();
-    if (!position || assetClass !== 'crypto') return false;
+    if (!position || assetClass !== 'crypto') return null;
 
     const executionConfig = this.configStore?.getExecutionConfig?.() ?? {};
     const profitLock = executionConfig?.cryptoProfitLock ?? {};
-    if (profitLock?.enabled === false) return false;
+    if (profitLock?.enabled === false) return null;
 
     const entryPrice = Number(position?.entryPrice);
     const currentPrice = Number(features?.currentPrice ?? position?.currentPrice);
-    if (!Number.isFinite(entryPrice) || !Number.isFinite(currentPrice) || entryPrice <= 0) return false;
+    if (!Number.isFinite(entryPrice) || !Number.isFinite(currentPrice) || entryPrice <= 0) return null;
 
     const unrealizedPnlPct = (currentPrice - entryPrice) / entryPrice;
     const minUnrealizedPnlPct = Number(profitLock?.minUnrealizedPnlPct);
-    if (!Number.isFinite(minUnrealizedPnlPct) || unrealizedPnlPct < minUnrealizedPnlPct) return false;
+    if (!Number.isFinite(minUnrealizedPnlPct) || unrealizedPnlPct < minUnrealizedPnlPct) return null;
 
     const fast = features?.timeframes?.['5m']?.values ?? {};
+    const medium = features?.timeframes?.['1h']?.values ?? {};
+
+    const isFastOverboughtRollover = this.#matchesCryptoFastOverboughtRollover({
+      profitLock,
+      fast,
+    });
+    if (isFastOverboughtRollover) {
+      return this.#buildCryptoProfitLockExitDecision(features, {
+        unrealizedPnlPct,
+        mode: 'fast_overbought_rollover',
+      });
+    }
+
+    const isMediumTrendFade = this.#matchesCryptoMediumTrendFade({
+      profitLock,
+      unrealizedPnlPct,
+      fast,
+      medium,
+    });
+    if (isMediumTrendFade) {
+      return this.#buildCryptoProfitLockExitDecision(features, {
+        unrealizedPnlPct,
+        mode: 'medium_trend_fade',
+      });
+    }
+
+    return null;
+  }
+
+  #matchesCryptoFastOverboughtRollover({ profitLock, fast }) {
     const fastRsiFloor = Number(profitLock?.fastRsiFloor);
     const fastEmaGapCeiling = Number(profitLock?.fastEmaGapCeiling);
     const fastPriceVsSmaFloor = Number(profitLock?.fastPriceVsSmaFloor);
@@ -209,19 +240,46 @@ export class StrategyInstance {
       && fast.priceVsSma20 >= fastPriceVsSmaFloor;
   }
 
-  #buildCryptoProfitLockExitDecision(features) {
+  #matchesCryptoMediumTrendFade({ profitLock, unrealizedPnlPct, fast, medium }) {
+    const mediumWeakMinUnrealizedPnlPct = Number(profitLock?.mediumWeakMinUnrealizedPnlPct);
+    if (!Number.isFinite(mediumWeakMinUnrealizedPnlPct) || unrealizedPnlPct < mediumWeakMinUnrealizedPnlPct) {
+      return false;
+    }
+
+    const mediumRsiCeiling = Number(profitLock?.mediumRsiCeiling);
+    const mediumPriceVsSmaCeiling = Number(profitLock?.mediumPriceVsSmaCeiling);
+    const mediumEmaGapCeiling = Number(profitLock?.mediumEmaGapCeiling);
+    const fastRsiCeiling = Number(profitLock?.fastRsiCeiling);
+    const fastEmaGapCeiling = Number(profitLock?.fastEmaGapForMediumWeakExitCeiling);
+
+    return Number.isFinite(Number(medium?.rsi14))
+      && Number.isFinite(Number(medium?.priceVsSma20))
+      && Number.isFinite(Number(medium?.emaGap12_26))
+      && Number.isFinite(Number(fast?.rsi14))
+      && Number.isFinite(Number(fast?.emaGap12_26))
+      && medium.rsi14 <= mediumRsiCeiling
+      && medium.priceVsSma20 <= mediumPriceVsSmaCeiling
+      && medium.emaGap12_26 <= mediumEmaGapCeiling
+      && fast.rsi14 <= fastRsiCeiling
+      && fast.emaGap12_26 <= fastEmaGapCeiling;
+  }
+
+  #buildCryptoProfitLockExitDecision(features, { unrealizedPnlPct = null, mode = 'fast_overbought_rollover' } = {}) {
     const position = features?.position ?? null;
     const entryPrice = Number(position?.entryPrice);
     const currentPrice = Number(features?.currentPrice ?? position?.currentPrice);
-    const unrealizedPnlPct = Number.isFinite(entryPrice) && Number.isFinite(currentPrice) && entryPrice > 0
+    const resolvedUnrealizedPnlPct = Number.isFinite(unrealizedPnlPct)
+      ? unrealizedPnlPct
+      : (Number.isFinite(entryPrice) && Number.isFinite(currentPrice) && entryPrice > 0
       ? (currentPrice - entryPrice) / entryPrice
-      : null;
+      : null);
     const fast = features?.timeframes?.['5m']?.values ?? {};
+    const medium = features?.timeframes?.['1h']?.values ?? {};
 
     return {
       action: 'close_long',
       confidence: 0.9,
-      reasoning: ['crypto_profit_lock', 'fast_overbought_rollover'],
+      reasoning: ['crypto_profit_lock', mode],
       requestedSizePct: null,
       stopLossPct: null,
       takeProfitPct: null,
@@ -230,10 +288,13 @@ export class StrategyInstance {
         assetClass: features?.assetClass ?? null,
         marketSession: features?.marketState?.sessionLabel ?? null,
         forcedCryptoProfitLockExit: true,
-        unrealizedPnlPct,
+        unrealizedPnlPct: resolvedUnrealizedPnlPct,
         fastRsi14: Number.isFinite(Number(fast?.rsi14)) ? Number(fast.rsi14) : null,
         fastEmaGap12_26: Number.isFinite(Number(fast?.emaGap12_26)) ? Number(fast.emaGap12_26) : null,
         fastPriceVsSma20: Number.isFinite(Number(fast?.priceVsSma20)) ? Number(fast.priceVsSma20) : null,
+        mediumRsi14: Number.isFinite(Number(medium?.rsi14)) ? Number(medium.rsi14) : null,
+        mediumEmaGap12_26: Number.isFinite(Number(medium?.emaGap12_26)) ? Number(medium.emaGap12_26) : null,
+        mediumPriceVsSma20: Number.isFinite(Number(medium?.priceVsSma20)) ? Number(medium.priceVsSma20) : null,
       },
     };
   }

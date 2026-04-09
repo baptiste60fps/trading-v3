@@ -84,6 +84,12 @@ export const defaultConfig = Object.freeze({
       fastRsiFloor: 74,
       fastEmaGapCeiling: 0,
       fastPriceVsSmaFloor: 0.001,
+      mediumWeakMinUnrealizedPnlPct: 0.024,
+      mediumRsiCeiling: 42,
+      mediumPriceVsSmaCeiling: -0.004,
+      mediumEmaGapCeiling: -0.0015,
+      fastRsiCeiling: 68,
+      fastEmaGapForMediumWeakExitCeiling: 0.001,
     },
   },
   telemetry: {
