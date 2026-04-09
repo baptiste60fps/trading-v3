@@ -1,7 +1,7 @@
 {
   "type": "daily_market_report",
-  "generatedAtMs": 1775682605549,
-  "reportDate": "2026-04-08",
+  "generatedAtMs": 1775721870492,
+  "reportDate": "2026-04-09",
   "runtime": {
     "mode": "paper",
     "executionDryRun": false,
@@ -17,43 +17,43 @@
       "isOpen": false,
       "isPreClose": false,
       "isNoTradeOpen": false,
-      "minutesFromOpen": 459,
-      "minutesToClose": -69,
-      "sessionLabel": "after_close"
+      "minutesFromOpen": -326,
+      "minutesToClose": 716,
+      "sessionLabel": "before_open"
     },
-    "targetSessionDate": "2026-04-08",
+    "targetSessionDate": "2026-04-09",
     "targetSessionOpenLocal": "09:30",
     "targetWakeupLocal": "08:45"
   },
   "account": {
     "cash": 93442.38,
-    "equity": 96870.76,
-    "exposurePct": 0.035391228560610034,
+    "equity": 96837.47,
+    "exposurePct": 0.03505965740327582,
     "positionCount": 3,
     "positions": [
       {
         "symbol": "BTC/USD",
         "qty": 0.020497376,
         "entryPrice": 69182.965071863,
-        "currentPrice": 71419.213,
-        "marketValue": 1463.906462,
-        "unrealizedPnl": 45.837214
+        "currentPrice": 70982.19,
+        "marketValue": 1454.948638,
+        "unrealizedPnl": 36.87939
       },
       {
         "symbol": "ETH/USD",
         "qty": 0.66737467,
         "entryPrice": 2124.827151055,
-        "currentPrice": 2212.7,
-        "marketValue": 1476.699932,
-        "unrealizedPnl": 58.644113
+        "currentPrice": 2181.4,
+        "marketValue": 1455.811105,
+        "unrealizedPnl": 37.755286
       },
       {
         "symbol": "SOL/USD",
         "qty": 5.870367238,
         "entryPrice": 80.38,
-        "currentPrice": 83.09,
-        "marketValue": 487.768814,
-        "unrealizedPnl": 15.908695
+        "currentPrice": 82.504,
+        "marketValue": 484.328779,
+        "unrealizedPnl": 12.46866
       }
     ],
     "error": null
@@ -68,7 +68,7 @@
         "url": "https://www.sec.gov/rss/pressrelease.xml",
         "status": "error",
         "error": "RSS request failed (403) for https://www.sec.gov/rss/pressrelease.xml",
-        "fetchedAtMs": 1775682581742,
+        "fetchedAtMs": 1775721841751,
         "itemCount": 0,
         "source": "network",
         "items": []
@@ -79,7 +79,7 @@
         "url": "https://www.sec.gov/rss/news/press.xml",
         "status": "error",
         "error": "RSS request failed (403) for https://www.sec.gov/rss/news/press.xml",
-        "fetchedAtMs": 1775682581812,
+        "fetchedAtMs": 1775721841818,
         "itemCount": 0,
         "source": "network",
         "items": []
@@ -90,9 +90,9 @@
         "url": "https://www.federalreserve.gov/feeds/press_all.xml",
         "status": "ok",
         "error": null,
-        "fetchedAtMs": 1775682581967,
+        "fetchedAtMs": 1775721701102,
         "itemCount": 5,
-        "source": "network",
+        "source": "cache",
         "items": [
           {
             "title": "Minutes of the Federal Open Market Committee, March 17–18, 2026",
@@ -132,9 +132,9 @@
         "url": "https://www.federalreserve.gov/feeds/press_monetary.xml",
         "status": "ok",
         "error": null,
-        "fetchedAtMs": 1775682582110,
+        "fetchedAtMs": 1775721701150,
         "itemCount": 5,
-        "source": "network",
+        "source": "cache",
         "items": [
           {
             "title": "Minutes of the Federal Open Market Committee, March 17–18, 2026",
@@ -175,7 +175,7 @@
       "symbol": "BTC/USD",
       "assetClass": "crypto",
       "strategyProfile": "crypto_momentum",
-      "currentPrice": 71452.305,
+      "currentPrice": 71007.1235,
       "marketState": {
         "timezone": "America/New_York",
         "sessionMode": "continuous",
@@ -190,9 +190,9 @@
         "symbol": "BTC/USD",
         "qty": 0.020497376,
         "entryPrice": 69182.965071863,
-        "currentPrice": 71419.213,
-        "marketValue": 1463.906462,
-        "unrealizedPnl": 45.837214
+        "currentPrice": 70982.19,
+        "marketValue": 1454.948638,
+        "unrealizedPnl": 36.87939
       },
       "riskState": {
         "canOpen": true,
@@ -201,50 +201,50 @@
       },
       "timeframes": {
         "5m": {
-          "lastClose": 71452.305,
-          "rsi14": 61.154233901086286,
-          "atrPct14": 0.0012296736163475443,
-          "priceVsSma20": 0.0011898254186498167,
-          "emaGap12_26": -0.000010770561445989084,
+          "lastClose": 71007.1235,
+          "rsi14": 51.002372197035356,
+          "atrPct14": 0.0014243787204573134,
+          "priceVsSma20": 0.00006877952019536671,
+          "emaGap12_26": 0.00016137512351451131,
           "barCount": 250
         },
         "1h": {
-          "lastClose": 71452.305,
-          "rsi14": 47.88579588877204,
-          "atrPct14": 0.007258024876074409,
-          "priceVsSma20": -0.001077980686457492,
-          "emaGap12_26": 0.004779144691255016,
+          "lastClose": 71007.1235,
+          "rsi14": 47.05402784633333,
+          "atrPct14": 0.004955766012486269,
+          "priceVsSma20": -0.0023273021255969866,
+          "emaGap12_26": 0.00039683567490630646,
           "barCount": 250
         },
         "4h": {
-          "lastClose": 71452.305,
-          "rsi14": 63.71650226351634,
-          "atrPct14": 0.01638319394999126,
-          "priceVsSma20": 0.025131117360850035,
-          "emaGap12_26": 0.015239757268180193,
+          "lastClose": 71007.1235,
+          "rsi14": 66.9894073384669,
+          "atrPct14": 0.01549111864192553,
+          "priceVsSma20": 0.012486768981033382,
+          "emaGap12_26": 0.012690443125522921,
           "barCount": 250
         },
         "1d": {
-          "lastClose": 71452.305,
-          "rsi14": 50.56679889394573,
-          "atrPct14": 0.03511539648921855,
-          "priceVsSma20": 0.04094200292162532,
-          "emaGap12_26": 0.0001568021593206868,
+          "lastClose": 71007.1235,
+          "rsi14": 58.875935018063956,
+          "atrPct14": 0.032760075103098654,
+          "priceVsSma20": 0.03436557660713823,
+          "emaGap12_26": 0.001963735784476022,
           "barCount": 250
         }
       },
       "relatedContext": {
-        "oneHourTrend": 0.0037948688264094785,
-        "oneHourRsi": 38.24413425716976,
-        "fourHourTrend": 0.014624656232480885,
-        "fourHourRsi": 56.37010575627688
+        "oneHourTrend": -0.00291808402709771,
+        "oneHourRsi": 35.47500409057271,
+        "fourHourTrend": 0.010411356212729924,
+        "fourHourRsi": 61.23379938427659
       }
     },
     {
       "symbol": "ETH/USD",
       "assetClass": "crypto",
       "strategyProfile": "crypto_momentum",
-      "currentPrice": 2210.775,
+      "currentPrice": 2182.1725,
       "marketState": {
         "timezone": "America/New_York",
         "sessionMode": "continuous",
@@ -259,9 +259,9 @@
         "symbol": "ETH/USD",
         "qty": 0.66737467,
         "entryPrice": 2124.827151055,
-        "currentPrice": 2212.7,
-        "marketValue": 1476.699932,
-        "unrealizedPnl": 58.644113
+        "currentPrice": 2181.4,
+        "marketValue": 1455.811105,
+        "unrealizedPnl": 37.755286
       },
       "riskState": {
         "canOpen": true,
@@ -270,50 +270,50 @@
       },
       "timeframes": {
         "5m": {
-          "lastClose": 2210.775,
-          "rsi14": 48.20508322185954,
-          "atrPct14": 0.0013487836359905845,
-          "priceVsSma20": 0.0001492346479308785,
-          "emaGap12_26": -0.00027876027291051414,
-          "barCount": 248
+          "lastClose": 2182.1725,
+          "rsi14": 57.856402850595074,
+          "atrPct14": 0.0011067443764675173,
+          "priceVsSma20": 0.0002952517143485184,
+          "emaGap12_26": 0.00010916095483448235,
+          "barCount": 249
         },
         "1h": {
-          "lastClose": 2210.775,
-          "rsi14": 37.74271429060642,
-          "atrPct14": 0.009207895794784296,
-          "priceVsSma20": -0.009490847649956778,
-          "emaGap12_26": 0.004842830024717349,
+          "lastClose": 2182.1725,
+          "rsi14": 36.301195439431524,
+          "atrPct14": 0.005783898516599511,
+          "priceVsSma20": -0.006931893416491273,
+          "emaGap12_26": -0.0024684793899898564,
           "barCount": 250
         },
         "4h": {
-          "lastClose": 2210.775,
-          "rsi14": 59.444961646323144,
-          "atrPct14": 0.021436639108780513,
-          "priceVsSma20": 0.028489428148433464,
-          "emaGap12_26": 0.018922935621204562,
+          "lastClose": 2182.1725,
+          "rsi14": 61.88700928485778,
+          "atrPct14": 0.02005087328600937,
+          "priceVsSma20": 0.007995574593299724,
+          "emaGap12_26": 0.014431777543578966,
           "barCount": 250
         },
         "1d": {
-          "lastClose": 2210.775,
-          "rsi14": 53.19724252916805,
-          "atrPct14": 0.045295995013287176,
-          "priceVsSma20": 0.055351189407797284,
-          "emaGap12_26": 0.007656381775738725,
+          "lastClose": 2182.1725,
+          "rsi14": 60.77882604444155,
+          "atrPct14": 0.04178830458627156,
+          "priceVsSma20": 0.04132425359547573,
+          "emaGap12_26": 0.008718982379541147,
           "barCount": 250
         }
       },
       "relatedContext": {
-        "oneHourTrend": 0.003763026159678312,
-        "oneHourRsi": 43.315675056252566,
-        "fourHourTrend": 0.0127830670559687,
-        "fourHourRsi": 58.505876064873476
+        "oneHourTrend": -0.0014854264946496283,
+        "oneHourRsi": 40.85142029402361,
+        "fourHourTrend": 0.009540689003701901,
+        "fourHourRsi": 63.78499841108115
       }
     },
     {
       "symbol": "SOL/USD",
       "assetClass": "crypto",
       "strategyProfile": "crypto_momentum",
-      "currentPrice": 83.3195,
+      "currentPrice": 82.2875,
       "marketState": {
         "timezone": "America/New_York",
         "sessionMode": "continuous",
@@ -328,9 +328,9 @@
         "symbol": "SOL/USD",
         "qty": 5.870367238,
         "entryPrice": 80.38,
-        "currentPrice": 83.09,
-        "marketValue": 487.768814,
-        "unrealizedPnl": 15.908695
+        "currentPrice": 82.504,
+        "marketValue": 484.328779,
+        "unrealizedPnl": 12.46866
       },
       "riskState": {
         "canOpen": true,
@@ -339,43 +339,43 @@
       },
       "timeframes": {
         "5m": {
-          "lastClose": 83.3195,
-          "rsi14": 55.29836609045709,
-          "atrPct14": 0.0016255412684220037,
-          "priceVsSma20": 0.0015010586021066063,
-          "emaGap12_26": -0.00002989871041606071,
-          "barCount": 249
+          "lastClose": 82.2875,
+          "rsi14": 66.93031717155714,
+          "atrPct14": 0.0016513530522341098,
+          "priceVsSma20": 0.0006057441913644517,
+          "emaGap12_26": 0.0007599195456280342,
+          "barCount": 248
         },
         "1h": {
-          "lastClose": 83.3195,
-          "rsi14": 38.745554223733095,
-          "atrPct14": 0.008167741559384574,
-          "priceVsSma20": -0.008483956981963973,
-          "emaGap12_26": 0.002746907628101608,
+          "lastClose": 82.2875,
+          "rsi14": 34.6488127417139,
+          "atrPct14": 0.006022438749159067,
+          "priceVsSma20": -0.005908584603793958,
+          "emaGap12_26": -0.003367688664205563,
           "barCount": 250
         },
         "4h": {
-          "lastClose": 83.3195,
-          "rsi14": 53.29524986623061,
-          "atrPct14": 0.021085852115736894,
-          "priceVsSma20": 0.01762018954938601,
-          "emaGap12_26": 0.010326376843757208,
+          "lastClose": 82.2875,
+          "rsi14": 60.58058948369539,
+          "atrPct14": 0.019478637334259235,
+          "priceVsSma20": 0.0025114106296483226,
+          "emaGap12_26": 0.006390934881880882,
           "barCount": 250
         },
         "1d": {
-          "lastClose": 83.3195,
-          "rsi14": 35.358533719085784,
-          "atrPct14": 0.053516336916070925,
-          "priceVsSma20": -0.012778387916202366,
-          "emaGap12_26": -0.019001852191229063,
+          "lastClose": 82.2875,
+          "rsi14": 41.40092802843319,
+          "atrPct14": 0.04956798860397996,
+          "priceVsSma20": -0.0202095801921771,
+          "emaGap12_26": -0.01878645201734699,
           "barCount": 250
         }
       },
       "relatedContext": {
-        "oneHourTrend": 0.0048109873579861824,
-        "oneHourRsi": 42.814255089689226,
-        "fourHourTrend": 0.017081346444692377,
-        "fourHourRsi": 61.58073195491974
+        "oneHourTrend": -0.001035821857541775,
+        "oneHourRsi": 41.677611642882425,
+        "fourHourTrend": 0.013561110334550944,
+        "fourHourRsi": 64.43820831166235
       }
     }
   ],
@@ -386,50 +386,50 @@
     "error": null,
     "analysis": {
       "marketTone": "risk_on",
-      "summary": "The market is showing signs of risk-on sentiment, with crypto assets maintaining their upward trends despite some short-term volatility. The Federal Reserve's recent press releases and monetary policy updates suggest continued cautious but supportive measures for the economy.",
+      "summary": "The market is showing signs of risk-on sentiment, with crypto assets maintaining positive momentum despite some short-term volatility. The Federal Reserve's recent press releases and monetary policy updates suggest continued cautious but supportive measures.",
       "keyRisks": [
-        "Potential regulatory changes",
-        "Volatility in major cryptocurrencies"
+        "Volatility in crypto markets",
+        "Interest rate hikes"
       ],
       "keyCatalysts": [
         "Positive FOMC minutes",
-        "Continued economic recovery"
+        "Potential regulatory changes for banks"
       ],
       "watchlist": [
         {
           "symbol": "BTC/USD",
           "bias": "watch_long",
           "confidence": 0.6,
-          "note": "Strong one-day trend and positive four-hour RSI suggest potential for further gains."
+          "note": "Short-term volatility, but long-term trends remain positive."
         },
         {
           "symbol": "ETH/USD",
           "bias": "watch_long",
-          "confidence": 0.55,
-          "note": "Moderate one-day trend and positive four-hour RSI indicate a cautious long bias."
+          "confidence": 0.7,
+          "note": "Positive four-hour trend and RSI indicate potential for further gains."
         },
         {
           "symbol": "SOL/USD",
-          "bias": "stand_aside",
-          "confidence": 0.45,
-          "note": "Mixed signals across timeframes, with recent downward pressure on the asset."
+          "bias": "watch_long",
+          "confidence": 0.55,
+          "note": "Four-hour EMA gap suggests upward pressure, but overall trend is mixed."
         }
       ],
       "preOpenChecklist": [
         {
-          "item": "Review FOMC minutes for any significant policy shifts",
+          "item": "Review FOMC minutes and implications for crypto markets",
           "status": "ready",
           "note": ""
         },
         {
-          "item": "Monitor global economic indicators and sentiment",
+          "item": "Monitor regulatory news on banks and credit unions",
           "status": "watch",
-          "note": "Keep an eye on emerging trends that could impact crypto markets."
+          "note": "Potential impact on liquidity and trading."
         },
         {
-          "item": "Check for any new regulatory announcements or updates",
-          "status": "block",
-          "note": "Hold off on making any trades until the situation is clearer."
+          "item": "Check technical indicators for key support/resistance levels",
+          "status": "ready",
+          "note": ""
         }
       ]
     }
