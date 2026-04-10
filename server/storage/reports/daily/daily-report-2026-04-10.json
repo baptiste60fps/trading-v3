@@ -1,7 +1,7 @@
 {
   "type": "daily_market_report",
-  "generatedAtMs": 1775761124291,
-  "reportDate": "2026-04-09",
+  "generatedAtMs": 1775801465193,
+  "reportDate": "2026-04-10",
   "runtime": {
     "mode": "paper",
     "executionDryRun": false,
@@ -14,62 +14,46 @@
     "currentState": {
       "timezone": "America/New_York",
       "sessionMode": "regular",
-      "isOpen": true,
+      "isOpen": false,
       "isPreClose": false,
       "isNoTradeOpen": false,
-      "minutesFromOpen": 328,
-      "minutesToClose": 62,
-      "sessionLabel": "regular_open"
+      "minutesFromOpen": -440,
+      "minutesToClose": 830,
+      "sessionLabel": "before_open"
     },
-    "targetSessionDate": "2026-04-09",
+    "targetSessionDate": "2026-04-10",
     "targetSessionOpenLocal": "09:30",
     "targetWakeupLocal": "08:45"
   },
   "account": {
-    "cash": 88769.98,
-    "equity": 96914.66,
-    "exposurePct": 0.08403972856118981,
-    "positionCount": 5,
+    "cash": 93502.4,
+    "equity": 96938.39,
+    "exposurePct": 0.035445100759358604,
+    "positionCount": 3,
     "positions": [
-      {
-        "symbol": "AAPL",
-        "qty": 11,
-        "entryPrice": 257.99,
-        "currentPrice": 259.895,
-        "marketValue": 2858.845,
-        "unrealizedPnl": 20.955
-      },
       {
         "symbol": "BTC/USD",
         "qty": 0.020497376,
         "entryPrice": 69182.965071863,
-        "currentPrice": 71907.497,
-        "marketValue": 1473.915003,
-        "unrealizedPnl": 55.845755
+        "currentPrice": 72177.8,
+        "marketValue": 1479.455505,
+        "unrealizedPnl": 61.386257
       },
       {
         "symbol": "ETH/USD",
         "qty": 0.66737467,
         "entryPrice": 2124.827151055,
-        "currentPrice": 2206.7,
-        "marketValue": 1472.695684,
-        "unrealizedPnl": 54.639865
+        "currentPrice": 2197.91,
+        "marketValue": 1466.829461,
+        "unrealizedPnl": 48.773642
       },
       {
         "symbol": "SOL/USD",
         "qty": 5.870367238,
         "entryPrice": 80.38,
-        "currentPrice": 83.96,
-        "marketValue": 492.876033,
-        "unrealizedPnl": 21.015914
-      },
-      {
-        "symbol": "TGT",
-        "qty": 15,
-        "entryPrice": 122.3,
-        "currentPrice": 123.09,
-        "marketValue": 1846.35,
-        "unrealizedPnl": 11.85
+        "currentPrice": 83.42,
+        "marketValue": 489.706035,
+        "unrealizedPnl": 17.845916
       }
     ],
     "error": null
@@ -84,7 +68,7 @@
         "url": "https://www.sec.gov/rss/pressrelease.xml",
         "status": "error",
         "error": "RSS request failed (403) for https://www.sec.gov/rss/pressrelease.xml",
-        "fetchedAtMs": 1775761093577,
+        "fetchedAtMs": 1775801440152,
         "itemCount": 0,
         "source": "network",
         "items": []
@@ -95,7 +79,7 @@
         "url": "https://www.sec.gov/rss/news/press.xml",
         "status": "error",
         "error": "RSS request failed (403) for https://www.sec.gov/rss/news/press.xml",
-        "fetchedAtMs": 1775761093640,
+        "fetchedAtMs": 1775801440215,
         "itemCount": 0,
         "source": "network",
         "items": []
@@ -106,7 +90,7 @@
         "url": "https://www.federalreserve.gov/feeds/press_all.xml",
         "status": "ok",
         "error": null,
-        "fetchedAtMs": 1775761057989,
+        "fetchedAtMs": 1775801366231,
         "itemCount": 5,
         "source": "cache",
         "items": [
@@ -148,7 +132,7 @@
         "url": "https://www.federalreserve.gov/feeds/press_monetary.xml",
         "status": "ok",
         "error": null,
-        "fetchedAtMs": 1775761058130,
+        "fetchedAtMs": 1775801366269,
         "itemCount": 5,
         "source": "cache",
         "items": [
@@ -189,198 +173,210 @@
   "watchlist": [
     {
       "symbol": "BTC/USD",
+      "assetClass": "crypto",
       "strategyProfile": "crypto_momentum",
-      "currentPrice": null,
+      "currentPrice": 72140.5665,
       "marketState": {
         "timezone": "America/New_York",
-        "sessionMode": "regular",
+        "sessionMode": "continuous",
         "isOpen": true,
         "isPreClose": false,
         "isNoTradeOpen": false,
-        "minutesFromOpen": 328,
-        "minutesToClose": 62,
-        "sessionLabel": "regular_open"
+        "minutesFromOpen": null,
+        "minutesToClose": null,
+        "sessionLabel": "continuous_open"
       },
       "position": {
         "symbol": "BTC/USD",
         "qty": 0.020497376,
         "entryPrice": 69182.965071863,
-        "currentPrice": 71907.497,
-        "marketValue": 1473.915003,
-        "unrealizedPnl": 55.845755
+        "currentPrice": 72177.8,
+        "marketValue": 1479.455505,
+        "unrealizedPnl": 61.386257
       },
-      "riskState": null,
+      "riskState": {
+        "canOpen": true,
+        "canClose": true,
+        "flags": []
+      },
       "timeframes": {
         "5m": {
-          "lastClose": null,
-          "rsi14": null,
-          "atrPct14": null,
-          "priceVsSma20": null,
-          "emaGap12_26": null,
-          "barCount": 0
+          "lastClose": 72140.5665,
+          "rsi14": 50.868136029690284,
+          "atrPct14": 0.0012383234770253328,
+          "priceVsSma20": 0.0004835229622606824,
+          "emaGap12_26": 0.0006882701392587065,
+          "barCount": 249
         },
         "1h": {
-          "lastClose": null,
-          "rsi14": null,
-          "atrPct14": null,
-          "priceVsSma20": null,
-          "emaGap12_26": null,
-          "barCount": 0
+          "lastClose": 72140.5665,
+          "rsi14": 50.6898210943948,
+          "atrPct14": 0.007069430009456391,
+          "priceVsSma20": 0.0034230933128390874,
+          "emaGap12_26": 0.0030584482379064463,
+          "barCount": 250
         },
         "4h": {
-          "lastClose": null,
-          "rsi14": null,
-          "atrPct14": null,
-          "priceVsSma20": null,
-          "emaGap12_26": null,
-          "barCount": 0
+          "lastClose": 72140.5665,
+          "rsi14": 60.41632313948538,
+          "atrPct14": 0.01383703994062755,
+          "priceVsSma20": 0.02085445843768766,
+          "emaGap12_26": 0.01300464240396324,
+          "barCount": 250
         },
         "1d": {
-          "lastClose": null,
-          "rsi14": null,
-          "atrPct14": null,
-          "priceVsSma20": null,
-          "emaGap12_26": null,
-          "barCount": 0
+          "lastClose": 72140.5665,
+          "rsi14": 75.77656917499648,
+          "atrPct14": 0.030634413041209722,
+          "priceVsSma20": 0.04781669508539706,
+          "emaGap12_26": 0.005687119696925467,
+          "barCount": 250
         }
       },
       "relatedContext": {
-        "oneHourTrend": null,
-        "oneHourRsi": null,
-        "fourHourTrend": null,
-        "fourHourRsi": null
-      },
-      "error": "too many requests."
+        "oneHourTrend": 0.0006183503485385767,
+        "oneHourRsi": 45.14906053055974,
+        "fourHourTrend": 0.00907802655238616,
+        "fourHourRsi": 41.11709983275475
+      }
     },
     {
       "symbol": "ETH/USD",
+      "assetClass": "crypto",
       "strategyProfile": "crypto_momentum",
-      "currentPrice": null,
+      "currentPrice": 2196.304,
       "marketState": {
         "timezone": "America/New_York",
-        "sessionMode": "regular",
+        "sessionMode": "continuous",
         "isOpen": true,
         "isPreClose": false,
         "isNoTradeOpen": false,
-        "minutesFromOpen": 328,
-        "minutesToClose": 62,
-        "sessionLabel": "regular_open"
+        "minutesFromOpen": null,
+        "minutesToClose": null,
+        "sessionLabel": "continuous_open"
       },
       "position": {
         "symbol": "ETH/USD",
         "qty": 0.66737467,
         "entryPrice": 2124.827151055,
-        "currentPrice": 2206.7,
-        "marketValue": 1472.695684,
-        "unrealizedPnl": 54.639865
+        "currentPrice": 2197.91,
+        "marketValue": 1466.829461,
+        "unrealizedPnl": 48.773642
       },
-      "riskState": null,
+      "riskState": {
+        "canOpen": true,
+        "canClose": true,
+        "flags": []
+      },
       "timeframes": {
         "5m": {
-          "lastClose": null,
-          "rsi14": null,
-          "atrPct14": null,
-          "priceVsSma20": null,
-          "emaGap12_26": null,
-          "barCount": 0
+          "lastClose": 2196.304,
+          "rsi14": 51.940406103568264,
+          "atrPct14": 0.0011211042343344827,
+          "priceVsSma20": 0.00007957181937291976,
+          "emaGap12_26": 0.0008370414137291788,
+          "barCount": 247
         },
         "1h": {
-          "lastClose": null,
-          "rsi14": null,
-          "atrPct14": null,
-          "priceVsSma20": null,
-          "emaGap12_26": null,
-          "barCount": 0
+          "lastClose": 2196.304,
+          "rsi14": 43.012285607345156,
+          "atrPct14": 0.007805302259256613,
+          "priceVsSma20": -0.0004454820188486481,
+          "emaGap12_26": -0.00015958132240749618,
+          "barCount": 250
         },
         "4h": {
-          "lastClose": null,
-          "rsi14": null,
-          "atrPct14": null,
-          "priceVsSma20": null,
-          "emaGap12_26": null,
-          "barCount": 0
+          "lastClose": 2196.304,
+          "rsi14": 43.87726646324786,
+          "atrPct14": 0.01658492215054411,
+          "priceVsSma20": 0.009635745021262208,
+          "emaGap12_26": 0.010946801114748632,
+          "barCount": 250
         },
         "1d": {
-          "lastClose": null,
-          "rsi14": null,
-          "atrPct14": null,
-          "priceVsSma20": null,
-          "emaGap12_26": null,
-          "barCount": 0
+          "lastClose": 2196.304,
+          "rsi14": 70.490336417367,
+          "atrPct14": 0.040822970712826756,
+          "priceVsSma20": 0.04508638042178893,
+          "emaGap12_26": 0.010812934604963886,
+          "barCount": 250
         }
       },
       "relatedContext": {
-        "oneHourTrend": null,
-        "oneHourRsi": null,
-        "fourHourTrend": null,
-        "fourHourRsi": null
-      },
-      "error": "too many requests."
+        "oneHourTrend": 0.002227365128695548,
+        "oneHourRsi": 48.98782827408456,
+        "fourHourTrend": 0.010106947196993465,
+        "fourHourRsi": 49.38662817087351
+      }
     },
     {
       "symbol": "SOL/USD",
+      "assetClass": "crypto",
       "strategyProfile": "crypto_momentum",
-      "currentPrice": null,
+      "currentPrice": 83.44,
       "marketState": {
         "timezone": "America/New_York",
-        "sessionMode": "regular",
+        "sessionMode": "continuous",
         "isOpen": true,
         "isPreClose": false,
         "isNoTradeOpen": false,
-        "minutesFromOpen": 328,
-        "minutesToClose": 62,
-        "sessionLabel": "regular_open"
+        "minutesFromOpen": null,
+        "minutesToClose": null,
+        "sessionLabel": "continuous_open"
       },
       "position": {
         "symbol": "SOL/USD",
         "qty": 5.870367238,
         "entryPrice": 80.38,
-        "currentPrice": 83.96,
-        "marketValue": 492.876033,
-        "unrealizedPnl": 21.015914
+        "currentPrice": 83.42,
+        "marketValue": 489.706035,
+        "unrealizedPnl": 17.845916
       },
-      "riskState": null,
+      "riskState": {
+        "canOpen": true,
+        "canClose": true,
+        "flags": []
+      },
       "timeframes": {
         "5m": {
-          "lastClose": null,
-          "rsi14": null,
-          "atrPct14": null,
-          "priceVsSma20": null,
-          "emaGap12_26": null,
-          "barCount": 0
+          "lastClose": 83.44,
+          "rsi14": 54.23897865549534,
+          "atrPct14": 0.0021417870839610833,
+          "priceVsSma20": 0.0014885499756469476,
+          "emaGap12_26": 0.0009468887709369495,
+          "barCount": 248
         },
         "1h": {
-          "lastClose": null,
-          "rsi14": null,
-          "atrPct14": null,
-          "priceVsSma20": null,
-          "emaGap12_26": null,
-          "barCount": 0
+          "lastClose": 83.44,
+          "rsi14": 47.285835453774325,
+          "atrPct14": 0.009044801225859473,
+          "priceVsSma20": 0.0009370139181254798,
+          "emaGap12_26": 0.0013962820194846496,
+          "barCount": 250
         },
         "4h": {
-          "lastClose": null,
-          "rsi14": null,
-          "atrPct14": null,
-          "priceVsSma20": null,
-          "emaGap12_26": null,
-          "barCount": 0
+          "lastClose": 83.44,
+          "rsi14": 38.356933202261644,
+          "atrPct14": 0.017717949326290925,
+          "priceVsSma20": 0.01253557325278169,
+          "emaGap12_26": 0.007209251990023691,
+          "barCount": 250
         },
         "1d": {
-          "lastClose": null,
-          "rsi14": null,
-          "atrPct14": null,
-          "priceVsSma20": null,
-          "emaGap12_26": null,
-          "barCount": 0
+          "lastClose": 83.44,
+          "rsi14": 50.96335764958929,
+          "atrPct14": 0.04813284274286058,
+          "priceVsSma20": -0.004695282015279974,
+          "emaGap12_26": -0.01594436570388064,
+          "barCount": 250
         }
       },
       "relatedContext": {
-        "oneHourTrend": null,
-        "oneHourRsi": null,
-        "fourHourTrend": null,
-        "fourHourRsi": null
-      },
-      "error": "too many requests."
+        "oneHourTrend": 0.001449433457749475,
+        "oneHourRsi": 46.851053350869975,
+        "fourHourTrend": 0.011975721759355936,
+        "fourHourRsi": 52.14679480136662
+      }
     }
   ],
   "llm": {
@@ -390,50 +386,50 @@
     "error": null,
     "analysis": {
       "marketTone": "risk_on",
-      "summary": "The market is showing signs of risk-on sentiment, with the account exposure at a low level and positions in crypto assets maintained. Recent Federal Reserve press releases and monetary policy updates suggest ongoing stability but may impact investor confidence.",
+      "summary": "The market is showing a risk-on sentiment, with the pre-market session indicating potential for broad-based gains across various assets. The crypto market, particularly Bitcoin and Ethereum, shows mixed signals but overall positive momentum.",
       "keyRisks": [
-        "Potential regulatory changes",
-        "Interest rate hikes"
+        "Potential policy changes from Federal Reserve",
+        "Volatility in broader markets"
       ],
       "keyCatalysts": [
-        "Economic data releases",
-        "Crypto market sentiment shifts"
+        "Federal Reserve press releases",
+        "Crypto-specific news and developments"
       ],
       "watchlist": [
         {
           "symbol": "BTC/USD",
           "bias": "watch_long",
-          "confidence": 0.6,
-          "note": "Continued momentum in the crypto space, but cautious due to potential regulatory changes."
+          "confidence": 0.7,
+          "note": "Positive momentum across all timeframes, with a slight increase in one-hour trend."
         },
         {
           "symbol": "ETH/USD",
           "bias": "watch_long",
-          "confidence": 0.7,
-          "note": "Strong fundamentals and positive market sentiment support long-term outlook."
+          "confidence": 0.65,
+          "note": "Mixed signals but overall positive momentum, especially in the four-hour timeframe."
         },
         {
           "symbol": "SOL/USD",
           "bias": "stand_aside",
-          "confidence": 0.5,
-          "note": "Market conditions are volatile, requiring closer monitoring before taking a position."
+          "confidence": 0.45,
+          "note": "Momentum is slightly negative, with a decrease in one-day trend and an overall mixed signal."
         }
       ],
       "preOpenChecklist": [
         {
-          "item": "Review recent Federal Reserve press releases and their implications for crypto markets.",
+          "item": "Review Federal Reserve press releases for any significant policy changes or signals",
           "status": "ready",
           "note": ""
         },
         {
-          "item": "Monitor key economic indicators scheduled for release today.",
+          "item": "Monitor broader market indicators for signs of risk-on or risk-off sentiment",
           "status": "watch",
-          "note": "Economic data could influence market sentiment."
+          "note": "Keep an eye on overall market trends and news."
         },
         {
-          "item": "Check for any updates on regulatory actions affecting major crypto exchanges.",
+          "item": "Prepare for potential volatility in the crypto markets, especially Bitcoin and Ethereum",
           "status": "block",
-          "note": "Potential for significant market impact if new regulations are announced."
+          "note": "Be cautious with positions as there could be significant price movements."
         }
       ]
     }
