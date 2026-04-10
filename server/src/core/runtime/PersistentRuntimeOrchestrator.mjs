@@ -272,6 +272,7 @@ export class PersistentRuntimeOrchestrator {
           symbol,
           ok: true,
           decisionAction: result?.decision?.action ?? null,
+          decisionSource: result?.arbitration?.source ?? result?.decision?.signalContext?.decisionSource ?? null,
           executionStatus: result?.executionResult?.status ?? null,
           marketSession: result?.features?.marketState?.sessionLabel ?? null,
           currentPrice: result?.features?.currentPrice ?? null,
@@ -289,7 +290,7 @@ export class PersistentRuntimeOrchestrator {
           error: null,
         });
         this.#logInfo(
-          `Cycle #${cycleNumber} ${symbol} -> decision=${summary.decisionAction ?? 'unknown'} exec=${summary.executionStatus ?? 'unknown'} market=${summary.marketSession ?? 'unknown'}`,
+          `Cycle #${cycleNumber} ${symbol} -> source=${summary.decisionSource ?? 'unknown'} decision=${summary.decisionAction ?? 'unknown'} exec=${summary.executionStatus ?? 'unknown'} market=${summary.marketSession ?? 'unknown'}`,
         );
       } catch (error) {
         const summary = {

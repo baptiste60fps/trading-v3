@@ -100,4 +100,29 @@ BAPTISTO_LLM_BASE_URL=http://127.0.0.1:11434
     assert.equal(summary.llmReady, true);
     assert.equal(summary.llmHealthMessage, null);
   });
+
+  test('createRuntime exposes deterministic entry wiring when enabled in config', async () => {
+    const rootDir = makeServerRootFixture({
+      runtimeConfig: {
+        runtime: { mode: 'paper' },
+        execution: {
+          deterministicEntry: {
+            enabled: true,
+            allowedSymbols: ['BTC/USD'],
+            allowedAssetClasses: ['crypto'],
+          },
+        },
+      },
+    });
+
+    const runtime = await createRuntime({
+      serverRootDir: rootDir,
+      env: {},
+    });
+
+    const summary = runtime.describe();
+    assert.equal(summary.deterministicEntryEnabled, true);
+    assert.ok(runtime.patternSignalEngine);
+    assert.ok(runtime.deterministicEntryPolicy);
+  });
 };

@@ -16,6 +16,8 @@ Le but n'est pas de figer une API finale mot a mot, mais de verrouiller les fron
 - Une strategie ne produit pas un ordre broker.
 - Une strategie produit une `DecisionIntent`.
 - La traduction en execution appartient a une couche dediee.
+- Les exits forcees et les entrees haute conviction ne doivent pas etre noyes dans la meme couche que l'appel LLM.
+- L'ordre de priorite entre politiques doit etre explicite et testable.
 
 ### LLM
 
@@ -124,6 +126,7 @@ interface DecisionIntent {
   requestedSizePct?: number | null;
   stopLossPct?: number | null;
   takeProfitPct?: number | null;
+  signalContext?: Record<string, unknown> | null;
 }
 
 interface ExecutionIntent {
@@ -179,6 +182,123 @@ Orchestration racine du serveur.
 - contenir la logique d'indicateurs
 - contenir la logique de strategie
 - parser directement les reponses LLM
+
+## 3.b `DecisionArbiter`
+
+### Role
+
+Arbitrer plusieurs politiques de decision sur le meme `FeatureSnapshot`.
+
+### Responsabilites
+
+- appliquer les priorites metier
+- expliquer la source de decision retenue
+- renvoyer une decision unique a l'execution
+
+### Contrat minimal
+
+```ts
+interface DecisionArbiter {
+  decide(context: PolicyContext): Promise<{
+    decision: DecisionIntent;
+    source: 'exit_policy' | 'deterministic_entry' | 'llm' | 'market_gate';
+  }>;
+}
+```
+
+### Priorite cible
+
+1. `PositionExitPolicy`
+2. `market_gate`
+3. `DeterministicEntryPolicy`
+4. `LlmDecisionPolicy`
+5. fallback `skip`
+
+## 3.c `PositionExitPolicy`
+
+### Role
+
+Centraliser les sorties forcees et la gestion mecanique des positions.
+
+### Responsabilites
+
+- preclose actions
+- crypto profit lock
+- invalidation forte de setup
+- futurs giveback / hard stop metier
+
+### Contrat minimal
+
+```ts
+interface PositionExitPolicy {
+  evaluate(context: PolicyContext): Promise<DecisionIntent | null>;
+}
+```
+
+### Ne doit pas
+
+- parler au broker
+- ouvrir une position
+
+## 3.d `DeterministicEntryPolicy`
+
+### Role
+
+Ouvrir sans LLM uniquement sur des setups long `high conviction`.
+
+### Responsabilites
+
+- evaluer quelques patterns stricts et rares
+- refuser tout setup ambigu
+- produire une decision compacte et stable
+
+### Contrat minimal
+
+```ts
+interface DeterministicEntryPolicy {
+  evaluate(context: PolicyContext): Promise<DecisionIntent | null>;
+}
+```
+
+### Ne doit pas
+
+- ouvrir "souvent"
+- remplacer une strategie generale
+- contourner les garde-fous portefeuille / marche
+
+## 3.e `PatternSignalEngine`
+
+### Role
+
+Factoriser la logique de pattern entre backtest, guard heuristique et entree non-LLM.
+
+### Responsabilites
+
+- evaluer des patterns nommes
+- retourner un resultat structure et testable
+
+### Contrat minimal
+
+```ts
+interface PatternSignalEngine {
+  evaluateTrendPullbackContinuation(context: PolicyContext): Promise<PatternResult>;
+  evaluateBreakoutRetest?(context: PolicyContext): Promise<PatternResult>;
+}
+
+interface PatternResult {
+  matched: boolean;
+  confidence: number;
+  reasoning: string[];
+  requestedSizePct?: number | null;
+  gateFailures?: string[];
+  signalContext?: Record<string, unknown>;
+}
+```
+
+### Ne doit pas
+
+- appeler le broker
+- dependre du LLM
 
 ## 4. `ConfigStore`
 

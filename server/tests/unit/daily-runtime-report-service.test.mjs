@@ -131,6 +131,12 @@ export const register = async ({ test }) => {
           action: 'open_long',
           reasoning: ['entry_signal'],
         },
+        arbitration: {
+          source: 'deterministic_entry',
+          entryPolicyApplied: false,
+          finalAction: 'open_long',
+          finalConfidence: 0.91,
+        },
         executionIntent: {
           action: 'open_long',
           qty: 10,
@@ -194,6 +200,12 @@ export const register = async ({ test }) => {
           action: 'close_long',
           reasoning: ['take_profit'],
         },
+        arbitration: {
+          source: 'exit_policy',
+          entryPolicyApplied: false,
+          finalAction: 'close_long',
+          finalConfidence: 0.9,
+        },
         executionIntent: {
           action: 'close_long',
           referencePrice: 102,
@@ -218,9 +230,13 @@ export const register = async ({ test }) => {
     assert.equal(report.entries.length, 1);
     assert.equal(report.exits.length, 1);
     assert.equal(report.exits[0].pnl, 20);
+    assert.equal(report.entries[0].decisionSource, 'deterministic_entry');
+    assert.equal(report.exits[0].decisionSource, 'exit_policy');
+    assert.equal(report.cycleSummaries[0].decisionSource, 'deterministic_entry');
     assert.deepEqual(report.cycleSummaries[0].decisionReasoning, ['entry_signal']);
     assert.equal(report.symbols.AAPL.shortBars.length, 2);
     assert.equal(report.symbols.AAPL.strategyProfile, 'single_stock_quality');
+    assert.equal(report.symbols.AAPL.arbitration.source, 'exit_policy');
     assert.equal(report.wakeupReport.reportDate, '2026-04-01');
     assert.ok(fs.existsSync(report.reportPath));
 

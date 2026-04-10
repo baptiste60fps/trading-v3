@@ -97,6 +97,10 @@ const summarizeAccountState = (portfolioState) => ({
 });
 
 const isAcceptedExecutionStatus = (status) => ['dry_run', 'accepted', 'filled', 'closed'].includes(String(status ?? ''));
+const sanitizeFileToken = (value, fallback = 'report') => {
+  const token = String(value ?? '').trim().replace(/[^A-Za-z0-9._-]+/g, '-');
+  return token ? token : fallback;
+};
 
 const findPosition = (snapshot, symbol) =>
   (snapshot?.positions ?? []).find((position) => String(position?.symbol ?? '').toUpperCase() === symbol) ?? null;
@@ -249,6 +253,12 @@ export class BacktestEngine {
       const result = {
         features,
         decision,
+        arbitration: decision?.arbitration ?? {
+          source: decision?.signalContext?.decisionSource ?? null,
+          entryPolicyApplied: false,
+          finalAction: decision?.action ?? null,
+          finalConfidence: decision?.confidence ?? null,
+        },
         executionIntent,
         executionResult,
       };
@@ -261,6 +271,8 @@ export class BacktestEngine {
         symbol: safeSymbol,
         ok: true,
         decisionAction: safeString(decision?.action),
+        decisionSource: safeString(result?.arbitration?.source ?? decision?.signalContext?.decisionSource),
+        arbitration: result?.arbitration ?? null,
         executionStatus: safeString(executionResult?.status),
         marketSession: safeString(features?.marketState?.sessionLabel),
         currentPrice: toFiniteOrNull(features?.currentPrice ?? bar.close),
@@ -280,6 +292,8 @@ export class BacktestEngine {
         price: features.currentPrice ?? bar.close,
         action: decision.action,
         confidence: decision.confidence,
+        decisionSource: result?.arbitration?.source ?? decision?.signalContext?.decisionSource ?? null,
+        arbitration: result?.arbitration ?? null,
         reasoning: decision.reasoning ?? [],
         signalContext: decision.signalContext ?? null,
         executionStatus: executionResult?.status,
@@ -499,6 +513,7 @@ export class BacktestEngine {
       position: summarizePosition(features.position),
       riskState: features.riskState ?? null,
       decision: result?.decision ?? null,
+      arbitration: result?.arbitration ?? null,
       executionIntent: result?.executionIntent ?? null,
       executionResult: result?.executionResult ?? null,
       shortBars: compactBars(features.shortBars),
@@ -532,6 +547,8 @@ export class BacktestEngine {
         qty: toFiniteOrNull(executionIntent.qty ?? executionResult.filledQty),
         referencePrice: toFiniteOrNull(executionIntent.referencePrice),
         stopLossPct: toFiniteOrNull(executionIntent.stopLossPct),
+        decisionSource: safeString(result?.arbitration?.source ?? result?.decision?.signalContext?.decisionSource),
+        arbitration: result?.arbitration ?? null,
         reasoning: Array.isArray(result?.decision?.reasoning) ? result.decision.reasoning.slice() : [],
         bars,
       });
@@ -554,6 +571,8 @@ export class BacktestEngine {
         entryPrice,
         exitPrice,
         pnl,
+        decisionSource: safeString(result?.arbitration?.source ?? result?.decision?.signalContext?.decisionSource),
+        arbitration: result?.arbitration ?? null,
         reasoning: Array.isArray(result?.decision?.reasoning) ? result.decision.reasoning.slice() : [],
         bars,
       });
@@ -611,7 +630,10 @@ export class BacktestEngine {
     if (backtestsConfig.enabled === false) return null;
     const reportsDir = path.resolve(storage.reportsDir, safeString(backtestsConfig.outputSubdir, 'backtests'));
     fs.mkdirSync(reportsDir, { recursive: true });
-    const filePath = path.resolve(reportsDir, `backtest-report-${symbol}-${report.sessionDate}-${Date.now()}.json`);
+    const filePath = path.resolve(
+      reportsDir,
+      `backtest-report-${sanitizeFileToken(symbol, 'symbol')}-${report.sessionDate}-${Date.now()}.json`,
+    );
     fs.writeFileSync(filePath, `${JSON.stringify(report, null, 2)}\n`, 'utf8');
     return filePath;
   }

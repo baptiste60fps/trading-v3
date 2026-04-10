@@ -105,6 +105,74 @@
   },
   "execution": {
     "dryRun": true,
+    "deterministicEntry": {
+      "enabled": true,
+      "allowedSymbols": [
+        "BTC/USD",
+        "ETH/USD",
+        "SOL/USD"
+      ],
+      "allowedAssetClasses": [
+        "crypto"
+      ],
+      "patterns": {
+        "trendPullbackContinuation": {
+          "enabled": true,
+          "allowScoutEntries": false,
+          "minimumSignalScore": 9,
+          "minimumContextScore": 4,
+          "requireMediumTrendConfirmed": true,
+          "allowMissingCriticalContext": false,
+          "allowWeakRelatedContext": false,
+          "allowDegradedRelatedContext": false,
+          "allowOverextendedContext": false,
+          "minimumFastRsi": 46,
+          "maximumFastRsi": 57.5,
+          "minimumFastPriceVsSma": -0.0015,
+          "maximumFastPriceVsSma": 0.0009,
+          "minimumFastEmaGap": 0.0003,
+          "minimumMediumEmaGap": 0.001,
+          "minimumRelatedTrend": -0.003,
+          "confidenceBoost": 0.1,
+          "fallbackRequestedSizePct": 0.005,
+          "requestedSizeScale": 0.4,
+          "minRequestedSizePct": 0.0025,
+          "maxRequestedSizePct": 0.006
+        },
+        "breakoutRetest": {
+          "enabled": true,
+          "allowScoutEntries": false,
+          "minimumSignalScore": 8,
+          "minimumContextScore": 4,
+          "requireMediumTrendConfirmed": true,
+          "allowMissingCriticalContext": false,
+          "allowWeakRelatedContext": false,
+          "allowDegradedRelatedContext": false,
+          "allowOverextendedContext": false,
+          "minimumFastRsi": 49,
+          "maximumFastRsi": 60.5,
+          "minimumFastPriceVsSma": -0.0008,
+          "maximumFastPriceVsSma": 0.0018,
+          "minimumFastEmaGap": 0.00025,
+          "minimumMediumEmaGap": 0.0012,
+          "minimumRelatedTrend": -0.002,
+          "minimumShortBars": 16,
+          "lookbackBars": 18,
+          "breakoutWindowBars": 6,
+          "minBreakoutPct": 0.0011,
+          "minRetestPullbackPct": 0.0004,
+          "maxRetestDepthPct": 0.0035,
+          "maxPostBreakoutStretchPct": 0.004,
+          "minRecoveryPct": 0.00035,
+          "minRetestHoldPct": 0,
+          "confidenceBoost": 0.12,
+          "fallbackRequestedSizePct": 0.0045,
+          "requestedSizeScale": 0.35,
+          "minRequestedSizePct": 0.0025,
+          "maxRequestedSizePct": 0.0055
+        }
+      }
+    },
     "cryptoProfitLock": {
       "enabled": true,
       "minUnrealizedPnlPct": 0.018,
@@ -503,6 +571,24 @@
       "enabled": true,
       "assetClass": "crypto",
       "strategyProfile": "crypto_momentum",
+      "deterministicEntry": {
+        "patterns": {
+          "trendPullbackContinuation": {
+            "minimumFastRsi": 45,
+            "maximumFastRsi": 57,
+            "minimumRelatedTrend": -0.004,
+            "requestedSizeScale": 0.36,
+            "maxRequestedSizePct": 0.0055
+          },
+          "breakoutRetest": {
+            "minimumFastRsi": 49,
+            "maximumFastRsi": 59,
+            "minimumRelatedTrend": -0.003,
+            "requestedSizeScale": 0.32,
+            "maxRequestedSizePct": 0.005
+          }
+        }
+      },
       "strategyRules": {
         "minimumRelatedTrend": -0.01,
         "minimumRelatedRsi": 34,
@@ -525,6 +611,24 @@
       "enabled": true,
       "assetClass": "crypto",
       "strategyProfile": "crypto_momentum",
+      "deterministicEntry": {
+        "patterns": {
+          "trendPullbackContinuation": {
+            "minimumFastRsi": 46,
+            "maximumFastRsi": 58,
+            "minimumRelatedTrend": -0.003,
+            "requestedSizeScale": 0.38,
+            "maxRequestedSizePct": 0.006
+          },
+          "breakoutRetest": {
+            "minimumFastRsi": 50,
+            "maximumFastRsi": 60,
+            "minimumRelatedTrend": -0.002,
+            "requestedSizeScale": 0.36,
+            "maxRequestedSizePct": 0.0055
+          }
+        }
+      },
       "strategyRules": {
         "minimumRelatedTrend": -0.012,
         "minimumRelatedRsi": 34,
@@ -547,6 +651,32 @@
       "enabled": true,
       "assetClass": "crypto",
       "strategyProfile": "crypto_momentum",
+      "deterministicEntry": {
+        "patterns": {
+          "trendPullbackContinuation": {
+            "minimumContextScore": 5,
+            "minimumFastRsi": 48,
+            "maximumFastRsi": 56.5,
+            "minimumFastEmaGap": 0.0005,
+            "minimumMediumEmaGap": 0.0015,
+            "minimumRelatedTrend": -0.001,
+            "requestedSizeScale": 0.22,
+            "maxRequestedSizePct": 0.003
+          },
+          "breakoutRetest": {
+            "minimumSignalScore": 9,
+            "minimumContextScore": 5,
+            "minimumFastRsi": 50,
+            "maximumFastRsi": 57,
+            "minimumFastEmaGap": 0.0006,
+            "minimumMediumEmaGap": 0.0018,
+            "minimumRelatedTrend": 0,
+            "maxRetestDepthPct": 0.0028,
+            "requestedSizeScale": 0.18,
+            "maxRequestedSizePct": 0.0025
+          }
+        }
+      },
       "strategyRules": {
         "minimumMediumGap": 0.003,
         "minimumRelatedTrend": -0.008,

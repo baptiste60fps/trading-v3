@@ -2,6 +2,7 @@ import assert from 'assert/strict';
 import os from 'os';
 import path from 'path';
 import { BacktestEngine } from '../../src/core/backtest/BacktestEngine.mjs';
+import { HybridBacktestDecisionEngine } from '../../src/core/backtest/HybridBacktestDecisionEngine.mjs';
 import { SimpleRuleDecisionEngine } from '../../src/core/backtest/SimpleRuleDecisionEngine.mjs';
 import { IndicatorEngine } from '../../src/core/indicators/IndicatorEngine.mjs';
 
@@ -316,6 +317,141 @@ export const register = async ({ test }) => {
     assert.equal(report.symbol, 'BTC/USD');
     assert.ok(cryptoRequests.length > 0);
     assert.ok(cryptoRequests.every((request) => request.assetClass === 'crypto'));
+  });
+
+  test('BacktestEngine sanitizes crypto symbols when writing report filenames', async () => {
+    class CryptoConfigStore extends FakeConfigStore {
+      getAssetClass() {
+        return 'crypto';
+      }
+
+      getStrategyProfile() {
+        return 'crypto_momentum';
+      }
+
+      getRelatedSymbols() {
+        return [];
+      }
+
+      getSymbolConfig() {
+        return {
+          ...super.getSymbolConfig(),
+          assetClass: 'crypto',
+        };
+      }
+    }
+
+    const sourceMarketDataProvider = new FakeSourceMarketDataProvider();
+    sourceMarketDataProvider.dataset['BTC/USD'] = sourceMarketDataProvider.dataset.AAPL;
+    const engine = new BacktestEngine({
+      configStore: new CryptoConfigStore(),
+      marketCalendar: new FakeMarketCalendar(),
+      sourceMarketDataProvider,
+      indicatorEngine: new IndicatorEngine(),
+    });
+
+    const report = await engine.run({
+      symbol: 'BTC/USD',
+      startMs: Date.parse('2026-03-23T14:30:00.000Z'),
+      endMs: Date.parse('2026-03-23T16:30:00.000Z'),
+      stepTimeframe: '5m',
+      initialCash: 10_000,
+      decisionEngine: new ScriptedDecisionEngine(),
+      writeReport: true,
+    });
+
+    assert.ok(report.reportPath.includes('backtest-report-BTC-USD-'));
+  });
+
+  test('BacktestEngine records deterministic arbitration details in hybrid mode', async () => {
+    class CryptoConfigStore extends FakeConfigStore {
+      getAssetClass() {
+        return 'crypto';
+      }
+
+      getStrategyProfile() {
+        return 'crypto_momentum';
+      }
+
+      getRelatedSymbols() {
+        return [];
+      }
+
+      getSymbolConfig() {
+        return {
+          ...super.getSymbolConfig(),
+          assetClass: 'crypto',
+          strategyProfile: 'crypto_momentum',
+        };
+      }
+
+      getExecutionConfig() {
+        return {
+          dryRun: false,
+          deterministicEntry: {
+            enabled: true,
+            allowedSymbols: ['BTC/USD'],
+            allowedAssetClasses: ['crypto'],
+            patterns: {
+              trendPullbackContinuation: {
+                enabled: true,
+              },
+              breakoutRetest: {
+                enabled: true,
+              },
+            },
+          },
+        };
+      }
+    }
+
+    const sourceMarketDataProvider = new FakeSourceMarketDataProvider();
+    sourceMarketDataProvider.dataset['BTC/USD'] = sourceMarketDataProvider.dataset.AAPL;
+    const hybridDecisionEngine = new HybridBacktestDecisionEngine({
+      deterministicEntryPolicy: {
+        async evaluate() {
+          return {
+            action: 'open_long',
+            confidence: 0.93,
+            reasoning: ['deterministic_entry:breakout_retest'],
+            requestedSizePct: 0.01,
+            stopLossPct: 0.03,
+            takeProfitPct: 0.06,
+            signalContext: {
+              deterministicPattern: 'breakout_retest',
+            },
+          };
+        },
+      },
+      fallbackDecisionEngine: new ScriptedDecisionEngine(),
+      executionConfig: {
+        deterministicEntry: {
+          enabled: true,
+        },
+      },
+    });
+    const engine = new BacktestEngine({
+      configStore: new CryptoConfigStore(),
+      marketCalendar: new FakeMarketCalendar(),
+      sourceMarketDataProvider,
+      indicatorEngine: new IndicatorEngine(),
+    });
+
+    const report = await engine.run({
+      symbol: 'BTC/USD',
+      startMs: Date.parse('2026-03-23T14:30:00.000Z'),
+      endMs: Date.parse('2026-03-23T16:30:00.000Z'),
+      stepTimeframe: '5m',
+      initialCash: 10_000,
+      decisionEngine: hybridDecisionEngine,
+      writeReport: false,
+    });
+
+    assert.equal(report.events[0].decisionSource, 'deterministic_entry');
+    assert.equal(report.events[0].arbitration.source, 'deterministic_entry');
+    assert.equal(report.cycleSummaries[0].decisionSource, 'deterministic_entry');
+    assert.equal(report.cycleSummaries[0].arbitration.source, 'deterministic_entry');
+    assert.equal(report.symbols['BTC/USD'].arbitration.source, 'deterministic_entry');
   });
 
   test('SimpleRuleDecisionEngine opens on aligned trend and closes on stop loss', async () => {

@@ -63,6 +63,7 @@ Documentation de reference du serveur:
 - conventions,
 - schemas de donnees,
 - protocoles d'iteration si besoin plus tard.
+- design de l'architecture hybride `LLM + deterministic high conviction`.
 
 ### `scripts/`
 

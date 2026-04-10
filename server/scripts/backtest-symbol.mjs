@@ -1,5 +1,6 @@
 import { createRuntime } from '../src/app/createRuntime.mjs';
 import { BacktestEngine } from '../src/core/backtest/BacktestEngine.mjs';
+import { HybridBacktestDecisionEngine } from '../src/core/backtest/HybridBacktestDecisionEngine.mjs';
 import { SimpleRuleDecisionEngine } from '../src/core/backtest/SimpleRuleDecisionEngine.mjs';
 
 const parseArgs = (argv) => {
@@ -97,11 +98,18 @@ const main = async () => {
   const runtime = await createRuntime();
   const runtimeSummary = runtime.describe();
   const { startMs, endMs } = resolveWindow(options);
-  const decisionEngine = options.decisionMode === 'llm'
-    ? runtime.decisionEngine
-    : new SimpleRuleDecisionEngine({
+  const ruleDecisionEngine = new SimpleRuleDecisionEngine({
         symbolProfiles: runtime.configStore.getStrategyProfileMap(),
       });
+  const decisionEngine = options.decisionMode === 'llm'
+    ? runtime.decisionEngine
+    : options.decisionMode === 'hybrid'
+      ? new HybridBacktestDecisionEngine({
+          deterministicEntryPolicy: runtime.deterministicEntryPolicy,
+          fallbackDecisionEngine: ruleDecisionEngine,
+          executionConfig: runtime.configStore.getExecutionConfig(),
+        })
+      : ruleDecisionEngine;
   const backtestEngine = new BacktestEngine({
     configStore: runtime.configStore,
     marketCalendar: runtime.marketCalendar,

@@ -21,7 +21,12 @@ import { ExecutionEngine } from '../core/runtime/ExecutionEngine.mjs';
 import { PersistentRuntimeOrchestrator } from '../core/runtime/PersistentRuntimeOrchestrator.mjs';
 import { RuntimeSessionStateStore } from '../core/runtime/RuntimeSessionStateStore.mjs';
 import { StrategyInstance } from '../core/strategy/StrategyInstance.mjs';
+import { DecisionArbiter } from '../core/strategy/DecisionArbiter.mjs';
+import { DeterministicEntryPolicy } from '../core/strategy/DeterministicEntryPolicy.mjs';
 import { HeuristicEntryPolicy } from '../core/strategy/HeuristicEntryPolicy.mjs';
+import { LlmDecisionPolicy } from '../core/strategy/LlmDecisionPolicy.mjs';
+import { PatternSignalEngine } from '../core/strategy/PatternSignalEngine.mjs';
+import { PositionExitPolicy } from '../core/strategy/PositionExitPolicy.mjs';
 import { RssFeedService } from '../services/news/RssFeedService.mjs';
 import { DailyMarketReportService } from '../services/reports/DailyMarketReportService.mjs';
 import { DailyGitCommitService } from '../services/reports/DailyGitCommitService.mjs';
@@ -152,6 +157,23 @@ export const createRuntime = async ({
     enabled: executionConfig.entryPolicyGuardEnabled !== false,
     clampRequestedSize: executionConfig.clampEntrySizeToHeuristic !== false,
   });
+  const patternSignalEngine = new PatternSignalEngine({
+    configStore,
+  });
+  const deterministicEntryPolicy = new DeterministicEntryPolicy({
+    configStore,
+    patternSignalEngine,
+    enabled: executionConfig?.deterministicEntry?.enabled === true,
+  });
+  const positionExitPolicy = new PositionExitPolicy();
+  const llmDecisionPolicy = new LlmDecisionPolicy({
+    decisionEngine,
+  });
+  const decisionArbiter = new DecisionArbiter({
+    positionExitPolicy,
+    deterministicEntryPolicy,
+    llmDecisionPolicy,
+  });
   const executionEngine = new ExecutionEngine({
     brokerGateway,
     portfolioService,
@@ -179,6 +201,11 @@ export const createRuntime = async ({
     portfolioService,
     featureSnapshotService,
     decisionEngine,
+    patternSignalEngine,
+    deterministicEntryPolicy,
+    positionExitPolicy,
+    llmDecisionPolicy,
+    decisionArbiter,
     rssFeedService,
     dailyMarketReportService,
     dailyGitCommitService,
@@ -209,6 +236,7 @@ export const createRuntime = async ({
           decisionEngine,
           executionEngine,
           entryPolicy,
+          decisionArbiter,
           runtimeSessionStateStore,
           consoleLogger: consoleTradingLogger,
         })),
@@ -223,6 +251,7 @@ export const createRuntime = async ({
         decisionEngine,
         executionEngine,
         entryPolicy,
+        decisionArbiter,
         runtimeSessionStateStore,
         consoleLogger: consoleTradingLogger,
       });
@@ -239,6 +268,7 @@ export const createRuntime = async ({
         llmProvider: config.llm.provider,
         llmHealthMessage: llmHealth.message,
         executionDryRun: config.execution.dryRun,
+        deterministicEntryEnabled: config.execution?.deterministicEntry?.enabled === true,
         runtimeLoopIntervalMs: config.runtime.loopIntervalMs,
         runtimeIdleIntervalMs: config.runtime.idleIntervalMs,
         runtimeStartupWarmup: config.runtime.startupWarmup,

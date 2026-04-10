@@ -1,5 +1,6 @@
 import assert from 'assert/strict';
 import { StrategyInstance } from '../../src/core/strategy/StrategyInstance.mjs';
+import { DecisionArbiter } from '../../src/core/strategy/DecisionArbiter.mjs';
 import { RuntimeSessionStateStore } from '../../src/core/runtime/RuntimeSessionStateStore.mjs';
 import { makeTempDir } from '../helpers/fixtures.mjs';
 
@@ -257,6 +258,49 @@ export const register = async ({ test }) => {
     assert.equal(result.decision.action, 'skip');
     assert.deepEqual(result.decision.reasoning, ['market_gate', 'market_closed']);
     assert.equal(executionEngine.calls[0].decision.action, 'skip');
+  });
+
+  test('StrategyInstance uses deterministic high-conviction entries without consulting the LLM', async () => {
+    const decisionEngine = new FakeDecisionEngine();
+    const executionEngine = new FakeExecutionEngine();
+    const strategy = new StrategyInstance({
+      symbol: 'BTC/USD',
+      runtimeMode: 'paper',
+      configStore: new FakeConfigStore(),
+      featureSnapshotService: new FakeFeatureSnapshotService(),
+      decisionEngine,
+      executionEngine,
+      decisionArbiter: new DecisionArbiter({
+        deterministicEntryPolicy: {
+          async evaluate() {
+            return {
+              action: 'open_long',
+              confidence: 0.91,
+              reasoning: ['deterministic_entry:trend_pullback_continuation'],
+              requestedSizePct: 0.004,
+              stopLossPct: 0.035,
+              takeProfitPct: 0.065,
+            };
+          },
+        },
+        llmDecisionPolicy: {
+          async evaluate() {
+            decisionEngine.calls += 1;
+            return {
+              action: 'hold',
+              confidence: 0.5,
+              reasoning: ['llm_hold'],
+            };
+          },
+        },
+      }),
+    });
+
+    const result = await strategy.runOnce(Date.now());
+
+    assert.equal(decisionEngine.calls, 0);
+    assert.equal(result.decision.action, 'open_long');
+    assert.equal(executionEngine.calls[0].decision.action, 'open_long');
   });
 
   test('StrategyInstance forces a preclose exit for stock positions without calling the LLM', async () => {
