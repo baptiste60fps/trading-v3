@@ -24,7 +24,11 @@ const formatSessionDate = (atMs, timezone) =>
   }).format(new Date(atMs));
 
 const compactBar = (bar) => ({
-  t: Number.isFinite(Number(bar?.timestamp)) ? Number(bar.timestamp) : null,
+  t: Number.isFinite(Number(bar?.timestamp))
+    ? Number(bar.timestamp)
+    : (Number.isFinite(Number(bar?.endMs))
+        ? Number(bar.endMs)
+        : (Number.isFinite(Number(bar?.startMs)) ? Number(bar.startMs) : null)),
   o: toFiniteOrNull(bar?.open),
   h: toFiniteOrNull(bar?.high),
   l: toFiniteOrNull(bar?.low),

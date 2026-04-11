@@ -1,5 +1,6 @@
 const REPORT_LOOKBACK_DAYS = 120;
 const REPORT_BASE_PATH = '../server/storage/reports/runtime-daily';
+const SUPPORTED_REPORT_TYPES = new Set(['runtime_daily_report', 'backtest_daily_report']);
 
 const state = {
   reports: [],
@@ -140,6 +141,8 @@ const dateFromOffset = (offset) => {
 };
 
 const reportPathForDate = (date) => `${REPORT_BASE_PATH}/runtime-report-${date}.json`;
+const isSupportedReport = (report) => SUPPORTED_REPORT_TYPES.has(safeString(report?.type));
+const reportKindLabel = (report) => report?.type === 'backtest_daily_report' ? 'backtest' : 'runtime';
 
 const fetchJson = async (path) => {
   const response = await fetch(path, { cache: 'no-store' });
@@ -156,8 +159,8 @@ const discoverReports = async () => {
       const path = reportPathForDate(date);
       try {
         const report = await fetchJson(path);
-        if (report?.type !== 'runtime_daily_report') return;
-        found.push({ key: path, path, label: report.sessionDate ?? date, report });
+        if (!isSupportedReport(report)) return;
+        found.push({ key: path, path, label: `${report.sessionDate ?? date} · ${reportKindLabel(report)}`, report });
       } catch {
         // Missing report for this day is expected.
       }
@@ -201,6 +204,60 @@ const aggregateExitPnlBySymbol = (report) => {
     .sort((a, b) => b.pnl - a.pnl);
 };
 
+const detectChartIntervalMs = (bars) => {
+  const times = (Array.isArray(bars) ? bars : [])
+    .map((bar) => Number(bar?.t))
+    .filter((value) => Number.isFinite(value))
+    .sort((left, right) => left - right);
+
+  if (times.length >= 2) {
+    const diffs = [];
+    for (let index = 1; index < times.length; index += 1) {
+      const diff = times[index] - times[index - 1];
+      if (diff > 0) diffs.push(diff);
+    }
+    if (diffs.length) {
+      const mid = Math.floor(diffs.length / 2);
+      const sortedDiffs = diffs.slice().sort((left, right) => left - right);
+      return sortedDiffs[mid];
+    }
+  }
+
+  return 60_000;
+};
+
+const normalizeChartBars = ({ report, details }) => {
+  const bars = Array.isArray(details?.shortBars) ? details.shortBars : [];
+  if (!bars.length) return [];
+
+  const intervalMs = detectChartIntervalMs(bars);
+  const firstKnownIndex = bars.findIndex((bar) => Number.isFinite(Number(bar?.t)));
+  const anchorIndex = firstKnownIndex >= 0 ? firstKnownIndex : bars.length - 1;
+  const anchorTime = firstKnownIndex >= 0
+    ? Number(bars[firstKnownIndex].t)
+    : Number(details?.updatedAtMs ?? report?.updatedAtMs ?? report?.generatedAtMs ?? Date.now());
+
+  return bars.map((bar, index) => {
+    const explicitTime = Number(bar?.t);
+    const inferredTime = anchorTime + (index - anchorIndex) * intervalMs;
+    return {
+      t: Number.isFinite(explicitTime) ? explicitTime : inferredTime,
+      o: toFiniteOrNull(bar?.o),
+      h: toFiniteOrNull(bar?.h),
+      l: toFiniteOrNull(bar?.l),
+      c: toFiniteOrNull(bar?.c),
+      v: toFiniteOrNull(bar?.v) ?? 0,
+    };
+  });
+};
+
+const summarizeShortBarRange = (bars, timezone) => {
+  if (!Array.isArray(bars) || !bars.length) return 'Aucune barre exploitable';
+  const first = bars[0];
+  const last = bars[bars.length - 1];
+  return `${bars.length} bars · ${formatDateTime(first?.t, timezone)} → ${formatDateTime(last?.t, timezone)}`;
+};
+
 const summarizeCycles = (report) => {
   const cycles = Array.isArray(report?.cycleSummaries) ? report.cycleSummaries : [];
   const failures = cycles.filter((entry) => entry?.ok === false);
@@ -226,7 +283,7 @@ const buildHumanNarrative = (report) => {
   const paragraphs = [];
 
   paragraphs.push(
-    `La session ${safeString(report?.sessionDate, 'n/a')} tourne en mode ${safeString(report?.runtime?.mode, 'n/a')}${report?.runtime?.executionDryRun ? ', avec execution encore en dry-run' : ', avec routage paper actif'}. Le wake-up report donne un ton de marche ${wakeupTone}.`,
+    `La session ${safeString(report?.sessionDate, 'n/a')} est un rapport ${reportKindLabel(report)} en mode ${safeString(report?.runtime?.mode, 'n/a')}${report?.runtime?.executionDryRun ? ', avec execution encore en dry-run' : ', avec routage paper actif'}. Le wake-up report donne un ton de marche ${wakeupTone}.`,
   );
 
   if (entries === 0 && exits === 0) {
@@ -341,6 +398,7 @@ const renderTrades = (report) => {
     renderTable('Entrées', entries, [
       { label: 'Heure', render: (row) => escapeHtml(formatDateTime(row.atMs, timezone)) },
       { label: 'Symbole', render: (row) => escapeHtml(row.symbol) },
+      { label: 'Source', render: (row) => escapeHtml(safeString(row.decisionSource, 'n/a')) },
       { label: 'Qty', render: (row) => escapeHtml(safeString(row.qty, 'n/a')) },
       { label: 'Prix ref', render: (row) => escapeHtml(formatMoney(row.referencePrice)) },
       { label: 'Stop', render: (row) => escapeHtml(formatPct(row.stopLossPct)) },
@@ -349,6 +407,7 @@ const renderTrades = (report) => {
     renderTable('Sorties', exits, [
       { label: 'Heure', render: (row) => escapeHtml(formatDateTime(row.atMs, timezone)) },
       { label: 'Symbole', render: (row) => escapeHtml(row.symbol) },
+      { label: 'Source', render: (row) => escapeHtml(safeString(row.decisionSource, 'n/a')) },
       { label: 'Qty', render: (row) => escapeHtml(safeString(row.qty, 'n/a')) },
       { label: 'Entry', render: (row) => escapeHtml(formatMoney(row.entryPrice)) },
       { label: 'Exit', render: (row) => escapeHtml(formatMoney(row.exitPrice)) },
@@ -379,6 +438,7 @@ const renderCyclePanel = (report) => {
           <th>Cycle</th>
           <th>Heure</th>
           <th>Symbole</th>
+          <th>Source</th>
           <th>Décision</th>
           <th>Execution</th>
           <th>Marché</th>
@@ -395,6 +455,7 @@ const renderCyclePanel = (report) => {
                 <td class="mono">${escapeHtml(safeString(entry?.cycle, 'n/a'))}</td>
                 <td>${escapeHtml(formatDateTime(entry?.atMs, timezone))}</td>
                 <td>${escapeHtml(safeString(entry?.symbol, 'n/a'))}</td>
+                <td>${escapeHtml(safeString(entry?.decisionSource, 'n/a'))}</td>
                 <td>${escapeHtml(safeString(entry?.decisionAction, 'n/a'))}</td>
                 <td>${escapeHtml(safeString(entry?.executionStatus, 'n/a'))}</td>
                 <td>${escapeHtml(safeString(entry?.marketSession, 'n/a'))}</td>
@@ -425,11 +486,15 @@ const renderSymbolAnalysis = (report, symbol) => {
   const { entries, exits } = getSymbolEvents(report, symbol);
   const lastExit = exits[exits.length - 1] ?? null;
   const openPosition = details.position;
+  const timezone = report?.market?.timezone ?? 'America/New_York';
+  const normalizedBars = normalizeChartBars({ report, details });
   elements.symbolAnalysis.innerHTML = [
     statCard('Prix courant', formatMoney(details.currentPrice), safeString(details.strategyProfile, 'n/a')),
     statCard('Position', openPosition ? 'LONG' : 'FLAT', openPosition ? `Qty ${safeString(openPosition.qty, 'n/a')}` : 'Aucune position'),
     statCard('RSI 1h', safeString(details?.timeframes?.['1h']?.rsi14, 'n/a'), `EMA gap ${safeString(details?.timeframes?.['1h']?.emaGap12_26, 'n/a')}`),
     statCard('Executions', `${entries.length}/${exits.length}`, lastExit ? `Dernier delta ${lastExit.pnl?.toFixed?.(2) ?? 'n/a'}$` : 'Aucune sortie'),
+    statCard('Source décision', safeString(details?.arbitration?.source ?? details?.decision?.signalContext?.decisionSource, 'n/a'), safeString(details?.decision?.action, 'n/a')),
+    statCard('Série chart', String(normalizedBars.length), summarizeShortBarRange(normalizedBars, timezone)),
   ].join('');
 };
 
@@ -517,7 +582,9 @@ const renderChart = (report, symbol) => {
     return;
   }
 
-  const candleData = details.shortBars
+  const normalizedBars = normalizeChartBars({ report, details });
+
+  const candleData = normalizedBars
     .map((bar) => ({
       time: toChartTime(bar.t),
       open: toFiniteOrNull(bar.o),
@@ -527,7 +594,7 @@ const renderChart = (report, symbol) => {
     }))
     .filter((bar) => bar.time !== null && [bar.open, bar.high, bar.low, bar.close].every((value) => value !== null));
 
-  const volumeData = details.shortBars
+  const volumeData = normalizedBars
     .map((bar) => ({
       time: toChartTime(bar.t),
       value: toFiniteOrNull(bar.v) ?? 0,
@@ -606,9 +673,9 @@ const populateReportSelector = () => {
 
   if (!state.reports.length) {
     elements.app.classList.remove('is-loading');
-    elements.reportTitle.textContent = 'Aucun rapport runtime détecté';
+    elements.reportTitle.textContent = 'Aucun rapport détecté';
     elements.overviewGrid.innerHTML = emptyState('Aucun fichier `runtime-report-YYYY-MM-DD.json` trouvé automatiquement.');
-    elements.summaryNarrative.innerHTML = emptyState('Lance `npm start` en mode paper/live pour générer les rapports runtime quotidiens, ou charge un fichier JSON manuellement.');
+    elements.summaryNarrative.innerHTML = emptyState('Lance la routine pour générer des reports quotidiens, ou charge un fichier JSON runtime/backtest manuellement.');
     elements.wakeupContent.innerHTML = '';
     elements.tradeTables.innerHTML = '';
     elements.cycleAnalysis.innerHTML = '';
@@ -643,12 +710,12 @@ const handleManualFile = async (event) => {
   try {
     const text = await file.text();
     const report = JSON.parse(text);
-    if (report?.type !== 'runtime_daily_report') {
-      throw new Error('Le fichier chargé n’est pas un runtime_daily_report.');
+    if (!isSupportedReport(report)) {
+      throw new Error('Le fichier chargé n’est ni un runtime_daily_report ni un backtest_daily_report.');
     }
     const key = `manual:${file.name}`;
     state.reportMap.set(key, report);
-    state.reports = [{ key, path: key, label: report.sessionDate ?? file.name, report }, ...state.reports.filter((entry) => entry.key !== key)];
+    state.reports = [{ key, path: key, label: `${report.sessionDate ?? file.name} · ${reportKindLabel(report)}`, report }, ...state.reports.filter((entry) => entry.key !== key)];
     state.currentReportKey = key;
     populateReportSelector();
   } catch (error) {
