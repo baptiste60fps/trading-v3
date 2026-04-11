@@ -134,4 +134,45 @@ export const register = async ({ test }) => {
     assert.equal(result.decision.action, 'open_long');
     assert.equal(result.decision.signalContext.decisionSource, 'deterministic_entry');
   });
+
+  test('DecisionArbiter downgrades an llm open decision to hold when a position is already open', async () => {
+    const arbiter = new DecisionArbiter({
+      llmDecisionPolicy: {
+        async evaluate() {
+          return {
+            action: 'open_long',
+            confidence: 0.74,
+            reasoning: ['llm_open'],
+            requestedSizePct: 0.01,
+          };
+        },
+      },
+    });
+
+    const result = await arbiter.decide({
+      symbol: 'BTC/USD',
+      features: {
+        symbol: 'BTC/USD',
+        assetClass: 'crypto',
+        marketState: {
+          isOpen: true,
+          isPreClose: false,
+          isNoTradeOpen: false,
+          sessionLabel: 'continuous_open',
+        },
+        position: {
+          symbol: 'BTC/USD',
+          qty: 0.02,
+          entryPrice: 69_000,
+        },
+      },
+    });
+
+    assert.equal(result.source, 'llm');
+    assert.equal(result.decision.action, 'hold');
+    assert.deepEqual(result.decision.reasoning.slice(0, 2), ['position_guard', 'position_already_open']);
+    assert.equal(result.decision.signalContext.guardedOriginalAction, 'open_long');
+    assert.equal(result.decision.signalContext.decisionSource, 'llm');
+    assert.equal(result.decision.requestedSizePct, null);
+  });
 };

@@ -20,6 +20,26 @@ const decorateDecisionSource = (decision, source) => ({
   },
 });
 
+const guardDecisionForExistingPosition = (decision, features) => {
+  if (!features?.position || decision?.action !== 'open_long') return decision;
+  return {
+    ...decision,
+    action: 'hold',
+    confidence: Math.min(Number(decision?.confidence ?? 0), 0.25),
+    reasoning: ['position_guard', 'position_already_open', ...(Array.isArray(decision?.reasoning) ? decision.reasoning : [])],
+    requestedSizePct: null,
+    stopLossPct: null,
+    takeProfitPct: null,
+    signalContext: {
+      ...(decision?.signalContext ?? {}),
+      guardedOriginalAction: 'open_long',
+      hasPosition: true,
+      symbol: features?.symbol ?? decision?.signalContext?.symbol ?? null,
+      assetClass: features?.assetClass ?? decision?.signalContext?.assetClass ?? null,
+    },
+  };
+};
+
 export class DecisionArbiter {
   constructor({
     positionExitPolicy = null,
@@ -67,7 +87,7 @@ export class DecisionArbiter {
       const llmDecision = await this.llmDecisionPolicy.evaluate(context);
       return {
         source: 'llm',
-        decision: decorateDecisionSource(llmDecision, 'llm'),
+        decision: decorateDecisionSource(guardDecisionForExistingPosition(llmDecision, features), 'llm'),
       };
     }
 

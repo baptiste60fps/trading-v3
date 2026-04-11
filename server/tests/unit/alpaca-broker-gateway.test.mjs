@@ -244,4 +244,105 @@ export const register = async ({ test }) => {
     assert.equal(result.error.message, 'cannot cancel order while it is pending');
     assert.equal(client.calls.some((entry) => entry.path === '/positions/AAPL'), false);
   });
+
+  test('AlpacaBrokerGateway closes crypto positions using the compact Alpaca broker symbol', async () => {
+    const client = new FakeClient({
+      responder(path, options) {
+        if (path === '/orders' && (!options.method || options.method === 'GET')) {
+          return [];
+        }
+
+        if (path === '/positions/BTCUSD' && options.method === 'DELETE') {
+          return {
+            id: 'close-btc',
+            status: 'closed',
+            filled_qty: '0.02',
+            filled_avg_price: '73123.50',
+          };
+        }
+
+        throw new Error(`Unexpected broker call ${path}`);
+      },
+    });
+    const gateway = new AlpacaBrokerGateway({ client, paper: true });
+
+    const result = await gateway.close('BTC/USD');
+
+    assert.equal(result.accepted, true);
+    assert.deepEqual(
+      client.calls.map((entry) => [entry.path, entry.options.method ?? 'GET']),
+      [
+        ['/orders', 'GET'],
+        ['/positions/BTCUSD', 'DELETE'],
+      ],
+    );
+  });
+
+  test('AlpacaBrokerGateway falls back to the encoded slash symbol when compact crypto close path is not found', async () => {
+    const client = new FakeClient({
+      responder(path, options) {
+        if (path === '/orders' && (!options.method || options.method === 'GET')) {
+          return [];
+        }
+
+        if (path === '/positions/BTCUSD' && options.method === 'DELETE') {
+          const error = new Error('not found');
+          error.statusCode = 404;
+          throw error;
+        }
+
+        if (path === '/positions/BTC%2FUSD' && options.method === 'DELETE') {
+          return {
+            id: 'close-btc-fallback',
+            status: 'closed',
+            filled_qty: '0.02',
+            filled_avg_price: '73123.50',
+          };
+        }
+
+        throw new Error(`Unexpected broker call ${path}`);
+      },
+    });
+    const gateway = new AlpacaBrokerGateway({ client, paper: true });
+
+    const result = await gateway.close('BTC/USD');
+
+    assert.equal(result.accepted, true);
+    assert.deepEqual(
+      client.calls.map((entry) => [entry.path, entry.options.method ?? 'GET']),
+      [
+        ['/orders', 'GET'],
+        ['/positions/BTCUSD', 'DELETE'],
+        ['/positions/BTC%2FUSD', 'DELETE'],
+      ],
+    );
+  });
+
+  test('AlpacaBrokerGateway leaves openedAtMs null when broker positions do not expose an open timestamp', async () => {
+    const client = new FakeClient({
+      responder(path) {
+        if (path === '/positions') {
+          return [
+            {
+              symbol: 'ETHUSD',
+              qty: '0.4',
+              avg_entry_price: '2124.82',
+              current_price: '2238.75',
+              market_value: '895.50',
+              unrealized_pl: '45.20',
+            },
+          ];
+        }
+
+        throw new Error(`Unexpected broker call ${path}`);
+      },
+    });
+    const gateway = new AlpacaBrokerGateway({ client, paper: true });
+
+    const positions = await gateway.getOpenPositions();
+
+    assert.equal(positions.length, 1);
+    assert.equal(positions[0].symbol, 'ETH/USD');
+    assert.equal(positions[0].openedAtMs, null);
+  });
 };

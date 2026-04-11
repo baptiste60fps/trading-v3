@@ -47,6 +47,22 @@ const normalizeExecutionError = (error) => ({
   message: error?.message ?? 'Unknown broker error',
 });
 
+const parseOptionalEpochMs = (value) => {
+  if (value === null || value === undefined || value === '') return null;
+  const epochMs = Date.parse(String(value));
+  return Number.isFinite(epochMs) ? epochMs : null;
+};
+
+const buildPositionPathCandidates = (symbol) => {
+  const safeSymbol = normalizeSymbolId(symbol);
+  const encoded = `/positions/${encodeURIComponent(safeSymbol)}`;
+  if (!safeSymbol.includes('/')) return [encoded];
+
+  const compactSymbol = safeSymbol.replace(/\//g, '');
+  const compactPath = `/positions/${encodeURIComponent(compactSymbol)}`;
+  return compactPath === encoded ? [encoded] : [compactPath, encoded];
+};
+
 const OPEN_ORDER_STATUSES = new Set(['new', 'accepted', 'pending_new', 'accepted_for_bidding', 'partially_filled', 'held', 'stopped']);
 
 const normalizePosition = (position) => ({
@@ -54,7 +70,7 @@ const normalizePosition = (position) => ({
   side: 'long',
   qty: Number(position?.qty ?? 0),
   entryPrice: Number(position?.avg_entry_price ?? 0),
-  openedAtMs: Date.now(),
+  openedAtMs: parseOptionalEpochMs(position?.opened_at ?? position?.open_date ?? position?.created_at),
   stopPrice: null,
   unrealizedPnl: Number.isFinite(Number(position?.unrealized_pl)) ? Number(position.unrealized_pl) : null,
   currentPrice: Number.isFinite(Number(position?.current_price)) ? Number(position.current_price) : null,
@@ -95,13 +111,19 @@ export class AlpacaBrokerGateway extends BrokerGateway {
 
   async getOpenPosition(symbol) {
     const safeSymbol = assertSymbolId(String(symbol ?? '').toUpperCase());
-    try {
-      const position = await this.client.requestBroker(`/positions/${encodeURIComponent(safeSymbol)}`);
-      return normalizePosition(position);
-    } catch (error) {
-      if (error?.statusCode === 404) return null;
-      throw error;
+    const candidates = buildPositionPathCandidates(safeSymbol);
+    for (let index = 0; index < candidates.length; index += 1) {
+      try {
+        const position = await this.client.requestBroker(candidates[index]);
+        return normalizePosition(position);
+      } catch (error) {
+        const isLastCandidate = index === candidates.length - 1;
+        if (error?.statusCode === 404 && !isLastCandidate) continue;
+        if (error?.statusCode === 404) return null;
+        throw error;
+      }
     }
+    return null;
   }
 
   async getOpenPositions() {
@@ -179,9 +201,7 @@ export class AlpacaBrokerGateway extends BrokerGateway {
     const safeSymbol = assertSymbolId(String(symbol ?? '').toUpperCase());
     try {
       await this.#cancelProtectiveOrdersForSymbol(safeSymbol);
-      const response = await this.client.requestBroker(`/positions/${encodeURIComponent(safeSymbol)}`, {
-        method: 'DELETE',
-      });
+      const response = await this.#closePositionBySymbol(safeSymbol);
       return {
         accepted: true,
         brokerOrderId: response?.id ?? null,
@@ -200,6 +220,23 @@ export class AlpacaBrokerGateway extends BrokerGateway {
         error: normalizeExecutionError(error),
       };
     }
+  }
+
+  async #closePositionBySymbol(symbol) {
+    const candidates = buildPositionPathCandidates(symbol);
+    for (let index = 0; index < candidates.length; index += 1) {
+      try {
+        return await this.client.requestBroker(candidates[index], {
+          method: 'DELETE',
+        });
+      } catch (error) {
+        const isLastCandidate = index === candidates.length - 1;
+        if (error?.statusCode === 404 && !isLastCandidate) continue;
+        throw error;
+      }
+    }
+
+    throw new Error(`Unable to resolve broker position path for ${symbol}`);
   }
 
   async #cancelProtectiveOrdersForSymbol(symbol) {
